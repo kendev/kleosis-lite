@@ -1,0 +1,2336 @@
+<?php
+// $Id: kleosis.install,v 1.2 2011/07/24 01:53:21 kendev Exp $
+
+/**
+ * @file
+ * Install, update and uninstall functions for the kleosis module.
+ */
+
+require_once('includes/kleosis_db_lib.inc');
+
+/**
+ * The kleosis.install.inc code will populate the description tables:
+ */
+require_once('kleosis.install.inc');
+
+
+/**
+ * Implements hook_enable
+ */
+function kleosis_enable() {
+
+  // Create the Kleosis menu
+  if (module_exists('menu')) {
+    $menu = array(
+      'menu_name' => 'kleosismm',
+      'title' => 'Kleosis',
+      'description' => t('Student Info System functions'),
+    );
+    menu_save($menu);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * As in hook_install, there is no need to uninstall schema, Drupal will do it
+ * for us.
+ *
+ * @see hook_uninstall()
+ */
+function kleosis_uninstall() {
+
+  if (module_exists('menu')) {  // delete the kleosis menu.
+    if ($kleosis_menu = menu_load('kleosismm')) {
+      menu_delete($kleosis_menu);
+    }
+  }
+  variable_del('kleosis_moodle_url');
+  variable_del('kleosis_moodle_version');
+  variable_del('kleosis_moodle_username');
+  variable_del('kleosis_moodle_password');
+  variable_del('kleosis_academic_year');
+  variable_del('kleosis_academic_term');
+  variable_del('kleosis_starting_dow');
+  variable_del('kleosis_sample_data');
+  variable_del('kleosis_sample_users');
+  variable_del('kleosis_pager_rows');
+
+  if (variable_get('kleosis_student_role_exists') == FALSE) {  // if a role didn't exist before kleosis, then delete it
+    user_role_delete('student');
+  }
+  if (variable_get('kleosis_instructor_role_exists') == FALSE) {
+    user_role_delete('instructor');
+  }
+  if (variable_get('kleosis_parent_guardian_role_exists') == FALSE) {
+    user_role_delete('parent_guardian');
+  }
+
+  variable_del('kleosis_student_role_exists');
+  variable_del('kleosis_instructor_role_exists');
+  variable_del('kleosis_parent_guardian_role_exists');
+
+  variable_del('kleosis_morn_break_start_hour');
+  variable_del('kleosis_morn_break_start_min');
+  variable_del('kleosis_morn_break_end_hour');
+  variable_del('kleosis_morn_break_end_min');
+  variable_del('kleosis_lunch_start_hour');
+  variable_del('kleosis_lunch_start_min');
+  variable_del('kleosis_lunch_end_hour');
+  variable_del('kleosis_lunch_end_min');
+  variable_del('kleosis_aft_break_start_hour');
+  variable_del('kleosis_aft_break_start_min');
+  variable_del('kleosis_aft_break_end_hour');
+  variable_del('kleosis_aft_break_end_min');
+
+/*
+  variable_del('kleosis_final_exam_weight');
+  variable_del('kleosis_course_grade_weight');
+  variable_del('kleosis_course_grade_item_1_name');
+  variable_del('kleosis_course_grade_item_1_weight');
+  variable_del('kleosis_course_grade_item_2_name');
+  variable_del('kleosis_course_grade_item_2_weight');
+  variable_del('kleosis_course_grade_item_3_name');
+  variable_del('kleosis_course_grade_item_3_weight');
+*/
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Define the database tables used by kleosis
+ * @see hook_schema()
+ */
+function kleosis_schema() {
+
+  $schema['ks_students'] = array(
+    'description' => 'Stores biographical data for the student.',
+    'fields' => array(
+      'kstu_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique student ID.',
+      ),
+      'drp_uid_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Drupal user uid',
+      ),
+      'mdl_uid_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Moodle user uid',
+      ),
+      'identity_id' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'optional id',
+      ),
+      'reg_no' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'registration number',
+      ),
+      'fullname' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'full name of student',
+      ),
+      'familyname' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'family name of student',
+      ),
+      'friendlyname' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'friendly or nick name',
+      ),
+      'fullname_t' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'full name of student in another language',
+      ),
+      'familyname_t' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'family name of student in another language',
+      ),
+      'friendlyname_t' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'friendly or nick name in another language',
+      ),
+      'gender' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'male or female',
+      ),
+      'religion' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'religion',
+      ),
+      'nationality' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'nationality',
+      ),
+      'date_of_birth' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => t('date of birth'),
+      ),
+      'language_at_home' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'primary language spoken at home',
+      ),
+      'mobile_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'primary mobile phone',
+      ),
+      'home_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'home phone',
+      ),
+      'other_phone_1' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'other phone number.',
+      ),
+      'other_phone_2' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'other phone number',
+      ),
+      'address_1' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'first address line',
+      ),
+      'address_2' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'second address line',
+      ),
+      'address_3' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'third address line',
+      ),
+      'address_city' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of city',
+      ),
+      'address_region_state' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of state or region',
+      ),
+      'address_province' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of province',
+      ),
+      'address_country' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of country',
+      ),
+      'address_zip_postalcode' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'zip or postal code',
+      ),
+      'living_with' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'student living with person or place',
+      ),
+      'passport_no' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'passport number',
+      ),
+      'passport_expiry_dt' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'passport expiration date',
+      ),
+      'passport_place_of_issue' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'passport place of issue',
+      ),
+      'curr_status' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current status',
+      ),
+      'curr_gradelevel' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current grade level',
+      ),
+      'curr_main_program' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current main program enrolled in',
+      ),
+      'curr_other_program' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current other program enrolled in',
+      ),
+      'curr_campus' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current primary campus',
+      ),
+      'curr_other' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'current something else',
+      ),
+      'application_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date application received',
+      ),
+      'application_forms_signed' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'all required application forms were signed-submitted',
+      ),
+      'anticipated_start_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'anticipated arrival date',
+      ),
+      'acceptance_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date of acceptance',
+      ),
+      'graduation_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date of anticipated/final graduation date',
+      ),
+      'entrance_exam_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date of entrance examination',
+      ),
+      'entrance_exam_results' => array(
+        'type' => 'text',
+        'size' => 'small',
+        'description' => 'entrance exam results.',
+        'not null' => FALSE,
+        'object default' => array(),
+      ),
+      'english_level_at_acceptance' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'initial english level',
+      ),
+      'special_needs' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'special needs',
+      ),
+      'transportation' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'transportation needs',
+      ),
+      'website' => array(
+        'type' => 'varchar',
+        'length' => 2250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'student website url',
+      ),
+      'remarks' => array(
+        'type' => 'text',
+        'size' => 'small',
+        'description' => 'general remarks',
+        'not null' => FALSE,
+        'object default' => array(),
+      ),
+      'dt_record_changed' => array(
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'general remarks',
+      ),
+    ),
+    'primary key' => array('kstu_id'),
+    'indexes' => array(
+      'fullname' => array('fullname'),
+      'friendlyname' => array('friendlyname'),
+    ),
+  );
+
+  $schema['ks_users'] = array(
+    'description' => 'Stores biographical data for a ks user',
+    'fields' => array(
+      'ksu_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'drp_uid_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Drupal user uid',
+      ),
+      'mdl_uid_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Moodle user uid',
+      ),
+      'usertype' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'type of user record',
+      ),
+      'identity_id' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'optional id',
+      ),
+      'relationship' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'relationship of user to this student',
+      ),
+      'fullname' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'full name of user',
+      ),
+      'familyname' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'family name of user',
+      ),
+      'friendlyname' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'friendly or nick name',
+      ),
+      'fullname_t' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'full name of user in another language',
+      ),
+      'familyname_t' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'family name of user in another language',
+      ),
+      'friendlyname_t' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'friendly or nick name in another language',
+      ),
+      'nationality' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'nationality',
+      ),
+      'occupation' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'type of work',
+      ),
+      'mobile_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'primary mobile phone',
+      ),
+      'home_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'home phone',
+      ),
+      'office_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'office phone number.',
+      ),
+      'other_phone' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'other phone number',
+      ),
+      'address_1' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'first address line',
+      ),
+      'address_2' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'second address line',
+      ),
+      'address_3' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'third address line',
+      ),
+      'address_city' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of city',
+      ),
+      'address_region_state' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of state or region',
+      ),
+      'address_province' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of province',
+      ),
+      'address_country' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'name of country',
+      ),
+      'address_zip_postalcode' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'zip or postal code',
+      ),
+      'curr_status' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'current status of user',
+      ),
+      'began_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date when the role began',
+      ),
+      'end_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'date when the role ended',
+      ),
+      'remarks' => array(
+        'type' => 'text',
+        'size' => 'small',
+        'description' => 'general remarks',
+        'not null' => FALSE,
+        'object default' => array(),
+      ),
+      'dt_record_changed' => array(
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'general remarks',
+      ),
+    ),
+    'primary key' => array('ksu_id'),
+    'indexes' => array(
+      'fullname' => array('fullname'),
+      'friendlyname' => array('friendlyname'),
+    ),
+  );
+
+  $schema['ks_student_status_details'] = array(
+    'description' => 'info for each student status change',
+    'fields' => array(
+      'kssd_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kstu_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'link to student',
+      ),
+      'ksts_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'link to student status',
+      ),
+      'status_reason' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'reason for changing the status',
+      ),
+      'status_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'date of status change',
+      ),
+      'gradelevel' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'optional grade level change',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for the status change',
+      ),
+    ),
+    'primary key' => array('kssd_id'),
+  );
+
+  $schema['ks_student_status_desc'] = array(
+    'description' => 'Student status description table',
+    'fields' => array(
+      'ksts_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the Status',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of status',
+      ),
+    ),
+    'primary key' => array('ksts_id'),
+  );
+
+  $schema['ks_instructor_status_desc'] = array(
+    'description' => 'Instructor status desc table',
+    'fields' => array(
+      'kinsts_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the Status',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of status',
+      ),
+    ),
+    'primary key' => array('kinsts_id'),
+  );
+
+  $schema['ks_usertypes_desc'] = array(
+    'description' => 'Type of user (based on role)',
+    'fields' => array(
+      'kutyp_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'usertype' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The user type',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of usertype',
+      ),
+    ),
+    'primary key' => array('kutyp_id'),
+  );
+
+  $schema['ks_residings_desc'] = array(
+    'description' => 'Residing with desc table',
+    'fields' => array(
+      'kres_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'residing_with' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Place or person residing with',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of place or person',
+      ),
+    ),
+    'primary key' => array('kres_id'),
+  );
+
+  $schema['ks_gradelevel_desc'] = array(
+    'description' => 'List of gradelevels',
+    'fields' => array(
+      'kgrdl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'gradelevel' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Grade Level',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of gradelevel',
+      ),
+    ),
+    'primary key' => array('kgrdl_id'),
+  );
+
+  $schema['ks_user_relationships'] = array(
+    'description' => 'List of relationships',
+    'fields' => array(
+      'krel_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kusr_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Link to first user',
+      ),
+      'kusr_rel_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Link to second user (relation)',
+      ),
+      'relationship' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Relationship of first user to second user',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of Relationship',
+      ),
+    ),
+    'primary key' => array('krel_id'),
+  );
+
+  $schema['ks_user_urls'] = array(
+    'description' => 'List of user urls',
+    'fields' => array(
+      'kuurl_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kusr_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'url for this user',
+      ),
+      'user_url' => array(
+        'type' => 'varchar',
+        'length' => 2250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'A user url',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of url',
+      ),
+    ),
+    'primary key' => array('kuurl_id'),
+  );
+
+  $schema['ks_user_relationships_desc'] = array(
+    'description' => 'Types of relationships',
+    'fields' => array(
+      'kurel_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'relationship' => array(
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 30,
+        'default' => 0,
+        'description' => 'The type of relationship',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of relationship type',
+      ),
+    ),
+    'primary key' => array('kurel_id'),
+  );
+
+  $schema['ks_organization_desc'] = array(
+    'description' => 'List of organizations',
+    'fields' => array(
+      'korg_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'organization' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Organization name',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of Organization',
+      ),
+    ),
+    'primary key' => array('korg_id'),
+  );
+
+  $schema['ks_department_desc'] = array(
+    'description' => 'List of departments',
+    'fields' => array(
+      'kdept_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'department' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Departments name',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of departments',
+      ),
+    ),
+    'primary key' => array('kdept_id'),
+  );
+
+  $schema['ks_program_desc'] = array(
+    'description' => 'List of programs',
+    'fields' => array(
+      'kpgm_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'program' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Program name',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of program',
+      ),
+    ),
+    'primary key' => array('kpgm_id'),
+  );
+
+  $schema['ks_campus_desc'] = array(
+    'description' => 'List of campuses',
+    'fields' => array(
+      'kcmps_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'campus' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Campus name',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of campus',
+      ),
+    ),
+    'primary key' => array('kcmps_id'),
+  );
+
+  $schema['ks_english_level_desc'] = array(
+    'description' => 'List of English levels',
+    'fields' => array(
+      'kelvl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'english_level' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Name of English level',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of English level',
+      ),
+    ),
+    'primary key' => array('kelvl_id'),
+  );
+
+  $schema['ks_transportation_desc'] = array(
+    'description' => 'List of transportation types',
+    'fields' => array(
+      'ktrns_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'transportation' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Type of transportation',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of transportation',
+      ),
+    ),
+    'primary key' => array('ktrns_id'),
+  );
+/*
+  $schema['ks_courses'] = array(
+    'description' => 'Course definition.',
+    'fields' => array(
+      'kcrs_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique Course ID.',
+      ),
+      'courseno' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Course number (varchar).',
+      ),
+      'coursename' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Course name (varchar).',
+      ),
+      'program' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The program this course belongs to.',
+      ),
+      'department' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The department this course belongs to.',
+      ),
+      'prerequisite' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Course prerequisite.',
+      ),
+      'course_status' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The current status of the course.',
+      ),
+      'length' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The length of the course.',
+      ),
+      'room_type' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The type of room required for this course.',
+      ),
+      'lab_type' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The type of lab (if any) required for this course.',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Course description.',
+      ),
+    ),
+    'primary key' => array('kcrs_id'),
+    'indexes' => array(
+      'courseno' => array('courseno'),
+      'coursename' => array('coursename'),
+    ),
+  );
+*/
+/*
+  $schema['ks_course_classes'] = array(
+    'description' => 'A class is an instance of a course',
+    'fields' => array(
+      'kccls_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique Class ID.',
+      ),
+      'kcrs_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The course that this class belongs to.',
+      ),
+      'classname_suffix' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'A suffix can be added to the class name.',
+      ),
+      'course_class_type' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'To be defined...',
+      ),
+      'start_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date and time when the class will begin.',
+      ),
+      'end_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date and time when the class will end.',
+      ),
+      'academic_year_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The academic year (format: 2011-2012)',
+      ),
+      'term' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The term that the class is active in.',
+      ),
+      'gradelevel' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The gradelevel of the class.',
+      ),
+      'section' => array(
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Class section.',
+      ),
+      'course_class_status' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The current status of the class.',
+      ),
+      'schedule_change' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'True only if the schedule has not changed during this class.',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Class remarks.',
+      ),
+    ),
+    'primary key' => array('kccls_id'),
+  );
+*/
+  $schema['ks_class_schedule'] = array(
+    'description' => 'Contains period schedules for a class',
+    'fields' => array(
+      'kclss_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kccls_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class that this schedule entry belongs to.',
+      ),
+      'period_start_datetime' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date and time for the start of this period.',
+      ),
+      'period_end_datetime' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date and time for the end of this period.',
+      ),
+      'period_day' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The day of the week this period occurs (from select array)',
+      ),
+      'period_hour' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The starting hour and minute this period begins (from select array)',
+      ),
+      'period_length' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The length in minutes of this period (from select array)',
+      ),
+      'period_status' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The status for this period (from select array)',
+      ),
+      'classroom' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The room for this schedule entry.',
+      ),
+      'period_lead' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The lead instructor for this schedule entry.',
+      ),
+      'period_sub' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The sub instructor for this schedule entry.',
+      ),
+    ),
+    'primary key' => array('kclss_id'),
+  );
+
+  $schema['ks_instructor_class_schedule'] = array(
+    'description' => 'Contains instructor list for each period of a class',
+    'fields' => array(
+      'kiclss_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'ksu_id_fk' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The instructor for this schedule entry.',
+      ),
+      'kclss_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class schedule period that this entry belongs to.',
+      ),
+      'class_period_role' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The role for the instructor for this schedule entry.',
+      ),
+      'klmsr_id_fk' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The LMS role for the instructor for this schedule entry.',
+      ),
+      'begin_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'date this period was assigned',
+      ),
+      'end_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'date this period was unassigned',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for this scheduled period',
+      ),
+    ),
+    'primary key' => array('kiclss_id'),
+  );
+
+  $schema['ks_student_course_classes'] = array(
+    'description' => 'Classes taken by a student.',
+    'fields' => array(
+      'ksccl_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique Student Classlist ID.',
+      ),
+      'kstu_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The student foreign key',
+      ),
+      'kccls_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class foreign key.',
+      ),
+      'class_auth' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Authorization to take this class.',
+      ),
+      'enrol_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date and time when the student enroled.',
+      ),
+      'unenrol_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date and time when the student unenroled.',
+      ),
+      'completed' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'The completion status.',
+      ),
+      'final_grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'final_attendance' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Final attendance (absences).',
+      ),
+      'final_other' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Other final item.',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Class remarks.',
+      ),
+    ),
+    'primary key' => array('ksccl_id'),
+  );
+
+  $schema['ks_course_grades'] = array(
+    'description' => 'Student course grades',
+    'fields' => array(
+      'kcgrd_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'ksccl_id_fk' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Link to the student course class',
+      ),
+      'grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'assmt_type_fk' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Link to the specific assessment type.',
+      ),
+      'assmt_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date and time this grade was recorded.',
+      ),
+    ),
+    'primary key' => array('kcgrd_id'),
+  );
+
+  $schema['ks_student_course_class_grades'] = array(
+    'description' => 'Student course grades',
+    'fields' => array(
+      'kcclg_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'ksccl_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Link to the student course class',
+      ),
+      'current_grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'current_grade_str' => array(
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Current grade as a string',
+      ),
+      'final_exam_grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'final_exam_grade_str' => array(
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Final exam grade as a string',
+      ),
+      'course_grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'course_grade_str' => array(
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Course grade as a string',
+      ),
+      'grade_item_1' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'grade_item_2' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'grade_item_3' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'final_grade' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 0,
+        'precision' => 10,
+        'scale' => 5,
+      ),
+      'final_grade_str' => array(
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Final grade as a string',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for this grade entry',
+      ),
+    ),
+    'primary key' => array('kcclg_id'),
+  );
+
+  $schema['ks_student_groups'] = array(
+    'description' => 'list of groups that students belong to',
+    'fields' => array(
+      'ksgrp_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kstu_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'link to student',
+      ),
+      'ksgrpd_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'group name',
+      ),
+      'start_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'date group was assigned',
+      ),
+      'end_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'date group was unassigned',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for the status change',
+      ),
+    ),
+    'primary key' => array('ksgrp_id'),
+  );
+
+  $schema['ks_instructor_lms_role_desc'] = array(
+    'description' => 'The roles available in the lms',
+    'fields' => array(
+      'klmsr_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'rolename' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The lms role shortname',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description for the lms role',
+      ),
+    ),
+    'primary key' => array('klmsr_id'),
+  );
+
+  $schema['ks_instructor_class_role_desc'] = array(
+    'description' => 'The roles available in the lms',
+    'fields' => array(
+      'kiclsr_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'rolename' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The class role shortname',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description for the class role',
+      ),
+    ),
+    'primary key' => array('kiclsr_id'),
+  );
+
+  $schema['ks_student_group_desc'] = array(
+    'description' => 'The student groups',
+    'fields' => array(
+      'ksgrpd_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'groupname' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The group name',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description the group',
+      ),
+    ),
+    'primary key' => array('ksgrpd_id'),
+  );
+
+  $schema['ks_course_status_desc'] = array(
+    'description' => 'Course status description table',
+    'fields' => array(
+      'kcsts_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the course status',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of course status',
+      ),
+    ),
+    'primary key' => array('kcsts_id'),
+  );
+
+  $schema['ks_classroom'] = array(
+    'description' => 'The list of classrooms and labs',
+    'fields' => array(
+      'kclsr_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'room_name' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the room',
+      ),
+      'room_type' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'type of room',
+      ),
+      'room_building' => array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'building that contains the room',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description of room type',
+      ),
+    ),
+    'primary key' => array('kclsr_id'),
+  );
+
+  $schema['ks_class_schedule_status_desc'] = array(
+    'description' => 'The status of a period in the class schedule',
+    'fields' => array(
+      'kclsss_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The period status',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description of the period status',
+      ),
+    ),
+    'primary key' => array('kclsss_id'),
+  );
+
+  $schema['ks_room_type_desc'] = array(
+    'description' => 'The types of classrooms and labs available',
+    'fields' => array(
+      'krmtyp_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'room_type' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of room',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Description of room type',
+      ),
+    ),
+    'primary key' => array('krmtyp_id'),
+  );
+
+  $schema['ks_assessment_type_desc'] = array(
+    'description' => 'Assessment type description table',
+    'fields' => array(
+      'kasmt_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'assessment_type' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of assessment',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of assessment type',
+      ),
+    ),
+    'primary key' => array('kasmt_id'),
+  );
+
+  $schema['ks_course_auth_desc'] = array(
+    'description' => 'Course authorization description table',
+    'fields' => array(
+      'kcauth_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'course_auth' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The authorization to take a particular course',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the authorization',
+      ),
+    ),
+    'primary key' => array('kcauth_id'),
+  );
+
+  $schema['ks_academic_year_desc'] = array(
+    'description' => 'Specifies the academic years and terms',
+    'fields' => array(
+      'kayr_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'academic_year' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The academic year (format: 2011-2012)',
+      ),
+      'term1_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date term1 starts.',
+      ),
+      'term1_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date term1 ends.',
+      ),
+      'term2_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term2 starts.',
+      ),
+      'term2_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term2 ends.',
+      ),
+      'term3_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term3 starts.',
+      ),
+      'term3_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term3 ends.',
+      ),
+      'term4_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term4 starts.',
+      ),
+      'term4_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term4 ends.',
+      ),
+      'term5_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term5 starts.',
+      ),
+      'term5_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term5 ends.',
+      ),
+      'term6_startdate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term6m starts.',
+      ),
+      'term6_enddate' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'The date term6 ends.',
+      ),
+    ),
+    'primary key' => array('kayr_id'),
+  );
+
+  $schema['ks_student_attendance'] = array(
+    'description' => 'Contains period attendance for a student',
+    'fields' => array(
+      'ksatnd_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kstu_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The student foreign key',
+      ),
+      'kclss_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class that this absence entry belongs to.',
+      ),
+      'atnd_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date of this student absence.',
+      ),
+      'period_day' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The day of the week this absence period occured',
+      ),
+      'period_hour' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The starting hour and minute this this absence period occured',
+      ),
+      'abs_type' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The type of absence.',
+      ),
+      'excused_abs' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The absence is excused.',
+      ),
+      'excuse_reason' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The reason for the excused absence',
+      ),
+      'remarks_instructor' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Absence remarks from the instructor.',
+      ),
+      'remarks_counselor' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Absence remarks from the counselor.',
+      ),
+    ),
+    'primary key' => array('ksatnd_id'),
+  );
+
+  $schema['ks_instructor_attendance'] = array(
+    'description' => 'Contains period attendance for an instructor',
+    'fields' => array(
+      'kiatnd_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'ksu_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The instructor foreign key',
+      ),
+      'kclss_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class that this absence entry belongs to.',
+      ),
+      'atnd_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date of this instructor absence.',
+      ),
+      'period_day' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The day of the week this absence period occured',
+      ),
+      'period_hour' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The starting hour and minute this this absence period occured',
+      ),
+      'abs_type' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The type of absence.',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for the instructor absence.',
+      ),
+    ),
+    'primary key' => array('kiatnd_id'),
+  );
+
+  $schema['ks_attendance_taken'] = array(
+    'description' => 'Contains period attendance_taking check',
+    'fields' => array(
+      'ksatndt_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key',
+      ),
+      'kclss_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The class that this attendance check belongs to.',
+      ),
+      'kusr_id_fk' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The instructor that enters this attendance check.',
+      ),
+      'atnd_date' => array(
+        'mysql_type' => 'DATETIME',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'The date of this attendance check.',
+      ),
+      'period_day' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The day of the week for this attendance check.',
+      ),
+      'period_hour' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'The starting hour and minute for this attendance check.',
+      ),
+      'attend_taken' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'size' => 'tiny',
+        'default' => 0,
+        'description' => 'Attendance was taken',
+      ),
+      'attend_other' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'size' => 'tiny',
+        'default' => 0,
+        'description' => 'Attendance taken optional field.',
+      ),
+      'remarks' => array(
+        'type' => 'varchar',
+        'length' => 240,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Remarks for this attendance check.',
+      ),
+    ),
+    'primary key' => array('ksatndt_id'),
+  );
+
+  $schema['ks_absence_type_desc'] = array(
+    'description' => 'Absence type description table',
+    'fields' => array(
+      'kabsty_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'absence_type' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of absence',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of absence',
+      ),
+    ),
+    'primary key' => array('kabsty_id'),
+  );
+
+  $schema['ks_excused_absence_reason_desc'] = array(
+    'description' => 'Excuse reasons description table',
+    'fields' => array(
+      'kexcr_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'excuse_reason' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The excuse reason',
+      ),
+      'excused' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'excused or unexcused.',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'description of excuse reason',
+      ),
+    ),
+    'primary key' => array('kexcr_id'),
+  );
+
+  $schema['ks_countries_desc'] = array(
+    'description' => 'Countries description table',
+    'fields' => array(
+      'kcntry_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the Status',
+      ),
+      'code_2' => array(
+        'type' => 'char',
+        'length' => 2,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => '2 character country abbreviation',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Countries description',
+      ),
+    ),
+    'primary key' => array('kcntry_id'),
+  );
+
+
+  return $schema;
+}
+
+

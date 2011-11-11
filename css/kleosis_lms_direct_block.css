@@ -1,0 +1,8 @@
+/* $Id$ */
+.block-kleosis-lms-direct .content ul {
+padding-left: 0; /* LTR */
+}
+.block-kleosis-lms-direct .content ul li {
+margin-bottom: 10px;
+list-style-type: none;
+}

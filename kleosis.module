@@ -1,0 +1,1206 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * This module provides the core records management features of Kleosis.
+ *
+ * Kleosis is a student information system for the K12 learning environment. The main menu
+ * items are defined in this file.
+ *
+ */
+
+require_once ('includes/kleosis_user_reg_and_profile.inc');
+require_once ('includes/kleosis_user_blocks.inc');
+require_once ('includes/kleosis_lib.inc');
+
+/**
+ * Display help and module information
+ *
+ * @param path which path of kleosis we're displaying help
+ * @param arg array that holds the current path as would be returned from arg() function
+ *
+ * @return help text for the path
+ */
+function kleosis_help($path, $arg) {
+
+  if ($path == 'admin/help#kleosis') {
+    $output = '<p>' . t("The Kleosis module provides student information management functionality and integrates with the Moodle LMS.") . '</p>';
+    return $output;
+  }
+}
+
+/**
+ * Implement hook_permission
+ * Valid permissions for this module
+ *
+ * @return array An array of valid permissions for the kleosis module
+ */
+function kleosis_permission() {
+
+    return array(
+    'administer kleosis' => array(
+      'title' =>t('Administer Kleosis'),
+      'description' => t('Load/unload sample data and set various configuration parameters.'),
+      'restrict access' => TRUE,
+    ),
+    'access kleosis content' =>  array(
+      'title' => t('Access Kleosis content'),
+    ),
+  );
+}
+
+/**
+ *
+ * Implementation of hook_menu() (kleosis Main Menu).
+ *
+ */
+function kleosis_menu() {
+  $items = array();
+  $items['kleosis'] = array(
+//    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_CALLBACK,
+//    'title' => 'Kleosis',
+    'description' => 'Access SIS functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_intro_form'),
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosismm',
+  );
+  //Link to the kleosis Students page (with tabs)
+  $items['kleosis/students'] = array(
+    'title' => 'Students',    // this title shows in the main menu
+    'description' => 'Access Students functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_students_list_form'),
+    'file' => 'includes/kleosis_students.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => -1,
+    'menu_name' => 'kleosismm',
+  );
+
+  $items['kleosis/students/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Students List',  // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+
+    $items['kleosis/students/summary'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Summary',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_student_summary'),
+      'file' => 'includes/kleosis_students.inc',
+      'access callback' => TRUE,
+      'weight' => 3,
+    );
+      $items['kleosis/students/summary/default'] = array(
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'title' => 'Summary',
+        'weight' => -10,
+       );
+
+      $items['kleosis/students/summary/biodata/%kleosis_std_sd'] = array(
+       'description' => 'Display biodata details',
+       'page callback' => 'kleosis_biodata_details_view',
+       'page arguments' => array(4),
+       'access arguments' => array('access content'),
+       'file' => 'includes/kleosis_students_admin_info.inc',
+       'title' => 'Biodata Details',
+       'type' => MENU_LOCAL_TASK,
+       'weight' => 1,
+      );
+
+      $items['kleosis/students/summary/setstatus/%kleosis_std_sd'] = array(
+        'description' => 'Display/edit student status details',
+        'page callback' => 'kleosis_student_set_status',
+        'page arguments' => array(4),
+        'access arguments' => array('access content'),
+        'file' => 'includes/kleosis_students_admin_info.inc',
+        'title' => 'Status Details',
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 2,
+      );
+
+      $items['kleosis/students/summary/setrelations/%kleosis_std_sd'] = array(
+        'description' => 'Display/edit student relationships',
+        'page callback' => 'kleosis_student_setrelations',
+        'page arguments' => array(4),
+        'access arguments' => array('access content'),
+        'file' => 'includes/kleosis_students_admin_info.inc',
+        'title' => 'Relationships',
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 3,
+      );
+
+  $items['kleosis/students/classes'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Classes',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_student_classes_ph'),
+    'file' => 'includes/kleosis_students.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+    $items['kleosis/students/classes/default'] = array(
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'title' => 'Classes', // this title shows in the tabbbed menu as the first tab
+      'weight' => -10,
+    );
+    $items['kleosis/students/classes/enrolled_classes'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Enrolled Classes',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_students_classes'),
+      'file' => 'includes/kleosis_students.inc',
+      'access callback' => TRUE,
+      'weight' => 1,
+    );
+    $items['kleosis/students/classes/class_schedule'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Class Schedule',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_student_class_schedule'),
+      'file' => 'includes/kleosis_students.inc',
+      'access callback' => TRUE,
+      'weight' => 2,
+    );
+
+  $items['kleosis/students/classes/details/view'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'kleosis_student_course_class_view',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_students.inc',
+    'access callback' => TRUE,
+  );
+  $items['kleosis/students/classes/details/edit'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_student_course_class_edit'),
+    'file' => 'includes/kleosis_students.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['kleosis/students/attendance'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_students_attendance'),
+    'file' => 'includes/kleosis_students_attnd_grades.inc',
+    'access callback' => TRUE,
+    'weight' => 5,
+  );
+    $items['kleosis/students/grades'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Grades',
+      'description' => 'Provides Grades functions for a student',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_student_grades'),
+      'file' => 'includes/kleosis_students_attnd_grades.inc',
+      'access callback' => TRUE,
+      'weight' => 6,
+    );
+    $items['kleosis/students/grades/default'] = array(
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
+      'weight' => -10,
+    );
+
+      $items['kleosis/students/grades/current_grades'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'Current Grades',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_current_grades'),
+        'file' => 'includes/kleosis_students_attnd_grades.inc',
+        'access callback' => TRUE,
+        'weight' => 1,
+      );
+      $items['kleosis/students/grades/final_grades'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'Final Grades',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_final_grades'),
+        'file' => 'includes/kleosis_students_attnd_grades.inc',
+        'access callback' => TRUE,
+        'weight' => 2,
+      );
+
+    $items['kleosis/students/reports'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Reports',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_students_reports'),
+      'file' => 'includes/kleosis_students.inc',
+      'access callback' => TRUE,
+      'weight' => 7,
+    );
+    $items['kleosis/students/transcript'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Transcript',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_students_transcript'),
+      'file' => 'includes/kleosis_students.inc',
+      'access callback' => TRUE,
+      'weight' => 8,
+    );
+
+  //Link to the kleosis Enrollment page:
+  $items['kleosis/enrollment'] = array(
+    'type' => MENU_NORMAL_ITEM,
+    'title' => 'Enrollments',
+    'description' => 'Provides SIS Enrollment functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_enrollment_page'),
+//    'page callback' => 'kleosis_enrollment_page',
+//    'page arguments' => array(1),
+    'file' => 'includes/kleosis_enrollment.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 6,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/enrollment/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Enrollments', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+/*
+  $items['kleosis/enrollment/placeholder_1'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Another Tab',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_placeholder_tab'),
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+*/
+  //Link to the kleosis Attendance page:
+  $items['kleosis/attendance'] = array(
+    'title' => 'Attendance',
+    'description' => 'Provides SIS Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_attendance_taking_form'),
+    'file' => 'includes/forms/kleosis_attendance_taking_form.inc',
+    'access callback' => TRUE,
+    'weight' => 7,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/attendance/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Take Attendance', // this title shows in the tabbbed menu as the first tab
+    'weight' => -10,
+  );
+  $items['kleosis/attendance/view'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'View Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_attendance_view_form'),
+    'file' => 'includes/forms/kleosis_attendance_view_form.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+
+   //Link to the kleosis Grades page:
+    $items['kleosis/grades'] = array(
+      'title' => 'Grades',
+      'description' => 'Provides SIS Grades functions',
+      'page callback' => 'drupal_get_form',
+//      'page arguments' => array('kleosis_current_grades_by_class'),
+      'page arguments' => array('kleosis_current_grades'),
+      'file' => 'includes/kleosis_grades.inc',
+      'access callback' => TRUE,
+      'expanded' => TRUE,
+      'weight' => 8,
+      'menu_name' => 'kleosismm',
+    );
+    $items['kleosis/grades/default'] = array(
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
+      'weight' => 1,
+    );
+
+    $items['kleosis/grades/current_grades'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Current Grades',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_current_grades_by_class'),
+      'file' => 'includes/kleosis_grades.inc',
+      'access callback' => TRUE,
+      'weight' => 3,
+    );
+      $items['kleosis/grades/current_grades/default'] = array(
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'title' => 'by Class',
+        'weight' => 2,
+      );
+/*
+      $items['kleosis/grades/current_grades/by_student'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'by Student',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_current_grades_by_student'),
+        'file' => 'includes/kleosis_grades.inc',
+        'access callback' => TRUE,
+        'weight' => 8,
+      );
+*/
+    $items['kleosis/grades/final_grades'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Final Grades',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_final_grades_by_class'),
+      'file' => 'includes/kleosis_grades.inc',
+      'access callback' => TRUE,
+      'weight' => 5,
+    );
+      $items['kleosis/grades/final_grades/default'] = array(
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'title' => 'by Class',
+        'weight' => 4,
+      );
+/*
+      $items['kleosis/grades/final_grades/by_student'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'by Student',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_final_grades_by_student'),
+        'file' => 'includes/kleosis_grades.inc',
+        'access callback' => TRUE,
+        'weight' => 10,
+      );
+*/
+    $items['kleosis/grades/final_grades_edit'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Edit Final Grades',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_final_grades_edit_form'),
+      'file' => 'includes/kleosis_grades.inc',
+      'access callback' => TRUE,
+      'weight' => 7,
+    );
+/*
+    $items['kleosis/grades/grade_scales'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Grade Scales',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_grade_scales'),
+      'file' => 'includes/kleosis_grades.inc',
+      'access callback' => TRUE,
+      'weight' => 9,
+    );
+*/
+
+  //Link to the kleosis Grades-LS page - this will eventually be removed
+/*
+/////////////////////////////////////////////////
+  $items['kleosis/grades_ls'] = array(
+    'title' => 'Grades-LS',
+    'description' => 'Provides SIS Grades functions for LIST',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_final_grades_ls_form'),
+    'file' => 'includes/kleosis_grades_ls.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 9,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/grades_ls/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Final Grades-LS List', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/grades_ls/edit_final_grades_ls'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Edit Final Grades-LS',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_final_grades_ls_edit_form'),
+    'file' => 'includes/kleosis_grades_ls.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+
+//  $items['kleosis/grades_ls/set_final_grades_ls'] = array(
+//    'type' => MENU_LOCAL_TASK,
+//    'title' => 'Lock Final Grades-LS',
+//    'page callback' => 'drupal_get_form',
+//    'page arguments' => array('kleosis_set_final_grades_ls'),
+//    'file' => 'includes/kleosis_grades_ls.inc',
+//    'access arguments' => array('administer kleosis'),
+//    'weight' => 8,
+//  );
+
+  $items['kleosis/grades_ls/current_grades'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Current Grades-LS',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_get_current_grades_ls'),
+    'file' => 'includes/kleosis_grades_ls.inc',
+    'access callback' => TRUE,
+    'weight' => 10,
+  );
+/////////////////////////////////////////////////
+*/
+/*
+  //Link to the kleosis Class Schedule page:
+    // Note - these menu items are currently located in the Class module
+  $items['kleosis/class_schedule'] = array(
+    'type' => MENU_NORMAL_ITEM,
+    'title' => 'Class Schedule',
+    'description' => 'Provides SIS Class Schedule functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_class_schedule_page'),
+    'file' => 'includes/kleosis_class_schedule.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 5,
+    'menu_name' => 'kleosismm',
+  );
+  //Link to the kleosis Class Schedule page:
+  $items['kleosis/class_schedule/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Class Schedule', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/class_schedule/placeholder_1'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Another Tab',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_placeholder_tab'),
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+*/
+  //Link to the kleosis Faculty page:
+  $items['kleosis/faculty'] = array(
+    'title' => 'Faculty',
+    'description' => 'Provides SIS Faculty functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_faculty_page'),
+    'file' => 'includes/kleosis_faculty.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 10,
+    'menu_name' => 'kleosismm',
+  );
+  //Link to the kleosis Faculty page:
+  $items['kleosis/faculty/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Faculty', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+
+  $items['kleosis/faculty/placeholder_1'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Faculty Item',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_placeholder_tab'),
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+  //Link to the kleosis Reports and Queries page:
+  $items['kleosis/reports_and_queries'] = array(
+    'title' => 'Reports and Queries',
+    'description' => 'Provides SIS Reports',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_reports_and_queries_page'),
+    'file' => 'includes/kleosis_reports_and_queries.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 12,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/reports_and_queries/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Reports and Queries', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+/*  $items["kleosis/reports_and_queries/courses"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List local courses',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_queries_courses_list_form'),
+    'file' => 'includes/kleosis_reports_and_queries.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+  $items["kleosis/reports_and_queries/classes"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List local classes',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_queries_classes_list_form'),
+    'file' => 'includes/kleosis_reports_and_queries.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+  $items["kleosis/reports_and_queries/students"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List students',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_queries_students_list_form'),
+    'file' => 'includes/kleosis_reports_and_queries.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+  $items["kleosis/reports_and_queries/instructors"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List instructors',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_queries_instructors_list_form'),
+    'file' => 'includes/kleosis_reports_and_queries.inc',
+    'access callback' => TRUE,
+    'weight' => 5,
+  );
+*/
+  //Link to the kleosis Admin page:
+  $items['kleosis/admin'] = array(
+    'title' => 'Admin',
+    'description' => 'Provides SIS Admin functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_admin_page'),
+    'file' => 'includes/kleosis_admin.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 14,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/admin/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Admin', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/admin/placeholder_1'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Admin Item',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_placeholder_tab'),
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+/*
+  $items['kleosis/admin/main_menu'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Kleosis Menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_main_menu'),
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+*/
+  //Link to the kleosis LMS Direct page:
+  $items['kleosis/lms_direct'] = array(
+    'title' => 'LMS Direct',
+    'description' => 'Provides SIS LMS Direct functions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_lms_direct_page'),
+    'file' => 'includes/kleosis_lms_direct.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 16,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/lms_direct/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'LMS Direct',
+    'weight' => 1,
+  );
+
+  // todo: move the users (moodle) users, roles, and courses functions into kleosis_lms_direct.inc
+
+  $items["kleosis/lms_direct/list"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List Users',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_users_list_form'),
+    'file' => 'includes/kleosis_users.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+
+  $items["kleosis/lms_direct/roles"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List Roles',
+    'page callback' => 'kleosis_roles',
+    'page arguments' => array(t('This is the User Roles list')),
+    'file' => 'includes/kleosis_users.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+
+  $items["kleosis/lms_direct/courses"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'List all Courses',
+    'page callback' => 'kleosis_courses',
+    'page arguments' => array(t('This is the Courses list')),
+    'file' => 'includes/kleosis_lms_direct.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+// Callback for the LMS Direct example to edit a moodle user
+  $items['kleosis/users/edit'] = array(
+    'title' => 'Edit User',
+    'page callback' => 'kleosis_users_edit',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/kleosis_users.inc',
+  );
+
+  //Link to the kleosis Processes page:
+  $items['kleosis/processes'] = array(
+    'title' => 'Processes',
+    'description' => 'Provides functions to control process flow',
+    'page callback' => 'kleosis_processes',
+    'file' => 'includes/kleosis_processes.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 20,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/processes/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Processes',
+    'weight' => 1,
+  );
+  $items['kleosis/processes/devcode_b'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Sync Users',
+    'page callback' => 'kleosis_processes_devcode_sync_users',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+  $items["kleosis/processes/usersync"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Users Lists',
+    'page callback' => 'kleosis_processes_usersync',
+    'file' => 'includes/kleosis_processes.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+// can put development code in this callback for testing...
+  $items["kleosis/processes/devcode_a"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Dev Code A',
+    'page callback' => 'kleosis_processes_devcode_page_a',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+  $items["kleosis/processes/sample_data"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Sample Data',
+    'page callback' => 'kleosis_processes_sample_data_page',
+    'page arguments' => array(1),
+    'file' => 'includes/sample_data/kleosis_manage_sample_data.inc',
+//    'access callback' => TRUE,
+    'access arguments' => array('administer kleosis'),
+    'weight' => 5,
+  );
+  $items["kleosis/processes/logout"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Force logout',
+    'page callback' => 'kleosis_processes_devcode_force_logout',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 6,
+  );
+  $items['admin/config/development/kleosis'] = array(
+    'title' => 'Kleosis settings',
+    'description' => 'Configuration for the Kleosis module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_settings_form'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+  return $items;
+}
+
+/**
+ *
+ * Implementation of hook_theme() (kleosis Main Menu).
+ *
+ */
+function kleosis_theme() {
+  return array(
+
+    'kleosis_users_list_form' => array('render element' => 'form'),
+
+    'kleosis_users_roles_form' => array('render element' => 'form'),
+  );
+}
+
+/**
+ *
+ * Implementation of hook_views_api()
+ *
+ */
+function kleosis_views_api() {
+  return array(
+    'api' => 2,
+    'path' =>
+   drupal_get_path('module', 'kleosis'),
+  );
+}
+
+/**
+ * Page callback for the kleosis introduction menu entry.
+ *
+ * @param $content
+ *   Some content passed in.
+ */
+function kleosis_intro_form($form, &$form_state) {
+
+ drupal_set_title(t('Kleosis - Student Information System'));
+
+$page_desc = <<<EOT
+  <p><h1><strong>Welcome to Kleosis</strong></h1></p>
+
+  <strong>Kleosis</strong> is an open-source Student Information System (SIS) implemented as a Drupal module and fully integrated with the Moodle Learning Management System.  The main menu on the left will appear on most every <strong>Kleosis</strong> page as you navigate and access the numerous functions of this application.
+  <br/><br/>
+  Each main menu item represents a feature of <strong>Kleosis</strong> and links to a functional page with additional sub-menu items.  Please use the application via the various menu items and since <strong>Kleosis</strong> is a community-supported project, feedback is always welcome on how to improve and extend its features.
+
+  <br/><br/><br/><br/><br/>
+EOT;
+
+// add a fieldset for the page info
+
+$form['pagehelp'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Kleosis home page'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+$form['pagehelp']['pageinfo'] = array(
+    '#markup' => $page_desc,
+  );
+
+return $form;
+}
+
+function pagess_example_description() {
+  return array('#markup' => t('The page_example provides something') );
+}
+
+/**
+ * Defines the form for the main menu tab
+ *
+ * @return
+ *    The Main Menu tab
+ */
+function kleosis_main_menu($form, &$form_state) {
+
+    $form_state['redirect'] = 'kleosis';
+    drupal_redirect_form($form_state);
+}
+
+/**
+ * Defines a placeholder tab
+ *
+ * @return
+ *    a markup blurb...
+ */
+function kleosis_placeholder_tab($form, &$form_state) {
+
+ drupal_set_title(t('Kleosis Item'));
+
+$page_desc = <<<EOT
+  <br/>This is a placeholder page for upcoming Kleosis functionality (currently under construction...)
+  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+EOT;
+
+// add a fieldset for the page info
+
+$form['pagehelp'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Description'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+$form['pagehelp']['pageinfo'] = array(
+    '#markup' => $page_desc,
+  );
+
+return $form;
+}
+
+/**
+*
+* Create and display the Kleosis configuration settings form.
+*
+*/
+function kleosis_settings_form($form, &$form_state) {
+
+  $ks_libpath = drupal_get_path('module', 'kleosis');
+  $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
+  require_once ($kslib);
+
+  $form['kleosis_moodle_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('The url to your moodle site.'),
+    '#description' => t('The url to the moodle instance that will be accessed by Kleosis.'),
+    '#default_value' => variable_get('kleosis_moodle_url','http://localhost/moodle'),
+    '#size' => 40,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+  $form['kleosis_moodle_version'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Moodle version - 1.9.x or 2.x'),
+    '#description' => t('The version of the moodle instance that will be accessed by Kleosis.'),
+    '#default_value' => variable_get('kleosis_moodle_version','2.x'),
+    '#size' => 5,
+    '#maxlength' => 10,
+    '#required' => TRUE,
+  );
+  $form['kleosis_moodle_username'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Moodle default username'),
+    '#description' => t('An existing Moodle username with sufficient user permissions.'),
+    '#default_value' => variable_get('kleosis_moodle_username','admin'),
+    '#size' => 5,
+    '#maxlength' => 30,
+    '#required' => TRUE,
+  );
+  $form['kleosis_moodle_password'] = array(
+    '#type' => 'password',
+    '#title' => t('Moodle password for default username'),
+    '#description' => t('The Moodle password for the default user.'),
+    '#default_value' => variable_get('kleosis_moodle_password','moodle'),
+    '#size' => 5,
+    '#maxlength' => 30,
+    '#required' => TRUE,
+  );
+  $form['kleosis_academic_year'] = array(
+    '#type' => 'select',
+    '#title' => t('Academic Year'),
+    '#description' => t('The current academic year for Kleosis functions.'),
+    '#options' =>  kleosis_academic_year_values(),
+    '#default_value' =>  variable_get('kleosis_academic_year','2011-2012'),
+//    '#weight' => 9,
+  );
+  $form['kleosis_academic_term'] = array(
+    '#type' => 'select',
+    '#title' => t('Academic Term'),
+    '#description' => t('The current term for Kleosis functions.'),
+    '#options' =>  array('0' => ' ','1' => '1','2' => '2','3' => '3','4' => '4','5' => '5','6' => '6','fy' => 'FY'),
+    '#default_value' =>  variable_get('kleosis_academic_term','fy'),
+//    '#weight' => 10,
+  );
+  $form['kleosis_starting_dow'] = array(
+    '#type' => 'select',
+    '#title' => t('Starting day of week'),
+    '#description' => t('The first day of the week (ISO-8601).'),
+    '#options' =>  kleosis_dayofweek_values(),
+    '#default_value' =>  variable_get('kleosis_starting_dow','1'),
+//    '#weight' => 11,
+  );
+  $form['kleosis_pager_rows'] = array(
+    '#type' => 'select',
+    '#title' => t('Pager rows'),
+    '#description' => t('The maximum number of rows displayed on each page.'),
+    '#options' =>  array(8 => '8',12 => '12',16 => '16',18 => '18',20 => '20',22 => '22',24 => '24',28 => '28',36 => '36'),
+    '#default_value' =>  16,
+//    '#weight' => 12,
+  );
+  $form['kleosis_break'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Scheduled breaktimes'),
+    '#description' => t('Morning, lunch, and afternoon breaktimes.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['kleosis_break']['kleosis_morn_break_start_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Morning break start hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_morn_break_start_hour', '10'),
+    '#description' => t('Starting hour for the morning break.'),
+  );
+  $form['kleosis_break']['kleosis_morn_break_start_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Morning break start minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_morn_break_start_min', '05'),
+    '#description' => t('Starting minute for the morning break.'),
+  );
+  $form['kleosis_break']['kleosis_morn_break_end_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Morning break end hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_morn_break_end_hour', '10'),
+    '#description' => t('Ending hour for the morning break.'),
+  );
+  $form['kleosis_break']['kleosis_morn_break_end_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Morning break end minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_morn_break_end_min', '20'),
+    '#description' => t('Ending minute for the morning break.'),
+  );
+
+  $form['kleosis_break']['kleosis_lunch_start_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Lunchtime start hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_lunch_start_hour', '12'),
+    '#description' => t('Starting hour for the lunchtime.'),
+  );
+  $form['kleosis_break']['kleosis_lunch_start_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Lunchtime start minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_lunch_start_min', '15'),
+    '#description' => t('Starting minute for the lunchtime.'),
+  );
+  $form['kleosis_break']['kleosis_lunch_end_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Lunchtime end hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_lunch_end_hour', '12'),
+    '#description' => t('Ending hour for the lunchtime.'),
+  );
+  $form['kleosis_break']['kleosis_lunch_end_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Lunchtime end minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_lunch_end_min', '55'),
+    '#description' => t('Ending minute for the lunchtime.'),
+  );
+
+  $form['kleosis_break']['kleosis_aft_break_start_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Afternoon break start hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_aft_break_start_hour', '14'),
+    '#description' => t('Starting hour for the afternoon break.'),
+  );
+  $form['kleosis_break']['kleosis_aft_break_start_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Afternoon break start minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_aft_break_start_min', '30'),
+    '#description' => t('Starting minute for the afternoon break.'),
+  );
+
+  $form['kleosis_break']['kleosis_aft_break_end_hour'] = array(
+    '#type' => 'select',
+    '#title' => t('Afternoon break end hour'),
+    '#options' =>  kleosis_hours_values(),
+    '#default_value' => variable_get('kleosis_aft_break_end_hour', '14'),
+    '#description' => t('Ending hour for the afternoon break.'),
+  );
+  $form['kleosis_break']['kleosis_aft_break_end_min'] = array(
+    '#type' => 'select',
+    '#title' => t('Afternoon break end minute'),
+    '#options' =>  kleosis_minutes_values(),
+    '#default_value' => variable_get('kleosis_aft_break_end_min', '50'),
+    '#description' => t('Ending minute for the afternoon break.'),
+  );
+/*
+  $form['kleosis_local_grade'] = array(  // fieldset for local grade info
+      '#type' => 'fieldset',
+      '#title' => t('Gradebook settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#attached' => array(
+        'js' => array(
+          'misc/form.js',
+          'misc/collapse.js',
+          ),
+        ),
+      '#attributes' => array(
+          'class' => array('collapsible', 'collapsed'),
+        ),
+    );
+  $form['kleosis_local_grade']['weight_total'] = array(
+    '#markup' =>  t('All weights for the Gradebook settings must result in a total of 100.00'),
+    '#prefix' => '<strong>',
+    '#suffix' => '</strong>',
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Course grade weight'),
+    '#description' => t('Course grade percentage of final grade. All weights for the Gradebook settings must result in a total of 100.00
+    '),
+    '#default_value' =>  variable_get('kleosis_course_grade_weight','75.00'),
+    '#size' => 3,
+    '#maxlength' => 5,
+  );
+  $form['kleosis_local_grade']['kleosis_final_exam_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Final exam weight'),
+    '#description' => t('Final exam percentage of final grade.'),
+    '#default_value' =>  variable_get('kleosis_final_exam_weight','25.00'),
+    '#size' => 3,
+    '#maxlength' => 5,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_1_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 1 name'),
+    '#description' => t('The name of Item 1 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_grade_item_1_name','Item 1 grade'),
+    '#size' => 15,
+    '#maxlength' => 15,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_1_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 1 weight'),
+    '#description' => t('The weight of Item 1 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_course_grade_item_1_weight','00.00'),
+    '#size' => 3,
+    '#maxlength' => 5,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_2_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 2 name'),
+    '#description' => t('The name of Item 2 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_grade_item_2_name','Item 2 grade'),
+    '#size' => 15,
+    '#maxlength' => 15,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_2_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 2 weight'),
+    '#description' => t('The weight of Item 2 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_course_grade_item_2_weight','00.00'),
+    '#size' => 3,
+    '#maxlength' => 5,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_3_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 3 name'),
+    '#description' => t('The name of Item 3 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_grade_item_3_name','Item 3 grade'),
+    '#size' => 15,
+    '#maxlength' => 15,
+  );
+  $form['kleosis_local_grade']['kleosis_course_grade_item_3_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Optional grade item 3 weight'),
+    '#description' => t('The weight of Item 3 if used in the calculation of the final grade.'),
+    '#default_value' =>  variable_get('kleosis_course_grade_item_3_weight','00.00'),
+    '#size' => 3,
+    '#maxlength' => 5,
+  );
+*/
+
+  // Submit button
+//  $form['submit'] = array(
+//    '#type' => 'submit',
+//    '#value' => t('Save settings'),
+//  );
+  return system_settings_form($form);
+}
+
+/**
+*  Validate the moodle url
+*/
+function kleosis_settings_form_validate($form, &$form_state) {
+
+  $moodle_url = $form_state['values']['kleosis_moodle_url'];
+  if('/' == $moodle_url[strlen($moodle_url)-1]) {
+    $moodle_url =  substr($moodle_url, 0, -1);  // remove trailing slash if exists
+  }
+  $form_state['values']['kleosis_moodle_url'] = $moodle_url;
+}
+
+/**
+*  Implement hook_field_access (experimental)
+*/
+function kleosis_field_access($op, $field, $entity_type, $entity, $account) {
+
+  if ( ($field['field_name'] == 'field_favorite_color') && (($op == 'view') || ($op == 'edit'))  &&  !(in_array('administrator',$account->roles) ) ) {
+//    return user_access('edit field of interest', $account);
+//    return FALSE;  // only admins can access this field !!!
+
+  }
+  return TRUE;
+}
+
+/**
+ *
+ * Retrieve the current user name from the session variable
+ *
+ * @param $uid
+ *   The user id from the url
+ *
+ *  return user's uid
+ */
+/*function kleosis_student_to_arg($uarg){
+
+  $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : '');
+  dpm('inside kleosis_student_to_arg');
+  dpm($uarg);
+
+  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
+    dpm('here is the ksopid:');
+    dpm($_GET['ksopid']);
+
+  }
+  dpm($uid);
+
+  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
+  $uid = $uid . '?ksopid=' . $uid;
+  }
+  if ( isset( $_GET['kssid'] ) && !empty( $_GET['kssid'] )) {
+  $uid = $uid . '&kssid=' . $_GET['kssid'];
+  }
+  if ( isset( $_GET['ksop'] ) && !empty( $_GET['ksop'] )) {
+  $uid = $uid . '&ksop=' . $_GET['ksop'];
+  }
+  dpm('here is the returning param');
+  dpm($uid);
+
+  return $uid;
+}
+*/
+/**
+ *  Provide a parameter replacement for this menu item:
+ *    $items['kleosis/students/summary/setstatus/%kleosis_std_sd']
+ *
+ * @param $uarg
+ *   The user id from the url
+ *
+ *  return a user's uid
+ */
+function kleosis_std_sd_load($uarg){
+
+  $arg4 = arg(4);
+  $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
+ // retrieve the current uid from the session variable
+  $uid = isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : $someid;
+
+  return $uid;
+}
+
+/**
+ *
+ *  Provide a non-null parameter replacement for this menu item:
+ *    $items['kleosis/students/summary/setstatus/%kleosis_std_sd']
+ *
+ * @param $uarg
+ *   The user id from the url (can be null)
+ *
+ *  return non-null uid
+ */
+function kleosis_std_sd_to_arg($uarg){
+
+  $arg4 = arg(4);
+  $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
+//  $uid = isset($_SESSION['student_status']['student']) ? $_SESSION['student_status']['student'] : $someid;
+
+  $uid = isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : $someid;
+
+  return $uid;
+}
+

@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Simple test case for courses module.
+ *
+ * Verify courses module functionality.
+ */
+
+/**
+ * Functionality tests for courses module.
+ */
+class CoursesTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Courses',
+      'description' => 'Verify the custom node type creation.',
+      'group' => 'Kleosis',
+    );
+  }
+
+  function setUp() {
+    // Enable the module.
+    parent::setUp('courses');
+  }
+
+  /**
+   * Verify the functionality of the courses module.
+   */
+  function testNodeCreation() {
+    // Create and login user.
+    $account = $this->drupalCreateUser(array('access content', 'create courses content'));
+    $this->drupalLogin($account);
+
+    // Create a new node.
+    $edit = array(
+      'title' => $this->randomName(),
+//      'courses_color[und][0][value]' => 'red',
+//      'courses_color[und][1][value]' => 'green',
+//      'courses_color[und][2][value]' => 'blue',
+//      'courses_quantity[und][0][value]' => 100,
+    );
+    $this->drupalPost('node/add/course', $edit, t('Save'));
+    $this->assertText("Course " . $edit['title'] . " has been created", "Found node creation message");
+//    $this->assertPattern("/The colors available.*red.*green.*blue/", "Correct 'colors available' on node page");
+
+    // Look on the courses page to make sure it shows up there also.
+    $this->drupalGet('kleosis/students/courses');
+    $this->assertText($edit['title'], "Found random title string");
+//    $this->assertPattern("/red.*green.*blue/", "Correct 'colors available' on courses page");
+
+  }
+}
+

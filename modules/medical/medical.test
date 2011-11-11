@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Simple test case for medical module.
+ *
+ * Verify example module functionality.
+ */
+
+/**
+ * Functionality tests for medical module.
+ */
+class MedicalTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Simple Medical',
+      'description' => 'Verify the custom node type creation.',
+      'group' => 'Kleosis',
+    );
+  }
+
+  function setUp() {
+    // Enable the module.
+    parent::setUp('medical');
+  }
+
+  /**
+   * Verify the functionality of the medical module.
+   */
+  function testNodeCreation() {
+    // Create and login user.
+    $account = $this->drupalCreateUser(array('access content', 'create medical content'));
+    $this->drupalLogin($account);
+
+    // Create a new node. The image makes it more complicated, so skip it.
+    $edit = array(
+      'title' => $this->randomName(),
+      'simple_medical_color[und][0][value]' => 'red',
+      'simple_medical_color[und][1][value]' => 'green',
+      'simple_medical_color[und][2][value]' => 'blue',
+      'simple_medical_quantity[und][0][value]' => 100,
+    );
+    $this->drupalPost('node/add/medical', $edit, t('Save'));
+    $this->assertText("Medical " . $edit['title'] . " has been created", "Found node creation message");
+    $this->assertPattern("/The colors available.*red.*green.*blue/", "Correct 'colors available' on node page");
+
+    // Look on the examples page to make sure it shows up there also.
+    $this->drupalGet('kleosis/students/medical');
+    $this->assertText($edit['title'], "Found random title string");
+    $this->assertPattern("/red.*green.*blue/", "Correct 'colors available' on medical page");
+
+  }
+}
+

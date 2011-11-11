@@ -1,0 +1,10 @@
+name = Medical
+description = Provides and maintains basic student medical information
+package = Kleosis
+core = 7.x
+dependencies[] = kleosis
+files[] = medical.test
+files[] = medical.module
+
+version = "7.x-1.x-dev"
+

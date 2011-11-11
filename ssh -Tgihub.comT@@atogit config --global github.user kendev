@@ -1,0 +1,28 @@
+[33mtag lite_v.9.3.8[m
+Tagger: Ken DeVellis <ken@kendee.com>
+Date:   Fri Nov 11 09:46:52 2011 +0700
+
+kleosis lite v .9.3.8
+
+[33mcommit a441d0da48a2e0f05811ecd8e35f0ba64604221b[m
+Author: Ken DeVellis <ken@kendee.com>
+Date:   Fri Nov 11 08:26:14 2011 +0700
+
+    initial project commit
+
+[1mdiff --git a/INSTALL.txt b/INSTALL.txt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c58823c[m
+[1m--- /dev/null[m
+[1m+++ b/INSTALL.txt[m
+[36m@@ -0,0 +1,65 @@[m
+[32m+[m[32mInstall notes (2011 June 20):[m
+[32m+[m
+[32m+[m[32m- Install Kleosis as a normal Drupal module[m
+[32m+[m
+[32m+[m	[32m- Create a Main Menu item that links to Kleosis  (this will be created automatically in a future release)[m
+[32m+[m		[32m- Select Structure, Menus, Main Menu from the Administration menu, then select 'add link'[m
+[32m+[m			[32mMenu link title: Kleosis[m
+[32m+[m			[32mPath: kleosis[m
+[32m+[m			[32mDescription: Student Info System[m
+[32m+[m			[32m(Parent link should already be set to Main menu)[m

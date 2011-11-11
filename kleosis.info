@@ -1,0 +1,42 @@
+; $Id$
+name = Kleosis
+description = Provides student records management functions and integrates with the Moodle LMS.
+core = 7.x
+package = "Kleosis"
+
+files[] = kleosis.module
+files[] = kleosis.install
+files[] = kleosis.views.inc
+files[] = includes/kleosis_admin.inc
+files[] = includes/kleosis_attendance.inc
+files[] = includes/kleosis_class_schedule.inc
+files[] = includes/kleosis_courses.inc
+files[] = includes/kleosis_db_lib.inc
+files[] = includes/kleosis_enrollment.inc
+files[] = includes/kleosis_faculty.inc
+files[] = includes/kleosis_grades.inc
+files[] = includes/kleosis_lib.inc
+files[] = includes/kleosis_lms_direct.inc
+files[] = includes/kleosis_processes.inc
+files[] = includes/kleosis_processes_devcode.inc
+files[] = includes/kleosis_reports.inc
+files[] = includes/kleosis_reports_and_queries.inc
+files[] = includes/kleosis_students.inc
+files[] = includes/kleosis_students_admin_info.inc
+files[] = includes/kleosis_users.inc
+files[] = includes/kleosis_user_blocks.inc
+files[] = includes/kleosis_user_reg_and_profile.inc
+files[] = includes/kleosis_ws.inc
+files[] = includes/forms/kleosis_guest_edit_form.inc
+files[] = includes/forms/kleosis_guest_view_form.inc
+files[] = includes/forms/kleosis_instructor_edit_form.inc
+files[] = includes/forms/kleosis_instructor_view_form.inc
+files[] = includes/forms/kleosis_parent_guardian_edit_form.inc
+files[] = includes/forms/kleosis_parent_guardian_view_form.inc
+files[] = includes/forms/kleosis_staff_edit_form.inc
+files[] = includes/forms/kleosis_staff_view_form.inc
+files[] = includes/forms/kleosis_student_edit_form.inc
+files[] = includes/forms/kleosis_student_view_form.inc
+files[] = kws/MoodleWS.php
+
+version = "7.x-1.x-dev"

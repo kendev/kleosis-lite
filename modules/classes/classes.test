@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Simple test case for classes module.
+ *
+ * Verify classes module functionality.
+ */
+
+/**
+ * Functionality tests for classes module.
+ */
+class classesTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'classes',
+      'description' => 'Verify the custom node type creation.',
+      'group' => 'Kleosis',
+    );
+  }
+
+  function setUp() {
+    // Enable the module.
+    parent::setUp('classes');
+  }
+
+  /**
+   * Verify the functionality of the classes module.
+   */
+  function testNodeCreation() {
+    // Create and login user.
+    $account = $this->drupalCreateUser(array('access content', 'create classes content'));
+    $this->drupalLogin($account);
+
+    // Create a new node.
+    $edit = array(
+      'title' => $this->randomName(),
+//      'classes_color[und][0][value]' => 'red',
+//      'classes_color[und][1][value]' => 'green',
+//      'classes_color[und][2][value]' => 'blue',
+//      'classes_quantity[und][0][value]' => 100,
+    );
+    $this->drupalPost('node/add/class', $edit, t('Save'));
+    $this->assertText("class " . $edit['title'] . " has been created", "Found node creation message");
+//    $this->assertPattern("/The colors available.*red.*green.*blue/", "Correct 'colors available' on node page");
+
+    // Look on the classes page to make sure it shows up there also.
+    $this->drupalGet('kleosis/students/classes');
+    $this->assertText($edit['title'], "Found random title string");
+//    $this->assertPattern("/red.*green.*blue/", "Correct 'colors available' on medical page");
+
+  }
+}
+
