@@ -58,7 +58,7 @@ Optionally, add a My Courses - LMS Direct block to an existing page on your webs
 		- Click on Save Block and exit the Blocks page
 		- Navigate to the new page and click on a courses link in the My Course block
 
-More documentation can be found at http://www.globalnetu.com/kleosis_demo
+More documentation can be found at http://www.kleosis.org
 
 
 
