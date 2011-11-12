@@ -1,8 +1,9 @@
-Install notes (2011 June 20):
+Install notes (12 Nov 2011):
 
+- Install the prerequisite Drupal contributed modules*
 - Install Kleosis as a normal Drupal module
 
-	- Create a Main Menu item that links to Kleosis  (this will be created automatically in a future release)
+	- Create a Main Menu item that links to Kleosis 
 		- Select Structure, Menus, Main Menu from the Administration menu, then select 'add link'
 			Menu link title: Kleosis
 			Path: kleosis
@@ -11,28 +12,9 @@ Install notes (2011 June 20):
 			Weight: use default or set to a preferred number
 
 	- Kleosis then shows up as a Main Menu item that points to an information page. Next, add the Kleosis menu to this page
-		- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region - be sure to show the block only on the listed page named 'kleosis'.
+		- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region - be sure to show the block on these listed pages: kleosis and kleosis/*
 		
-These next steps were required in Drupal 7.0 because of some minor bugs - should now be ok for Drupal 7.2:
-		
-/**		
-		- there is currently a bug in the installation process (or most probably in my thinking and coding) that results in two missing menu items in the Kleosis menu that gets built during install, so can add them manually now:
-			- Select Structure, Menus from the Administration Menu, then select add link for the the Kleosis menu
-				Menu link title: Class Schedule
-				Path: kleosis/class_schedule
-				Description: Provides SIS Class Schedule functions
-				(Parent link should already be set to Kleosis)
-				Weight: 5
-			- Repeat above for the Enrollment link
-				Menu link title: Enrollment
-				Path: kleosis/enrollments
-				Description: Provides SIS Enrollment functions
-				(Parent link should already be set to Kleosis)
-				Weight: 6
-			- (Optional) Indent these two menu items to the right under menu item Courses
-**/	
-
-- The OKTech webservices code needs to be intalled on the Moodle instance you will connect to.  This is a separate installation step, and instructions to do this can be found at: http://cipcnet.insa-lyon.fr/Members/ppollet/public/moodlews/  
+- The OKTech webservices code needs to be intalled on the Moodle instance you will connect to.  This is a separate installation step, and instructions to do this can be found at: http://cipcnet.insa-lyon.fr/Members/ppollet/public/moodlews/  or at https://github.com/patrickpollet/moodlews
 Click on INSTALL for the install procedures.  This webservices code works for both Moodle 1.9.x and Moodle 2.x.
   
 - Kleosis comes with a recent version of OKTech's webservices client code, and the following configuration info is required to point to the Moodle instance you will connect to:
@@ -43,6 +25,11 @@ Click on INSTALL for the install procedures.  This webservices code works for bo
 		- Moodle version
 		- Moodle default username
 		- Moodle password for default username
+	Other configuration settings should be entered now as well such as:
+		- Academic Year and Term
+		- Startng day of week
+		- Number of rows displayed by the pager
+		- Scheduled Breaks (select 00 for each if no breaks)
 	- Save the configuration
 		
 If all goes well, Kleosis is now fully operational.  Select the Kleosis, Students menu item to get a list of students from the sample data created during install. Then Select the Kleosis/LMS Direct and the 'List Roles' menu tab for a quick test of Moodle connectivity.
@@ -57,6 +44,19 @@ Optionally, add a My Courses - LMS Direct block to an existing page on your webs
 		*Note*: it's very important that you not show LMS Direct blocks all pages of your site.  Since there is a latency associated with connectivity thru the webservices layer to Moodle from these blocks, you probably don't want this latency on all of your site pages!
 		- Click on Save Block and exit the Blocks page
 		- Navigate to the new page and click on a courses link in the My Course block
+
+
+*Note: Kleosis requires the following Drupal 7 Modules to be installed:
+
+	- ctools
+	- entity
+	- references
+	- views
+	- date
+	- calendar
+	- menu_attributes
+	- profile2
+	- wysiwyg
 
 More documentation can be found at http://www.kleosis.org
 
