@@ -483,7 +483,10 @@ function kleosis_student_summary_form($form, &$form_state) {
     '#type' => 'item',
     '#title' => t('Primary Guardian'),
 //    '#markup' => ($guardian)? l($ks_primary_guardian['fullname'] , 'user/' . $ks_primary_guardian_id, array('query' => array())) : 'not set',
-    '#markup' => ($guardian)? $ks_primary_guardian['fullname'] : 'not set',
+    '#markup' => ($guardian)? l($ks_primary_guardian['fullname'] , 'user/' . $ks_primary_guardian_id, array('query' => array('ksopid' => $uid, 'ksop' => $name))) : 'not set',
+//  //      'operations' =>  l(t('Summary page'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
+
+//    '#markup' => ($guardian)? $ks_primary_guardian['fullname'] : 'not set',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
     );

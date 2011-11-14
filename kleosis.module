@@ -766,8 +766,7 @@ $page_desc = <<<EOT
   <strong>Kleosis</strong> is an open-source Student Information System (SIS) implemented as a Drupal module and fully integrated with the Moodle Learning Management System.  The main menu on the left will appear on most every <strong>Kleosis</strong> page as you navigate and access the numerous functions of this application.
   <br/><br/>
   Each main menu item represents a feature of <strong>Kleosis</strong> and links to a functional page with additional sub-menu items.  Please use the application via the various menu items and since <strong>Kleosis</strong> is a community-supported project, feedback is always welcome on how to improve and extend its features.
-
-  <br/><br/><br/><br/><br/>
+  <br/><br/>
 EOT;
 
 // add a fieldset for the page info
@@ -783,11 +782,35 @@ $form['pagehelp']['pageinfo'] = array(
     '#markup' => $page_desc,
   );
 
+$form['pagehelp']['enter_button'] = array(
+
+    '#type' => 'image_button',
+    '#name' => 'Enter_button',
+    '#src' => 'images/help.gif',
+    '#submit' => array('kleosis_enter'),
+    '#attributes' => array('alt' => t('Enter')),
+    //'#op' => 'enter',
+    // Do not check errors for the 'Enter' button.
+    '#limit_validation_errors' => array(),
+    '#prefix' => '<div style="float: right;clear: right;width:120px">',
+    '#suffix' => '<br/><br/></div>',
+  );
+
+
+
 return $form;
 }
 
-function pagess_example_description() {
-  return array('#markup' => t('The page_example provides something') );
+/**
+ * Function called by the main page 'Enter" buttonto redirect to the Students List page
+ *
+ * @return
+ *    redirect to the Students List page
+ */
+function kleosis_enter($form, &$form_state) {
+
+    $form_state['redirect'] = 'kleosis/students';
+    drupal_redirect_form($form_state);
 }
 
 /**

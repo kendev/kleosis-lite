@@ -99,15 +99,13 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-/*
-$account->content['student_biodata']['familyname'] = array(
+  $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Family Name'),
     '#markup' => ($defaults)? $ks_user['familyname'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-*/
 /*
   if (!(empty($fullname_t))) {
   $account->content['student_biodata']['fullname_t'] = array(
@@ -141,7 +139,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Nationality'),
     '#markup' => ($defaults)? $ks_user['nationality'] : 0,
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $account->content['student_biodata']['date_of_birth'] = array(
@@ -188,9 +186,9 @@ $account->content['student_biodata']['familyname'] = array(
   );
   $account->content['student_biodata']['other_phone_1'] = array(
     '#type' => 'user_profile_item',
-    '#title' => t('Other Phone'),
+    '#title' => t('Other Phone 1'),
     '#markup' => ($defaults)? $ks_user['other_phone_1'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_biodata']['other_phone_2'] = array(
@@ -246,7 +244,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('City'),
     '#markup' => ($defaults)? $ks_user['address_city'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_biodata']['address_region_state'] = array(
@@ -267,7 +265,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Country'),
     '#markup' => ($defaults)? $ks_user['address_country'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_biodata']['address_zip_postalcode'] = array(
@@ -291,6 +289,7 @@ $account->content['student_biodata']['familyname'] = array(
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#weight' => -45,
+ /*
       '#attached' => array(
         'js' => array(
           'misc/form.js',
@@ -300,6 +299,7 @@ $account->content['student_biodata']['familyname'] = array(
       '#attributes' => array(
           'class' => array('collapsible', 'collapsed'),
         ),
+ */
     );
 
   $account->content['student_admin_info']['curr_status'] = array(
@@ -309,25 +309,17 @@ $account->content['student_biodata']['familyname'] = array(
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-
-  $account->content['student_admin_info']['curr_campus'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Current Campus'),
-    '#markup' => ($defaults)? get_campus_desc($ks_user['curr_campus']) : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
-    '#suffix' => '</span></div><br/>',
-  );
   $account->content['student_admin_info']['curr_gradelevel'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Current Grade Level'),
     '#markup' => ($defaults)? get_gradelevel_desc($ks_user['curr_gradelevel']) : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</span></div><br/>',
   );
-  $account->content['student_admin_info']['reg_no'] = array(
+  $account->content['student_admin_info']['curr_campus'] = array(
     '#type' => 'user_profile_item',
-    '#title' => t('Registration No.'),
-    '#markup' => ($defaults)? $ks_user['reg_no'] : '',
+    '#title' => t('Current Campus'),
+    '#markup' => ($defaults)? get_campus_desc($ks_user['curr_campus']) : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</span></div><br/>',
   );
@@ -335,7 +327,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Current Main Program'),
     '#markup' => ($defaults)? get_program_desc($ks_user['curr_main_program']) : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['curr_other_program'] = array(
@@ -349,7 +341,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Acceptance Date'),
     '#markup' => ($defaults)? $accd->format('d-M-Y') : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['anticipated_start_date'] = array(
@@ -366,18 +358,18 @@ $account->content['student_biodata']['familyname'] = array(
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
+  $account->content['student_admin_info']['reg_no'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Registration No.'),
+    '#markup' => ($defaults)? $ks_user['reg_no'] : '',
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</span></div><br/>',
+  );
   $account->content['student_admin_info']['application_forms_signed'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Application Forms Signed'),
     '#markup' => ($defaults)? (($ks_user['application_forms_signed'] == 1) ? 'Yes' : 'No') : 'No',
     '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $account->content['student_admin_info']['entrance_exam_results'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Entrance Exams Results'),
-    '#markup' => ($defaults)? $ks_user['entrance_exam_results'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['entrance_exam_date'] = array(
@@ -387,6 +379,13 @@ $account->content['student_biodata']['familyname'] = array(
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
+  $account->content['student_admin_info']['entrance_exam_results'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Entrance Exams Results'),
+    '#markup' => ($defaults)? $ks_user['entrance_exam_results'] : '',
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
   $account->content['student_admin_info']['english_level_at_acceptance'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('English Level at Acceptance'),
@@ -394,25 +393,18 @@ $account->content['student_biodata']['familyname'] = array(
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-  $account->content['student_admin_info']['special_needs'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Special Needs'),
-    '#markup' => ($defaults)? $ks_user['special_needs'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
   $account->content['student_admin_info']['living_with'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Residing with'),
     '#markup' => ($defaults)? get_residing_desc($ks_user['living_with']) : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['transportation'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Transportation'),
     '#markup' => ($defaults)? get_transportation_type_desc($ks_user['transportation']) : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['graduation_date'] = array(
@@ -422,25 +414,11 @@ $account->content['student_biodata']['familyname'] = array(
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-  $account->content['student_admin_info']['medical_records_link'] = array(
+  $account->content['student_admin_info']['special_needs'] = array(
     '#type' => 'user_profile_item',
-    '#title' => t('Medical Records Link'),
-    '#markup' => ($defaults)? 'details' : '',
+    '#title' => t('Special Needs'),
+    '#markup' => ($defaults)? $ks_user['special_needs'] : '',
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $account->content['student_admin_info']['scholarship_link'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Scholarship Link'),
-    '#markup' => ($defaults)? 'details' : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $account->content['student_admin_info']['boarding_info_link'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Boarding Info Link'),
-    '#markup' => ($defaults)? 'details' : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
 
@@ -572,7 +550,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#type' => 'link',
     '#title' => ($defaults)? $ks_user['website'] : '',
     '#href' => ($defaults)? $ks_user['website'] : '',
-    //'#options' => $uri['options'],  // url options go here
+    //'#options' => array('query' => array('target' => '_blank')),
     '#prefix' => '<div style="float:left;width:275px"><strong>Website</strong><br/>',
     '#suffix' => '</div><br/>',
   );
@@ -607,46 +585,7 @@ $account->content['student_biodata']['familyname'] = array(
     '#suffix' => '</div><br/>',
   );
 
-//  $account->content[] = get_formcat_common();
-
 }
 
-// experimental....
-/*
-function get_formcat_common() {
-
-$formcat = array();
-  $formcat['lecategory01']['country'] = array(
-      '#type' => 'user_profile_category',
-      '#title' => t('Country'),
-      '#weight' => 10,
-    );
-  $formcat['lecategory02']['planet'] = array(
-      '#type' => 'user_profile_category',
-      '#title' => t('Planet'),
-      '#weight' => 15,
-    );
-  $formcat['lecategory01']['countrycode'] = array(
-      '#type' => 'user_profile_item',
-      '#title' => t('Country Code'),
-      '#markup' => 'this is some silly country code',
-      '#weight' => 11,
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
-    );
-
-  $formcat['lecategory02']['planetcode'] = array(
-      '#type' => 'user_profile_item',
-      '#title' => t('Planet Code'),
-      '#size' => 25,
-      '#maxlength' => 48,
-      '#weight' => 16,
-      '#markup' => 'this is some silly planet code',
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
-    );
-  return $formcat;
-}
-*/
 
 

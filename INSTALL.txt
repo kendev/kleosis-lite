@@ -61,5 +61,6 @@ Optionally, add a My Courses - LMS Direct block to an existing page on your webs
 More documentation can be found at http://www.kleosis.org
 
 
+(todo: include instructions to upload the added Views handler files and the Kleosis_Bartik theme)
 
 

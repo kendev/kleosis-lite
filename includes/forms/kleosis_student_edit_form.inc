@@ -74,6 +74,14 @@ function build_ks_user_student_edit($theuser) {
     '#prefix' => '<div style="float: left;width:275px" >',
     '#suffix' => '</div>',
   );
+  $form['student_biodata']['gender'] = array(
+    '#type' => 'radios',
+    '#title' => t('Gender'),
+    '#options' => array(t('Male'), t('Female')),
+    '#default_value' => ($defaults)? $ks_user['gender'] : '',
+    '#prefix' => '<div style="float: left;width:275px" >',
+    '#suffix' => '</div>',
+  );
   $form['student_biodata']['fullname'] = array(
     '#type' => 'textfield',
     '#title' => t('Full Name'),
@@ -130,12 +138,13 @@ function build_ks_user_student_edit($theuser) {
     '#suffix' => '</div><br/>',
   );
 */
-  $form['student_biodata']['gender'] = array(
-    '#type' => 'radios',
-    '#title' => t('Gender'),
-    '#options' => array(t('Male'), t('Female')),
-    '#default_value' => ($defaults)? $ks_user['gender'] : '',
-    '#prefix' => '<div style="float: left;width:275px" >',
+  $form['student_biodata']['std_nationality'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Nationality'),
+    '#size' => 20,
+    '#maxlength' => 24,
+    '#default_value' => ($defaults)? $ks_user['nationality'] : '',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $form['student_biodata']['date_of_birth'] = array(
@@ -146,27 +155,7 @@ function build_ks_user_student_edit($theuser) {
        'day' => $dob->format('j'),
        'year' => $dob->format('Y'),
       ),
-    '#prefix' => '<div style="float: left;clear:left;width:275px" >',
-    '#suffix' => '</div>',
-  );
-  $form['student_biodata']['passport_expiry_dt'] = array(
-    '#type' => 'date',
-    '#title' => t('Passport Expiry Date'),
-    '#default_value' => array(
-       'month' => $pped->format('n'),
-       'day' => $pped->format('j'),
-       'year' => $pped->format('Y'),
-      ),
     '#prefix' => '<div style="float: left;width:275px" >',
-    '#suffix' => '</div>',
-  );
-  $form['student_biodata']['std_nationality'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Nationality'),
-    '#size' => 20,
-    '#maxlength' => 24,
-    '#default_value' => ($defaults)? $ks_user['nationality'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $form['student_biodata']['religion'] = array(
@@ -193,7 +182,7 @@ function build_ks_user_student_edit($theuser) {
     '#size' => 24,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $ks_user['mobile_phone'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_biodata']['home_phone'] = array(
@@ -207,14 +196,14 @@ function build_ks_user_student_edit($theuser) {
   );
   $form['student_biodata']['other_phone_1'] = array(
     '#type' => 'textfield',
-    '#title' => t('Other Phone'),
+    '#title' => t('Other Phone 1'),
     '#size' => 24,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $ks_user['other_phone_1'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-/*
+
 $form['student_biodata']['other_phone_2'] = array(
     '#type' => 'textfield',
     '#title' => t('Other Phone 2'),
@@ -224,7 +213,7 @@ $form['student_biodata']['other_phone_2'] = array(
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-*/
+
 $form['student_biodata']['passport_no'] = array(
     '#type' => 'textfield',
     '#title' => t('Passport No.'),
@@ -287,7 +276,7 @@ $form['student_biodata']['passport_no'] = array(
     '#size' => 35,
     '#maxlength' => 48,
     '#default_value' => ($defaults)? $ks_user['address_city'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_biodata']['address_region_state'] = array(
@@ -314,7 +303,7 @@ $form['student_biodata']['passport_no'] = array(
     '#size' => 24,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $ks_user['address_country'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_biodata']['address_zip_postalcode'] = array(
@@ -363,28 +352,19 @@ $form['student_biodata']['passport_no'] = array(
     '#suffix' => '</div><br/>',
     );
 
-  $form['student_admin_info']['curr_campus'] = array(
-    '#type' => 'select',
-    '#title' => t('Current Campus'),
-    '#options' => get_campuses(),
-    '#default_value' => ($defaults)? $ks_user['curr_campus'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
   $form['student_admin_info']['curr_gradelevel'] = array(
     '#type' => 'select',
     '#title' => t('Current Grade Level'),
     '#options' => get_gradelevels(),
     '#default_value' => ($defaults)? $ks_user['curr_gradelevel'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-  $form['student_admin_info']['reg_no'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Registration No.'),
-    '#size' => 20,
-    '#maxlength' => 24,
-    '#default_value' => ($defaults)? $ks_user['reg_no'] : '',
+  $form['student_admin_info']['curr_campus'] = array(
+    '#type' => 'select',
+    '#title' => t('Current Campus'),
+    '#options' => get_campuses(),
+    '#default_value' => ($defaults)? $ks_user['curr_campus'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
@@ -393,7 +373,7 @@ $form['student_biodata']['passport_no'] = array(
     '#title' => t('Current Main Program'),
     '#options' => get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_main_program'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['curr_other_program'] = array(
@@ -401,7 +381,7 @@ $form['student_biodata']['passport_no'] = array(
     '#title' => t('Current Other Program'),
     '#options' => get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_other_program'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['acceptance_date'] = array(
@@ -412,7 +392,7 @@ $form['student_biodata']['passport_no'] = array(
        'day' => $accd->format('j'),
        'year' => $accd->format('Y'),
       ),
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['anticipated_start_date'] = array(
@@ -437,6 +417,15 @@ $form['student_biodata']['passport_no'] = array(
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
+  $form['student_admin_info']['reg_no'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Registration No.'),
+    '#size' => 20,
+    '#maxlength' => 24,
+    '#default_value' => ($defaults)? $ks_user['reg_no'] : '',
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
   $form['student_admin_info']['application_forms_signed'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Application Forms Signed'),
@@ -453,16 +442,16 @@ $form['student_biodata']['passport_no'] = array(
        'day' => $eexd->format('j'),
        'year' => $eexd->format('Y'),
       ),
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['entrance_exam_results'] = array(
     '#type' => 'textarea',
     '#title' => t('Entrance Exam Results'),
-    '#cols' => 80,
+    '#cols' => 40,
     '#rows' => 3,
     '#default_value' => ($defaults)? $ks_user['entrance_exam_results'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['english_level_at_acceptance'] = array(
@@ -470,15 +459,6 @@ $form['student_biodata']['passport_no'] = array(
     '#title' => t('English Level at Acceptance'),
     '#options' => get_english_levels(),
     '#default_value' => ($defaults)? $ks_user['english_level_at_acceptance'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $form['student_admin_info']['special_needs'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Special Needs'),
-    '#cols' => 80,
-    '#rows' => 3,
-    '#default_value' => ($defaults)? $ks_user['special_needs'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
@@ -506,6 +486,15 @@ $form['student_biodata']['passport_no'] = array(
        'day' => $grdd->format('j'),
        'year' => $grdd->format('Y'),
       ),
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
+  $form['student_admin_info']['special_needs'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Special Needs'),
+    '#cols' => 80,
+    '#rows' => 3,
+    '#default_value' => ($defaults)? $ks_user['special_needs'] : '',
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );

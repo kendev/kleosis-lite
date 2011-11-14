@@ -51,7 +51,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#title' => t('Username'),
 //    '#markup' => ($defaults)? $account->name : '',
     '#markup' => ($defaults)? l($account->name , 'user/' . $account->uid . '/edit', array('query' => array())) : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $account->content['parent_guardian_biodata']['identity_id'] = array(
@@ -75,7 +75,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-/*
+
   $account->content['parent_guardian_biodata']['familyname'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Family Name'),
@@ -83,7 +83,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-*/
+
 /*
   if (!(empty($fullname_t))) {
   $account->content['parent_guardian_biodata']['fullname_t'] = array(
@@ -117,6 +117,13 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Nationality'),
     '#markup' => ($defaults)? $ks_user['nationality'] : '',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#suffix' => '</div>',
+  );
+  $account->content['parent_guardian_biodata']['occupation'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Occupation'),
+    '#markup' => ($defaults)? $ks_user['occupation'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div>',
   );
@@ -131,7 +138,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Home Phone'),
     '#markup' => ($defaults)? $ks_user['home_phone'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['parent_guardian_biodata']['office_phone'] = array(
@@ -173,7 +180,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('City'),
     '#markup' => ($defaults)? $ks_user['address_city'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['parent_guardian_biodata']['address_region_state'] = array(
@@ -194,7 +201,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Country'),
     '#markup' => ($defaults)? $ks_user['address_country'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['parent_guardian_biodata']['address_zip_postalcode'] = array(
@@ -218,6 +225,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
       '#weight' => -5,
+/*
       '#attached' => array(
         'js' => array(
           'misc/form.js',
@@ -227,6 +235,7 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
       '#attributes' => array(
           'class' => array('collapsible', 'collapsed'),
         ),
+*/
     );
 
   $account->content['parent_guardian_admin_info']['curr_status'] = array(
@@ -247,49 +256,9 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Date Completed'),
     '#markup' => ($defaults)? $endd->format('d-M-Y') : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
 
-//  $account->content[] = get_formcat_common();
-
 }
-
-// experimental....
-/*
-function get_formcat_common() {
-
-  $formcat = array();
-  $formcat['lecategory01']['country'] = array(
-      '#type' => 'user_profile_category',
-      '#title' => t('Country'),
-      '#weight' => 10,
-    );
-  $formcat['lecategory02']['planet'] = array(
-      '#type' => 'user_profile_category',
-      '#title' => t('Planet'),
-      '#weight' => 15,
-    );
-  $formcat['lecategory01']['countrycode'] = array(
-      '#type' => 'user_profile_item',
-      '#title' => t('Country Code'),
-      '#markup' => 'this is some silly country code',
-      '#weight' => 11,
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
-    );
-
-  $formcat['lecategory02']['planetcode'] = array(
-      '#type' => 'user_profile_item',
-      '#title' => t('Planet Code'),
-      '#size' => 25,
-      '#maxlength' => 48,
-      '#weight' => 16,
-      '#markup' => 'this is some silly planet code',
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
-    );
-  return $formcat;
-}
-*/
 

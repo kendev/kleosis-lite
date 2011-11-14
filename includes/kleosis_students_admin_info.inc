@@ -625,7 +625,7 @@ function kleosis_biodata_details_view($callback_arg = '') {
 }
 
 /*
-//////////////////////This is just a bunch of test code:  ////////////////////////
+//////////////////////This is just a bunch of early test code:  ////////////////////////
 
 //  $roles = user_roles();
 //  $rolesarray = array(array_search('student', $roles) => 4);

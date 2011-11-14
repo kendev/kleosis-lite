@@ -328,6 +328,11 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 // end of blank period
 
 
+    $form['class_schedule_entry_record']['spacer'] = array(
+      '#markup' =>    '&nbsp;',
+      '#prefix' => '<div style="float: left;clear: left;width:1px">',
+      '#suffix' => '</div>',
+    );
     $form['class_schedule_entry_record']['add'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),

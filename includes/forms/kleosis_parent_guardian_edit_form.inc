@@ -48,7 +48,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 20,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $theuser->name : '',
-    '#prefix' => '<div style="float: left;width:275px" >',
+    '#prefix' => '<div style="float: left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $form['parent_guardian_biodata']['identity_id'] = array(
@@ -122,7 +122,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 20,
     '#maxlength' => 24,
     '#default_value' => ($defaults)? $ks_user['nationality'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $form['parent_guardian_biodata']['occupation'] = array(
@@ -149,7 +149,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 24,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $ks_user['home_phone'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['parent_guardian_biodata']['office_phone'] = array(
@@ -176,7 +176,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 35,
     '#maxlength' => 48,
     '#default_value' => ($defaults)? $ks_user['address_1'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['parent_guardian_biodata']['address_2'] = array(
@@ -203,7 +203,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 35,
     '#maxlength' => 48,
     '#default_value' => ($defaults)? $ks_user['address_city'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['parent_guardian_biodata']['address_region_state'] = array(
@@ -230,7 +230,7 @@ function build_ks_user_parent_guardian_edit($theuser) {
     '#size' => 24,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $ks_user['address_country'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['parent_guardian_biodata']['address_zip_postalcode'] = array(
@@ -287,18 +287,18 @@ function build_ks_user_parent_guardian_edit($theuser) {
        'day' => $endd->format('j'),
        'year' => $endd->format('Y'),
       ),
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
 
-//  $form[] = get_formcat_common();
+//  $form[] = ks_pg_get_formcat_common();
 
   return $form;
 }
 
 /*
 // experimental....
-function get_formcat_common() {
+function ks_pg_get_formcat_common() {
 
   $formcat = array();
   $formcat['lecategory01']['country'] = array(
@@ -308,25 +308,6 @@ function get_formcat_common() {
   $formcat['lecategory02']['planet'] = array(
       '#type' => 'user_profile_category',
       '#title' => t('Planet'),
-    );
-  $formcat['lecategory01']['countrycode'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Country Code'),
-      '#size' => 25,
-      '#maxlength' => 48,
-      '#default_value' => 'this is some silly country code',
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
-    );
-
-  $formcat['lecategory02']['planetcode'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Planet Code'),
-      '#size' => 25,
-      '#maxlength' => 48,
-      '#default_value' => 'this is some silly planet code',
-      '#prefix' => '<div>',
-      '#suffix' => '</div><br/>',
     );
   return $formcat;
 }
