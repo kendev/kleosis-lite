@@ -358,7 +358,7 @@ function kleosis_user_operations_reg_new_user($cusers)  {
       ks_update_moodle_uid($ks_usertype, $cuser, $mdl_uid);
       $message = array('@user' => $theuser->name, '@updated' => t('has been successfully updated.'));
       drupal_set_message(t('User @user @updated', $message));
-      return;
+//      return;
     }
     else {
       // create the user in a kleosis user extension table
@@ -389,8 +389,8 @@ function ks_create_moodleuser($auser) {
   else {
     $newuser = array('drp_uid' => $auser->uid,    // todo: determine other user fields to send to moodle
                   'username' => $auser->name,
-                  'firstname' => $auser->name . ' - firstname',
-                  'lastname' => $auser->name . ' - lastname',
+                  'firstname' => $auser->name . '-fn',
+                  'lastname' => $auser->name . '-ln',
                   'email' => $auser->mail);
     $muser = ws_add_user($newuser);  // todo: error checking
     $mdl_uid = $muser->users[0]->id;
