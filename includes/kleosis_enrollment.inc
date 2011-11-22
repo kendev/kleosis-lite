@@ -343,7 +343,7 @@ else{
       'program' => $student->program,
       'gradelevel' => $student->gradelevel,
       'status' =>  $student->status,
-      'operations' =>  l(t('Enrolled classes'), 'kleosis/students/classes', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
+      'operations' =>  l(t('Enrolled classes'), 'kleosis/students/classes/enrolled_classes', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
 //      'operations' => l(t('edit'), 'user/' . $student->drp_uid_fk . '/edit', array('query' => array('destination' => 'kleosis/students/list')))
 //      'operations' => l(t('edit'), 'kleosis/std/summary/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list')))
 //      'operations' =>  l(t('Summary'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))

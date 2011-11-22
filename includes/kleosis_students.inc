@@ -566,12 +566,12 @@ function kleosis_students_classes($form, &$form_state) {
 
   if ($uid == 0) {
 
-    drupal_set_message('Please select a Student by clicking on a Summary link.');
+    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
     drupal_goto($path = 'kleosis/students', $options = array());
 
 //      $build['no_student selected'] = array(
 //     '#type' => 'markup',
-//     '#markup' => '<p><br/>' . t('Please select a Student from the Students List page by clicking on a Summary link.') . '</p>',
+//     '#markup' => '<p><br/>' . t('Please select a Student by clicking on a Student link.from the Student List page.') . '</p>',
 //      );
 //      return $build;
   }

@@ -1,9 +1,9 @@
 <?php
-// $Id: kleosis_delete_users.inc,v 1.8 2011/09/21 01:55:21 kendev Exp $
+// $Id: kleosis_delete_users.inc,v 1.8 2011/11/21 01:55:21 kendev Exp $
 
 /**
  * @file
- * Remove the Kleosis sample users
+ * Remove the Kleosis sample users and their data in related tables
  */
 
  // remove enrollments first // todo: can improve this by deleting only the sample students related enrollments
@@ -32,16 +32,23 @@
     }
   }
 
+// todo: delete from the following tables only the records belonging to the sample students, instructors, and parent-guardians
+
   $cnt_deleted = db_delete('ks_students')->execute();
 
   $cnt_deleted = db_delete('ks_users')->execute();
 
+  $cnt_deleted = db_delete('ks_attendance_taken')->execute();
+  $cnt_deleted = db_delete('ks_class_schedule')->execute();
+  $cnt_deleted = db_delete('ks_course_grades')->execute();
+  $cnt_deleted = db_delete('ks_instructor_attendance')->execute();
+  $cnt_deleted = db_delete('ks_instructor_class_schedule')->execute();
+  $cnt_deleted = db_delete('ks_medical_info')->execute();
+  $cnt_deleted = db_delete('ks_student_attendance')->execute();
+  $cnt_deleted = db_delete('ks_student_course_class_grades')->execute();
+  $cnt_deleted = db_delete('ks_student_course_classes')->execute();
+  $cnt_deleted = db_delete('ks_student_groups')->execute();
   $cnt_deleted = db_delete('ks_student_status_details')->execute();
   $cnt_deleted = db_delete('ks_user_relationships')->execute();
-  $cnt_deleted = db_delete('ks_student_groups')->execute();
-  $cnt_deleted = db_delete('ks_student_attendance')->execute();
-  $cnt_deleted = db_delete('ks_instructor_attendance')->execute();
-  $cnt_deleted = db_delete('ks_course_grades')->execute();
-  $cnt_deleted = db_delete('ks_class_schedule')->execute();
-  $cnt_deleted = db_delete('ks_instructor_class_schedule')->execute();
+  $cnt_deleted = db_delete('ks_user_urls')->execute();
 

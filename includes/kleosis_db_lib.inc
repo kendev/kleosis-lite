@@ -413,7 +413,7 @@ function get_program_desc($intprogram) {
  * @return
  *    options - an array of programs
  */
-function get_programs() {
+function ks_get_programs() {
 
   $options = array();
   $results = db_query('SELECT kpgm_id, program FROM {ks_program_desc}' )->fetchAll();
@@ -461,7 +461,7 @@ function get_campuses() {
 function ks_get_classrooms() {
 
   $options = array();
-  $results = db_query('SELECT kclsr_id, room_name FROM {ks_classroom}' )->fetchAll();
+  $results = db_query('SELECT kclsr_id, room_name FROM {ks_classroom_desc}' )->fetchAll();
   foreach ($results as $classroom) {
     $options[$classroom->kclsr_id] = $classroom->room_name;
   }
@@ -477,7 +477,7 @@ function ks_get_classrooms() {
  */
 function ks_get_classroom($intclassroom) {
 
-  $classroom = db_query('SELECT room_name FROM {ks_classroom} WHERE kclsr_id = :kclsr_id',
+  $classroom = db_query('SELECT room_name FROM {ks_classroom_desc} WHERE kclsr_id = :kclsr_id',
                         array(':kclsr_id' => $intclassroom))->fetchField();
   return $classroom;
 }

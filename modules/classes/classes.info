@@ -3,9 +3,7 @@ description = Provides and maintains the Classes functionality for Kleosis
 package = Kleosis
 core = 7.x
 dependencies[] = kleosis
-//dependencies[] = courses
 files[] = classes.test
 files[] = classes.module
 
-version = "7.x-1.x-dev"
-
+version = "7.x-3.x-dev"

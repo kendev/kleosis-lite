@@ -202,6 +202,7 @@ function _course_installed_fields() {
         'max_length'  => 1000,
       ),
     ),
+/*
     'course_grade_weight' => array(
       'field_name' => 'ks_course_grade_weight',
       'type'        => 'number_decimal',
@@ -252,6 +253,7 @@ function _course_installed_fields() {
         'decimal_separator' => '.',
       ),
     ),
+*/
   );
 }
 
@@ -379,6 +381,7 @@ function _course_installed_instances() {
         'settings'   => array('rows' => 4),
       ),
     ),
+/*
     'course_grade_weight' => array(
       'field_name' => 'ks_course_grade_weight',
       'type'        => 'number_decimal',
@@ -449,6 +452,7 @@ function _course_installed_instances() {
         ),
       ),
     ),
+*/
   );
 }
 

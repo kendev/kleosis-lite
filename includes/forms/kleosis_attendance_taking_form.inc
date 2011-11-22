@@ -374,12 +374,12 @@ function kleosis_attendance_input_form($form, &$form_state) {
   );
   $form['attendance_input']['student_name'] = array(
     '#markup' =>    'Student Name',
-    '#prefix' => '<div style="float: left;clear: left;width:160px"><strong>',
+    '#prefix' => '<div style="float: left;clear: left;width:170px"><strong>',
     '#suffix' => '</strong></div>',
   );
   $form['attendance_input']['absence_type'] = array(
     '#markup' =>    'Absence Type',
-    '#prefix' => '<div style="float: left;width:120px"><strong>',
+    '#prefix' => '<div style="float: left;width:115px"><strong>',
     '#suffix' => '</strong></div>',
   );
   $form['attendance_input']['excuse_reason'] = array(
@@ -434,7 +434,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
     $form['attendance_input']['student_name_' . $i] = array(
 //      '#markup' =>    $student->name,
       '#markup' => l($student->name, 'kleosis/students/attendance', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-      '#prefix' => '<div style="float: left;clear: left;width:160px"><strong><em>',
+      '#prefix' => '<div style="float: left;clear: left;width:170px"><strong><em>',
       '#suffix' => '</em></strong></div>',
     );
     $form['attendance_input']['absence_type_' . $i] = array(
@@ -443,7 +443,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
       '#default_value' =>  isset($attnd_rec['abs_type']) ? $attnd_rec['abs_type'] : 0,
       '#DANGEROUS_SKIP_CHECK' => FALSE,
       '#validated' => TRUE,
-      '#prefix' => '<div style="float: left;width:120px" >',
+      '#prefix' => '<div style="float: left;width:110px" >',
       '#suffix' => '</div>',
     );
     $form['attendance_input']['excuse_reason_' . $i] = array(

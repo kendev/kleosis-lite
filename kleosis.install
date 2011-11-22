@@ -1791,7 +1791,7 @@ function kleosis_schema() {
     'primary key' => array('kcsts_id'),
   );
 
-  $schema['ks_classroom'] = array(
+  $schema['ks_classroom_desc'] = array(
     'description' => 'The list of classrooms and labs',
     'fields' => array(
       'kclsr_id' => array(
