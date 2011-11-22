@@ -380,7 +380,7 @@ function kleosis_gradelevel_values() {
   return $le_array;
 }
 /**
- * map drupal gradelevel to kleosis gradelevel - this is silly
+ * map drupal gradelevel to kleosis gradelevel - this is silly...
  *
  * @param $drp_gradelevel
  *    a drupal string gradelevel value
@@ -413,7 +413,7 @@ function ks_map_drp_gradelevel_to_ks($drp_gradelevel) {
   return $le_array[$drp_gradelevel];
 }
 /**
- * map a kleosis gradelevel to a drupal gradelevel - this is silly too
+ * map a kleosis gradelevel to a drupal gradelevel - this is silly too...
  *
  * @param $ks_gradelevel
  *    a Kleosis integer gradelevel value

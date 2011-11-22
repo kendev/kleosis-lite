@@ -371,7 +371,7 @@ $form['student_biodata']['passport_no'] = array(
   $form['student_admin_info']['curr_main_program'] = array(
     '#type' => 'select',
     '#title' => t('Current Main Program'),
-    '#options' => get_programs(),
+    '#options' => ks_get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_main_program'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
@@ -379,7 +379,7 @@ $form['student_biodata']['passport_no'] = array(
   $form['student_admin_info']['curr_other_program'] = array(
     '#type' => 'select',
     '#title' => t('Current Other Program'),
-    '#options' => get_programs(),
+    '#options' => ks_get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_other_program'] : '',
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',

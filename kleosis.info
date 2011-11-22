@@ -3,7 +3,7 @@ name = Kleosis
 description = Provides student records management functions and integrates with the Moodle LMS.
 core = 7.x
 package = "Kleosis"
-
+; todo:  update the files list
 files[] = kleosis.module
 files[] = kleosis.install
 files[] = kleosis.views.inc
@@ -39,4 +39,4 @@ files[] = includes/forms/kleosis_student_edit_form.inc
 files[] = includes/forms/kleosis_student_view_form.inc
 files[] = kws/MoodleWS.php
 
-version = "7.x-1.x-dev"
+version = "7.x-3.x-dev"

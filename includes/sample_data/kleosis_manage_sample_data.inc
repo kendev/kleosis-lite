@@ -1,5 +1,5 @@
 <?php
-// $Id: kleosis_manage_sample_data.php,v 1.8 2011/09/21 01:55:21 kendev Exp $
+// $Id: kleosis_manage_sample_data.php,v 1.8 2011/11/21 01:55:21 kendev Exp $
 
 /**
  * @file
@@ -303,12 +303,13 @@ function kleosis_create_sample_course($title, $course_no, $program, $dept, $cour
   $node->ks_course_room_type['und'][0]['value'] = 'standard';
   $node->ks_course_lab_type['und'][0]['value'] = 'none';
   $node->ks_course_description['und'][0]['value'] = $desc ;
+/*
   $node->ks_course_grade_weight['und'][0]['value'] = '75.00' ;
   $node->ks_final_exam_weight['und'][0]['value'] = '25.00' ;
   $node->ks_grade_item_a_weight['und'][0]['value'] = '0.00' ;
   $node->ks_grade_item_b_weight['und'][0]['value'] = '0.00' ;
   $node->ks_grade_item_c_weight['und'][0]['value'] = '0.00' ;
-
+*/
   if($node = node_submit($node)) { // Prepare node for saving
       node_save($node);
     //  drupal_set_message('Course: ' . $title . ' with nid: ' . $node->nid . ' created successfully.');

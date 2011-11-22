@@ -27,7 +27,7 @@ Click on INSTALL for the install procedures.  This webservices code works for bo
 		- Moodle password for default username
 	Other configuration settings should be entered now as well such as:
 		- Academic Year and Term
-		- Startng day of week
+		- Starting day of week
 		- Number of rows displayed by the pager
 		- Scheduled Breaks (select 00 for each if no breaks)
 	- Save the configuration
