@@ -745,7 +745,7 @@ function kleosis_theme() {
 function kleosis_views_api() {
   return array(
     'api' => 2,
-    'path' => drupal_get_path('module', 'kleosis'),
+    'path' => drupal_get_path('module', 'kleosis') . '/views',
   );
 }
 

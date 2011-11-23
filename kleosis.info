@@ -1,4 +1,4 @@
-; $Id$
+
 name = Kleosis
 description = Provides student records management functions and integrates with the Moodle LMS.
 core = 7.x
@@ -38,5 +38,9 @@ files[] = includes/forms/kleosis_staff_view_form.inc
 files[] = includes/forms/kleosis_student_edit_form.inc
 files[] = includes/forms/kleosis_student_view_form.inc
 files[] = kws/MoodleWS.php
+
+files[] = views/views_handler_filter_custom_datetime.inc
+files[] = views/views_handler_filter_custom_numeric.inc
+files[] = views/views_handler_argument_custom_numeric.inc
 
 version = "7.x-3.x-dev"

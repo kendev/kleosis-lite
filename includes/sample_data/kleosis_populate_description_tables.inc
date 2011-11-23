@@ -831,7 +831,7 @@
 
   $fields = array(
     'kexcr_id' => 8,
-    'excuse_reason' => t('study leave'),
+    'excuse_reason' => t('study leave (e)'),
     'excused' => 1,
     'description' => t('planned time off to study for examinations'),
   );
@@ -841,7 +841,7 @@
 
   $fields = array(
     'kexcr_id' => 9,
-    'excuse_reason' => t('trip/visit'),
+    'excuse_reason' => t('trip/visit (e)'),
     'excused' => 1,
     'description' => t('visit with educational value'),
   );
@@ -851,7 +851,7 @@
 
   $fields = array(
     'kexcr_id' => 10,
-    'excuse_reason' => t('late < 10 min'),
+    'excuse_reason' => t('late < 10 min (e)'),
     'excused' => 1,
     'description' => t('late < 10 minutes'),
   );
@@ -861,7 +861,7 @@
 
   $fields = array(
     'kexcr_id' => 11,
-    'excuse_reason' => t('late > 10 min'),
+    'excuse_reason' => t('late > 10 min (e)'),
     'excused' => 1,
     'description' => t('late > 10 minutes'),
   );
@@ -871,7 +871,7 @@
 
   $fields = array(
     'kexcr_id' => 12,
-    'excuse_reason' => t('other exc'),
+    'excuse_reason' => t('other exc (e)'),
     'excused' => 1,
     'description' => t('other excused absence'),
   );
