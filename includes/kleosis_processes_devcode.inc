@@ -174,6 +174,15 @@ dpm($theweights['few']);
 */
 
 
+//  $rec_count = db_query('SELECT count(*) FROM {ks_organization_desc}' )->fetchField();
+//  drupal_set_message('The number of records found is: ' . $rec_count);
+
+//  $cnt_deleted = db_delete('ks_organization_desc')->execute();
+//  drupal_set_message('ks_organization_desc table entries have been removed');
+
+
+
+
  return array('#markup' => 'Development code goes here...');
 
 }

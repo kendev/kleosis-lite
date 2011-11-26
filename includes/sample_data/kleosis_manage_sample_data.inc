@@ -32,18 +32,33 @@ function kleosis_sample_data_form() {
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
+  $form['loadem']['load_desc'] = array(
+    '#type' => 'submit',
+    '#value' => t('Populate decription tables'),
+    '#weight' => '1',
+    '#prefix' => '<br/><div style="float: left;clear:left;width:340px" >',
+    '#suffix' => '</div>',
+  );
+  $form['loadem']['remove_desc'] = array(
+    '#type' => 'submit',
+    '#value' => t('Unpopulate decription tables'),
+//    '#disabled' => TRUE,
+    '#weight' => '2',
+    '#prefix' => '<div style="float: left;width:300px" >',
+    '#suffix' => '</div>',
+  );
   $form['loadem']['load_users'] = array(
     '#type' => 'submit',
     '#value' => t('Load sample users'),
-    '#weight' => '1',
-    '#prefix' => '<br/><div style="float: left;clear:left;width:300px" >',
+    '#weight' => '3',
+    '#prefix' => '<br/><div style="float: left;clear:left;width:340px" >',
     '#suffix' => '</div>',
   );
   $form['loadem']['remove_users'] = array(
     '#type' => 'submit',
     '#value' => t('Remove sample users'),
 //    '#disabled' => TRUE,
-    '#weight' => '3',
+    '#weight' => '4',
     '#prefix' => '<div style="float: left;width:300px" >',
     '#suffix' => '</div>',
   );
@@ -51,7 +66,7 @@ function kleosis_sample_data_form() {
     '#type' => 'submit',
     '#value' => t('Load courses and classes'),
     '#weight' => '5',
-    '#prefix' => '<br/><div style="float: left;clear:left;width:300px" >',
+    '#prefix' => '<br/><div style="float: left;clear:left;width:340px" >',
     '#suffix' => '</div>',
   );
   $form['loadem']['remove_courses_and_classes'] = array(
@@ -76,26 +91,36 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
 
   switch ($form_state['values']['op']) {
 
-    case 'Load sample users':
-    $already_loaded = variable_get('kleosis_sample_users', FALSE);
-    if (!$already_loaded) {
-      drupal_set_message('Sample users are being loaded...');
-      require_once('kleosis_create_sample_users.inc');
-      require_once('kleosis_populate_description_tables.inc');
-      // todo:  create student status details record
-      drupal_set_message('Sample users are now loaded');
+    case 'Populate decription tables':
+      drupal_set_message('Description tables are being populated...');
+        require_once('kleosis_populate_description_tables.inc');
+      drupal_set_message('Description tables have been populated...');
 
-      variable_set('kleosis_sample_users', TRUE);
-    }
-    else {
-      drupal_set_message('Sample users have already been loaded.');
-    }
+      break;
+    case 'Unpopulate decription tables':
+      drupal_set_message('Description tables are being unpopulated...');
+      require_once('kleosis_unpopulate_description_tables.inc');
+      drupal_set_message('Description tables have been unpopulated...');
+
+      break;
+    case 'Load sample users':
+      $already_loaded = variable_get('kleosis_sample_users', FALSE);
+      if (!$already_loaded) {
+        drupal_set_message('Sample users are being loaded...');
+        require_once('kleosis_create_sample_users.inc');
+        // todo:  create student status details record
+        drupal_set_message('Sample users are now loaded');
+
+        variable_set('kleosis_sample_users', TRUE);
+      }
+      else {
+        drupal_set_message('Sample users have already been loaded.');
+      }
       break;
 
     case 'Remove sample users':
       drupal_set_message('Sample users are being removed...');
       require_once('kleosis_delete_sample_users.inc');
-      require_once('kleosis_unpopulate_description_tables.inc');
       // todo: delete student status details records
 
       drupal_set_message('Sample users have been deleted.');
