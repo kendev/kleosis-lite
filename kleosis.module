@@ -785,7 +785,8 @@ $form['pagehelp']['enter_button'] = array(
 
     '#type' => 'image_button',
     '#name' => 'Enter_button',
-    '#src' => 'misc/ui/images/enterbutton1.png',
+//    '#src' => 'misc/ui/images/enterbutton1.png',
+    '#src' => drupal_get_path('module', 'kleosis') . '/images/enterbutton1.png',
     '#submit' => array('kleosis_enter'),
     '#attributes' => array('alt' => t('Enter')),
     //'#op' => 'enter',
