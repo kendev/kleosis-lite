@@ -1027,7 +1027,7 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Afternoon break end minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_aft_break_end_min', '50'),
+    '#default_value' => variable_get('kleosis_aft_break_end_min', '45'),
     '#description' => t('Ending minute for the afternoon break.'),
   );
 /*

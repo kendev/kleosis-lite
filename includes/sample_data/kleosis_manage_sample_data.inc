@@ -56,7 +56,7 @@ function kleosis_sample_data_form() {
   );
   $form['loadem']['remove_users'] = array(
     '#type' => 'submit',
-    '#value' => t('Remove sample users'),
+    '#value' => t('Remove sample users*'),
 //    '#disabled' => TRUE,
     '#weight' => '4',
     '#prefix' => '<div style="float: left;width:300px" >',
@@ -71,13 +71,50 @@ function kleosis_sample_data_form() {
   );
   $form['loadem']['remove_courses_and_classes'] = array(
     '#type' => 'submit',
-    '#value' => t('Remove courses and classes'),
+    '#value' => t('Remove courses and classes*'),
 //    '#disabled' => TRUE,
     '#weight' => '7',
     '#prefix' => '<div style="float: left;width:300px" >',
     '#suffix' => '</div>',
   );
+  $form['loadem']['load_schedule'] = array(
+    '#type' => 'submit',
+    '#value' => t('Load sample class schedule'),
+    '#weight' => '9',
+    '#prefix' => '<br/><div style="float: left;clear:left;width:340px" >',
+    '#suffix' => '</div>',
+  );
+  $form['loadem']['remove_schedule'] = array(
+    '#type' => 'submit',
+    '#value' => t('Remove class schedule*'),
+//    '#disabled' => TRUE,
+    '#weight' => '10',
+    '#prefix' => '<div style="float: left;width:300px" >',
+    '#suffix' => '</div>',
+  );
+  $form['notes_1'] = array(
+      '#markup' => t('Instructions for loading the sample data:'),
+      '#weight' => 12,
+      '#prefix' => '<div style="float: left;clear: left;width:640px" ><strong><p>',
+      '#suffix' => '</strong></p></div>',
+    );
+$use_desc = <<<EOT
+    <strong>Populate description tables</strong> - This step is required and should be performed immediately after the Kleosis install. Maintenance screens for the inidividual
+    description tables are not available yet, so modifications to the data entries can be accomplished by editing the kleosis_populate_description_tables.inc file (<strong><em>carefully</em></strong>). <br/><br/>
 
+    <strong>Unpopulate description tables</strong> - Should be performed before any changes are made to the kleosis_populate_description_tables.inc file and before the tables are re-populated.<br/><br/>
+
+    <strong>Load sample users, Load courses and classes, and Load sample class schedule</strong> should be performed in sequence to optionally load the sample data. <br/><br/>
+    <strong>Remove sample users*, Remove courses and classes*, and Remove class schedule*</strong> will currently remove data from multiple relevant tables - use with caution! Using all three will clear all the sample data as well as any user-entered data. <br/><br/>
+
+EOT;
+
+  $form['notes_2'] = array(
+      '#markup' => $use_desc,
+      '#weight' => 13,
+      '#prefix' => '<div style="float: left;clear: left;width:832px" >',
+      '#suffix' => '</div>',
+    );
   return $form;
 
 }
@@ -108,9 +145,8 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
       if (!$already_loaded) {
         drupal_set_message('Sample users are being loaded...');
         require_once('kleosis_create_sample_users.inc');
-        // todo:  create student status details record
-        drupal_set_message('Sample users are now loaded');
 
+        drupal_set_message('Sample users are now loaded');
         variable_set('kleosis_sample_users', TRUE);
       }
       else {
@@ -118,10 +154,9 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
       }
       break;
 
-    case 'Remove sample users':
+    case 'Remove sample users*':
       drupal_set_message('Sample users are being removed...');
       require_once('kleosis_delete_sample_users.inc');
-      // todo: delete student status details records
 
       drupal_set_message('Sample users have been deleted.');
       variable_set('kleosis_sample_users', FALSE);
@@ -262,7 +297,7 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
       }
       break;
 
-    case 'Remove courses and classes':
+    case 'Remove courses and classes*':
 
       // remove enrollments
         drupal_set_message('Removing all enrollments...');
@@ -292,6 +327,28 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
         drupal_set_message('Sample courses have been removed');
 
         variable_set('kleosis_sample_data', FALSE);
+
+      break;
+    case 'Load sample class schedule':
+      $already_loaded = variable_get('kleosis_sample_schedule', FALSE);
+      if (!$already_loaded) {
+        drupal_set_message('Sample class schedule is being loaded...');
+        require_once('kleosis_create_sample_schedule.inc');
+        drupal_set_message('Sample class schedule is now loaded');
+
+        variable_set('kleosis_sample_schedule', TRUE);
+      }
+      else {
+        drupal_set_message('Sample class schedule has already been loaded.');
+      }
+      break;
+
+    case 'Remove class schedule*':
+      drupal_set_message('Class schedule is now being removed...');
+//      $cnt_deleted = db_delete('ks_class_schedule')->execute();
+
+      drupal_set_message('Class schedule has been removed.');
+      variable_set('kleosis_sample_schedule', FALSE);
 
       break;
   }
