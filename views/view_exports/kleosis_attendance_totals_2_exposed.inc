@@ -1,3 +1,4 @@
+<?php
 $view = new view;
 $view->name = 'kleosis_attendance_totals_2';
 $view->description = '';
