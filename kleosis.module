@@ -744,11 +744,29 @@ function kleosis_theme() {
  */
 function kleosis_views_api() {
   return array(
-    'api' => 2,
+    'api' => 3,
     'path' => drupal_get_path('module', 'kleosis') . '/views',
   );
 }
 
+/**
+ * Implementation of hook_views_default_views().
+ *
+ */
+ function kleosis_views_default_views() {
+
+  $views = array();
+
+  $path = drupal_get_path('module', 'kleosis') . '/views/view_exports';
+  $files = drupal_system_listing("/\.inc$/", $path, 'name', 0);
+
+  foreach($files as $file) {
+    include $file->uri;
+    $views[$view->name] = $view;
+  }
+
+  return $views;
+}
 /**
  * Page callback for the kleosis introduction menu entry.
  *

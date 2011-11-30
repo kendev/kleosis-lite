@@ -1,3 +1,4 @@
+<?php
 $view = new view;
 $view->name = 'students_class_list';
 $view->description = '';
@@ -244,7 +245,7 @@ $handler->display->display_options['filters']['rid']['id'] = 'rid';
 $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
 $handler->display->display_options['filters']['rid']['field'] = 'rid';
 $handler->display->display_options['filters']['rid']['value'] = array(
-  4 => '4',
+  37 => '37',
 );
 $handler->display->display_options['filters']['rid']['reduce_duplicates'] = 0;
 
