@@ -1,17 +1,12 @@
 <?php
-// $Id: kleosis_delete_users.inc,v 1.8 2011/11/21 01:55:21 kendev Exp $
 
 /**
  * @file
  * Remove the Kleosis sample users and their data in related tables
  */
 
- // remove enrollments first // todo: can improve this by deleting only the sample students related enrollments
-  drupal_set_message('Removing all enrollments...');
-  $cnt_deleted = db_delete('ks_student_course_classes')->execute();
-  drupal_set_message('Enrollments have been removed');
-
-  drupal_set_message('Removing sample students...');
+// todo: can improve this process by deleting only the sample user data related records
+// drupal_set_message('Removing sample students...');
   $kleosis_users = array('student9000', 'student9001', 'student9002', 'student9003', 'student9004',
                         'student9005', 'student9006', 'student9007', 'student9008', 'student9009',
                         'student9010', 'student9011', 'student9012', 'student9013', 'student9014', 'student9015',

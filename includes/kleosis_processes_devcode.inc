@@ -34,6 +34,7 @@ dpm($thecourse);
   return $weights;
 }
 */
+
 /**
  * Provides a quick page for developing code
  *
@@ -179,6 +180,7 @@ dpm($theweights['few']);
 
 //  $cnt_deleted = db_delete('ks_organization_desc')->execute();
 //  drupal_set_message('ks_organization_desc table entries have been removed');
+
 
 
  return array('#markup' => 'Development code goes here...');

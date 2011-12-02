@@ -991,12 +991,15 @@ function kleosis_student_class_schedule_list() {
   $query->addField('ksstuclass', 'ksccl_id');
   $query->addField('ksstuclass', 'kstu_id_fk');
   $query->addField('ksstuclass', 'kccls_id_fk');
+  $query->addField('ksstuclass', 'enrol_date');
+  $query->addField('ksstuclass', 'unenrol_date');
   $query->addField('ksclsched', 'period_start_datetime');
   $query->addField('ksclsched', 'period_end_datetime');
   $query->addField('ksclsched', 'period_day');
 
   $query->condition('ksstuclass.' . 'kstu_id_fk', $uid, '=');
   $query->condition('ksstuclass.' . 'kccls_id_fk', $nids, 'IN');
+//  $query->condition('ksstuclass.' . 'enrol_date', 'unenrol_date', '<');
 
   $schedule_records = $query->execute()->fetchAll();
 
@@ -1005,25 +1008,29 @@ function kleosis_student_class_schedule_list() {
   $schedule_array = array();
   foreach($schedule_records as $period) {
 
-    $pstartd = !empty($period->period_start_datetime) ? new DateTime($period->period_start_datetime) : new DateTime('1900-01-02 03:04:05');
-    $pendd = !empty($period->period_end_datetime) ? new DateTime($period->period_end_datetime) : new DateTime('1900-01-02 03:04:05');
+    $enrol_ok = $period->enrol_date > $period->unenrol_date; // check for enrol date greater than the possible unenroll date
+    if($enrol_ok) {
+      $pstartd = !empty($period->period_start_datetime) ? new DateTime($period->period_start_datetime) : new DateTime('1900-01-02 03:04:05');
+      $pendd = !empty($period->period_end_datetime) ? new DateTime($period->period_end_datetime) : new DateTime('1900-01-02 03:04:05');
 
-    $a_start_period = $pstartd->format('H') . ':' . $aperiod = $pstartd->format('i');
-    $an_end_period = $pendd->format('H') . ':' . $aperiod = $pendd->format('i');
-    $aperiod = $a_start_period . '-' . $an_end_period;
+      $a_start_period = $pstartd->format('H') . ':' . $aperiod = $pstartd->format('i');
+      $an_end_period = $pendd->format('H') . ':' . $aperiod = $pendd->format('i');
+      $aperiod = $a_start_period . '-' . $an_end_period;
 
-    // get the short course name from the course node
+      // get the short course name from the course node
 
-    if ($period->kccls_id_fk) {
-      $class_node = node_load($period->kccls_id_fk);
-      $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];
-      $course_node = node_load($node_course_ref);
-      $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
+      if ($period->kccls_id_fk) {
+        $class_node = node_load($period->kccls_id_fk);
+        $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];
+        $course_node = node_load($node_course_ref);
+        $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
+      }
+      else {
+        $node_course_no =  '';
+      }
+      $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day,) ;
     }
-    else {
-      $node_course_no =  '';
-    }
-    $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day,) ;
+
   }
 
   // then, build the period column (day_0) from the periods in the schedule_array and make them unique
