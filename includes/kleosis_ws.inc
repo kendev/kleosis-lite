@@ -25,9 +25,9 @@ require_once ($kws);
 function ws_get_user($uid, $uid_field='id') {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $userids = array($uid);
 
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
@@ -68,9 +68,9 @@ function ws_get_user($uid, $uid_field='id') {
 function ws_get_users($userids = array(), $userfield = '') {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
@@ -105,9 +105,9 @@ function ws_get_users($userids = array(), $userfield = '') {
 function ws_get_roles() {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
@@ -141,7 +141,6 @@ function ws_get_roles() {
 function ws_users_edit_form_submit_values($form_values) {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   $id        = $form_values['userid'];
   $username  = $form_values['username'];
@@ -170,6 +169,7 @@ function ws_users_edit_form_submit_values($form_values) {
   //  dpm($leUsers);
 
 try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
@@ -199,7 +199,6 @@ catch (Exception $e) {
 function ws_add_user($duser) {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   $drp_uid   = $duser['drp_uid'];
   $username  = $duser['username'];
@@ -238,6 +237,7 @@ function ws_add_user($duser) {
 //  dpm($le_users);
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
@@ -261,14 +261,14 @@ function ws_add_user($duser) {
  * Retrieve the Moodle course info for all courses
  *
  * @return
- *   Array of Moodle course info for all course
+ *   Array of Moodle course info for all coursea
  */
 function ws_get_courses() {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
@@ -284,8 +284,21 @@ function ws_get_courses() {
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
   }
   catch (Exception $e) {
+    // need to look for error type because ok tech webservices returns an error if user is a moodle system administrator ??!
+    $errormessage = $e->getMessage();
+    $errortype = 'Argument 2 passed to has_capability()';
+    $pos = strpos($errormessage, $errortype);
+
+    if($pos === FALSE) {
+       // string $errortype NOT found in $e->getMessage()
     drupal_set_message(t('webservices->get_courses returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      }
+    else {
+       // string $errortype IS found in $e->getMessage()
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => 'all',)));
+      }
+
     return NULL;
   }
 
@@ -303,7 +316,6 @@ function ws_get_courses() {
 function ws_get_my_courses($ks_user = '') {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   $ks_user = ($ks_user) ? $ks_user : $res['mdl_uid'];
 
@@ -313,10 +325,12 @@ function ws_get_my_courses($ks_user = '') {
   }
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $courseids=array();
+
     $res=$moodle->get_my_courses($lr->getClient(), $lr->getSessionKey(), $ks_user, '');
 //    $res=$moodle->get_my_courses($lr->getClient(), $lr->getSessionKey(), $ws_mdl_uid, '');
     foreach ($res->courses as $le_course) {
@@ -327,8 +341,21 @@ function ws_get_my_courses($ks_user = '') {
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
   }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_courses returned an error = %errormessage. %tryagain',
+    // need to look for error type because ok tech webservices returns an error if user is a moodle system administrator ??!
+    $errormessage = $e->getMessage();
+    $errortype = 'Argument 2 passed to has_capability()';
+    $pos = strpos($errormessage, $errortype);
+
+    if($pos === FALSE) {
+       // string $errortype NOT found in $e->getMessage()
+    drupal_set_message(t('webservices->ws_get_my_courses returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      }
+    else {
+       // string $errortype IS found in $e->getMessage()
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $res['mdl_username'],)));
+      }
+
     return NULL;
   }
 
@@ -344,9 +371,9 @@ function ws_get_my_courses($ks_user = '') {
 function ws_get_assignments($course = '') { // todo: complete this...
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $assgtsa = array();
@@ -361,7 +388,7 @@ function ws_get_assignments($course = '') { // todo: complete this...
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_ass_assignments returned an error = %errormessage. %tryagain',
+    drupal_set_message(t('webservices->get_assignments returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
     return NULL;
     }
@@ -375,15 +402,19 @@ function ws_get_assignments($course = '') { // todo: complete this...
  * @param $ks_user
  *   mdl_uid of the user whose grades to get (optional)
  * @return
- *   Array of all the grades for the logged-in user from moodle
+ *   Array of all the grades for the user from moodle
  */
 function ws_get_grades($ks_user = '') {
 
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
   $ks_user = ($ks_user) ? $ks_user : $res['mdl_uid'];
 
+  if (empty($res['mdl_uid']) && empty($ks_user)) {
+    return NULL;
+  }
+
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
@@ -398,14 +429,26 @@ function ws_get_grades($ks_user = '') {
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_grades returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+
+    // need to look for error type because ok tech webservices returns an error if no course is found ??!
+    $errormessage = $e->getMessage();
+    $errortype = 'no courses found';
+    $pos = strpos($errormessage, $errortype);
+
+    if($pos === FALSE) {
+       // string $errortype NOT found in $e->getMessage()
+      drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
+      array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      }
+    else {
+       // string $errortype IS found in $e->getMessage()
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user,)));
+      }
     return NULL;
     }
 
     return $gradesa;
 }
-
 
 /**
  * Retrieve all grades for a user from moodle, using the student username
@@ -413,21 +456,26 @@ function ws_get_grades($ks_user = '') {
  * @param $ks_user
  *   username of the user whose courses to get (optional)
  * @return
- *   Array of all the grades for the logged-in user from moodle
+ *   Array of all the grades for the user from moodle
  */
 function ws_get_grades_by_username($ks_user = '') {
 
   global $user;
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
-  $ks_user = ($ks_user) ? $ks_user : $user->name;
+  $ks_user = ($ks_user) ? $ks_user : $res['mdl_username'];
+
+  if (empty($res['mdl_username']) && empty($ks_user)) {
+    return NULL;
+  }
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
 
     $res = $moodle->get_user_grades($lr->getClient(), $lr->getSessionKey(), $ks_user, 'idnumber');  // todo: look into this...
+//    $res = $moodle->get_user_grades($lr->getClient(), $lr->getSessionKey(), $ks_user, 'username');  // todo: look into this...
 
     $gradessoa = $res->getGrades();
 
@@ -437,8 +485,21 @@ function ws_get_grades_by_username($ks_user = '') {
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_grades returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+
+    // need to look for error type because ok tech webservices returns an error if no course is found ??!
+    $errormessage = $e->getMessage();
+    $errortype = 'no courses found';
+    $pos = strpos($errormessage, $errortype);
+
+    if($pos === FALSE) {
+       // string $errortype NOT found in $e->getMessage()
+      drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
+      array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      }
+    else {
+       // string $errortype IS found in $e->getMessage()
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user,)));
+      }
     return NULL;
     }
 
@@ -457,10 +518,10 @@ function ws_get_course_grades($coursename) {
 
 //  global $user;
   $res = get_mdl_login();   // get the login username and password for this ws call (todo: maybe redesign this)
-  $margs = get_wsdl_uri();  // get the params for MoodleWS
 //  $ks_user = ($ks_user) ? $ks_user : $user->name;
 
   try {
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
     $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
@@ -475,7 +536,7 @@ function ws_get_course_grades($coursename) {
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_grades returned an error = %errormessage. %tryagain',
+    drupal_set_message(t('webservices->get_course_grades returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
     return NULL;
     }
@@ -487,56 +548,58 @@ function ws_get_course_grades($coursename) {
  * Set the Moodle login name and password and user's mdl_uid for ws function calls
  *
  * @return
- *   Array: username, password, mdl_uid
+ *   Array: username, password, mdl_uid, mdl_username
+ *
+ * Note: this is version 1.0 for determining the user for each webservices login
+ * todo: expand get_mdl_login() to get users password from the users table in drupal
  */
 function get_mdl_login() {
 
   global $user;
 
-  $username = variable_get('kleosis_moodle_username','admin');     // set username and password here
+  $username = variable_get('kleosis_moodle_username','admin');     // set username and password from the Configuration->Development->Kleosis menu path
   $password = variable_get('kleosis_moodle_password','moodle');   // todo: can encrypt or get from db...
   $mdl_uid = 0;
+  $mdl_username = '';
 
-  if (user_is_logged_in()) {
+  if (user_is_logged_in()) {  // get the logged-in users name and moodle id
     if (isset($user->mdl_uid)) {
       $mdl_uid = $user->mdl_uid;
-//dpm('$user->mdl_uid is set!');
+      $mdl_username = $user->name;
+ //     $mdl_password = ''; // todo: expand get_mdl_login() to get users password from the users table in drupal
     }
-    else {
-      // look in ks_students table
+    else { //  try to find the logged-in users name and moodle id
+      // first, look in ks_students table
       $is_ks_student = ks_check_exists_userrecord('ks_student', $user->uid);
       if ( (isset($is_ks_student['mdl_uid_fk']) ) && (!empty($is_ks_student['mdl_uid_fk'])) ) {
          $mdl_uid = $is_ks_student['mdl_uid_fk'];
-//dpm('user is a ks_student');
-//dpm($mdl_uid);
+         $mdl_username = get_ks_username_by_id($is_ks_student['drp_uid_fk']);
       }
       else {
-      // look in ks_users table
+      // next, look in ks_users table
       $is_ks_user = ks_check_exists_userrecord('ks_any', $user->uid);
       if ( (isset($is_ks_user['mdl_uid_fk']) ) && (!empty($is_ks_user['mdl_uid_fk'])) ) {
          $mdl_uid = $is_ks_user['mdl_uid_fk'];
-//dpm('user is a ks_user');
-//dpm($mdl_uid);
+         $mdl_username = get_ks_username_by_id($is_ks_student['drp_uid_fk']);
       }
     }
 
-  if (!$mdl_uid) {
-    // if not in ks tables, then get mdl_uid from moodle
-    // then set $user->mdl_uid
-
-// dpm('$user is not in a ks_user table!');
-
+  if (!$mdl_uid) {  // the user is not a ks_student or ks_user and therefore does not have a kleosis mdl_uid
+                    // the user may have a web portal account such as a registrar, nurse, driver, etc so
+                    // try to get the mdl_uid from moodle as the user may have an account there...
+                    // to do this, login to moodle as admin/password and then lookup the user by using the logged-in users username
+                    // if so, then set $user->mdl_uid
     try {
       $userids = array($user->name);
       $margs = get_wsdl_uri();  // get the params for MoodleWS
       $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
 
-      $lr = $moodle->login($username, $password);
-      $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, 'username');
+      $lr = $moodle->login($username, $password); // this call uses admin/moodle
+      $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, 'username');  // look for the user in Moodle
 
       $rowsa = array();
       // should only be one
-      foreach ($res->users as $le_user) {
+      foreach ($res->users as $le_user) { // if user is found, retrieve the id and password
         $rowsa[] = array('id' => $le_user->id, 'username' => $le_user->username, 'firstname' => $le_user->firstname, 'lastname' => $le_user->lastname);
       }
       $moodle->logout($lr->getClient(), $lr->getSessionKey());
@@ -547,19 +610,17 @@ function get_mdl_login() {
       return NULL;
     }
 
-    if ( isset($rowsa[0]['id']) ) {
-      $mdl_uid = $rowsa[0]['id'];  // for testing: 3 = kendev, 21 = student9001
+    if (isset($rowsa[0]['id']) ) {  // if the user is found in Moodle, get the Moodle id
+      $mdl_uid = $rowsa[0]['id'];  // and save it
+      $mdl_username = $rowsa[0]['username'];  // along with the username
     }
 
     $user->mdl_uid = $mdl_uid;
-//dpm('user found in moodle');
-//dpm($mdl_uid);
-
-  }
     }
   }
+}
 
-  $login_user = array('username' => $username, 'password' => $password, 'mdl_uid' => $mdl_uid);
+  $login_user = array('username' => $username, 'password' => $password, 'mdl_uid' => $mdl_uid, 'mdl_username' => $mdl_username,);
 
   return $login_user;
 }
@@ -572,38 +633,11 @@ function get_mdl_login() {
 function get_wsdl_uri() {
 
       $moodle_url = variable_get('kleosis_moodle_url','http://localhost/moodle');
-      $moodle_version = variable_get('kleosis_moodle_version','2.x');
-//      $local = ($moodle_version[0] == 2) ? '/local' : '';
-      $local = '';
-      $uri = $moodle_url . $local . '/wspp/wsdl';
-      $wsdl = $moodle_url . $local .'/wspp/wsdl_pp.php';
+      $uri = $moodle_url . '/wspp/wsdl';
+      $wsdl = $moodle_url .'/wspp/wsdl_pp.php';
+//      $wsdl = $moodle_url .'/wspp/wsdl_pp2.php';
 
   return array('wsdl' => $wsdl, 'uri' => $uri);
 
 }
 
-/************************************************************************************************************/
-/**
- * Retrieve a sample list of users defined in Moodle - this is a legacy test function
- *
- * @return
- *   Array of users defined in Moodle
- */
-function lms_sample_user_data() {
-
-  $users   = array();
-  $users[] = array('id' => 2, 'username' => 'admin', 'firstname' => 'Admin', 'lastname' => 'User');
-  $users[] = array('id' => 14, 'username' => 'redondo', 'firstname' => 'Redondo', 'lastname' => 'Sumpter');
-  $users[] = array('id' => 5, 'username' => 'dave', 'firstname' => 'David', 'lastname' => 'Heuring');
-  $users[] = array('id' => 7, 'username' => 'visitor', 'firstname' => 'Gnu', 'lastname' => 'Visitor');
-  $users[] = array('id' => 10, 'username' => 'instructor01', 'firstname' => 'Instructor', 'lastname' => 'One');
-  $users[] = array('id' => 11, 'username' => 'instructor02', 'firstname' => 'Instructor', 'lastname' => 'Two');
-  $users[] = array('id' => 12, 'username' => 'instructor03', 'firstname' => 'Instructor', 'lastname' => 'Three');
-  $users[] = array('id' => 3, 'username' => 'kendev', 'firstname' => 'Ken', 'lastname' => 'DeVellis');
-  $users[] = array('id' => 22, 'username' => 'mrand', 'firstname' => 'Mi', 'lastname' => 'Rand');
-  $users[] = array('id' => 19, 'username' => 'philc', 'firstname' => 'Phil', 'lastname' => 'Cozens');
-  $users[] = array('id' => 8, 'username' => 'student01', 'firstname' => 'Student', 'lastname' => 'One');
-  $users[] = array('id' => 9, 'username' => 'student02', 'firstname' => 'Student', 'lastname' => 'Two');
-
-  return $users;
-}

@@ -13,35 +13,14 @@ $libpath = $kleosispath . '/includes/kleosis_lib.inc';
 require_once ($kwspath);
 require_once ($libpath);
 
-// new functions development can go here...
-
-/*
-function kleosis_get_grade_item_weights2($classid) {
-
-  $theclass = node_load($classid);
-  $thecourse = node_load($theclass->ks_class_course_ref['und'][0]['nid']);
-dpm($theclass);
-dpm($thecourse);
-
-  $cgw = isset($thecourse->field_ks_course_grade_weight['und'][0]['value']) ? $thecourse->field_ks_course_grade_weight['und'][0]['value'] : 0.0;
-  $few = isset($thecourse->field_ks_final_exam_weight['und'][0]['value']) ? $thecourse->field_ks_final_exam_weight['und'][0]['value'] : 0.0;
-  $giaw = isset($thecourse->field_ks_grade_item_a_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_a_weight['und'][0]['value'] : 0.0;
-  $gibw = isset($thecourse->field_ks_grade_item_b_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_b_weight['und'][0]['value'] : 0.0;
-  $gicw = isset($thecourse->field_ks_grade_item_c_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_c_weight['und'][0]['value'] : 0.0;
-
-  $weights = array('cgw' => $cgw, 'few' => $few, 'giaw' => $giaw, 'gibw' => $gibw, 'gicw' => $gicw);
-
-  return $weights;
-}
-*/
-
 /**
  * Provides a quick page for developing code
+ * New dev code can go here for testing
  *
  * @param $callback_arg
  *    from hook_menu
  * @return
- *    tbd
+ *    zippo - up to dev code...
  */
 function kleosis_processes_devcode_page_a($callback_arg = '') {
 
@@ -51,12 +30,13 @@ function kleosis_processes_devcode_page_a($callback_arg = '') {
   $lepath = drupal_get_path('module', 'kleosis');
   global $base_url;
 
-// use this area for quick dev code...
+/****************  begin dev code  ***************
+
+Note: the following are test code snippets left here for instructional purposes
 
 $academic_year = variable_get('kleosis_academic_year','2011-2012');
 $term = variable_get('kleosis_academic_term','fy');
 
-/***********************************
 // get all class nids for the selected academic year and term:
 
 $query = new EntityFieldQuery();
@@ -131,12 +111,11 @@ dpm($record->final_grade_str);
  }
 }
 
-**************************************/
-
-/*
-$theweights = kleosis_get_grade_item_weights2(472);
-dpm($theweights['few']);
 */
+
+//$theweights = kleosis_get_grade_item_weights2(472);
+//dpm($theweights['few']);
+
 
 //global $user;
 
@@ -154,7 +133,6 @@ dpm($theweights['few']);
 //      return array('#theme' => 'item_list', '#items' => $items,); // this is better because it is a render array
 //      return array('#theme' => 'item_list', '#items' => $items, '#attached' => array('css' => drupal_get_path('module','kleosis') . '/css/kleosis_lms_direct_block.css'));  // this is cool - added some css...
 //  dpm($items);
-
 
 /*
   $grades = ws_get_grades();
@@ -181,12 +159,38 @@ dpm($theweights['few']);
 //  $cnt_deleted = db_delete('ks_organization_desc')->execute();
 //  drupal_set_message('ks_organization_desc table entries have been removed');
 
+/****************  end dev code  ***************/
+
+/****************  new dev code can go here ***************/
+
+
 
 
  return array('#markup' => 'Development code goes here...');
 
 }
 
+// new functions development can be placed here and called by above dev code...
+
+/*
+function kleosis_get_grade_item_weights2($classid) {
+
+  $theclass = node_load($classid);
+  $thecourse = node_load($theclass->ks_class_course_ref['und'][0]['nid']);
+dpm($theclass);
+dpm($thecourse);
+
+  $cgw = isset($thecourse->field_ks_course_grade_weight['und'][0]['value']) ? $thecourse->field_ks_course_grade_weight['und'][0]['value'] : 0.0;
+  $few = isset($thecourse->field_ks_final_exam_weight['und'][0]['value']) ? $thecourse->field_ks_final_exam_weight['und'][0]['value'] : 0.0;
+  $giaw = isset($thecourse->field_ks_grade_item_a_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_a_weight['und'][0]['value'] : 0.0;
+  $gibw = isset($thecourse->field_ks_grade_item_b_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_b_weight['und'][0]['value'] : 0.0;
+  $gicw = isset($thecourse->field_ks_grade_item_c_weight['und'][0]['value']) ? $thecourse->field_ks_grade_item_c_weight['und'][0]['value'] : 0.0;
+
+  $weights = array('cgw' => $cgw, 'few' => $few, 'giaw' => $giaw, 'gibw' => $gibw, 'gicw' => $gicw);
+
+  return $weights;
+}
+*/
 /*
 function getDayOfWeek($pTimezone) {
 

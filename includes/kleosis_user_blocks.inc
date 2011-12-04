@@ -194,40 +194,44 @@ function kleosis_block_contents($delta) {
 //    if (user_access('some permissions here')) {
         // todo: implement this...
 //    }
+      $items = array();
       $nbr_courses_to_display = variable_get('my_courses_count');
       $courses = ws_get_my_courses();
-      $items = array();
-      foreach ($courses as $key => $val) {
-        if ($val['id'] != 1) {
-          $items[$val['id']] = l($val['shortname'], $moodle_url . '/course/view.php', array('query' => array('id' => $val['id']), 'attributes' => array('target' => '_blank')));
+      if ($courses) {
+        foreach ($courses as $key => $val) {
+          if ($val['id'] != 1) {
+            $items[$val['id']] = l($val['shortname'], $moodle_url . '/course/view.php', array('query' => array('id' => $val['id']), 'attributes' => array('target' => '_blank')));
+          }
         }
       }
 //      return array('#markup' => theme('item_list', array('items' => $items)));  // this is ok, but should return a renderable array
-      return array('#theme' => 'item_list', '#items' => $items,); // this is better because it is a render array
 //      return array('#theme' => 'item_list', '#items' => $items, '#attached' => array('css' => drupal_get_path('module','kleosis') . '/css/kleosis_lms_direct_block.css'));  // this is cool - added some css...
+      return array('#theme' => 'item_list', '#items' => $items,); // this is better because it is a render array
 
       break;
   case 'my_assignments':
 
+//   currently gets all assignments...
+
+      $items = array();
       $nbr_assignments_to_display = variable_get('my_assignments_count');
       $assignments = ws_get_assignments();
 
-      $items = array();
-
-      foreach ($assignments as $key => $val) {
-        $items[$val['id']] = l($val['name'], $moodle_url . '/mod/assignment/index.php', array('query' => array('id' => $val['course']), 'attributes' => array('target' => '_blank')));
+      if($assignments) {
+        foreach ($assignments as $key => $val) {
+          $items[$val['id']] = l($val['name'], $moodle_url . '/mod/assignment/index.php', array('query' => array('id' => $val['course']), 'attributes' => array('target' => '_blank')));
+        }
       }
-
       return array('#markup' => theme('item_list', array('items' => $items)));
 
       break;
   case 'my_grades':
 
+      $items = array();
       $nbr_grades_to_display = variable_get('my_grades_count');
       $grades = ws_get_grades();  // todo: evolve this function
       // create  an array of grades just for demo purposes
 //      $items = array('0' => 'My Grade 1', '1' => 'My Grade 2', '2' => 'My Grade 3', '3' => 'My Grade 4', '4' => 'My Grade 5');
-      $items = array();
       $i = 0;
       if ( !empty($grades) ) {
       foreach ($grades as $key => $val) {

@@ -801,17 +801,12 @@ $form['pagehelp']['pageinfo'] = array(
 
 $form['pagehelp']['enter_button'] = array(
 
-    '#type' => 'image_button',
+    '#type' => 'submit',
     '#name' => 'Enter_button',
-//    '#src' => 'misc/ui/images/enterbutton1.png',
-    '#src' => drupal_get_path('module', 'kleosis') . '/images/enterbutton1.png',
+    '#value' => 'Enter',
     '#submit' => array('kleosis_enter'),
-    '#attributes' => array('alt' => t('Enter')),
-    //'#op' => 'enter',
-    // Do not check errors for the 'Enter' button.
-    '#limit_validation_errors' => array(),
     '#prefix' => '<div style="float: right;clear: right;width:160px">',
-    '#suffix' => '<br/></div>',
+    '#suffix' => '<br/><br/></div>',
   );
 
 
