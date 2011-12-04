@@ -12,7 +12,7 @@
  * In Drupal 7, there is no need to install schema using this hook, the schema
  * is already installed before this hook is called.
  *
- * Kleosis roles and variable are created here
+ * Kleosis roles and variables are created here
  *
  * @see hook_install()
  */
