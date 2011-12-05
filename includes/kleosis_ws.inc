@@ -12,6 +12,22 @@ $kwspath = drupal_get_path('module', 'kleosis');
 $kws = $kwspath . '/kws/MoodleWS.php';
 require_once ($kws);
 
+register_shutdown_function('ks_shutdown');
+
+/**
+ * Function to respond to a php fatal error
+ *
+ * @return
+ *   redirect to Kleosis home page  //todo: create error page and redirect from there
+ */
+function ks_shutdown() {
+ if (($error = error_get_last())) {
+   ob_clean();
+   global $base_url;
+   header('Location: ' . $base_url . '/' . 'kleosis');
+  }
+}
+
 /**
  * Retrieve the Moodle user's info for a single user
  *
@@ -432,10 +448,14 @@ function ws_get_grades($ks_user = '') {
 
     // need to look for error type because ok tech webservices returns an error if no course is found ??!
     $errormessage = $e->getMessage();
-    $errortype = 'no courses found';
-    $pos = strpos($errormessage, $errortype);
 
-    if($pos === FALSE) {
+    $errortype = 'no courses found';
+    $pos1 = strpos($errormessage, $errortype);
+
+    $errortype = 'unknown'; // user is unknown, so no courses belong to the user
+    $pos2 = strpos($errormessage, $errortype);
+
+    if( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
       drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
       array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
@@ -488,10 +508,14 @@ function ws_get_grades_by_username($ks_user = '') {
 
     // need to look for error type because ok tech webservices returns an error if no course is found ??!
     $errormessage = $e->getMessage();
-    $errortype = 'no courses found';
-    $pos = strpos($errormessage, $errortype);
 
-    if($pos === FALSE) {
+    $errortype = 'no courses found';
+    $pos1 = strpos($errormessage, $errortype);
+
+    $errortype = 'unknown'; // user is unknown, so no courses belong to the user
+    $pos2 = strpos($errormessage, $errortype);
+
+    if( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
       drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
       array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
