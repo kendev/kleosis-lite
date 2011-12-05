@@ -159,9 +159,13 @@ dpm($record->final_grade_str);
 //  $cnt_deleted = db_delete('ks_organization_desc')->execute();
 //  drupal_set_message('ks_organization_desc table entries have been removed');
 
+//register_shutdown_function('shutdown');
+
 /****************  end dev code  ***************/
 
-/****************  new dev code can go here ***************/
+/****************  new dev code can go here:  ***************/
+
+
 
 
 
@@ -171,7 +175,17 @@ dpm($record->final_grade_str);
 }
 
 // new functions development can be placed here and called by above dev code...
-
+/*
+function shutdown() {
+ if (($error = error_get_last())) {
+   ob_clean();
+   # report the event, send email etc.
+//   header("Location: http://localhost/error-capture");
+   header("Location: http://localhost/kleoport/kleosis");
+   # from /error-capture, you can use another redirect, to e.g. home page
+  }
+}
+*/
 /*
 function kleosis_get_grade_item_weights2($classid) {
 
