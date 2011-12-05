@@ -372,6 +372,19 @@ function kleosis_attendance_input_form($form, &$form_state) {
     '#prefix' => '<div style="float:left;clear:left;width:300px" >',
     '#suffix' => '</div>',
   );
+  $form['attendance_input']['update'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit Attendance'),
+    '#submit' => array('kleosis_attendance_form_submit'),  // not working...
+//    '#weight' => '10',
+    '#prefix' => '<div style="float: right;width:200px" >',
+    '#suffix' => '</div>',
+  );
+  $form['attendance_input']['spacer1'] = array(
+    '#markup' =>    '&nbsp;',
+    '#prefix' => '<div style="float: left;clear: left;width:160px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
   $form['attendance_input']['student_name'] = array(
     '#markup' =>    'Student Name',
     '#prefix' => '<div style="float: left;clear: left;width:170px"><strong>',
@@ -397,7 +410,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
     '#prefix' => '<div style="float: left;width:220px"><strong>',
     '#suffix' => '</strong></div>',
   );
-  $form['attendance_input']['spacer'] = array(
+  $form['attendance_input']['spacer2'] = array(
     '#markup' =>    '&nbsp;',
     '#prefix' => '<div style="float: left;clear: left;width:160px"><strong>',
     '#suffix' => '</strong></div>',
@@ -481,14 +494,6 @@ function kleosis_attendance_input_form($form, &$form_state) {
     '#default_value' => $i-1,
   );
 
-  $form['attendance_input']['update'] = array(
-    '#type' => 'submit',
-    '#value' => t('Update'),
-    '#submit' => array('kleosis_attendance_form_submit'),  // not working...
-    '#weight' => '10',
-    '#prefix' => '<div style="float: right;clear:left;width:200px" >',
-    '#suffix' => '</div>',
-  );
   $_SESSION['ks_atnd_class_select']['toggle_attnd'] = 'inactive';
 
 return $form;
@@ -510,7 +515,7 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
       break;
     case 'Apply':
 
-      if($form_state['input']['op'] == 'Update') {  // insert or update attendance records
+      if($form_state['input']['op'] == 'Submit Attendance') {  // insert or update attendance records
         // build a datetime object for the selected attendance date
         $hma = get_hour_and_minute_from_period($form_state['values']['period']);
         $attnd_select_hour = isset($hma['start_hour']) ? $hma['start_hour'] : '00';
@@ -628,7 +633,7 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
                                         'toggle_attnd' => 'active',
                                         );
       break;
-    case 'Update':
+    case 'Submit Attendance':
 //    dpm('Hey - update!'); // This case never happens - see case Apply
 //    dpm($form_state['values']['period_attnd_date']['year']);
       $attendance_date = new DateTime();
