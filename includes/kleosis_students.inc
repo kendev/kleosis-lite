@@ -392,6 +392,12 @@ function kleosis_student_summary_form($form, &$form_state) {
             DateTime::createFromFormat('Y-m-d H:i:s', '1900-01-01 0:0:00');
 */
   $form = array();
+
+  $form['spacer'] = array(
+    '#markup' => ' ',
+    '#prefix' => '<br/><div style="float:left;width:275px" >',
+    '#suffix' => '</div>',
+  );
   $form['user_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',
       '#title' => t('Student Summary for: ') .$name,
@@ -415,13 +421,13 @@ function kleosis_student_summary_form($form, &$form_state) {
     '#suffix' => '</div>',
   );
 /**********************************/
-
+/*
   $form['user_biodata']['user_picture'] = array(
     '#markup' => theme('user_picture', array('account' => $account)),
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div>',
   );
-
+*/
 /**********************************/
   $form['user_biodata']['identity_id'] = array(
     '#type' => 'item',
