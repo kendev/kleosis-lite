@@ -21,6 +21,7 @@ The installation instructions that follow will provide details on the Kleosis mo
       References project: http://drupal.org/project/references
       Views project: http://drupal.org/project/views
       Wysiwyg project: http://drupal.org/project/wysiwyg
+      Advanced_help project: http://drupal.org/project/advanced_help
 	
 Then, from the Administrative Menu select the Modules menu item and check the following configurations checkboxes for those modules.  Save the configuration.
 
@@ -71,9 +72,7 @@ Views:
 	  Description: Student Info System
 	  (Parent menu link should be set to the Main menu)
 	  Weight: use default or set to a preferred number
-
-    - Download and copy the Kleosis Bartik theme and place the kleosis_bartik folder in the ../sites/all/themes folder.  Then enable and set it as the default theme. The Kleosis Bartik theme has been modified to allow a wider width in the content area to avoid wrapping of some output data rows.
-	
+	  
     - Kleosis will show up as a Main Menu item that points to an information page.  The Kleosis menu will be added to this page: 
 	- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region - be sure to show the block only on these listed pages: kleosis and kleosis/*
 
@@ -90,6 +89,12 @@ Views:
 		- Number of rows displayed by the pager
 		- Scheduled Breaks (select 00 for each if no breaks)
 	- Save the configuration
+	
+    - Move the folder '_unzip_and_move_me.zip' to a temporary location outside of the kleosis root folder and then unzip it.  Then, move the kleosis_bartik folder into the ../sites/all/themes folder.
+      Next, enable the Kleosis Bartik theme and set it as the default theme as follows: select Appearance from the Administration Menu, then click on the 'Enable and set default link' under the Kleosis Bartik 7.x theme.  
+      The Kleosis Bartik theme has been modified to allow a wider width in the content area to avoid wrapping of some output data rows.
+      Note - on Linux systems, be sure the appropriate permissions are set for the kleosis_bartik folder and files to insure proper theme display.
+	
     - Sample data: The description tables in Kleosis must be populated next and currently this is not done automatically during install. To populate the tables:
     	- From the Kleosis main menu, select Processes and then select the Sample Data tab.
     	- Click on the Populate description tables button
@@ -111,7 +116,7 @@ Kleosis contains numerous LMS Direct blocks that provide information from Moodle
     2) copy the additional wspp folder located inside the ..yourmoodle/wspp/local folder into ..yourmoodle/local folder.
        example: yourmoodle/wspp/local/wspp  --->  yourmoodle/local/wspp
 
-    3) go to administration, notifications to install it
+    3) click on the Moodle Site administration, Notifications link to complete the installation
 
     4) you should get a new configuration screen named OK Tech Webservices (aka wspp) inside the Site Adminstration/Development block
 
@@ -126,4 +131,7 @@ Optional Kleosis configuration: add a My Courses - LMS Direct block to an existi
 	- Click on Save Block and exit the Blocks page
 	- Navigate to the new page and click on a courses link in the My Course block
 
+That's it!  To help get started using Kleosis, take a look at the Getting Started page of the Kleosis documentation: http://www.kleosis.org/kleosisdocs/index.php/Getting_Started
+
+Have fun and please send us feedback at kleosis.org
 
