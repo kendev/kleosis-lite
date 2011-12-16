@@ -96,7 +96,7 @@ function kleosis_student_relationships_edit_form() {
     '#label' => t('Action'),
     '#value' => t('Add New Relationship'),
     '#weight' => '10',
-    '#prefix' => '<div style="float:right;width:250px" >',
+    '#prefix' => '<div style="float:right;width:225px" >',
     '#suffix' => '</div>',
   );
 /*
@@ -224,7 +224,7 @@ function kleosis_student_relationships_list() {
         '#theme' => 'tableselect',
         '#header' => $header,
         '#options' => $options,
-        '#empty' => t('No are relationships defined') . $studentname,
+        '#empty' => t('No relationships are defined') . $studentname,
         '#multiple' => TRUE,
         '#js_select' => TRUE,
       );

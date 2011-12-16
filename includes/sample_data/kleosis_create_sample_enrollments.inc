@@ -12,6 +12,7 @@
                         'Kleosis sample English 102 Class - Section 1', 'Kleosis sample Math 101 Class - Section 1',
                         'Kleosis sample Music 101 Class - Section 1', 'Kleosis sample PE 101 Class - Section 1',
                         'Kleosis sample Science 101 Class - Section 1',
+                        'Kleosis Morning Break', 'Kleosis Lunchtime A', 'Kleosis Afternoon Break'
                         );
 
   foreach($studentnames as $studentname) {

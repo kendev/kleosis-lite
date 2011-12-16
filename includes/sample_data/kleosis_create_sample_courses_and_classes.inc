@@ -127,6 +127,13 @@
     kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1', $course_nids[30], 'fy', '1', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1');
     kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2', $course_nids[30], 'fy', '2', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2');
 
+  $course_nids[31] = kleosis_create_sample_course('Kleosis Breaktime', 'Break', 'general_academic', 'other', 'lunch-breaktime', 'all', 'Description for Kleosis Breaktime');
+    kleosis_create_sample_class('Kleosis Morning Break', $course_nids[31], 'fy', 'M1', 'Remarks for Kleosis Morning Break');
+    kleosis_create_sample_class('Kleosis Afternoon Break', $course_nids[31], 'fy', 'A1', 'Remarks for Kleosis Afternoon Break');
+
+  $course_nids[32] = kleosis_create_sample_course('Kleosis Lunchtime', 'Lunch', 'general_academic', 'other', 'lunch-breaktime', 'all', 'Description for Kleosis Lunchtime');
+    kleosis_create_sample_class('Kleosis Lunchtime A', $course_nids[32], 'fy', 'A', 'Remarks for Kleosis Lunchtime A');
+    kleosis_create_sample_class('Kleosis Lunchtime B', $course_nids[32], 'fy', 'B', 'Remarks for Kleosis Lunchtime B');
 
 /**
  * Create a Kleosis sample course

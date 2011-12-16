@@ -514,6 +514,8 @@ function kleosis_course_types_values() {  // todo: these values may be defined i
     'non-credit' => t('Non-Credit'),
     'attendance' =>t('Attendance'),
     'lab' => t('Lab'),
+    'lunch-breaktime' => t('Lunch-Breaktime'),
+    'other' => t('Other'),
   );
   return $le_array;
 }
@@ -532,6 +534,7 @@ function kleosis_program_values() {  // todo: these values may be defined in the
     'advanced_academic' => t('Advanced Academic'),
     'special_needs' => t('Special Needs'),
     'certification' =>t('Standards Certification'),
+    'other' => t('Other'),
   );
   return $le_array;
 }

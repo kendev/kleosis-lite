@@ -1194,6 +1194,216 @@
   kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
 //---
 
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Morning Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 1; $p_s_h = '10'; $p_s_m = '05'; $p_e_h = '10'; $p_e_m = '20'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Morning Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 2; $p_s_h = '10'; $p_s_m = '05'; $p_e_h = '10'; $p_e_m = '20'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Morning Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 3; $p_s_h = '10'; $p_s_m = '05'; $p_e_h = '10'; $p_e_m = '20'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Morning Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 4; $p_s_h = '10'; $p_s_m = '05'; $p_e_h = '10'; $p_e_m = '20'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Morning Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 5; $p_s_h = '10'; $p_s_m = '05'; $p_e_h = '10'; $p_e_m = '20'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Afternoon Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 1; $p_s_h = '14'; $p_s_m = '30'; $p_e_h = '14'; $p_e_m = '45'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Afternoon Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 2; $p_s_h = '14'; $p_s_m = '30'; $p_e_h = '14'; $p_e_m = '45'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Afternoon Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 3; $p_s_h = '14'; $p_s_m = '30'; $p_e_h = '14'; $p_e_m = '45'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Afternoon Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 4; $p_s_h = '14'; $p_s_m = '30'; $p_e_h = '14'; $p_e_m = '45'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Afternoon Break'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 5; $p_s_h = '14'; $p_s_m = '30'; $p_e_h = '14'; $p_e_m = '45'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Lunchtime A'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 1; $p_s_h = '12'; $p_s_m = '15'; $p_e_h = '12'; $p_e_m = '55'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Lunchtime A'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 2; $p_s_h = '12'; $p_s_m = '15'; $p_e_h = '12'; $p_e_m = '55'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Lunchtime A'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 3; $p_s_h = '12'; $p_s_m = '15'; $p_e_h = '12'; $p_e_m = '55'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Lunchtime A'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 4; $p_s_h = '12'; $p_s_m = '15'; $p_e_h = '12'; $p_e_m = '55'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
+  $p_l_i = 0;  // No instructor required for lunch and breaks
+
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
+  $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Lunchtime A'))->fetchField();
+
+  $theclass = node_load($classid);  // get the class start date from the class
+  $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
+  $class_start_date = new DateTime($start_date);  // create a datetime object for new period
+
+  $p_d = 5; $p_s_h = '12'; $p_s_m = '15'; $p_e_h = '12'; $p_e_m = '55'; $cl_rm = 0;
+
+  kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
+//---
+
 /**
  * function to write a record into the the ks_class_schedule table
  * uses ks_insert_schedule_record() in ks_db_lib.inc

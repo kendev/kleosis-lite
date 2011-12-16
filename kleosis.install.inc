@@ -43,18 +43,18 @@ function kleosis_install() {
   variable_set('kleosis_starting_dow', '1');
   variable_set('kleosis_pager_rows', '16');
 
-  variable_set('kleosis_morn_break_start_hour', '10');
-  variable_set('kleosis_morn_break_start_min', '05');
-  variable_set('kleosis_morn_break_end_hour', '10');
-  variable_set('kleosis_morn_break_end_min', '20');
-  variable_set('kleosis_lunch_start_hour', '12');
-  variable_set('kleosis_lunch_start_min', '15');
-  variable_set('kleosis_lunch_end_hour', '12');
-  variable_set('kleosis_lunch_end_min', '55');
-  variable_set('kleosis_aft_break_start_hour', '14');
-  variable_set('kleosis_aft_break_start_min', '30');
-  variable_set('kleosis_aft_break_end_hour', '14');
-  variable_set('kleosis_aft_break_end_min', '50');
+  variable_set('kleosis_morn_break_start_hour', '00');
+  variable_set('kleosis_morn_break_start_min', '00');
+  variable_set('kleosis_morn_break_end_hour', '00');
+  variable_set('kleosis_morn_break_end_min', '00');
+  variable_set('kleosis_lunch_start_hour', '00');
+  variable_set('kleosis_lunch_start_min', '00');
+  variable_set('kleosis_lunch_end_hour', '00');
+  variable_set('kleosis_lunch_end_min', '00');
+  variable_set('kleosis_aft_break_start_hour', '00');
+  variable_set('kleosis_aft_break_start_min', '00');
+  variable_set('kleosis_aft_break_end_hour', '00');
+  variable_set('kleosis_aft_break_end_min', '00');
 
 /*
   variable_set('kleosis_final_exam_weight','25.00');

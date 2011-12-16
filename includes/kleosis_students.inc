@@ -943,7 +943,7 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
 }
 
 /**
- * Provides the class schedule for a student
+ * Provides the class schedule layout for a student
  *
  * @return
  *   build of the class schedule
@@ -990,7 +990,7 @@ function kleosis_student_class_schedule_list() {
     $nids = array_keys($result['node']);
     $nodes = entity_load('node', array_keys($result['node']));
 
-  // get the start and end times from the classes that the student has taken during the selected academic year and term
+  // get the period start and end times from the class schedule for the classes that the student has (is) taken during the selected academic year and term
 
   $query = db_select('ks_student_course_classes', 'ksstuclass');
   $query->innerJoin('ks_class_schedule', 'ksclsched', 'ksclsched.kccls_id_fk = ksstuclass.kccls_id_fk');
