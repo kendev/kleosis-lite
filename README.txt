@@ -17,7 +17,7 @@ Kleosis is an open source project and is welcoming contributors to participate i
 
 More Information
 ----------------
-See the Kleosis home site at: [http://www.kleosis.org](http://www.kleosis.org/ "Kleosis Website") 
+See the Kleosis home site at: [http://www.kleosis.org]
 
 Good luck and enjoy!
 
