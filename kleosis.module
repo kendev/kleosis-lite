@@ -68,7 +68,6 @@ function kleosis_menu() {
     'expanded' => TRUE,
     'menu_name' => 'kleosismm',
   );
-  //Link to the kleosis Students page (with tabs)
   $items['kleosis/students'] = array(
     'title' => 'Students',    // this title shows in the main menu
     'description' => 'Access Students functions',
@@ -80,7 +79,6 @@ function kleosis_menu() {
     'weight' => -1,
     'menu_name' => 'kleosismm',
   );
-
   $items['kleosis/students/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'title' => 'Students List',  // this title shows in the tabbbed menu as the first tab
@@ -101,7 +99,6 @@ function kleosis_menu() {
         'title' => 'Summary',
         'weight' => -10,
        );
-
       $items['kleosis/students/summary/biodata/%kleosis_std_sd'] = array(
        'description' => 'Display biodata details',
        'page callback' => 'kleosis_biodata_details_view',
@@ -112,7 +109,6 @@ function kleosis_menu() {
        'type' => MENU_LOCAL_TASK,
        'weight' => 1,
       );
-
       $items['kleosis/students/summary/setstatus/%kleosis_std_sd'] = array(
         'description' => 'Display/edit student status details',
         'page callback' => 'kleosis_student_set_status',
@@ -123,7 +119,6 @@ function kleosis_menu() {
         'type' => MENU_LOCAL_TASK,
         'weight' => 2,
       );
-
       $items['kleosis/students/summary/setrelations/%kleosis_std_sd'] = array(
         'description' => 'Display/edit student relationships',
         'page callback' => 'kleosis_student_setrelations',
@@ -207,7 +202,6 @@ function kleosis_menu() {
       'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
       'weight' => -10,
     );
-
       $items['kleosis/students/grades/current_grades'] = array(
         'type' => MENU_LOCAL_TASK,
         'title' => 'Current Grades',
@@ -246,7 +240,6 @@ function kleosis_menu() {
       'weight' => 8,
     );
 
-  //Link to the kleosis Enrollment page:
   $items['kleosis/enrollment'] = array(
     'type' => MENU_NORMAL_ITEM,
     'title' => 'Enrollments',
@@ -276,7 +269,6 @@ function kleosis_menu() {
     'weight' => 2,
   );
 */
-  //Link to the kleosis Attendance page:
   $items['kleosis/attendance'] = array(
     'title' => 'Attendance',
     'description' => 'Provides SIS Attendance',
@@ -302,49 +294,48 @@ function kleosis_menu() {
     'weight' => 2,
   );
 
-   //Link to the kleosis Grades page:
-    $items['kleosis/grades'] = array(
-      'title' => 'Grades',
-      'description' => 'Provides SIS Grades functions',
-      'page callback' => 'drupal_get_form',
+  $items['kleosis/grades'] = array(
+    'title' => 'Grades',
+    'description' => 'Provides SIS Grades functions',
+    'page callback' => 'drupal_get_form',
 //      'page arguments' => array('kleosis_current_grades_by_class'),
-      'page arguments' => array('kleosis_current_grades'),
-      'file' => 'includes/kleosis_grades.inc',
-      'access callback' => TRUE,
-      'expanded' => TRUE,
-      'weight' => 8,
-      'menu_name' => 'kleosismm',
-    );
-    $items['kleosis/grades/default'] = array(
-      'type' => MENU_DEFAULT_LOCAL_TASK,
-      'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
-      'weight' => 1,
-    );
+    'page arguments' => array('kleosis_current_grades'),
+    'file' => 'includes/kleosis_grades.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 8,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/grades/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
 
-    $items['kleosis/grades/current_grades'] = array(
+  $items['kleosis/grades/current_grades'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Current Grades',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_current_grades_by_class'),
+    'file' => 'includes/kleosis_grades.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+    $items['kleosis/grades/current_grades/default'] = array(
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'title' => 'by Class',
+      'weight' => 2,
+    );
+/*
+    $items['kleosis/grades/current_grades/by_student'] = array(
       'type' => MENU_LOCAL_TASK,
-      'title' => 'Current Grades',
+      'title' => 'by Student',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('kleosis_current_grades_by_class'),
+      'page arguments' => array('kleosis_current_grades_by_student'),
       'file' => 'includes/kleosis_grades.inc',
       'access callback' => TRUE,
-      'weight' => 3,
+      'weight' => 8,
     );
-      $items['kleosis/grades/current_grades/default'] = array(
-        'type' => MENU_DEFAULT_LOCAL_TASK,
-        'title' => 'by Class',
-        'weight' => 2,
-      );
-/*
-      $items['kleosis/grades/current_grades/by_student'] = array(
-        'type' => MENU_LOCAL_TASK,
-        'title' => 'by Student',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('kleosis_current_grades_by_student'),
-        'file' => 'includes/kleosis_grades.inc',
-        'access callback' => TRUE,
-        'weight' => 8,
-      );
 */
     $items['kleosis/grades/final_grades'] = array(
       'type' => MENU_LOCAL_TASK,
@@ -442,37 +433,6 @@ function kleosis_menu() {
   );
 /////////////////////////////////////////////////
 */
-/*
-  //Link to the kleosis Class Schedule page:
-    // Note - these menu items are currently located in the Class module
-  $items['kleosis/class_schedule'] = array(
-    'type' => MENU_NORMAL_ITEM,
-    'title' => 'Class Schedule',
-    'description' => 'Provides SIS Class Schedule functions',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_class_schedule_page'),
-    'file' => 'includes/kleosis_class_schedule.inc',
-    'access callback' => TRUE,
-    'expanded' => TRUE,
-    'weight' => 5,
-    'menu_name' => 'kleosismm',
-  );
-  //Link to the kleosis Class Schedule page:
-  $items['kleosis/class_schedule/default'] = array(
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Class Schedule', // this title shows in the tabbbed menu as the first tab
-    'weight' => 1,
-  );
-  $items['kleosis/class_schedule/placeholder_1'] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Another Tab',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_placeholder_tab'),
-    'access callback' => TRUE,
-    'weight' => 2,
-  );
-*/
-  //Link to the kleosis Faculty page:
   $items['kleosis/faculty'] = array(
     'title' => 'Faculty',
     'description' => 'Provides SIS Faculty functions',
@@ -484,13 +444,11 @@ function kleosis_menu() {
     'weight' => 10,
     'menu_name' => 'kleosismm',
   );
-  //Link to the kleosis Faculty page:
   $items['kleosis/faculty/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'title' => 'Faculty', // this title shows in the tabbbed menu as the first tab
     'weight' => 1,
   );
-
   $items['kleosis/faculty/placeholder_1'] = array(
     'type' => MENU_LOCAL_TASK,
     'title' => 'Faculty Item',
@@ -499,7 +457,6 @@ function kleosis_menu() {
     'access callback' => TRUE,
     'weight' => 2,
   );
-  //Link to the kleosis Reports and Queries page:
   $items['kleosis/reports_and_queries'] = array(
     'title' => 'Reports and Queries',
     'description' => 'Provides SIS Reports',
@@ -553,7 +510,7 @@ function kleosis_menu() {
     'weight' => 5,
   );
 */
-  //Link to the kleosis Admin page:
+
   $items['kleosis/admin'] = array(
     'title' => 'Admin',
     'description' => 'Provides SIS Admin functions',
@@ -578,17 +535,7 @@ function kleosis_menu() {
     'access callback' => TRUE,
     'weight' => 2,
   );
-/*
-  $items['kleosis/admin/main_menu'] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Kleosis Menu',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_main_menu'),
-    'access callback' => TRUE,
-    'weight' => 4,
-  );
-*/
-  //Link to the kleosis LMS Direct page:
+
   $items['kleosis/lms_direct'] = array(
     'title' => 'LMS Direct',
     'description' => 'Provides SIS LMS Direct functions',
@@ -647,7 +594,6 @@ function kleosis_menu() {
     'file' => 'includes/kleosis_users.inc',
   );
 
-  //Link to the kleosis Processes page:
   $items['kleosis/processes'] = array(
     'title' => 'Processes',
     'description' => 'Provides functions to control process flow',
@@ -700,6 +646,7 @@ function kleosis_menu() {
     'access arguments' => array('administer kleosis'),
     'weight' => 5,
   );
+/*
   $items["kleosis/processes/logout"] = array(
     'type' => MENU_LOCAL_TASK,
     'title' => 'Force logout',
@@ -709,6 +656,7 @@ function kleosis_menu() {
     'access callback' => TRUE,
     'weight' => 6,
   );
+*/
   $items['admin/config/development/kleosis'] = array(
     'title' => 'Kleosis settings',
     'description' => 'Configuration for the Kleosis module.',
@@ -717,9 +665,7 @@ function kleosis_menu() {
     'access arguments' => array('administer users'),
     'type' => MENU_NORMAL_ITEM,
   );
-////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////
   return $items;
 }
 
@@ -815,7 +761,7 @@ return $form;
 }
 
 /**
- * Function called by the main page 'Enter" buttonto redirect to the Students List page
+ * Function called by the main page 'Enter" button to redirect to the Students List page
  *
  * @return
  *    redirect to the Students List page
@@ -827,7 +773,7 @@ function kleosis_enter($form, &$form_state) {
 }
 
 /**
- * Defines the form for the main menu tab
+ * Defines the form for the main menu tab - not currently used
  *
  * @return
  *    The Main Menu tab
@@ -960,28 +906,28 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Morning break start hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_morn_break_start_hour', '10'),
+    '#default_value' => variable_get('kleosis_morn_break_start_hour', '00'),
     '#description' => t('Starting hour for the morning break.'),
   );
   $form['kleosis_break']['kleosis_morn_break_start_min'] = array(
     '#type' => 'select',
     '#title' => t('Morning break start minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_morn_break_start_min', '05'),
+    '#default_value' => variable_get('kleosis_morn_break_start_min', '00'),
     '#description' => t('Starting minute for the morning break.'),
   );
   $form['kleosis_break']['kleosis_morn_break_end_hour'] = array(
     '#type' => 'select',
     '#title' => t('Morning break end hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_morn_break_end_hour', '10'),
+    '#default_value' => variable_get('kleosis_morn_break_end_hour', '00'),
     '#description' => t('Ending hour for the morning break.'),
   );
   $form['kleosis_break']['kleosis_morn_break_end_min'] = array(
     '#type' => 'select',
     '#title' => t('Morning break end minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_morn_break_end_min', '20'),
+    '#default_value' => variable_get('kleosis_morn_break_end_min', '00'),
     '#description' => t('Ending minute for the morning break.'),
   );
 
@@ -989,28 +935,28 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Lunchtime start hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_lunch_start_hour', '12'),
+    '#default_value' => variable_get('kleosis_lunch_start_hour', '00'),
     '#description' => t('Starting hour for the lunchtime.'),
   );
   $form['kleosis_break']['kleosis_lunch_start_min'] = array(
     '#type' => 'select',
     '#title' => t('Lunchtime start minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_lunch_start_min', '15'),
+    '#default_value' => variable_get('kleosis_lunch_start_min', '00'),
     '#description' => t('Starting minute for the lunchtime.'),
   );
   $form['kleosis_break']['kleosis_lunch_end_hour'] = array(
     '#type' => 'select',
     '#title' => t('Lunchtime end hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_lunch_end_hour', '12'),
+    '#default_value' => variable_get('kleosis_lunch_end_hour', '00'),
     '#description' => t('Ending hour for the lunchtime.'),
   );
   $form['kleosis_break']['kleosis_lunch_end_min'] = array(
     '#type' => 'select',
     '#title' => t('Lunchtime end minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_lunch_end_min', '55'),
+    '#default_value' => variable_get('kleosis_lunch_end_min', '00'),
     '#description' => t('Ending minute for the lunchtime.'),
   );
 
@@ -1018,14 +964,14 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Afternoon break start hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_aft_break_start_hour', '14'),
+    '#default_value' => variable_get('kleosis_aft_break_start_hour', '00'),
     '#description' => t('Starting hour for the afternoon break.'),
   );
   $form['kleosis_break']['kleosis_aft_break_start_min'] = array(
     '#type' => 'select',
     '#title' => t('Afternoon break start minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_aft_break_start_min', '30'),
+    '#default_value' => variable_get('kleosis_aft_break_start_min', '00'),
     '#description' => t('Starting minute for the afternoon break.'),
   );
 
@@ -1033,14 +979,14 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Afternoon break end hour'),
     '#options' =>  kleosis_hours_values(),
-    '#default_value' => variable_get('kleosis_aft_break_end_hour', '14'),
+    '#default_value' => variable_get('kleosis_aft_break_end_hour', '00'),
     '#description' => t('Ending hour for the afternoon break.'),
   );
   $form['kleosis_break']['kleosis_aft_break_end_min'] = array(
     '#type' => 'select',
     '#title' => t('Afternoon break end minute'),
     '#options' =>  kleosis_minutes_values(),
-    '#default_value' => variable_get('kleosis_aft_break_end_min', '45'),
+    '#default_value' => variable_get('kleosis_aft_break_end_min', '00'),
     '#description' => t('Ending minute for the afternoon break.'),
   );
 /*

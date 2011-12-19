@@ -40,7 +40,7 @@ $page_desc = <<<EOT
       <li>Test - Test - Users List -> shows content from internal tables and from moodle<br/><br/></li>
       <li>Test - Dev Code -> for quick function development and testing by programmers<br/><br/></li>
       <li>Sample Data -> loads sample data into Kleosis<br/><br/></li>
-      <li>Force Logout -> compensated for a bug in an earlier version of Drupal 7<br/><br/></li>
+<!--      <li>Force Logout -> compensated for a bug in an earlier version of Drupal 7<br/><br/></li> -->
       <li>more to come...<br/><br/></li>
     </ul>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

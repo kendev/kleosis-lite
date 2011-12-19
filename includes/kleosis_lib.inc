@@ -584,14 +584,8 @@ function kleosis_schedule_breaktimes() {
   $breaktime_schedule_array[] = array('period' => $lunch_break, 'class' => 'lunch break', 'day' => 'all',) ;
   $breaktime_schedule_array[] = array('period' => $afternoon_break, 'class' => 'afternoon break', 'day' => 'all',) ;
 
-
-
-
   return $breaktime_schedule_array;
 }
-
-
-
 
 
 /**

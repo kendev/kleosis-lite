@@ -432,7 +432,7 @@ $sync_message2 = 'The synchronization of Moodle users into Drupal is currently u
 }
 
 /**
- * Provides a quick page for developing code
+ * Provides a quick logout option
  *
  * @param $callback_arg
  *    from hook_menu
@@ -482,7 +482,7 @@ $form['pagehelp']['pageinfo'] = array(
 return $form;
 }
 */
-/************************************    sample and test code   **************************************************/
+/************************************    more sample and test code   **************************************************/
 /*
 //$result = ks_get_enroll_records($drupaluserid, $unenroll_is_null = TRUE, $class_id = '', $enrol_date = '') {
 $result = ks_get_enroll_records(368, TRUE, 249);
