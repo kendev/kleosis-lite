@@ -59,39 +59,19 @@ function new_module_menu() {
 }
 
 /**
- * Displays the New Node main page - not currently used
- *
- */
-function kleosis_new_module_page($form, &$form_state) {
-
-$page_desc = <<<EOT
-    <br/>This is the base page for the kleosis New Node functions.
-    A description of the New NOdes functions accessable from above tabs will go here.<br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('New Node Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-
-/**
  * Render a filtered list of New Nodes.
  *
  * Returned form has a filter form and a list of courses
  *
  */
 function kleosis_new_module_list_form() {
+
+  // Set Breadcrumbs
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = t('New Node List');
+
+  drupal_set_breadcrumb($breadcrumb);
 
   $build['filter'] = kleosis_new_module_filter_form();
   $build['#submit'][] = 'kleosis_new_module_filter_form_submit';
@@ -283,11 +263,14 @@ drupal_set_title(t('New Node List'));
 
   foreach ($results as $row) {
     $node = node_load($row->nid);
+
+    // can now get contents of any field like this: somefield = $node->ks_somefield['und'][0]['value'];
+
     $options[$row->nid] = array(
       'nid' => $node->nid,
       'title' => $node->title,
       'type' => $node->type,
-//      'operations' =>  l(t('view'), 'node/' . $row->nid, array('query' => array('destination' => 'kleosis/new_nodes/list')))
+//      'operations' =>  l(t('view'), 'node/' . $row->nid, array('query' => array('destination' => 'kleosis/new_modules/list')))
       'operations' =>  l(t('view'), 'kleosis/new_module/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/new_module'))) . ' | ' . l(t('edit'), 'kleosis/new_module/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/new_module'))),
       );
   }
@@ -309,6 +292,23 @@ drupal_set_title(t('New Node List'));
 
 return $build;
 
+}
+
+/**
+ *
+ * Implements hook_node_validate().
+ *
+ */
+function kleosis_new_node_validate($node, $form, &$form_state) {
+
+  if ($node->type == 'new_node') {
+    if( !isset($form_state['values']['somefield_1']['und'][0]['value']) ) {
+        form_set_error('classes', t('Please enter a value for somefield_1.'), $limit_validation_errors = NULL);
+      }
+    if( !isset($form_state['values']['somefield_2']['und'][0]['value']) ) {
+        form_set_error('classes', t('Please enter a value for somefield_2.'), $limit_validation_errors = NULL);
+      }
+  }
 }
 
 /**
@@ -349,32 +349,42 @@ function kleosis_new_node_view($callback_arg = '') {
 //  dpm('Here are args 0, 1, 2, 3, 4');
 //  dpm(arg(0)); dpm(arg(1)); dpm(arg(2)); dpm(arg(3)); dpm(arg(4));
 
-    drupal_set_title(t('New Node Info'));
-    $nid = arg(3);
-    if ($nid && ($nid <> 1)) {  // if nid id is passed, then look up the new_node node and display it
-      $node = node_load($nid);
-      if(  !empty($node)  ) {
-        $ksop = isset($_GET['ksop']) ? $_GET['ksop'] : '';
-        if ($ksop == 'edit') {
-          $build['node_edit'] = node_page_edit($node);
-        }
-        else {
-          $build['node_display'] = node_view($node);
-        }
+  // Set Breadcrumbs
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('New Node'), 'kleosis/new_module');
+  $breadcrumb[] = t('New Node Info');
+
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('New Node Info'));
+  $nid = arg(3);
+  if ($nid && ($nid <> 1)) {  // if nid id is passed, then look up the new_node node and display it
+    $node = node_load($nid);
+    if(  !empty($node)  ) {
+      $ksop = isset($_GET['ksop']) ? $_GET['ksop'] : '';
+      if ($ksop == 'edit') {
+        $build['node_edit'] = node_page_edit($node);
       }
       else {
-        $build['node_not_exists'] = array(
-        '#type' => 'markup',
-        '#markup' => '<p><br/>' . t('This new_node does not exist or cannot be found - please select another.') . '</p>',
-        );
+        $build['node_display'] = node_view($node);
       }
     }
-    else {  // node argument does not exist, or is = 1, try again
-      $build['no_node_argument'] = array(
-     '#type' => 'markup',
-     '#markup' => '<p><br/>' . t('Please select a New Node from the New Node List page by clicking on a view or edit link.') . '</p>',
+    else {
+      $build['node_not_exists'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p><br/>' . t('This new_node does not exist or cannot be found - please select another.') . '</p>',
       );
     }
+  }
+  else {  // node argument does not exist, or is = 1, try again
+    $build['no_node_argument'] = array(
+   '#type' => 'markup',
+   '#markup' => '<p><br/>' . t('Please select a New Node from the New Node List page by clicking on a view or edit link.') . '</p>',
+    );
+//    drupal_set_message('Please select a New Node Name or edit link from the New Node List tab.');
+//    drupal_goto($path = 'kleosis/new_module', $options = array());
+  }
   return $build;
 }
 
@@ -387,8 +397,18 @@ function kleosis_new_node_view($callback_arg = '') {
 
 function kleosis_create_new_node_form($form, $form_state) {
 
+  module_load_include('pages.inc', 'node', 'node');
   global $user;
   global $base_root;
+
+  // Set Breadcrumbs
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('New Node'), 'kleosis/new_module');
+  $breadcrumb[] = t('New Node Info');
+
+  drupal_set_breadcrumb($breadcrumb);
+
   drupal_set_title(t('Create a new_node'));
   $build = array();
 
@@ -462,7 +482,7 @@ function ks_new_node_get_users_name($uid){
 /**
  *
  *  Provide a non-null parameter replacement for this menu item:
- *    $items['kleosis/new_nodes/details/%new_node_id'']
+ *    $items['kleosis/new_modules/details/%new_node_id'']
  *
  * @param $uarg
  *   The new_node id from the url (can be null)
@@ -561,11 +581,12 @@ function new_module_help($path, $arg) {
 }
 
 
-/******************************************************************
+/***********************************************************************************
 
- *    Example functions to load list_text type fields (for the Courses module)
+ *  Example functions to load list_text type fields (for the Courses module)
+ *  Note: this is legacy code - see updated code in courses.install and kleosis_lib.inc
 
-/******************************************************************/
+/***********************************************************************************/
 /**
  * The allowed values for the lab_type courses field
  *

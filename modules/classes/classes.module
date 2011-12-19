@@ -15,6 +15,7 @@ require_once ($libpath);
 
 /**
  * Implements hook_node_info().
+ * (this is optional as this info now originates in classes.install)
  */
 function classes_node_info() {
   return array(
@@ -84,40 +85,7 @@ function classes_menu() {
     'type' => MENU_LOCAL_TASK,
     'weight' => 4,
   );
-/*  $items['kleosis/classes/schedule'] = array(
-    'title' => 'Class Schedule',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_class_schedule_form'),
-    'access callback' => TRUE,
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 5,
-  );
-    $items['kleosis/students/summary'] = array(
-      'type' => MENU_LOCAL_TASK,
-      'title' => 'Summary',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('kleosis_student_summary'),
-      'file' => 'includes/kleosis_students.inc',
-      'access callback' => TRUE,
-      'weight' => 3,
-    );
-      $items['kleosis/students/summary/default'] = array(
-        'type' => MENU_DEFAULT_LOCAL_TASK,
-        'title' => 'Summary',
-        'weight' => -10,
-       );
 
-      $items['kleosis/students/summary/biodata/%kleosis_std_sd'] = array(
-       'description' => 'Display biodata details',
-       'page callback' => 'kleosis_biodata_details_view',
-       'page arguments' => array(4),
-       'access arguments' => array('access content'),
-       'file' => 'includes/kleosis_students_admin_info.inc',
-       'title' => 'Biodata Details',
-       'type' => MENU_LOCAL_TASK,
-       'weight' => 1,
-      );
-*/
   $items['kleosis/classes/schedule'] = array(
     'title' => 'Class Schedule',
     'page callback' => 'drupal_get_form',
@@ -162,18 +130,6 @@ function classes_menu() {
     'weight' => 3,
   );
 
-/*
-  $items['kleosis/classes/schedule/edit/tempdev'] = array(  // note: this function is very much under development
-    'title' => 'Class Schedule Edit Temp Dev',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_class_schedule_edit_form'),
-    'file' => '../../includes/forms/kleosis_class_schedule_edit_form.inc',
-//    'access callback' => TRUE,
-    'access arguments' => array('administer kleosis'),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 6,
-  );
-*/
   return $items;
 }
 

@@ -4,15 +4,12 @@
  * @file
  * This is a simple medical node that allows medical information
  * to be maintained by the Kleosis module for students
- * - WARNING - This module contains very early code from the Drupal examples module - WARNING -
+ * - NOTE - This module contains some early code from the Drupal examples module - NOTE -
  * The code has been improved in the Course and Class modules...
- * todo: clean-up this code
+ * todo: clean-up the code in this module
  */
 
  module_load_include('pages.inc', 'node', 'node');
-
-//$kleosispath = drupal_get_path('module', 'kleosis');
-//$medicalform = $kleosispath . '/modules/forms/kleosis_medical_view_form.inc';
 
 /**
  * Implements hook_menu().
@@ -60,7 +57,7 @@ function medical_menu() {
 }
 
 /**
- * Custom callback that builds a list of medical content.
+ * Custom callback that builds a list of medical content - not currently used
  *
  * @return
  *   a build array
@@ -137,15 +134,12 @@ function kleosis_medical_info_view($callback_arg = '') {
     if ($nid) {
       $node = node_load($nid);
 
-//      dpm($node);
-//      dpm($node->medical_physician['und'][0]['value']);
-//      dpm($node->medical_allergies['und']);
-//      $res = $node->medical_allergies['und'];
+//      $res = $node->medical_allergies['und']; // test code
 //      foreach ($res as $allergy) {
 //        dpm($allergy['value']);
 //      }
-
 //      $build['node_display'] = node_view($node, 'Medical_VM_01');
+
       $build['node_display'] = node_view($node);
       return $build;
        /* if ($nid) {  // another technique: redirect to let Drupal launch the node edit form
@@ -194,7 +188,7 @@ function kleosis_medical_info_view($callback_arg = '') {
 
       $build['student_id_not_found'] = array(
         '#type' => 'markup',
-        '#markup' => '<p>' . t('Student id not found. New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, click on the summary link, and then View Medical Info.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',);
+        '#markup' => '<p>' . t('Student id not found. New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',);
 
         return $build;
       }
@@ -206,7 +200,7 @@ function kleosis_medical_info_view($callback_arg = '') {
     //     with autocomplete textbox to select user
     $build['no_id'] = array(
       '#type' => 'markup',
-      '#markup' => '<p>' . t('New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, click on the summary link, and then Medical Info tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',
+      '#markup' => '<p>' . t('New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',
     );
     return $build;
 }
@@ -361,10 +355,16 @@ function medical_help($path, $arg) {
   }
 }
 
+/*************************************************************************************************************
+ *
+ * The following code is based on the Drupal 7 examples module and implemented here for illustrative purposes...
+ *
+ *************************************************************************************************************/
+
 /**
  * Implements hook_entity_info_alter().
  *
- * We need to modify the default node entity info by adding a new view mode to
+ * This will modify the default node entity info by adding a new view mode to
  * be used in functions like node_view() or node_build_content().
  *
  */
@@ -433,11 +433,18 @@ function medical_condition($variables) {
   return $output;
 }
 
+/*************************************************************************************************************
+ *
+ * The above code is based on the Drupal 7 examples module and implemented here for illustrative purposes...
+ *
+ *************************************************************************************************************/
+
+
 /**
 *
 * Implement hook_form() with the standard default form
 *
-*  (Drupal documentation 17 June 2011 is not "complete" on this function)
+*  (Drupal documentation 17 June 2011 is not "complete" on this function, so it's not currently used)
 */
 /*
 function medical_node_form($node, &$form_state) {
@@ -455,8 +462,7 @@ function medical_node_form($node, &$form_state) {
   $types = node_type_get_types();
   drupal_set_title(t('Create @name', array('@name' => $types[$type]->name)), PASS_THROUGH);
 
-return node_content_form($node,$form_state);
-
+  return node_content_form($node,$form_state);
 }
 */
 
@@ -506,17 +512,16 @@ function ks_get_med_subject_record($med_nid, $category) {
   return $result;
 }
 
-/**   todo: finish this function...
+/**
  *
- * update the subject records in the ks_medical_info custom table for a category
+ * Update the subject records in the ks_medical_info custom table for a category
  * from a specific user's medical node form
  *
-// * @param $med_nid
-// *    is the drupal nid for the user's medical form (node)
-// * @param $category
-// *    is the category id (e.g. administrative, illnesses, surgery, etc.)
  * @param $subject_record
  *    is a record of subject fields in the category from the medical info form
+ *      med_subject is the subject id (e.g. chicken pox, asthma, measles, etc.)
+ *      med_category is the category id (e.g. administrative, illnesses, surgery, etc.)
+ *      med_nid_fk is the drupal nid for the user's medical form (node)
  * @return
  *    ok or not
  */
@@ -539,10 +544,9 @@ function ks_update_med_subject_record($subject_record) {
 
  }
 
-
-/**   todo: finish this function...
+/**
  *
- * insert the subject records into the ks_medical_info custom table for a category
+ * Insert the subject records into the ks_medical_info custom table for a category
  * from a specific user's medical node form
  *
 // * @param $med_nid
@@ -557,8 +561,6 @@ function ks_update_med_subject_record($subject_record) {
 function ks_insert_med_subject_record($subject_record) {
 
 //  dpm('inside ks_insert_med_subject_record');
-//  dpm($subject_record);
-
 
   $cnt = db_insert('ks_medical_info')
       ->fields(array('med_nid_fk' => $subject_record['med_nid_fk'],
@@ -572,7 +574,7 @@ function ks_insert_med_subject_record($subject_record) {
 
  }
 
-/**   todo: test this function...
+/**
  *
  * delete all subject records from the ks_medical_info custom table for all categories
  * for a specific user's medical node form
@@ -598,344 +600,337 @@ function ks_delete_med_subject_record($med_nid) {
  */
 function medical_node_insert($node) {
 
-//  used primarily when this medical node uses a custom table
 // dpm('inside medical_node_insert()');
-// dpm($node);
 
 if ($node->type <> 'medical') {
 //  dpm('not medical_node_insert');
   return;
 }
 
+  $category = 2;  // illness
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->il_yes_no_chicken_pox;
+  $subject_record['description'] = $node->il_details_chicken_pox;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$category = 2;  // illness
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->il_yes_no_chicken_pox;
-$subject_record['description'] = $node->il_details_chicken_pox;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->il_yes_no_german_measles_rubella;
+  $subject_record['description'] = $node->il_details_german_measles_rubella;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->il_yes_no_german_measles_rubella;
-$subject_record['description'] = $node->il_details_german_measles_rubella;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->il_yes_no_hepatitis;
+  $subject_record['description'] = $node->il_details_hepatitis;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->il_yes_no_hepatitis;
-$subject_record['description'] = $node->il_details_hepatitis;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->il_yes_no_measles;
+  $subject_record['description'] = $node->il_details_measles;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->il_yes_no_measles;
-$subject_record['description'] = $node->il_details_measles;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->il_yes_no_mumps;
+  $subject_record['description'] = $node->il_details_mumps;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->il_yes_no_mumps;
-$subject_record['description'] = $node->il_details_mumps;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->il_yes_no_poliomyelitis;
+  $subject_record['description'] = $node->il_details_poliomyelitis;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->il_yes_no_poliomyelitis;
-$subject_record['description'] = $node->il_details_poliomyelitis;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->il_yes_no_tuberculosis;
+  $subject_record['description'] = $node->il_details_tuberculosis;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->il_yes_no_tuberculosis;
-$subject_record['description'] = $node->il_details_tuberculosis;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->il_yes_no_typhoid;
+  $subject_record['description'] = $node->il_details_typhoid;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->il_yes_no_typhoid;
-$subject_record['description'] = $node->il_details_typhoid;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->il_yes_no_whooping_cough;
+  $subject_record['description'] = $node->il_details_whooping_cough;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->il_yes_no_whooping_cough;
-$subject_record['description'] = $node->il_details_whooping_cough;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->il_yes_no_others;
+  $subject_record['description'] = $node->il_details_others;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->il_yes_no_others;
-$subject_record['description'] = $node->il_details_others;
-$ok = ks_insert_med_subject_record($subject_record);
+  /**********/
 
-/**********/
+  $category = 3;  // health problems
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->hp_yes_no_allergies;
+  $subject_record['description'] = $node->hp_details_allergies;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$category = 3;  // health problems
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->hp_yes_no_allergies;
-$subject_record['description'] = $node->hp_details_allergies;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->hp_yes_no_asthma;
+  $subject_record['description'] = $node->hp_details_asthma;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->hp_yes_no_asthma;
-$subject_record['description'] = $node->hp_details_asthma;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->hp_yes_no_congenital_abnormalities;
+  $subject_record['description'] = $node->hp_details_congenital_abnormalities;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->hp_yes_no_congenital_abnormalities;
-$subject_record['description'] = $node->hp_details_congenital_abnormalities;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->hp_yes_no_convulsions_epilepsy;
+  $subject_record['description'] = $node->hp_details_convulsions_epilepsy;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->hp_yes_no_convulsions_epilepsy;
-$subject_record['description'] = $node->hp_details_convulsions_epilepsy;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->hp_yes_no_diabetes;
+  $subject_record['description'] = $node->hp_details_diabetes;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->hp_yes_no_diabetes;
-$subject_record['description'] = $node->hp_details_diabetes;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->hp_yes_no_frequent_headaches;
+  $subject_record['description'] = $node->hp_details_frequent_headaches;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->hp_yes_no_frequent_headaches;
-$subject_record['description'] = $node->hp_details_frequent_headaches;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->hp_yes_no_hearing_difficulties;
+  $subject_record['description'] = $node->hp_details_hearing_difficulties;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->hp_yes_no_hearing_difficulties;
-$subject_record['description'] = $node->hp_details_hearing_difficulties;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->hp_yes_no_speech_difficulties;
+  $subject_record['description'] = $node->hp_details_speech_difficulties;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->hp_yes_no_speech_difficulties;
-$subject_record['description'] = $node->hp_details_speech_difficulties;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->hp_yes_no_sight_difficulties;
+  $subject_record['description'] = $node->hp_details_sight_difficulties;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->hp_yes_no_sight_difficulties;
-$subject_record['description'] = $node->hp_details_sight_difficulties;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 10;
+  $subject_record['yes_no'] = $node->hp_yes_no_heart_condition;
+  $subject_record['description'] = $node->hp_details_heart_condition;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 10;
-$subject_record['yes_no'] = $node->hp_yes_no_heart_condition;
-$subject_record['description'] = $node->hp_details_heart_condition;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 11;
+  $subject_record['yes_no'] = $node->hp_yes_no_surgery;
+  $subject_record['description'] = $node->hp_details_surgery;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 11;
-$subject_record['yes_no'] = $node->hp_yes_no_surgery;
-$subject_record['description'] = $node->hp_details_surgery;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->hp_yes_no_others;
+  $subject_record['description'] = $node->hp_details_others;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->hp_yes_no_others;
-$subject_record['description'] = $node->hp_details_others;
-$ok = ks_insert_med_subject_record($subject_record);
+  /**********/
 
-/**********/
+  $category = 4;  // vaccination history
 
-$category = 4;  // vaccination history
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->vi_yes_no_bcg_tuberculosis;
+  $subject_record['description'] = $node->vi_details_bcg_tuberculosis;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->vi_yes_no_bcg_tuberculosis;
-$subject_record['description'] = $node->vi_details_bcg_tuberculosis;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->vi_yes_no_chicken_pox;
+  $subject_record['description'] = $node->vi_details_chicken_pox;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->vi_yes_no_chicken_pox;
-$subject_record['description'] = $node->vi_details_chicken_pox;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->vi_yes_no_dtp_whooping_cough;
+  $subject_record['description'] = $node->vi_details_dtp_whooping_cough;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->vi_yes_no_dtp_whooping_cough;
-$subject_record['description'] = $node->vi_details_dtp_whooping_cough;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->vi_yes_no_hepatitis_a;
+  $subject_record['description'] = $node->vi_details_hepatitis_a;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->vi_yes_no_hepatitis_a;
-$subject_record['description'] = $node->vi_details_hepatitis_a;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->vi_yes_no_hepatitis_b;
+  $subject_record['description'] = $node->vi_details_hepatitis_b;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->vi_yes_no_hepatitis_b;
-$subject_record['description'] = $node->vi_details_hepatitis_b;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->vi_yes_no_hib;
+  $subject_record['description'] = $node->vi_details_hib;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->vi_yes_no_hib;
-$subject_record['description'] = $node->vi_details_hib;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->vi_yes_no_japanese_b_encephalitis;
+  $subject_record['description'] = $node->vi_details_japanese_b_encephalitis;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->vi_yes_no_japanese_b_encephalitis;
-$subject_record['description'] = $node->vi_details_japanese_b_encephalitis;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->vi_yes_no_measles;
+  $subject_record['description'] = $node->vi_details_measles;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->vi_yes_no_measles;
-$subject_record['description'] = $node->vi_details_measles;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->vi_yes_no_mumps;
+  $subject_record['description'] = $node->vi_details_mumps;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->vi_yes_no_mumps;
-$subject_record['description'] = $node->vi_details_mumps;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 10;
+  $subject_record['yes_no'] = $node->vi_yes_no_opv_polio;
+  $subject_record['description'] = $node->vi_details_opv_polio;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 10;
-$subject_record['yes_no'] = $node->vi_yes_no_opv_polio;
-$subject_record['description'] = $node->vi_details_opv_polio;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 11;
+  $subject_record['yes_no'] = $node->vi_yes_no_rubella;
+  $subject_record['description'] = $node->vi_details_rubella;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 11;
-$subject_record['yes_no'] = $node->vi_yes_no_rubella;
-$subject_record['description'] = $node->vi_details_rubella;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 12;
+  $subject_record['yes_no'] = $node->vi_yes_no_typhoid;
+  $subject_record['description'] = $node->vi_details_typhoid;
+  $ok = ks_insert_med_subject_record($subject_record);
 
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 12;
-$subject_record['yes_no'] = $node->vi_yes_no_typhoid;
-$subject_record['description'] = $node->vi_details_typhoid;
-$ok = ks_insert_med_subject_record($subject_record);
-
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->vi_yes_no_others;
-$subject_record['description'] = $node->vi_details_others;
-$ok = ks_insert_med_subject_record($subject_record);
-
-
-$category = 5;  // additional info
-
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->ai_yes_no_med_allergies;
-$subject_record['description'] = $node->ai_details_med_allergies;
-$ok = ks_insert_med_subject_record($subject_record);
-
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->ai_yes_no_meds_now_taking;
-$subject_record['description'] = $node->ai_details_meds_now_taking;
-$ok = ks_insert_med_subject_record($subject_record);
-
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->ai_yes_no_med_extra_info;
-$subject_record['description'] = $node->ai_details_med_extra_info;
-$ok = ks_insert_med_subject_record($subject_record);
-
-$category = 1;  // administrative
-
-$subject_record = array();
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->ad_yes_no_med_can_take;
-$subject_record['description'] = $node->ad_details_med_can_take;
-$ok = ks_insert_med_subject_record($subject_record);
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->vi_yes_no_others;
+  $subject_record['description'] = $node->vi_details_others;
+  $ok = ks_insert_med_subject_record($subject_record);
 
 
+  $category = 5;  // additional info
 
-//etc
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->ai_yes_no_med_allergies;
+  $subject_record['description'] = $node->ai_details_med_allergies;
+  $ok = ks_insert_med_subject_record($subject_record);
+
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->ai_yes_no_meds_now_taking;
+  $subject_record['description'] = $node->ai_details_meds_now_taking;
+  $ok = ks_insert_med_subject_record($subject_record);
+
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->ai_yes_no_med_extra_info;
+  $subject_record['description'] = $node->ai_details_med_extra_info;
+  $ok = ks_insert_med_subject_record($subject_record);
+
+  $category = 1;  // administrative
+
+  $subject_record = array();
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->ad_yes_no_med_can_take;
+  $subject_record['description'] = $node->ad_details_med_can_take;
+  $ok = ks_insert_med_subject_record($subject_record);
 
 }
 
@@ -946,7 +941,6 @@ $ok = ks_insert_med_subject_record($subject_record);
  */
 function medical_node_load($nodes, $types) {
 
-//  used primarily when this medical node uses a custom table
 //  dpm('inside medical_node_load() - not currently implemented');
 }
 
@@ -957,345 +951,340 @@ function medical_node_load($nodes, $types) {
  */
 function medical_node_update($node) {
 
-//  used primarily when this medical node uses a custom table
-//  dpm('inside medical_node_update() - not currently implemented');
-if ($node->type <> 'medical') {
-//  dpm('not medical_node_insert');
-  return;
-}
-//  dpm($node);
+  //  dpm('inside medical_node_update');
+  if ($node->type <> 'medical') {
+  //  dpm('not medical_node_insert');
+    return;
+  }
+  //  dpm($node);
 
-$category = 2;  // illness
-$subject_record = array();
+  $category = 2;  // illness
+  $subject_record = array();
 
-$subject_record['ksmi_id'] = $node->il_chicken_pox_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->il_yes_no_chicken_pox;
-$subject_record['description'] = $node->il_details_chicken_pox;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_chicken_pox_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->il_yes_no_chicken_pox;
+  $subject_record['description'] = $node->il_details_chicken_pox;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_german_measles_rubella_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->il_yes_no_german_measles_rubella;
-$subject_record['description'] = $node->il_details_german_measles_rubella;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_german_measles_rubella_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->il_yes_no_german_measles_rubella;
+  $subject_record['description'] = $node->il_details_german_measles_rubella;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_hepatitis_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->il_yes_no_hepatitis;
-$subject_record['description'] = $node->il_details_hepatitis;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_hepatitis_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->il_yes_no_hepatitis;
+  $subject_record['description'] = $node->il_details_hepatitis;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_measles_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->il_yes_no_measles;
-$subject_record['description'] = $node->il_details_measles;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_measles_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->il_yes_no_measles;
+  $subject_record['description'] = $node->il_details_measles;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_mumps_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->il_yes_no_mumps;
-$subject_record['description'] = $node->il_details_mumps;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_mumps_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->il_yes_no_mumps;
+  $subject_record['description'] = $node->il_details_mumps;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_poliomyelitis_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->il_yes_no_poliomyelitis;
-$subject_record['description'] = $node->il_details_poliomyelitis;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_poliomyelitis_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->il_yes_no_poliomyelitis;
+  $subject_record['description'] = $node->il_details_poliomyelitis;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_tuberculosis_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->il_yes_no_tuberculosis;
-$subject_record['description'] = $node->il_details_tuberculosis;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_tuberculosis_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->il_yes_no_tuberculosis;
+  $subject_record['description'] = $node->il_details_tuberculosis;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_typhoid_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->il_yes_no_typhoid;
-$subject_record['description'] = $node->il_details_typhoid;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_typhoid_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->il_yes_no_typhoid;
+  $subject_record['description'] = $node->il_details_typhoid;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_whooping_cough_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->il_yes_no_whooping_cough;
-$subject_record['description'] = $node->il_details_whooping_cough;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_whooping_cough_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->il_yes_no_whooping_cough;
+  $subject_record['description'] = $node->il_details_whooping_cough;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->il_others_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->il_yes_no_others;
-$subject_record['description'] = $node->il_details_others;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->il_others_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->il_yes_no_others;
+  $subject_record['description'] = $node->il_details_others;
+  $ok = ks_update_med_subject_record($subject_record);
 
-/**********/
+  /**********/
 
-$category = 3;  // Health Problems
-$subject_record = array();
+  $category = 3;  // Health Problems
+  $subject_record = array();
 
-$subject_record['ksmi_id'] = $node->hp_allergies_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->hp_yes_no_allergies;
-$subject_record['description'] = $node->hp_details_allergies;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_allergies_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->hp_yes_no_allergies;
+  $subject_record['description'] = $node->hp_details_allergies;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_asthma_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->hp_yes_no_asthma;
-$subject_record['description'] = $node->hp_details_asthma;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_asthma_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->hp_yes_no_asthma;
+  $subject_record['description'] = $node->hp_details_asthma;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_congenital_abnormalities_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->hp_yes_no_congenital_abnormalities;
-$subject_record['description'] = $node->hp_details_congenital_abnormalities;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_congenital_abnormalities_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->hp_yes_no_congenital_abnormalities;
+  $subject_record['description'] = $node->hp_details_congenital_abnormalities;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_convulsions_epilepsy_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->hp_yes_no_convulsions_epilepsy;
-$subject_record['description'] = $node->hp_details_convulsions_epilepsy;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_convulsions_epilepsy_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->hp_yes_no_convulsions_epilepsy;
+  $subject_record['description'] = $node->hp_details_convulsions_epilepsy;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_diabetes_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->hp_yes_no_diabetes;
-$subject_record['description'] = $node->hp_details_diabetes;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_diabetes_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->hp_yes_no_diabetes;
+  $subject_record['description'] = $node->hp_details_diabetes;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_frequent_headaches_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->hp_yes_no_frequent_headaches;
-$subject_record['description'] = $node->hp_details_frequent_headaches;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_frequent_headaches_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->hp_yes_no_frequent_headaches;
+  $subject_record['description'] = $node->hp_details_frequent_headaches;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_hearing_difficulties_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->hp_yes_no_hearing_difficulties;
-$subject_record['description'] = $node->hp_details_hearing_difficulties;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_hearing_difficulties_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->hp_yes_no_hearing_difficulties;
+  $subject_record['description'] = $node->hp_details_hearing_difficulties;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_speech_difficulties_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->hp_yes_no_speech_difficulties;
-$subject_record['description'] = $node->hp_details_speech_difficulties;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_speech_difficulties_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->hp_yes_no_speech_difficulties;
+  $subject_record['description'] = $node->hp_details_speech_difficulties;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_sight_difficulties_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->hp_yes_no_sight_difficulties;
-$subject_record['description'] = $node->hp_details_sight_difficulties;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_sight_difficulties_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->hp_yes_no_sight_difficulties;
+  $subject_record['description'] = $node->hp_details_sight_difficulties;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_heart_condition_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 10;
-$subject_record['yes_no'] = $node->hp_yes_no_heart_condition;
-$subject_record['description'] = $node->hp_details_heart_condition;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_heart_condition_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 10;
+  $subject_record['yes_no'] = $node->hp_yes_no_heart_condition;
+  $subject_record['description'] = $node->hp_details_heart_condition;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_surgery_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 11;
-$subject_record['yes_no'] = $node->hp_yes_no_surgery;
-$subject_record['description'] = $node->hp_details_surgery;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_surgery_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 11;
+  $subject_record['yes_no'] = $node->hp_yes_no_surgery;
+  $subject_record['description'] = $node->hp_details_surgery;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->hp_others_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->hp_yes_no_others;
-$subject_record['description'] = $node->hp_details_others;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->hp_others_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->hp_yes_no_others;
+  $subject_record['description'] = $node->hp_details_others;
+  $ok = ks_update_med_subject_record($subject_record);
 
-/**********/
+  /**********/
 
-$category = 4;  // vaccination history
+  $category = 4;  // vaccination history
 
-$subject_record['ksmi_id'] = $node->vi_bcg_tuberculosis_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->vi_yes_no_bcg_tuberculosis;
-$subject_record['description'] = $node->vi_details_bcg_tuberculosis;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_bcg_tuberculosis_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->vi_yes_no_bcg_tuberculosis;
+  $subject_record['description'] = $node->vi_details_bcg_tuberculosis;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_chicken_pox_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->vi_yes_no_chicken_pox;
-$subject_record['description'] = $node->vi_details_chicken_pox;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_chicken_pox_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->vi_yes_no_chicken_pox;
+  $subject_record['description'] = $node->vi_details_chicken_pox;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_dtp_whooping_cough_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->vi_yes_no_dtp_whooping_cough;
-$subject_record['description'] = $node->vi_details_dtp_whooping_cough;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_dtp_whooping_cough_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->vi_yes_no_dtp_whooping_cough;
+  $subject_record['description'] = $node->vi_details_dtp_whooping_cough;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_hepatitis_a_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 4;
-$subject_record['yes_no'] = $node->vi_yes_no_hepatitis_a;
-$subject_record['description'] = $node->vi_details_hepatitis_a;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_hepatitis_a_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 4;
+  $subject_record['yes_no'] = $node->vi_yes_no_hepatitis_a;
+  $subject_record['description'] = $node->vi_details_hepatitis_a;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_hepatitis_b_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 5;
-$subject_record['yes_no'] = $node->vi_yes_no_hepatitis_b;
-$subject_record['description'] = $node->vi_details_hepatitis_b;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_hepatitis_b_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 5;
+  $subject_record['yes_no'] = $node->vi_yes_no_hepatitis_b;
+  $subject_record['description'] = $node->vi_details_hepatitis_b;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_hib_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 6;
-$subject_record['yes_no'] = $node->vi_yes_no_hib;
-$subject_record['description'] = $node->vi_details_hib;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_hib_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 6;
+  $subject_record['yes_no'] = $node->vi_yes_no_hib;
+  $subject_record['description'] = $node->vi_details_hib;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_japanese_b_encephalitis_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 7;
-$subject_record['yes_no'] = $node->vi_yes_no_japanese_b_encephalitis;
-$subject_record['description'] = $node->vi_details_japanese_b_encephalitis;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_japanese_b_encephalitis_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 7;
+  $subject_record['yes_no'] = $node->vi_yes_no_japanese_b_encephalitis;
+  $subject_record['description'] = $node->vi_details_japanese_b_encephalitis;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_measles_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 8;
-$subject_record['yes_no'] = $node->vi_yes_no_measles;
-$subject_record['description'] = $node->vi_details_measles;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_measles_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 8;
+  $subject_record['yes_no'] = $node->vi_yes_no_measles;
+  $subject_record['description'] = $node->vi_details_measles;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_mumps_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 9;
-$subject_record['yes_no'] = $node->vi_yes_no_mumps;
-$subject_record['description'] = $node->vi_details_mumps;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_mumps_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 9;
+  $subject_record['yes_no'] = $node->vi_yes_no_mumps;
+  $subject_record['description'] = $node->vi_details_mumps;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_opv_polio_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 10;
-$subject_record['yes_no'] = $node->vi_yes_no_opv_polio;
-$subject_record['description'] = $node->vi_details_opv_polio;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_opv_polio_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 10;
+  $subject_record['yes_no'] = $node->vi_yes_no_opv_polio;
+  $subject_record['description'] = $node->vi_details_opv_polio;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_rubella_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 11;
-$subject_record['yes_no'] = $node->vi_yes_no_rubella;
-$subject_record['description'] = $node->vi_details_rubella;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_rubella_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 11;
+  $subject_record['yes_no'] = $node->vi_yes_no_rubella;
+  $subject_record['description'] = $node->vi_details_rubella;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_typhoid_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 12;
-$subject_record['yes_no'] = $node->vi_yes_no_typhoid;
-$subject_record['description'] = $node->vi_details_typhoid;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_typhoid_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 12;
+  $subject_record['yes_no'] = $node->vi_yes_no_typhoid;
+  $subject_record['description'] = $node->vi_details_typhoid;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->vi_others_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 99;
-$subject_record['yes_no'] = $node->vi_yes_no_others;
-$subject_record['description'] = $node->vi_details_others;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->vi_others_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 99;
+  $subject_record['yes_no'] = $node->vi_yes_no_others;
+  $subject_record['description'] = $node->vi_details_others;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$category = 5;  // additional info
+  $category = 5;  // additional info
 
-$subject_record['ksmi_id'] = $node->ai_med_allergies_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->ai_yes_no_med_allergies;
-$subject_record['description'] = $node->ai_details_med_allergies;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->ai_med_allergies_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->ai_yes_no_med_allergies;
+  $subject_record['description'] = $node->ai_details_med_allergies;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->ai_meds_now_taking_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 2;
-$subject_record['yes_no'] = $node->ai_yes_no_meds_now_taking;
-$subject_record['description'] = $node->ai_details_meds_now_taking;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->ai_meds_now_taking_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 2;
+  $subject_record['yes_no'] = $node->ai_yes_no_meds_now_taking;
+  $subject_record['description'] = $node->ai_details_meds_now_taking;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$subject_record['ksmi_id'] = $node->ai_med_extra_info_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 3;
-$subject_record['yes_no'] = $node->ai_yes_no_med_extra_info;
-$subject_record['description'] = $node->ai_details_med_extra_info;
-$ok = ks_update_med_subject_record($subject_record);
+  $subject_record['ksmi_id'] = $node->ai_med_extra_info_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 3;
+  $subject_record['yes_no'] = $node->ai_yes_no_med_extra_info;
+  $subject_record['description'] = $node->ai_details_med_extra_info;
+  $ok = ks_update_med_subject_record($subject_record);
 
-$category = 1;  // administrative
+  $category = 1;  // administrative
 
-$subject_record['ksmi_id'] = $node->ad_med_can_take_ksmi_id;
-$subject_record['med_nid_fk'] = $node->nid;
-$subject_record['med_category'] = $category;
-$subject_record['med_subject'] = 1;
-$subject_record['yes_no'] = $node->ad_yes_no_med_can_take;
-$subject_record['description'] = $node->ad_details_med_can_take;
-$ok = ks_update_med_subject_record($subject_record);
-
-
-//etc
-
+  $subject_record['ksmi_id'] = $node->ad_med_can_take_ksmi_id;
+  $subject_record['med_nid_fk'] = $node->nid;
+  $subject_record['med_category'] = $category;
+  $subject_record['med_subject'] = 1;
+  $subject_record['yes_no'] = $node->ad_yes_no_med_can_take;
+  $subject_record['description'] = $node->ad_details_med_can_take;
+  $ok = ks_update_med_subject_record($subject_record);
 
 }
 
