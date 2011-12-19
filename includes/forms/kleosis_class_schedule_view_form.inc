@@ -212,29 +212,3 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
   return $form;
 }
 
-/*
-* Validate function for the kleosis_class_schedule_view_form
-*/
-
-  function kleosis_class_schedule_view_form_validate($form, &$form_state) {
-
-//   dpm('inside kleosis_class_schedule_view_form');
-//   dpm($form);
-//   dpm($form_state);
-//   form_set_error('validate_category','this is a test error message from the validate function ' .
-//      ' - will cause a return to edit form with no call to the submit function');
-}
-
-/*
-* Submit function for the kleosis_class_schedule_view_form
-*/
-function kleosis_class_schedule_view_form_submit($form, &$form_state) {
-
-//    dpm('inside kleosis_class_schedule_view_form');
-//    dpm($form);
-//    dpm($form_state);
-//    drupal_set_message('inside kleosis_class_schedule_view_form');
-
-  $form_state['redirect'] = 'kleosis/classes/schedule/edit/tempdev';
-
-}

@@ -329,7 +329,7 @@ function kleosis_class_schedule_delete_page() {
 function kleosis_class_schedule_delete_confirm($form, &$form_state) {
   $caption = '<p>' . t('This action cannot be undone.') . '</p>';
   $heading = t('Are you sure you want to delete the selected schedule period?');
-  $cancel_path = 'kleosis/classes/schedule/create';
+  $cancel_path = 'kleosis/classes/schedule/edit';
   $yes = t('Delete period');
   $no = t('Cancel');
   return confirm_form($form, $heading, $cancel_path, $caption, $yes, $no);
