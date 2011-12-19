@@ -57,6 +57,25 @@ if ($rec_count != 0) {
 }
 else {
   $fields = array(
+    'academic_year' => '2007-2008',
+    'term1_startdate' => '2007-08-14 00:00:00',
+    'term1_enddate' => '2007-12-21 00:00:00',
+    'term2_startdate' => '2008-01-06 00:00:00',
+    'term2_enddate' =>  '2008-06-24 00:00:00',
+//    'term3_startdate' => '2008-04-01 00:00:00',
+//    'term3_enddate' => '2008-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
     'academic_year' => '2008-2009',
     'term1_startdate' => '2008-08-12 00:00:00',
     'term1_enddate' => '2008-12-30 00:00:00',
@@ -226,6 +245,102 @@ else {
   db_insert('ks_academic_year_desc')
     ->fields($fields)
     ->execute();
+
+  $fields = array(
+    'academic_year' => '2017-2018',
+    'term1_startdate' => '2017-08-07 00:00:00',
+    'term1_enddate' => '2017-12-23 00:00:00',
+    'term2_startdate' => '2018-01-03 00:00:00',
+    'term2_enddate' =>  '2018-06-30 00:00:00',
+//    'term3_startdate' => '2018-04-01 00:00:00',
+//    'term3_enddate' => '2018-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'academic_year' => '2018-2019',
+    'term1_startdate' => '2018-08-07 00:00:00',
+    'term1_enddate' => '2018-12-23 00:00:00',
+    'term2_startdate' => '2019-01-03 00:00:00',
+    'term2_enddate' =>  '2019-06-30 00:00:00',
+//    'term3_startdate' => '2019-04-01 00:00:00',
+//    'term3_enddate' => '2019-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'academic_year' => '2019-2020',
+    'term1_startdate' => '2019-08-07 00:00:00',
+    'term1_enddate' => '2019-12-23 00:00:00',
+    'term2_startdate' => '2020-01-03 00:00:00',
+    'term2_enddate' =>  '2020-06-30 00:00:00',
+//    'term3_startdate' => '2020-04-01 00:00:00',
+//    'term3_enddate' => '2020-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'academic_year' => '2020-2021',
+    'term1_startdate' => '2020-08-07 00:00:00',
+    'term1_enddate' => '2020-12-23 00:00:00',
+    'term2_startdate' => '2021-01-03 00:00:00',
+    'term2_enddate' =>  '2021-06-30 00:00:00',
+//    'term3_startdate' => '2021-04-01 00:00:00',
+//    'term3_enddate' => '2021-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'academic_year' => '2021-2022',
+    'term1_startdate' => '2021-08-07 00:00:00',
+    'term1_enddate' => '2021-12-23 00:00:00',
+    'term2_startdate' => '2022-01-03 00:00:00',
+    'term2_enddate' =>  '2022-06-30 00:00:00',
+//    'term3_startdate' => '2022-04-01 00:00:00',
+//    'term3_enddate' => '2022-07-30 00:00:00',
+//    'term4_startdate' => '1900-00-00 00:00:00',
+//    'term4_enddate' => '1900-00-00 00:00:00',
+//    'term5_startdate' => '1900-00-00 00:00:00',
+//    'term5_enddate' =>  '1900-00-00 00:00:00',
+//    'term6_startdate' => '1900-00-00 00:00:00',
+//    'term6_enddate' => '1900-00-00 00:00:00',
+  );
+  db_insert('ks_academic_year_desc')
+    ->fields($fields)
+    ->execute();
+
 }
 /**
  * populate the ks_assessment_type_desc table

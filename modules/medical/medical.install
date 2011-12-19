@@ -237,7 +237,7 @@ function _medical_installed_instances() {
 /**
  * Implements hook_schema().
  *
- * Define the database tables used by kleosis medical info node
+ * Define the custom database tables used by kleosis medical info node
  * @see hook_schema()
  */
 function medical_schema() {

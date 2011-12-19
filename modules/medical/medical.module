@@ -4,9 +4,9 @@
  * @file
  * This is a simple medical node that allows medical information
  * to be maintained by the Kleosis module for students
- * - WARNING - This is very early hacking code - WARNING -
+ * - WARNING - This module contains very early code from the Drupal examples module - WARNING -
  * The code has been improved in the Course and Class modules...
- *
+ * todo: clean-up this code
  */
 
  module_load_include('pages.inc', 'node', 'node');
@@ -86,7 +86,7 @@ function kleosis_medical_list() {
 
 
 /**
- * Medinfo node page - blank and not used for now
+ * Medinfo node page - blank and not currently used
  *
  */
 

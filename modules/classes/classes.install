@@ -143,10 +143,12 @@ function _class_installed_fields() {
       'settings'    => array(
         'allowed_values'  => array(
           'standard' => t('Standard'),
-          'large' => t('Large'),
+          'online' => t('Online'),
           'night' => t('Night'),
           'weekend' => t('Weekend'),
           'summer' => t('Summer'),
+          'lunch-breaktime' => t('Lunch-Breaktime'),
+          'other' => t('Other'),
         ),
       ),
     ),

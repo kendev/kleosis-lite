@@ -63,8 +63,16 @@ Views:
 
 
 2 - Kleosis module installation: Download kleosis-lite.zip file from https://github.com/kendev/kleosis-lite
-    - unzip into a convenient folder then install as a Drupal module.
-    - check all Kleosis checkboxes in the Modules list and save the configuration
+    - Unzip into the following folder: ...'yourdrupal'/sites/all/modules
+    - Next, the Kleosis Bartik theme should be installed:
+	- Move the folder '_unzip_and_move_me.zip' to a temporary location outside of the kleosis root folder and then unzip it.  Then, move
+	  the kleosis_bartik folder into the ../sites/all/themes folder.
+	  Now, enable the Kleosis Bartik theme and set it as the default theme as follows: select Appearance from the Administration Menu, then click on the 'Enable and set default' link under the Kleosis Bartik 7.x theme.  
+	  The Kleosis Bartik theme has been modified to allow a wider width in the content area to avoid wrapping of some output data rows.
+	  Note - on Linux systems, be sure the appropriate permissions are set for the kleosis_bartik folder and files to insure proper theme display.    
+    - Kleosis will be installed next as a Drupal module
+    - Select Modules from the Administration menu and scroll down to the Kleosis fieldset area
+    - Check all Kleosis checkboxes in the modules list and save the configuration (this may take a few minutes)
     - Create a Main Menu item that links to Kleosis: 
       - Select Structure, Menus, Main Menu from the Administration menu, then select 'add link'
 	  Menu link title: Kleosis
@@ -84,20 +92,16 @@ Views:
 		- Moodle default username
 		- Moodle password for default username
 	- Other configuration settings should be entered now as well such as:
-		- Academic Year and Term
+		- Academic Year and Term (perform this after the description tables have been populated - see below)
 		- Starting day of week
 		- Number of rows displayed by the pager
 		- Scheduled Breaks (select 00 for each if no breaks)
 	- Save the configuration
 	
-    - Move the folder '_unzip_and_move_me.zip' to a temporary location outside of the kleosis root folder and then unzip it.  Then, move the kleosis_bartik folder into the ../sites/all/themes folder.
-      Next, enable the Kleosis Bartik theme and set it as the default theme as follows: select Appearance from the Administration Menu, then click on the 'Enable and set default link' under the Kleosis Bartik 7.x theme.  
-      The Kleosis Bartik theme has been modified to allow a wider width in the content area to avoid wrapping of some output data rows.
-      Note - on Linux systems, be sure the appropriate permissions are set for the kleosis_bartik folder and files to insure proper theme display.
 	
     - Sample data: The description tables in Kleosis must be populated next and currently this is not done automatically during install. To populate the tables:
     	- From the Kleosis main menu, select Processes and then select the Sample Data tab.
-    	- Click on the Populate description tables button
+    	- Click on the Populate description tables button (return to the Configuration Settings for Kleosis and set the Academic Year and Term)
     	- Optional: If you want to load the sample school data, click on the Load sample data button (this data can be removed later).
     	
 If all goes well, Kleosis is now operational.  If the sample data was loaded, select the Kleosis, Students menu item to view a list of students.
