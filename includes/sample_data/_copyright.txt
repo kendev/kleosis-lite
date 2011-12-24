@@ -1,5 +1,5 @@
-All Kleosis code is Copyright (c) 2010 onwards by Ken DeVellis and/or
-the original authors.
+All Kleosis code in this folder is Copyright (c) 2010 onwards by 
+Ken DeVellis and/or the original authors.
 
 Kleosis is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
