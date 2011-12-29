@@ -393,6 +393,36 @@ function get_gradelevels() {
   return $options;
 }
 /**
+ * Get all organizations
+ *
+ * @return
+ *    options - an array of organizations
+ */
+function ks_get_organizations() {
+
+  $options = array();
+  $results = db_query('SELECT korg_id, organization FROM {ks_organization_desc}' )->fetchAll();
+  foreach ($results as $organization) {
+    $options[$organization->korg_id] = $organization->organization;
+  }
+  return $options;
+}
+/**
+ * Retrieve the organization as a string
+ *
+ * @param $intorg
+ *   The organization as an integer
+ * @return
+ *   the organization as a string
+ */
+function get_organization_desc($intorg) {
+
+  $organization = db_query('SELECT organization FROM {ks_organization_desc} WHERE korg_id = :korg_id',
+                            array(':korg_id' => $intorg))->fetchField();
+  return $organization;
+}
+
+/**
  * Retrieve the program as a string
  *
  * @param $intprogram

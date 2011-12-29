@@ -1167,7 +1167,7 @@ function kleosis_student_class_schedule_list() {
     '#header' => $header,
 //    '#options' => $options,   // used for tableselect
     '#rows' => $options,   // used for table
-    '#empty' => t('No grades exist for the student for the selected academic year and term.'),
+    '#empty' => t('No schedule exists for the student for the selected academic year and term.'),
     '#multiple' => TRUE,
     '#js_select' => TRUE,
   );
@@ -1176,83 +1176,3 @@ function kleosis_student_class_schedule_list() {
 
   return $build;
 }
-
-/**
- * Provides various reports for a student
- *
- * @return
- *   tbd
- */
-
-function kleosis_students_reports($form, &$form_state) {
-
-  // Set Breadcrumbs
-  $breadcrumb = array();
-  $breadcrumb[] = l(t('Home'), 'kleosis');
-  $breadcrumb[] = l(t('Students'), 'kleosis/students');
-  $breadcrumb[] = t('Student Reports');
-
-  drupal_set_breadcrumb($breadcrumb);
-
-drupal_set_title(t('Student Reports'));
-
-$page_desc = <<<EOT
-    <br/>This page will provide reports for the selected student as well as appropriate links.
-    <br/><br/>Administrators can create and add additional reports using the Views module.<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-
-
-/**
- * Provides a transcript for a student
- *
- * @return
- *   tbd
- */
-
-function kleosis_students_transcript($form, &$form_state) {
-
-  // Set Breadcrumbs
-  $breadcrumb = array();
-  $breadcrumb[] = l(t('Home'), 'kleosis');
-  $breadcrumb[] = l(t('Students'), 'kleosis/students');
-  $breadcrumb[] = t('Student Transcript');
-
-  drupal_set_breadcrumb($breadcrumb);
-
-drupal_set_title(t('Student Transcript'));
-
-$page_desc = <<<EOT
-    <br/>This page will provide a transcript for the selected student as well as appropriate links.
-    <br/><br/>Administrators can customize the transcript by using the Views module.<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-

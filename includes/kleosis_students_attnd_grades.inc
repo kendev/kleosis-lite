@@ -57,7 +57,7 @@ function kleosis_students_attendance($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Summary link.');
+    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -486,7 +486,7 @@ function kleosis_student_current_grades($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Summary link.');
+    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -673,7 +673,7 @@ function kleosis_student_final_grades($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page');
+    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -699,7 +699,7 @@ function kleosis_student_final_grades($form, &$form_state) {
 
 /**
  *
- * Academic year and term selection for the Students Current Grades List form
+ * Academic year and term selection for the Students Final Grades List form
  *
  */
 
