@@ -32,15 +32,16 @@ function kleosis_install() {
   $role_id_instructor = ks_create_new_role('instructor');
   $role_id_parent_guardian = ks_create_new_role('parent_guardian');
 
-  variable_set('kleosis_moodle_url', 'http://localhost/moodle');
-  variable_set('kleosis_moodle_version', '2.x');
-  variable_set('kleosis_moodle_username', 'admin');
-  variable_set('kleosis_moodle_password', 'moodle');
+  variable_set('kleosis_organization', '1');
   variable_set('kleosis_sample_users', FALSE);
   variable_set('kleosis_sample_data', FALSE);
   variable_set('kleosis_academic_year', '2011-2012');
   variable_set('kleosis_academic_term', 'fy');
   variable_set('kleosis_starting_dow', '1');
+  variable_set('kleosis_moodle_url', 'http://localhost/moodle');
+  variable_set('kleosis_moodle_version', '2.x');
+  variable_set('kleosis_moodle_username', 'admin');
+  variable_set('kleosis_moodle_password', 'moodle');
   variable_set('kleosis_pager_rows', '16');
 
   variable_set('kleosis_morn_break_start_hour', '00');

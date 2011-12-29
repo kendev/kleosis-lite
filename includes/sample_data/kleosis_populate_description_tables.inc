@@ -1822,8 +1822,8 @@ else {
 
     $fields = array(
       'korg_id' => 1,
-      'organization' => 'Main Enterprise',
-      'description' => 'Main Enterprise',
+      'organization' => 'Kleosis Sample School',
+      'description' => 'Sample cchool for testing and piloting Kleosis',
     );
     db_insert('ks_organization_desc')
       ->fields($fields)
@@ -1831,8 +1831,8 @@ else {
 
     $fields = array(
       'korg_id' => 2,
-      'organization' => 'Main Institution',
-      'description' => 'Main Institution',
+      'organization' => 'Kleosis Partner School',
+      'description' => 'Partner school for the Kleosis Sample School',
     );
     db_insert('ks_organization_desc')
       ->fields($fields)
