@@ -12,7 +12,6 @@ The installation instructions that follow will provide details on the Kleosis mo
 1 - Drupal 7 installation: Instructions are found in the INSTALL.txt file from the drupal download file: http://www.drupal.org/start
     Use those instructions to install Drupal 7.  Ater sucessful installation, download and install the following contributed modules:
 
-      Calendar project: http://drupal.org/project/calendar
       Ctools project: http://drupal.org/project/ctools
       Date project: http://drupal.org/project/date
       Entity project: http://drupal.org/project/entity
@@ -20,8 +19,9 @@ The installation instructions that follow will provide details on the Kleosis mo
       Profile2 project: http://drupal.org/project/profile2
       References project: http://drupal.org/project/references
       Views project: http://drupal.org/project/views
-      Wysiwyg project: http://drupal.org/project/wysiwyg
       Advanced_help project: http://drupal.org/project/advanced_help
+      Wysiwyg project: http://drupal.org/project/wysiwyg
+      	(can use CKEditor as default client-side editor for Wysiwyg)
 	
 Then, from the Administrative Menu select the Modules menu item and check the following configurations checkboxes for those modules.  Save the configuration.
 
@@ -59,7 +59,7 @@ User Interface:
 Views:
 
   x    Views
-  x    Views API
+  x    Views UI
 
 
 2 - Kleosis module installation: Download kleosis-lite.zip file from https://github.com/kendev/kleosis-lite
@@ -67,7 +67,8 @@ Views:
     - Next, the Kleosis Bartik theme should be installed:
 	- Move the folder '_unzip_and_move_me.zip' to a temporary location outside of the kleosis root folder and then unzip it.  Then, move
 	  the kleosis_bartik folder into the ../sites/all/themes folder.
-	  Now, enable the Kleosis Bartik theme and set it as the default theme as follows: select Appearance from the Administration Menu, then click on the 'Enable and set default' link under the Kleosis Bartik 7.x theme.  
+	  Now, enable the Kleosis Bartik theme and set it as the default theme as follows: select Appearance from the Administration Menu, 
+	  then click on the 'Enable and set default' link under the Kleosis Bartik 7.x theme.  
 	  The Kleosis Bartik theme has been modified to allow a wider width in the content area to avoid wrapping of some output data rows.
 	  Note - on Linux systems, be sure the appropriate permissions are set for the kleosis_bartik folder and files to insure proper theme display.    
     - Kleosis will be installed next as a Drupal module
@@ -77,32 +78,37 @@ Views:
       - Select Structure, Menus, Main Menu from the Administration menu, then select 'add link'
 	  Menu link title: Kleosis
 	  Path: kleosis
-	  Description: Student Info System
 	  (Parent menu link should be set to the Main menu)
-	  Weight: use default or set to a preferred number
+	  Weight: initially set this to 2 - can change later to reposition the Kleosis tab
+	  Title (or Description): Student Info System
 	  
     - Kleosis will show up as a Main Menu item that points to an information page.  The Kleosis menu will be added to this page: 
-	- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region - be sure to show the block only on these listed pages: kleosis and kleosis/*
+	- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region 
+	- be sure to show the block only on these listed pages: kleosis and kleosis/*
+
+    - Sample data: The description tables in Kleosis must be populated next and currently this is not done automatically during install. To populate the tables:
+    	- From the Kleosis main menu, select Processes and then select the Sample Data tab.
+    	- Click on the Populate description tables button (return to the Configuration Settings for Kleosis and set the Academic Year and Term)
 
     - Configure Kleosis:
     	- Select Configuration from the Administration Menu, then select the Kleosis settings link
-	- Enter in (or use defaults if not connecting to Moodle) for the following fields:
+	- Enter in or select settings such as:
+		- Organization
+		- Academic Year and Term
+		- Starting day of week
+	- Then enter info (or use defaults if not connecting to Moodle) for the following fields:
 		- The url to your Moodle instance
 		- Moodle version
 		- Moodle default username
 		- Moodle password for default username
-	- Other configuration settings should be entered now as well such as:
-		- Academic Year and Term (perform this after the description tables have been populated - see below)
-		- Starting day of week
+	- Other configuration settings should be entered now as well:
 		- Number of rows displayed by the pager
 		- Scheduled Breaks (select 00 for each if no breaks)
-	- Save the configuration
+	- Save the configuration and close the Kleosis settings overlay page
 	
-	
-    - Sample data: The description tables in Kleosis must be populated next and currently this is not done automatically during install. To populate the tables:
-    	- From the Kleosis main menu, select Processes and then select the Sample Data tab.
-    	- Click on the Populate description tables button (return to the Configuration Settings for Kleosis and set the Academic Year and Term)
-    	- Optional: If you want to load the sample school data, click on the Load sample data button (this data can be removed later).
+    - Sample school setup (Optional): 
+        - From the Kleosis main menu, select Processes and then select the Sample Data tab.
+    	- Click on the Load sample data button (this data can be removed later).
     	
 If all goes well, Kleosis is now operational.  If the sample data was loaded, select the Kleosis, Students menu item to view a list of students.
 
@@ -124,14 +130,17 @@ Kleosis contains numerous LMS Direct blocks that provide information from Moodle
 
     4) you should get a new configuration screen named OK Tech Webservices (aka wspp) inside the Site Adminstration/Development block
 
-Optional Kleosis configuration: add a My Courses - LMS Direct block to an existing page on your website (or create a basic page with the title "My Portal" and add it as a link from the Main Menu. Then:
+Optional Kleosis configuration: add a My Courses - LMS Direct block to an existing page on your website 
+    (or create a basic page with the title "My Portal" and add it as a link from the Main Menu. Then:
 
     - Select Structure, Blocks from the Administration Menu and scroll down to see the LMS Direct Blocks
     - Select configure for the My Courses LMS Direct block
 	
 	- Select Sidebar second from the default theme select box
 	Click the "Only the listed pages" radio button and type the name of the basic page you just created (or your page of choice).		
-	*Note*: it's very important that you not show LMS Direct blocks all pages of your site.  Since there is a latency associated with connectivity thru the webservices layer to Moodle from these blocks, you probably don't want this latency on all of your site pages!
+	*Note*: it's very important that you not show LMS Direct blocks all pages of your site.  
+		Since there is a latency associated with connectivity thru the webservices layer to Moodle from these blocks, 
+		you probably don't want this latency on all of your site pages!
 	- Click on Save Block and exit the Blocks page
 	- Navigate to the new page and click on a courses link in the My Course block
 

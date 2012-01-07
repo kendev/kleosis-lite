@@ -897,9 +897,19 @@ function kleosis_settings_form($form, &$form_state) {
     '#description' => t('The maximum number of rows displayed on each page.'),
     '#options' =>  array(8 => '8',12 => '12',16 => '16',18 => '18',20 => '20',22 => '22',24 => '24',28 => '28',36 => '36'),
     '#default_value' =>  variable_get('kleosis_pager_rows','16'),
-//    '#weight' => 12,
   );
-  $form['kleosis_break'] = array(
+/*  // todo: implement this variable in Class Odf in file odf.php
+  $form['kleosis_odtreports_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Odt Reports temporary directory path'),
+    '#description' => t('The server path of the tmp directory used for the odt reports feature.'),
+    '#default_value' => variable_get('kleosis_odtreports_path','/tmp'),
+    '#size' => 5,
+    '#maxlength' => 30,
+    '#required' => TRUE,
+  );
+*/
+$form['kleosis_break'] = array(
     '#type' => 'fieldset',
     '#title' => t('Scheduled breaktimes'),
     '#description' => t('Morning, lunch, and afternoon breaktimes.'),
