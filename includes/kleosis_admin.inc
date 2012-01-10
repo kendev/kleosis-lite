@@ -15,9 +15,8 @@
 function kleosis_admin_page($form, &$form_state) {
 
 $page_desc = <<<EOT
-    <br/>This is the base page for the kleosis Admin functions.
-    A description of the Admin functions accessable from above tabs will go here.<br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/>This is the base page for the Kleosis Admin functions.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
 // add a fieldset for the page info

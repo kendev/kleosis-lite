@@ -15,9 +15,8 @@
 function kleosis_faculty_page($form, &$form_state) {
 
 $page_desc = <<<EOT
-    <br/>This is the base page for the kleosis Faculty functions.
-    A description of the Faculty functions accessable from above tabs will go here.<br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/>This is the base page for the Kleosis Faculty functions.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
 // add a fieldset for the page info

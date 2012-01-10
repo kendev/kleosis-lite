@@ -53,6 +53,14 @@ return $form;
 
 function kleosis_students_attendance($form, &$form_state) {
 
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis attendance')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis attendance."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
@@ -519,6 +527,13 @@ function kleosis_student_current_grades($form, &$form_state) {
 
 function kleosis_student_grades_acyt_select_form() {
 
+  // check permissions
+  global $user;
+  $view_grades = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis grades')) ) {
+    $view_grades = FALSE;
+  }
+
   $academic_year = variable_get('kleosis_academic_year','2011-2012');
   $term = variable_get('kleosis_academic_term','fy');
   $uid = $_SESSION['student']['id'];
@@ -571,7 +586,7 @@ function kleosis_student_grades_acyt_select_form() {
   $build['grades_from_moodle'] = array(
     '#type' => 'submit',
     '#value' => t('Get current grades from Moodle gradebook'),
-    '#disabled' => FALSE,
+    '#disabled' => !$view_grades,
     '#prefix' => '<div style="float: left;clear:left; width:225px" >',
     '#suffix' => '</div>',
   );
@@ -787,6 +802,14 @@ function kleosis_student_final_grades_acyt_select_form_submit($form, &$form_stat
  */
 
 function kleosis_student_final_grades_list() {
+
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis grades')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis grades."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
 
   $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
   $term = isset($_SESSION['ks_student_final_grades_select_filter']['term']) ? $_SESSION['ks_student_final_grades_select_filter']['term'] : variable_get('kleosis_academic_term','fy');

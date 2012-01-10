@@ -1,19 +1,17 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis Reports
-*/
-
+ /**
+ * @file
+ * kleosis Reports
+ */
 
 /**
  * Provides various reports for a student using .odt files
  *
  * @return
- *   tbd
+ *   a downloaded .odt file
  */
 
-function kleosis_students_reports_odt($form, &$form_state) {
+function kleosis_student_reports_odt($form, &$form_state) {
 
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
@@ -42,11 +40,18 @@ function kleosis_students_reports_odt($form, &$form_state) {
 
 /**
  *
- * Academic year and term selection for the Students Reports form
+ * Academic year and term selection for the Student Open Office (.odt) Reports form
  *
  */
 
 function kleosis_student_reports_odt_acyt_select_form() {
+
+  // check permissions
+  global $user;
+  $view_reports = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view reports and queries')) ) {
+    $view_reports = FALSE;
+  }
 
   $academic_year = isset($_SESSION['ks_student_reports_odt_select_filter']['academic_year']) ? $_SESSION['ks_student_reports_odt_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
   $term = isset($_SESSION['ks_student_reports_odt_select_filter']['term']) ? $_SESSION['ks_student_reports_odt_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
@@ -99,7 +104,7 @@ function kleosis_student_reports_odt_acyt_select_form() {
     '#type' => 'submit',
     '#value' => t('Download Report'),
     '#weight' => 10,
-    '#disabled' => FALSE,
+    '#disabled' => !$view_reports,
     '#prefix' => '<div style="float: left;width:170px" ></br>',
     '#suffix' => '</div>',
   );
@@ -107,14 +112,15 @@ function kleosis_student_reports_odt_acyt_select_form() {
     '#type' => 'submit',
     '#value' => t('Upload Report'),
     '#weight' => 12,
+//    '#disabled' => !$view_reports,
     '#disabled' => TRUE,
     '#prefix' => '<div style="float: left;width:140px" ></br>',
     '#suffix' => '</div>',
   );
 
-$odtreport_desc = <<<EOT
-* These reports are template-based using the Open Office standard document file format (.odt) -
-see the Kleosis documentation for more information on these user-customizable reports.
+  $odtreport_desc = <<<EOT
+  * These reports are template-based using the Open Office standard document file format (.odt) -
+  see the Kleosis documentation for more information on these user-customizable reports.
 EOT;
 
   $build['report_type'] = array(
@@ -134,12 +140,6 @@ function kleosis_student_reports_odt_acyt_select_form_submit($form, &$form_state
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
-
-//  dpm($uid);
-//  dpm($uid);
-//  dpm($form);
-//  dpm($form['filter']['acy_select']['reports_odt']['#options'][$form_state['values']['reports_odt']]);
-//  dpm($form_state);
 
   switch ($form_state['values']['op']) {
 
@@ -173,6 +173,7 @@ function kleosis_student_reports_odt_acyt_select_form_submit($form, &$form_state
 function kleosis_student_reports_odt_download() {
 
   error_reporting(E_ERROR); // todo: fix the cause of the error message about headers already being sent...
+                            // todo: verify that the newer odtphp.lib file fixed the error...
 
   $academic_year = isset($_SESSION['ks_student_reports_odt_select_filter']['academic_year']) ? $_SESSION['ks_student_reports_odt_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
   $term = isset($_SESSION['ks_student_reports_odt_select_filter']['term']) ? $_SESSION['ks_student_reports_odt_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
@@ -343,13 +344,136 @@ function kleosis_student_reports_odt_list() {
 
 
 /**
- * Provides a transcript for a student using .odt file
+ * Defines a student reports main tab
  *
  * @return
- *   tbd
+ *    redirects to kleosis_student_reports_odt
+ */
+function kleosis_student_reports($form, &$form_state) {
+
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Students'), 'kleosis/students');
+  $breadcrumb[] = t('Student Reports');
+
+  // Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('Student Reports'));
+
+
+  $page_desc = <<<EOT
+    <br/>This is the kleosis_student_reports form.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+EOT;
+
+  // add a fieldset for the page info
+
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Reports'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  drupal_goto($path = 'kleosis/students/reports/odt_reports', $options = array());
+  return $form;
+}
+
+/**
+ * Provides various interactive reports for a student
+ *
+ * @return
+ *    an interactive report...
+ */
+function kleosis_student_reports_ia($form, &$form_state) {
+
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Students'), 'kleosis/students');
+  $breadcrumb[] = t('Student Interactive Reports');
+
+  // Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('Student Interactive Reports'));
+
+
+  $page_desc = <<<EOT
+    <br/>These interactive reports will allow the user to add and edit additional data to each report.
+    The added data becomes managed by Kleosis and can be searched for fast retrieval (tbd)
+    - see the Kleosis documentation for more information on these reports.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+EOT;
+
+  // add a fieldset for the page info
+
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Interactive Reports'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  return $form;
+}
+
+/**
+ * Provides various reports using the PDS Report Service
+ *
+ * @return
+ *    interacts with the PDS Report Service (tbd)
+ */
+function kleosis_student_reports_pds($form, &$form_state) {
+
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Students'), 'kleosis/students');
+  $breadcrumb[] = t('PDS Report Service');
+
+  // Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('PDS Report Service'));
+
+
+  $page_desc = <<<EOT
+    <br/>These customizeable, interactive reports will allow the user to add and edit additional data, add and arrange new fields,
+    select themes, control layout and printing, subscribe to report events, and enable numerous other report options from the PDS Report Service (tbd).
+    The added data becomes managed by PDS report service and can be searched for fast retrieval (tbd)
+    - see the Kleosis documentation for more information on these reports.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+EOT;
+
+  // add a fieldset for the page info
+
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('PDS Report Service'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  return $form;
+}
+
+/**
+ * Provides a transcript for a student using an .odt template
+ *
+ * @return
+ *   a downloaded .odt file
  */
 
-function kleosis_students_transcript_odt($form, &$form_state) {
+function kleosis_student_transcript_odt($form, &$form_state) {
 
   // Set Breadcrumbs
   $breadcrumb = array();
@@ -359,25 +483,25 @@ function kleosis_students_transcript_odt($form, &$form_state) {
 
   drupal_set_breadcrumb($breadcrumb);
 
-drupal_set_title(t('Student Transcript'));
+  drupal_set_title(t('Student Transcript'));
 
-$page_desc = <<<EOT
-    <br/>This page will provide a transcript for the selected student as well as appropriate links.
-    <br/><br/>Administrators can customize the transcript by using the Views module.<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+  $page_desc = <<<EOT
+    <br/>The student transcript is generated as an Open Office document from a customizeable template (tbd)
+        - see the Kleosis documentation for more information.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  // add a fieldset for the page info
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Transcripts'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
 
-return $form;
+  return $form;
 }
-

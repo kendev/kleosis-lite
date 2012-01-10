@@ -232,7 +232,14 @@ function kleosis_students_enrollments_actions_form() {
 
 function kleosis_enrollments_students_list() {
 
-drupal_set_title(t('Student Enrollments'));
+  // check permissions
+  global $user;
+  $allow_enrollments = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis enrollments')) ) {
+    $allow_enrollments = FALSE;
+  }
+
+  drupal_set_title(t('Student Enrollments'));
 
   $form = array();
 
@@ -368,6 +375,7 @@ else{
     '#type' => 'submit',
     '#value' => t('Enroll Selected Students'),
     '#weight' => 20,
+    '#disabled' => !$allow_enrollments,
     '#prefix' => '<div style="float: left;clear:left; width:225px" >',
     '#suffix' => '</div>',
   );
@@ -376,6 +384,7 @@ else{
     '#type' => 'submit',
     '#value' => t('Unenroll Selected Students'),
     '#weight' => 25,
+    '#disabled' => !$allow_enrollments,
     '#prefix' => '<div style="float: left; width:225px" >',
     '#suffix' => '</div>',
   );

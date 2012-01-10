@@ -115,7 +115,7 @@ function kleosis_processes_usersync() {
     // Make a table for them.
     $header = array(t('Moodle User ID'), t('Username'), t('Fullname'), t('Friendlyname'), t('City'));
 
-    $output .= t("This test function is currently still here as demo code and simple shows three tables of data, two from local Drupal and the third directly from the Moodle database. <br/><br/>
+    $output .= t("This is a test function and is still available here as legacy demo code.  It simply shows three tables of data, two from local Drupal and the third directly from the Moodle database. <br/><br/>
     The following table displays the contents of Kleosis users extension table (joined with the Web Portal (Drupal) users table):");
     $output .= theme('table', array('header' => $header, 'rows' => $rows));
 
