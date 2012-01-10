@@ -15,6 +15,14 @@
 
 function kleosis_student_setrelations($callback_arg = '') {
 
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis student info')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis student details."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
   $krelid = isset($_GET['krelid']) ? $_GET['krelid'] : $callback_arg;
   $ksop = isset($_GET['ksop']) ? $_GET['ksop'] : $callback_arg;
 
@@ -442,6 +450,13 @@ function kleosis_student_status_details_edit_form_submit($form, &$form_state) {
 
 function kleosis_student_status_details_list() {
 
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis student info')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis student details."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
   // Set Breadcrumbs
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), 'kleosis');
@@ -543,21 +558,19 @@ return $form;
  */
 function ks_remove_status_detail($kssid) {
 
-    drupal_set_message(t('Note: deleting a student status detail has been temporarily disabled until the process is further defined....'));
+//    drupal_set_message(t('Note: deleting a student status detail has been temporarily disabled until the process is further defined....'));
 
-/*
     db_delete('ks_student_status_details')
       ->condition('kssd_id', $kssid)
       ->execute();
 
     drupal_set_message('Student status detail was successfully removed.');
-*/
 }
 
 // Implement the delete student status confirm form
 function ks_student_status_delete_confirm($form, &$form_state, $kssid) {
 
-  // todo: get this working...
+  // todo: review this...
 
     $form['confirm'] = array(
       '#type' => 'hidden',
@@ -603,6 +616,14 @@ function kleosis_biodata_details_view($callback_arg = '') {
 }
 */
 function kleosis_biodata_details_view($callback_arg = '') {
+
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis student info')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis student details."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
 
   // Set Breadcrumbs
   $breadcrumb = array();

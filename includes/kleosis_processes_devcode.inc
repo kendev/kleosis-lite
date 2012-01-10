@@ -166,9 +166,21 @@ dpm($record->final_grade_str);
 /****************  new dev code can go here:  ***************/
 
 
+//force_logout();
+
 
  return array('#markup' => 'Development code goes here...');
 
+}
+
+// force logout of current user
+function force_logout() {
+  drupal_set_message('logging out current user.');
+  global $user;
+  $tmp = NULL;
+  session_destroy();
+  user_module_invoke('logout', $tmp, $user);
+  $user = drupal_anonymous_user();
 }
 
 // new functions development can be placed here and called by above dev code...
@@ -399,7 +411,7 @@ function kleosis_sync_users_confirm_submit($form, &$form_state) {
 //  $aMoodle_users = ws_get_users();
 //  dpm($aMoodle_users);
 
-$sync_message1 = 'Drupal users can be synchronized to Moodle via the main Drupal administration menu.  Please see the "Synchronization Details" help screen below.';
+$sync_message1 = 'Drupal users can be currently be synchronized to Moodle via the main Drupal administration menu.  Please see the "Creating and Registering New Users" section in the Kleosis Documentation.';
 /**********************************************************************************************************************************/
 /****************************************     Here's the sync code for Moodle users to Drupal    **********************************/
 

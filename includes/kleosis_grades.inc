@@ -86,6 +86,13 @@ function kleosis_current_grades_by_class($form, &$form_state) {
 
 function kleosis_current_grades_select_form() {
 
+  // check permissions
+  global $user;
+  $view_grades = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis grades')) ) {
+    $view_grades = FALSE;
+  }
+
   if ( !isset($_SESSION['ks_student_current_grades_acyt_select']['toggle_grades']) ) {  // if not set, then this is the first time into this screen - set default sesion variables
 
     $_SESSION['ks_student_current_grades_acyt_select']['toggle_grades'] = 'inactive';
@@ -165,6 +172,7 @@ function kleosis_current_grades_select_form() {
     '#type' => 'submit',
     '#value' => t('Get current grades from Moodle gradebook'),
     '#weight' => 9,
+    '#disabled' => !$view_grades,
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
@@ -330,6 +338,13 @@ function kleosis_final_grades_by_class($form, &$form_state) {
 
 function kleosis_final_grades_select_form() {
 
+  // check permissions
+  global $user;
+  $view_grades = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis grades')) ) {
+    $view_grades = FALSE;
+  }
+
   // get the class value from the session variable (if any) and set the default value accordingly
   $class_id_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_id']) ? $_SESSION['ks_final_grades_class_filter']['class_id'] : 0;
   $class_name_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_name']) ? $_SESSION['ks_final_grades_class_filter']['class_name'] : '';
@@ -402,6 +417,7 @@ function kleosis_final_grades_select_form() {
     '#type' => 'submit',
     '#value' => t('Get grades'),
     '#weight' => 9,
+    '#disabled' => !$view_grades,
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
@@ -560,7 +576,15 @@ function kleosis_final_grades_select_form_submit($form, &$form_state) {
  */
 function kleosis_final_grades_edit_form($form, &$form_state) {
 
-drupal_set_title(t('Edit Final Grades'));
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('edit kleosis grades')) ) {
+    drupal_set_message(t("You currently do not have permissions to edit grades."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
+  drupal_set_title(t('Edit Final Grades'));
 
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), 'kleosis');

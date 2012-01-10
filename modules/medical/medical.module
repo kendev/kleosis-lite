@@ -108,6 +108,13 @@ function kleosis_medical_medinfo_page($callback_arg = '') {
 
 function kleosis_medical_info_view($callback_arg = '') {
 
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis student info')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis student medical info."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
   module_load_include('inc', 'node', 'node.pages');  // needed for the node_add() function
 
   global $user;

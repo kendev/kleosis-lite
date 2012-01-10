@@ -600,8 +600,14 @@ function kleosis_class_view($callback_arg = '') {
 
 function kleosis_create_class_form($form, $form_state) {
 
-  global $user;
   global $base_root;
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis classes')) ) {
+    drupal_set_message(t("You currently do not have permissions to create classes."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
 
   // Set Breadcrumbs
   $breadcrumb = array();
@@ -610,25 +616,16 @@ function kleosis_create_class_form($form, $form_state) {
   $breadcrumb[] = t('Create Class');
 
   drupal_set_breadcrumb($breadcrumb);
-
   drupal_set_title(t('Create a class'));
+
   $build = array();
 
-  if (  (in_array('administrator', $user->roles))  || (user_access('administer nodes'))  ){
-//    $build['the_class'] = node_add('class');  // this throws a form expired error, so:
+  //$build['the_class'] = node_add('class');  // this throws a form expired error, so do the following::
+  $path = 'node/add/' . 'class';   // another technique: redirect to let Drupal launch the node add form
+  $options = array('query' => array('destination' => 'kleosis/classes') );
+  drupal_goto($path, $options, $http_response_code = 302);
 
-        $path = 'node/add/' . 'class';   // another technique: redirect to let Drupal launch the node add form
-        $options = array('query' => array('destination' => 'kleosis/classes') );
-        drupal_goto($path, $options, $http_response_code = 302);
-  }
-  else {
-    $build['view_return'] = array(
-     '#type' => 'markup',
-   //  '#markup' => '<p><br/>' . t('<a href="!url">Return to Classes List</a>', array('!url' => $base_root . url('kleosis/classes')) ) . '</p>',);
-     '#markup' => '<p><br/>' . t('You do not have permission to create classs.') . '</p>',
-      );
-  }
-  return $build;
+  //return $build;
 }
 
 /**
@@ -881,7 +878,7 @@ function kleosis_class_students() {
       'remarks' =>  $student->remarks,
 //      'operations' => l(t('edit'), 'kleosis/std/summary/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list')))
 //      'operations' =>  l(t('Summary'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
-      'operations' =>  l(t('Other classes'), 'kleosis/students/classes', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name)))
+      'operations' =>  l(t('Other classes'), 'kleosis/students/classes/enrolled_classes', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name)))
     );
   }
   $build['students'] = array(

@@ -9,6 +9,14 @@
 
 function kleosis_class_schedule_create_form($form, &$form_state) {
 
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis classes')) ) {
+    drupal_set_message(t("You currently do not have permissions to create class schedules."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), 'kleosis');
   $breadcrumb[] = l(t('Classes'), 'kleosis/classes');

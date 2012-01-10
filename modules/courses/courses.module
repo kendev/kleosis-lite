@@ -535,6 +535,12 @@ function kleosis_course_view($callback_arg = '') {
                                       'coursename' => $node->title,
                                       );
       if ($ksop == 'edit') {
+      // check permissions
+        if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis courses')) ) {
+          drupal_set_message(t("You currently do not have permissions to edit courses."));
+          $options = array('query' => array('destination' => 'kleosis/students') );
+          drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+        }
         $build['node_edit'] = node_page_edit($node);
       }
       else {
@@ -549,10 +555,6 @@ function kleosis_course_view($callback_arg = '') {
     }
   }
   else {  // node argument does not exist, or is = 1, try again
-//    $build['no_node_argument'] = array(
-//   '#type' => 'markup',
-//   '#markup' => '<p><br/>' . t('Please select a Course Name or edit link from the Course List tab.') . '</p>',
-//    );
     drupal_set_message('Please select a Course Name or edit link from the Course List tab.');
     drupal_goto($path = 'kleosis/courses', $options = array());
   }
@@ -569,8 +571,16 @@ function kleosis_course_view($callback_arg = '') {
 function kleosis_create_course_form($form, $form_state) {
 
   module_load_include('pages.inc', 'node', 'node');
-  global $user;
   global $base_root;
+
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis courses')) ) {
+    drupal_set_message(t("You currently do not have permissions to create courses."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
 
   // Set Breadcrumbs
   $breadcrumb = array();

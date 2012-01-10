@@ -620,3 +620,29 @@ function kleosis_report_odt_values() {
   return $le_array;
 }
 
+/**
+ *
+ * Initialize Kleosis permissions to Kleosis roles
+ *
+ * @param
+ *    none
+ *
+ * @return
+ *    none
+ */
+function kleosis_set_role_permissions() {
+
+  $student_rid = ks_create_new_role('student'); // will not create the role if it exists already
+  $instructor_rid = ks_create_new_role('instructor');
+  $parent_guardian_rid = ks_create_new_role('parent_guardian');
+
+  user_role_grant_permissions($instructor_rid, array(
+    'view kleosis student info',
+    'view kleosis attendance',
+    'take kleosis attendance',
+    'view kleosis grades',
+    'edit kleosis grades',
+    'view kleosis reports and queries',
+    )
+  );
+}

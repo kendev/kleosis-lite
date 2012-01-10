@@ -32,9 +32,9 @@ function kleosis_help($path, $arg) {
 
 /**
  * Implement hook_permission
- * Valid permissions for this module
+ * Valid permissions for Kleosis
  *
- * @return array An array of valid permissions for the kleosis module
+ * @return array An array of valid permissions for the Kleosis module
  */
 function kleosis_permission() {
 
@@ -44,8 +44,41 @@ function kleosis_permission() {
       'description' => t('Load/unload sample data and set various configuration parameters.'),
       'restrict access' => TRUE,
     ),
-    'access kleosis content' =>  array(
-      'title' => t('Access Kleosis content'),
+    'administer kleosis courses' =>  array(
+      'title' => t('Administer Kleosis courses'),
+    ),
+    'administer kleosis classes' =>  array(
+      'title' => t('Administer Kleosis classes'),
+    ),
+    'view kleosis student info' =>  array(
+      'title' => t('View Kleosis student info'),
+    ),
+    'create kleosis student info' =>  array(
+      'title' => t('Create Kleosis student info'),
+    ),
+    'edit kleosis student info' =>  array(
+      'title' => t('Edit Kleosis student info'),
+    ),
+    'delete kleosis student info' =>  array(
+      'title' => t('Delete Kleosis student info'),
+    ),
+    'administer kleosis enrollments' =>  array(
+      'title' => t('Administer Kleosis enrollments'),
+    ),
+    'view kleosis attendance' =>  array(
+      'title' => t('View Kleosis attendance'),
+    ),
+    'take kleosis attendance' =>  array(
+      'title' => t('Take Kleosis attendance'),
+    ),
+    'view kleosis grades' =>  array(
+      'title' => t('View Kleosis grades'),
+    ),
+    'edit kleosis grades' =>  array(
+      'title' => t('Edit Kleosis grades'),
+    ),
+    'view kleosis reports and queries' =>  array(
+      'title' => t('View Kleosis reports and queries'),
     ),
   );
 }
@@ -225,17 +258,52 @@ function kleosis_menu() {
       'type' => MENU_LOCAL_TASK,
       'title' => 'Reports',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('kleosis_students_reports_odt'),
-      'file' => 'includes/kleosis_reports_odt.inc',
+      'page arguments' => array('kleosis_student_reports'),
+      'file' => 'includes/kleosis_student_reports.inc',
       'access callback' => TRUE,
       'weight' => 7,
     );
+      $items['kleosis/students/reports/default'] = array(
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'title' => 'Reports', // this title shows in the tabbbed menu as the first tab
+        'weight' => -10,
+      );
+      $items['kleosis/students/reports/odt_reports'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'Open Office Reports',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_reports_odt'),
+        'file' => 'includes/kleosis_student_reports.inc',
+        'access callback' => TRUE,
+        'weight' => 1,
+      );
+
+      $items['kleosis/students/reports/ia_reports'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'Interactive Reports',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_reports_ia'),
+        'file' => 'includes/kleosis_student_reports.inc',
+        'access callback' => TRUE,
+        'weight' => 2,
+      );
+
+      $items['kleosis/students/reports/pds_reports'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'PDS Reports',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_reports_pds'),
+        'file' => 'includes/kleosis_student_reports.inc',
+        'access callback' => TRUE,
+        'weight' => 3,
+      );
+
     $items['kleosis/students/transcript'] = array(
       'type' => MENU_LOCAL_TASK,
       'title' => 'Transcript',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('kleosis_students_transcript_odt'),
-      'file' => 'includes/kleosis_reports_odt.inc',
+      'page arguments' => array('kleosis_student_transcript_odt'),
+      'file' => 'includes/kleosis_student_reports.inc',
       'access callback' => TRUE,
       'weight' => 8,
     );
