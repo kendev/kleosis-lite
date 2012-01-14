@@ -83,12 +83,16 @@ Views:
 	  Title (or Description): Student Info System
 	  
     - Kleosis will show up as a Main Menu item that points to an information page.  The Kleosis menu will be added to this page: 
-	- Select Structure, Blocks menu item from the Administration menu and set the Kleosis menu (block) to sidebar first region 
-	- be sure to show the block only on these listed pages: kleosis and kleosis/*
+	- Select Structure, Blocks menu item from the Administration menu, scroll down and click on the configure link accross from the Disabled Kleosis menu
+	- In the Kleosis Bartik (default theme) select box, select Sidebar first
+	- In the 'Show block on specific pages' section, click on the 'Only the listed pages' radio button and then enter the following two lines in the textarea:
+		kleosis
+		kleosis/*		
+	- Click on Save block and the Kleosis menu will now be shown only on the main Kleosis page and subpages
 
     - Sample data: The description tables in Kleosis must be populated next and currently this is not done automatically during install. To populate the tables:
     	- From the Kleosis main menu, select Processes and then select the Sample Data tab.
-    	- Click on the Populate description tables button (return to the Configuration Settings for Kleosis and set the Academic Year and Term)
+    	- Click on the Populate description tables button
 
     - Configure Kleosis:
     	- Select Configuration from the Administration Menu, then select the Kleosis settings link

@@ -150,14 +150,10 @@ function _course_installed_fields() {
       'field_name' => 'ks_course_status',
       'type'        => 'list_text',
       'description' => $t('Course status'),
-       'settings'    => array(
-        'allowed_values'  => array(
-          'active' => t('Active'),
-          'non_active' => t('Non Active'),
-          'retired' =>t('Retired'),
+      'settings'    => array(
+        'allowed_values_function'  => 'kleosis_course_status_values',
         ),
       ),
-    ),
     'length' => array(
       'field_name' => 'ks_course_length',
       'type'        => 'text',
@@ -167,32 +163,18 @@ function _course_installed_fields() {
       'field_name' => 'ks_course_room_type',
       'type'        => 'list_text',
       'description' => $t('Room type'),
-       'settings'    => array(
-        'allowed_values'  => array(
-          'standard' => t('Standard'),
-          'large' => t('Large'),
-          'auditorium' =>t('Auditorium'),
-          'off_campus' => t('Off Campus'),
-          'shared' => t('Shared'),
-          'temporary' => t('Temporary'),
+      'settings'    => array(
+        'allowed_values_function'  => 'kleosis_room_types_values',
         ),
       ),
-    ),
     'lab_type' => array(
       'field_name' => 'ks_course_lab_type',
       'type'        => 'list_text',
       'description' => $t('Lab type'),
-       'settings'    => array(
-        'allowed_values'  => array(
-          'standard' => t('Standard'),
-          'large' => t('Large'),
-          'secure_1' => t('Secure Level 1'),
-          'secure_2' => t('Secure Level 2'),
-          'off_campus' => t('Off Campus'),
-          'temporary' => t('Temporary'),
+      'settings'    => array(
+        'allowed_values_function'  => 'kleosis_lab_types_values',
         ),
       ),
-    ),
     'description' => array(
       'field_name' => 'ks_course_description',
       'type'        => 'text',
@@ -357,7 +339,7 @@ function _course_installed_instances() {
     ),
     'room_type' => array(
       'field_name' => 'ks_course_room_type',
-      'label'       => $t('Room type (int)'),
+      'label'       => $t('Room type'),
       'type'        => 'list_text',
       'widget'      => array(
         'type'    => 'options_select',

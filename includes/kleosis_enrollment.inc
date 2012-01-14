@@ -42,13 +42,14 @@ function kleosis_students_enrollments_filter_form() {
   $oper = isset($_SESSION['kleosis_enrollments_filter']['oper']) ? $_SESSION['kleosis_enrollments_filter']['oper'] : '';
   $thename = isset($_SESSION['kleosis_enrollments_filter']['thename']) ? $_SESSION['kleosis_enrollments_filter']['thename'] : '';
 
+  $filter = ( ( ($field == 'username') || (empty($field)) ) && ( ($oper == 'is') || (empty($oper)) ) && (empty($thename)) ) ? '' : ' - ON';
   // create a fieldset with search elements
   $form['searchuser'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Student filter'),
+    '#title' => t('Student filter') . $filter,
     '#weight' => -10,
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
+    '#collapsed' => TRUE,
   );
   $form['searchuser']['field'] = array(
     '#type' => 'select',
@@ -221,6 +222,7 @@ function kleosis_students_enrollments_actions_form() {
     '#prefix' => '<div style="float: right;width:200px" >',
     '#suffix' => '</div>',
   );
+
   return $form;
 }
 /**
@@ -248,6 +250,18 @@ function kleosis_enrollments_students_list() {
   $field = isset($_SESSION['kleosis_enrollments_filter']['field']) ? $_SESSION['kleosis_enrollments_filter']['field'] : '';
   $oper = isset($_SESSION['kleosis_enrollments_filter']['oper']) ? $_SESSION['kleosis_enrollments_filter']['oper'] : '';
   $thename = isset($_SESSION['kleosis_enrollments_filter']['thename']) ? $_SESSION['kleosis_enrollments_filter']['thename'] : '';
+
+  $form['ib_level'] = array(
+  '#type' => 'select',
+    '#title' => t('IB Level'),
+    '#options' =>  array('0' => ('0')),
+    '#options' =>  ks_get_ib_levels(),
+//    '#default_value' => $ib_level_from_filter,
+    '#default_value' => 0,
+    '#weight' => 0,
+    '#prefix' => '<div style="float: left;width:100px" >',
+    '#suffix' => '</div>',
+  );
 
   // create another fieldset for multiple update options (tbd...)
 /*
@@ -509,7 +523,9 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
       $enroll_record = array();
       $enroll_record['drp_uid'] = $value;
       $enroll_record['class_nid'] = $form_state['values']['class'];
+      $enroll_record['ib_level'] = $form_state['values']['ib_level'];
       $enroll_record['class_auth'] = 1;
+      $enroll_record['enrol_status'] = 1;
       $enroll_record['enrol_date']['year'] = $enrd->format('Y');
       $enroll_record['enrol_date']['month'] = $enrd->format('n');
       $enroll_record['enrol_date']['day'] = $enrd->format('j');
@@ -564,7 +580,9 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
         $enroll_record['ksccl_id'] = $result['ksccl_id'];
         $enroll_record['drp_uid'] = $result['kstu_id_fk'];
         $enroll_record['class_nid'] = $result['kccls_id_fk'];
+        $enroll_record['ib_level'] = $result['ib_level'];
         $enroll_record['class_auth'] = $result['class_auth'];
+        $enroll_record['enrol_status'] = $result['enrol_status'];
         $enroll_record['enrol_date']['year'] = $enrd->format('Y');
         $enroll_record['enrol_date']['month'] = $enrd->format('n');
         $enroll_record['enrol_date']['day'] = $enrd->format('j');

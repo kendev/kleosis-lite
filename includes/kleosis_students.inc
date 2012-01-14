@@ -638,6 +638,7 @@ function kleosis_students_classes($form, &$form_state) {
   $header = array(
 //    'name' => array('data' => t('Username'), 'field' => 'u.name'),
     'title' => 'Class Name',
+    'ib_level' => array('data' => t('IB Level'), 'field' => 'ksscc.ib_level'),
     'course_no' => array('data' => t('Course No'),),
     'enrol_date' => array('data' => t('Enrol Date'), 'field' => 'ksscc.enrol_date'),
 //    'completed' => array('data' => t('Completed'), 'field' => 'ksscc.completed'),
@@ -672,10 +673,12 @@ function kleosis_students_classes($form, &$form_state) {
 
   $query = db_select('ks_student_course_classes', 'ksscc');
   $query->innerJoin('users', 'u', 'u.uid = ksscc.kstu_id_fk');
+  $query->leftJoin('ks_ib_level_desc', 'ibl', 'ibl.kibl_id = ksscc.ib_level');
   $query->addField('u', 'name');
   $query->addField('ksscc', 'ksccl_id');
   $query->addField('ksscc', 'kstu_id_fk');
   $query->addField('ksscc', 'kccls_id_fk');
+  $query->addField('ibl', 'ib_level');
   $query->addField('ksscc', 'enrol_date');
   $query->addField('ksscc', 'completed');
   $query->addField('ksscc', 'final_grade');
@@ -718,6 +721,7 @@ function kleosis_students_classes($form, &$form_state) {
     $options[$node->nid] = array(
 //      'name' => l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
       'title' =>  $node->title,
+      'ib_level' =>  $student->ib_level,
       'course_no' =>  $node_course_no,
       'enrol_date' =>  $student->enrol_date,
 //      'completed' =>  $student->completed,
@@ -728,7 +732,7 @@ function kleosis_students_classes($form, &$form_state) {
 //      'operations' =>  l(t('Summary'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
 //      'operations' =>  l(t('Other courses'), 'kleosis/students/courses', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name)))
 //      'operations' =>  l(t('edit'), 'kleosis/students/classes/details/edit', array('query' => array('ksopid' => $student->ksccl_id, 'ksop' => 'edit')))
-      'operations' =>  t('details')
+      'operations' =>  t('edit')
     );
   }
   $build['students'] = array(

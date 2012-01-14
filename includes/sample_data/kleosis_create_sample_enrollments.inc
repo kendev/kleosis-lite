@@ -46,7 +46,9 @@ function kleosis_enroll_student_into_class($studentid, $classid, $classname) {
 
     $enroll_record['drp_uid'] = $studentid;
     $enroll_record['class_nid'] = $classid;
+    $enroll_record['ib_level'] = 0;
     $enroll_record['class_auth'] = 1;
+    $enroll_record['enrol_status'] = 1;
     $enroll_record['enrol_date']['year'] = $enrd->format('Y');
     $enroll_record['enrol_date']['month'] = $enrd->format('n');
     $enroll_record['enrol_date']['day'] = $enrd->format('j');

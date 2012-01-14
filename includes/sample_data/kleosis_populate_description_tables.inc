@@ -717,6 +717,44 @@ else {
       ->execute();
 }
 /**
+ * populate the ks_ib_level_desc table
+ */
+
+  $rec_count = db_query('SELECT count(kibl_id) FROM {ks_ib_level_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_ib_level_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kibl_id' => 0,
+      'ib_level' => ' ',
+      'description' => 'no IB Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 1,
+      'ib_level' => 'SL',
+      'description' => 'Standard Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 2,
+      'ib_level' => 'HL',
+      'description' => 'Higher Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+}
+/**
  * populate the ks_course_status_desc table
  */
 

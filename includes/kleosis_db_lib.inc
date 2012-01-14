@@ -453,6 +453,36 @@ function ks_get_programs() {
   return $options;
 }
 /**
+ * Retrieve the IB Level as a string
+ *
+ * @param $int_ib_level
+ *   The ib_level as an integer
+ * @return
+ *   the ib_level as a string
+ */
+function ks_get_ib_level_desc($int_ib_level) {
+
+  $ib_level = db_query('SELECT ib_level FROM {ks_ib_level_desc} WHERE kibl_id = :kibl_id',
+                        array(':kibl_id' => $int_ib_level))->fetchField();
+  return $ib_level;
+}
+
+/**
+ * Get all IB Levels
+ *
+ * @return
+ *    options - an array of ib_levels
+ */
+function ks_get_ib_levels() {
+
+  $options = array();
+  $results = db_query('SELECT kibl_id, ib_level FROM {ks_ib_level_desc}' )->fetchAll();
+  foreach ($results as $ib_level) {
+    $options[$ib_level->kibl_id] = $ib_level->ib_level;
+  }
+  return $options;
+}
+/**
  * Retrieve the campus as a string
  *
  * @param $intcampus
@@ -1387,7 +1417,9 @@ function ks_get_enroll_records($drupaluserid, $unenroll_is_null = TRUE, $class_i
   $query->addField('ksenr', 'ksccl_id');
   $query->addField('ksenr', 'kstu_id_fk');
   $query->addField('ksenr', 'kccls_id_fk');
+  $query->addField('ksenr', 'ib_level');
   $query->addField('ksenr', 'class_auth');
+  $query->addField('ksenr', 'enrol_status');
   $query->addField('ksenr', 'enrol_date');
   $query->addField('ksenr', 'unenrol_date');
   $query->addField('ksenr', 'completed');
@@ -1434,7 +1466,9 @@ function ks_insert_enroll_record($ks_enroll_record) {
   $cnt = db_insert('ks_student_course_classes')
       ->fields(array( 'kstu_id_fk' => $ks_enroll_record['drp_uid'],
                       'kccls_id_fk' => $ks_enroll_record['class_nid'],
+                      'ib_level' => $ks_enroll_record['ib_level'],
                       'class_auth' => $ks_enroll_record['class_auth'],
+                      'enrol_status' => $ks_enroll_record['enrol_status'],
                       'enrol_date' => $enrd->format('Y-m-d'),
 //                      'unenrol_date' => $uenrd->format('Y-m-d'),
                       'completed' => $ks_enroll_record['completed'],
@@ -1470,7 +1504,9 @@ function ks_update_enroll_record($ks_enroll_record) {
       ->condition('ksccl_id', $ks_enroll_record['ksccl_id'])
       ->fields(array('kstu_id_fk' => $ks_enroll_record['drp_uid'],
                       'kccls_id_fk' => $ks_enroll_record['class_nid'],
+                      'ib_level' => $ks_enroll_record['ib_level'],
                       'class_auth' => $ks_enroll_record['class_auth'],
+                      'enrol_status' => $ks_enroll_record['enrol_status'],
                       'enrol_date' => $enrd->format('Y-m-d'),
                       'unenrol_date' => (isset($uenrd)) ? $uenrd->format('Y-m-d') : NULL,
                       'completed' => $ks_enroll_record['completed'],

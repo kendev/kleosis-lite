@@ -1432,11 +1432,24 @@ function kleosis_schema() {
         'default' => 0,
         'description' => 'The class foreign key.',
       ),
+      'ib_level' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'IB level for this class',
+      ),
       'class_auth' => array(
         'type' => 'int',
         'not null' => FALSE,
         'default' => 0,
         'description' => 'Authorization to take this class.',
+      ),
+      'enrol_status' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'Enrol status',
       ),
       'enrol_date' => array(
         'mysql_type' => 'DATETIME',
@@ -1936,6 +1949,33 @@ function kleosis_schema() {
       ),
     ),
     'primary key' => array('kcauth_id'),
+  );
+
+  $schema['ks_ib_level_desc'] = array(
+    'description' => 'IB Level description table',
+    'fields' => array(
+      'kibl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'ib_level' => array(
+        'type' => 'varchar',
+        'length' => 24,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The IB Level',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the IB Level',
+      ),
+    ),
+    'primary key' => array('kibl_id'),
   );
 
   $schema['ks_academic_year_desc'] = array(
