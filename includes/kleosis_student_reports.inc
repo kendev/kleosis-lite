@@ -40,7 +40,7 @@ function kleosis_student_reports_odt($form, &$form_state) {
 
 /**
  *
- * Academic year and term selection for the Student Open Office (.odt) Reports form
+ * Academic year and term selection for the Student OpenOffice (.odt) Reports form
  *
  */
 
@@ -119,7 +119,7 @@ function kleosis_student_reports_odt_acyt_select_form() {
   );
 
   $odtreport_desc = <<<EOT
-  * These reports are template-based using the Open Office standard document file format (.odt) -
+  * These reports are template-based using the OpenOffice standard document file format (.odt) -
   see the Kleosis documentation for more information on these user-customizable reports.
 EOT;
 
@@ -444,7 +444,7 @@ function kleosis_student_reports_pds($form, &$form_state) {
 
 
   $page_desc = <<<EOT
-    <br/>These customizeable, interactive reports will allow the user to add and edit additional data, add and arrange new fields,
+    <br/>These customizable, interactive reports will allow the user to add and edit additional data, add and arrange new fields,
     select themes, control layout and printing, subscribe to report events, and enable numerous other report options from the PDS Report Service (tbd).
     The added data becomes managed by PDS report service and can be searched for fast retrieval (tbd)
     - see the Kleosis documentation for more information on these reports.
@@ -486,7 +486,7 @@ function kleosis_student_transcript_odt($form, &$form_state) {
   drupal_set_title(t('Student Transcript'));
 
   $page_desc = <<<EOT
-    <br/>The student transcript is generated as an Open Office document from a customizeable template (tbd)
+    <br/>The student transcript is generated as an OpenOffice document from a customizable template (tbd)
         - see the Kleosis documentation for more information.
     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;

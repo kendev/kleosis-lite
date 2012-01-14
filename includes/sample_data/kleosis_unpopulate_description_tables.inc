@@ -56,6 +56,13 @@
   drupal_set_message('ks_course_auth_desc table entries have been removed');
 
 /**
+ * unpopulate the ks_ib_level_desc table
+ */
+
+  $cnt_deleted = db_delete('ks_ib_level_desc')->execute();
+  drupal_set_message('ks_ib_level_desc table entries have been removed');
+
+/**
  * unpopulate the ks_course_status_desc table
  */
 

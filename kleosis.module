@@ -270,7 +270,7 @@ function kleosis_menu() {
       );
       $items['kleosis/students/reports/odt_reports'] = array(
         'type' => MENU_LOCAL_TASK,
-        'title' => 'Open Office Reports',
+        'title' => 'OpenOffice Reports',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('kleosis_student_reports_odt'),
         'file' => 'includes/kleosis_student_reports.inc',

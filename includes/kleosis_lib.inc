@@ -481,6 +481,25 @@ function kleosis_academic_term_values() {
   return $le_array;
 }
 
+/**
+ * The allowed values for the room_type courses field
+ *
+ * @return
+ *    An array of room_types to select
+ */
+function kleosis_room_types_values() {  // todo: these values may be defined in the list (text) field directly
+
+  $le_array = array(
+    'standard' => t('Standard'),
+    'large' => t('Large'),
+    'auditorium' =>t('Auditorium'),
+    'off_campus' => t('Off Campus'),
+    'shared' => t('Shared'),
+    'temporary' => t('Temporary'),
+    'other' => t('Other'),
+  );
+  return $le_array;
+}
 
 /**
  * The allowed values for the lab_type courses field
@@ -493,10 +512,11 @@ function kleosis_lab_types_values() {  // todo: these values may be defined in t
   $le_array = array(
     'standard' => t('Standard'),
     'large' => t('Large'),
-    'auditorium' =>t('Auditorium'),
-    'lab' => t('Lab'),
-    'protected_lab' => t('Protected lab'),
+    'secure_1' => t('Secure Level 1'),
+    'secure_2' => t('Secure Level 2'),
+    'off_campus' => t('Off Campus'),
     'temporary' => t('Temporary'),
+    'other' => t('Other'),
   );
   return $le_array;
 }
@@ -505,16 +525,69 @@ function kleosis_lab_types_values() {  // todo: these values may be defined in t
  * The allowed values for the types of courses
  *
  * @return
- *    An array of lab_types to select
+ *    An array of course_types to select
  */
 function kleosis_course_types_values() {  // todo: these values may be defined in the list (text) field directly
 
   $le_array = array(
     'standard' => t('Standard'),
     'non-credit' => t('Non-Credit'),
-    'attendance' =>t('Attendance'),
     'lab' => t('Lab'),
+    'attendance' =>t('Attendance'),
     'lunch-breaktime' => t('Lunch-Breaktime'),
+    'other' => t('Other'),
+  );
+  return $le_array;
+}
+
+/**
+ * The allowed values for the course statuses
+ *
+ * @return
+ *    An array of course_statuses to select
+ */
+function kleosis_course_status_values() {  // todo: these values may be defined in the list (text) field directly
+
+  $le_array = array(
+    'active' => t('Active'),
+    'non_active' => t('Non Active'),
+    'retired' =>t('Retired'),
+  );
+  return $le_array;
+}
+
+/**
+ * The allowed values for the types of classes
+ *
+ * @return
+ *    An array of class_types to select
+ */
+function kleosis_class_types_values() {  // todo: these values may be defined in the list (text) field directly
+
+  $le_array = array(
+    'standard' => t('Standard'),
+    'online' => t('Online'),
+    'night' => t('Night'),
+    'weekend' => t('Weekend'),
+    'summer' => t('Summer'),
+    'other' => t('Other'),
+  );
+  return $le_array;
+}
+
+/**
+ * The allowed values for the class statuses
+ *
+ * @return
+ *    An array of class_statuses to select
+ */
+function kleosis_class_status_values() {  // todo: these values may be defined in the list (text) field directly
+
+  $le_array = array(
+    'active' => t('Active'),
+    'rescheduled' => t('Rescheduled'),
+    'postponed' => t('Postponed'),
+    'cancelled' => t('Cancelled'),
     'other' => t('Other'),
   );
   return $le_array;

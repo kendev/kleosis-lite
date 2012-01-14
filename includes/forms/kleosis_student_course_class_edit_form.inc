@@ -43,7 +43,9 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
   $query->addField('ksscc', 'ksccl_id');
   $query->addField('ksscc', 'kstu_id_fk');
   $query->addField('ksscc', 'kccls_id_fk');
+  $query->addField('ksscc', 'ib_level');
   $query->addField('ksscc', 'class_auth');
+  $query->addField('ksscc', 'enrol_status');
   $query->addField('ksscc', 'enrol_date');
   $query->addField('ksscc', 'unenrol_date');
   $query->addField('ksscc', 'completed');
@@ -59,7 +61,6 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
 //todo: determine academic year and term and filter accordingly....
 
   $cerecord = $query->execute()->fetch(PDO::FETCH_ASSOC);
-
   $enrd = (!empty($cerecord['enrol_date'])) ? new DateTime($cerecord['enrol_date']) : new DateTime('1900-01-01 0:0:00');
 //  $uenrd = (!empty($cerecord['unenrol_date'])) ? new DateTime($cerecord['unenrol_date']) : new DateTime('now');
   $uenrd = (!empty($cerecord['unenrol_date'])) ? new DateTime($cerecord['unenrol_date']) : new DateTime('1900-01-01 0:0:00');
@@ -112,13 +113,29 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
     '#prefix' => '<div style="float: left;width:320px" >',
     '#suffix' => '</div>',
   );
+  $form['class_entry_record']['ib_level'] = array(
+    '#type' => 'select',
+    '#title' => t('IB Level'),
+    '#options' => ks_get_ib_levels(),
+    '#default_value' => ($defaults)? $cerecord['ib_level'] : 0,
+    '#prefix' => '<div style="float: left;clear: left;width:240px" >',
+    '#suffix' => '</div><br/>',
+  );
   $form['class_entry_record']['class_auth'] = array(
     '#type' => 'textfield',
     '#title' => t('Class Authorization'),
     '#size' => 20,
     '#maxlength' => 30,
     '#default_value' => ($defaults)? $cerecord['class_auth'] : '',
-    '#prefix' => '<div style="float: left;clear: left;width:240px" >',
+    '#prefix' => '<div style="float: left;width:240px" >',
+    '#suffix' => '</div><br/>',
+  );
+  $form['class_entry_record']['enrol_status'] = array(
+    '#type' => 'select',
+    '#title' => t('Enrol Status'),
+    '#options' =>  array('0' => '0', '1' => '1',),
+    '#default_value' => ($defaults)? $cerecord['enrol_status'] : '',
+    '#prefix' => '<div style="float: left;width:240px" >',
     '#suffix' => '</div><br/>',
   );
   $form['class_entry_record']['enrol_date'] = array(
@@ -129,7 +146,7 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
        'day' => $enrd->format('j'),
        'year' => $enrd->format('Y'),
       ),
-    '#prefix' => '<div style="float: left;width:240px" >',
+    '#prefix' => '<div style="float: left;clear:left;width:240px" >',
     '#suffix' => '</div><br/>',
   );
   $form['class_entry_record']['unenrol_date'] = array(
@@ -245,7 +262,9 @@ function kleosis_student_course_class_edit_form_submit($form, &$form_state) {
       $enroll_record['ksccl_id'] = $form_state['values']['ksccl_id'];
       $enroll_record['drp_uid'] = $form_state['values']['kstu_id_fk'];
       $enroll_record['class_nid'] = $form_state['values']['kccls_id_fk'];
+      $enroll_record['ib_level'] = $form_state['input']['ib_level'];
       $enroll_record['class_auth'] = $form_state['input']['class_auth'];
+      $enroll_record['enrol_status'] = $form_state['input']['enrol_status'];
       $enroll_record['enrol_date']['year'] = $form_state['input']['enrol_date']['year'];
       $enroll_record['enrol_date']['month'] = $form_state['input']['enrol_date']['month'];
       $enroll_record['enrol_date']['day'] = $form_state['input']['enrol_date']['day'];

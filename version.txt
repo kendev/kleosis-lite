@@ -1,0 +1,9 @@
+/**
+ * Kleosis version information
+ *
+ * This file defines the current version of the core Kleosis code in this release
+ * @copyright  2010 onwards Ken DeVellis (http://kleosis.org)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+version  = v.9.4.5
