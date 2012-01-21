@@ -557,6 +557,13 @@ function kleosis_student_summary_form_validate($form, &$form_state) {
 
 function kleosis_students_classes($form, &$form_state) {
 
+  // check permissions
+  global $user;
+  $allow_edit = TRUE;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('administer kleosis classes')) ) {
+    $allow_edit = FALSE;
+  }
+
   drupal_set_title(t('Student Classes'));
 
   // Set Breadcrumbs
@@ -732,7 +739,9 @@ function kleosis_students_classes($form, &$form_state) {
 //      'operations' =>  l(t('Summary'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
 //      'operations' =>  l(t('Other courses'), 'kleosis/students/courses', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name)))
 //      'operations' =>  l(t('edit'), 'kleosis/students/classes/details/edit', array('query' => array('ksopid' => $student->ksccl_id, 'ksop' => 'edit')))
-      'operations' =>  t('edit')
+//      'operations' =>  t('edit')
+      'operations' =>  $allow_edit ? l(t('edit'), 'kleosis/students/classes/details/edit', array('query' => array('ksopid' => $student->ksccl_id, 'ksop' => 'edit'))) : t('edit')
+
     );
   }
   $build['students'] = array(
