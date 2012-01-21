@@ -685,9 +685,6 @@ function kleosis_report_odt_values() {
   $le_array = array(
     'progress_a' => t('Progress A'),
     'progress_b' => t('Progress B'),
-    'progress_c' => t('Progress C'),
-    'progress_d' => t('Progress D'),
-    'progress_e' => t('Progress E'),
     'other' => t('Other (tbd...)'),
   );
   return $le_array;
