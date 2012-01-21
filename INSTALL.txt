@@ -63,7 +63,8 @@ Views:
 
 
 2 - Kleosis module installation: Download kleosis-lite.zip file from https://github.com/kendev/kleosis-lite
-    - Unzip into the following folder: ...'yourdrupal'/sites/all/modules
+    - Unzip to get the a folder named something like 'kendev-kleosis-lite-v.9.4.5-0-g2066f28e3e988af8a4882f9b0fd254fe383926cb'
+    - Rename this folder to 'kleosis' and then move it into the following folder: ...'yourdrupal'/sites/all/modules
     - Next, the Kleosis Bartik theme should be installed:
 	- Move the folder '_unzip_and_move_me.zip' to a temporary location outside of the kleosis root folder and then unzip it.  Then, move
 	  the kleosis_bartik folder into the ../sites/all/themes folder.

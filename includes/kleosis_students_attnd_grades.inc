@@ -175,7 +175,6 @@ function kleosis_students_attendance_list() {
 
   $term_length = 180; // todo:  review this
 
-
   $header = array(
     'absent_reason' => 'Absent Reason',
     'total' => 'Total',
@@ -420,6 +419,10 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term){
   if ( !empty($result) ) {
     $nids_courses = array_keys($result['node']);  // these nids will be used to filter the following query:
   }
+  else {
+    drupal_set_message(t('There are no attendance courses defined.'));
+    return '';
+}
 
   /* then, get Classes referenced to Courses with course_type 'attendance' */
 

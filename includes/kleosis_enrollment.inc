@@ -536,7 +536,8 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
       $enroll_record['final_grade'] = 0;
       $enroll_record['final_attendance'] = '';
       $enroll_record['final_other'] = '';
-      $enroll_record['remarks'] = 'Sample Test enroll into class ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']];
+//      $enroll_record['remarks'] = 'Sample Test enroll into class ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']];
+      $enroll_record['remarks'] = '';
 
       $there_already = ks_get_enroll_records($value, TRUE, $form_state['values']['class']);
       $there_but_unenrolled = ks_get_enroll_records($value, FALSE, $form_state['values']['class']);
@@ -582,7 +583,8 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
         $enroll_record['class_nid'] = $result['kccls_id_fk'];
         $enroll_record['ib_level'] = $result['ib_level'];
         $enroll_record['class_auth'] = $result['class_auth'];
-        $enroll_record['enrol_status'] = $result['enrol_status'];
+//        $enroll_record['enrol_status'] = $result['enrol_status'];
+        $enroll_record['enrol_status'] = 0;
         $enroll_record['enrol_date']['year'] = $enrd->format('Y');
         $enroll_record['enrol_date']['month'] = $enrd->format('n');
         $enroll_record['enrol_date']['day'] = $enrd->format('j');
