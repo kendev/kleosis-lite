@@ -166,7 +166,7 @@ dpm($record->final_grade_str);
 /****************  new dev code can go here:  ***************/
 
 
-//force_logout();
+
 
 
  return array('#markup' => 'Development code goes here...');

@@ -12,22 +12,6 @@ $kwspath = drupal_get_path('module', 'kleosis');
 $kws = $kwspath . '/kws/MoodleWS.php';
 require_once ($kws);
 
-register_shutdown_function('ks_shutdown');
-
-/**
- * Function to respond to a php fatal error
- *
- * @return
- *   redirect to Kleosis home page  //todo: create error page and redirect from there
- */
-function ks_shutdown() {
- if (($error = error_get_last())) {
-   ob_clean();
-   global $base_url;
-   header('Location: ' . $base_url . '/' . 'kleosis');
-  }
-}
-
 /**
  * Retrieve the Moodle user's info for a single user
  *

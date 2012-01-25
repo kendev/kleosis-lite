@@ -14,6 +14,8 @@ require_once ('includes/kleosis_user_reg_and_profile.inc');
 require_once ('includes/kleosis_user_blocks.inc');
 require_once ('includes/kleosis_lib.inc');
 
+register_shutdown_function('kleosis_shutdown');
+
 /**
  * Display help and module information
  *
@@ -85,6 +87,19 @@ function kleosis_permission() {
 
 /**
  *
+ * Restrict access to the main Kleosis tab
+ *
+ * @return
+ *   TRUE or FALSE
+ */
+
+function kleosis_access_callback() {
+  global $user;
+  return (in_array('administrator', $user->roles) || user_access('view kleosis student info'));
+}
+
+/**
+ *
  * Implementation of hook_menu() (kleosis Main Menu).
  *
  */
@@ -97,7 +112,8 @@ function kleosis_menu() {
     'description' => 'Access SIS functions',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('kleosis_intro_form'),
-    'access callback' => TRUE,
+    'access callback' => 'kleosis_access_callback',
+//    'access arguments' => array('view kleosis student info'),
     'expanded' => TRUE,
     'menu_name' => 'kleosismm',
   );
@@ -1268,4 +1284,24 @@ function kleosis_std_sd_to_arg($uarg){
 
   return $uid;
 }
+
+/**
+ * Function to respond to a php fatal error
+ *
+ * @return
+ *   redirect to Kleosis home page  //todo: maybe create error page and redirect from there
+ */
+function kleosis_shutdown() {
+ if (($error = error_get_last())) {
+   $msg = 'Error occurred: %le_error';
+   $vars = array('%le_error'=> $error['message'] . '; Type: ' . $error['type'] . '; File: ' . $error['file'] . '; Line: ' . $error['line']);
+   watchdog('Kleosis', $msg, $vars, WATCHDOG_ERROR);
+
+   ob_clean();
+   ob_flush();
+   global $base_url;
+   header('Location: ' . $base_url . '/' . 'kleosis');
+  }
+}
+
 

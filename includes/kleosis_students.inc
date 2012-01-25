@@ -103,9 +103,10 @@ function kleosis_students_filter_form() {
 function fill_searchuser_items() {
 
   $le_array = array(
+    'username' => t('Username'),
     'fullname' => t('Fullname'),
     'friendlyname' => t('Friendlyname'),
-    'username' => t('Username'),
+    'gradelevel' => t('Gradelevel'),
   );
   return $le_array;
 }
@@ -174,14 +175,14 @@ drupal_set_title(t('Student List'));
   $header = array(
     'name' => array('data' => t('Username'), 'field' => 'u.name'),
 //    'drp_uid_fk' => array('data' => t('Student id'), 'field' => 'kstu.drp_uid_fk'),
-//    'fullname' => array('data' => t('Fullname'), 'field' => 'kstu.fullname'),
-    'identity_id' => array('data' => t('Identity id'), 'field' => 'kstu.identity_id'),
+    'fullname' => array('data' => t('Fullname'), 'field' => 'kstu.fullname'),
     'friendlyname' => array('data' => t('Friendly Name'), 'field' => 'kstu.friendlyname'),
     'program' => array('data' => t('Program'), 'field' => 'kpgm.program'),
     'gradelevel' => array('data' => t('Gradelevel'), 'field' => 'kgrdl.gradelevel'),
     'status' => array('data' => t('Status'), 'field' => 'ksts.status'),
 //    'operations' => array('data' => t('Ops')),
   );
+//    'identity_id' => array('data' => t('Identity id'), 'field' => 'kstu.identity_id'),
 
 if (($field == 'username'))  {
   $query = db_select('users', 'u');
@@ -208,20 +209,36 @@ else{
   $query->range(0, 2000);
 
   // adjust the query according to the filter values
-  if (($field <> 'username') && (!empty($field)))  {
-    if ($oper == 'is') {
-       $query->condition('kstu.' . $field, $thename, '=');
-    }
-    else{
-        $query->condition('kstu.' . $field, $thename . '%', 'like');
-    }
-  }
   if (($field == 'username') && (!empty($thename)) )  {
     if ($oper == 'is') {
        $query->condition('u.' . 'name', $thename, '=');
     }
     else{
         $query->condition('u.' . 'name', $thename . '%', 'like');
+    }
+  }
+  if (($field == 'fullname') && (!empty($thename)) )  {
+    if ($oper == 'is') {
+       $query->condition('kstu.' . 'fullname', $thename, '=');
+    }
+    else{
+        $query->condition('kstu.' . 'fullname', $thename . '%', 'like');
+    }
+  }
+  if (($field == 'friendlyname') && (!empty($thename)) )  {
+    if ($oper == 'is') {
+       $query->condition('kstu.' . 'friendlyname', $thename, '=');
+    }
+    else{
+        $query->condition('kstu.' . 'friendlyname', $thename . '%', 'like');
+    }
+  }
+  if (($field == 'gradelevel') && (!empty($thename)) )  {
+    if ($oper == 'is') {
+       $query->condition('kgrdl.' . 'gradelevel', $thename, '=');
+    }
+    else{
+        $query->condition('kgrdl.' . 'gradelevel', $thename . '%', 'like');
     }
   }
 //  $count_query = clone $query;
@@ -243,8 +260,8 @@ else{
 //      'name' => $student->name,
       'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name))),
 //      'drp_uid_fk' =>  $student->drp_uid_fk,
-//      'fullname' => $student->fullname,
-      'identity_id' => $student->identity_id,
+      'fullname' =>  !empty($student->fullname) ? $student->fullname : '(' . $student->name . ')',
+//      'identity_id' => $student->identity_id,
       'friendlyname' => $student->friendlyname,
       'program' => $student->program,
       'gradelevel' => $student->gradelevel,
