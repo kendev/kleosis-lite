@@ -643,13 +643,30 @@ function get_schedule_period_status($intstatus) {
  */
 function ks_get_acy_term_dates($academic_year, $term) {
 
-//  $term_startdate = 'term' . $term . '_startdate';
-//  $term_enddate = 'term' . $term . '_enddate';
+    // get termcount
+  $termcount = 6;
+  $rec = db_query('SELECT * FROM {ks_academic_year_desc} LIMIT 1' )->fetchAll();
+  if (empty($rec[0]->term1_enddate)) {
+    $termcount = 0;
+  }
+  else if (empty($rec[0]->term2_enddate)) {
+    $termcount = 1;
+  }
+  else if (empty($rec[0]->term3_enddate)) {
+    $termcount = 2;
+  }
+  else if (empty($rec[0]->term4_enddate)) {
+    $termcount = 3;
+  }
+  else if (empty($rec[0]->term5_enddate)) {
+    $termcount = 4;
+  }
+  else if (empty($rec[0]->term6_enddate)) {
+    $termcount = 5;
+  }
 
   $term_startdate =  ($term == 'fy') ? 'term1' . '_startdate' : 'term' . $term . '_startdate';
-  $term_enddate =  ($term == 'fy') ? 'term2' . '_enddate' : 'term' . $term . '_enddate';
-
-  // todo: determine last term and adjust above...
+  $term_enddate =  ($term == 'fy') ? 'term' . $termcount . '_enddate' : 'term' . $term . '_enddate';
 
   $query = db_select('ks_academic_year_desc', 'kacy');
   $query->addField('kacy', $term_startdate);
