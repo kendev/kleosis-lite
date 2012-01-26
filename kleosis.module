@@ -1289,18 +1289,23 @@ function kleosis_std_sd_to_arg($uarg){
  * Function to respond to a php fatal error
  *
  * @return
- *   redirect to Kleosis home page  //todo: maybe create error page and redirect from there
+ *   redirect to the calling url of the url that caused the error
+ *   Ubuntu 10.04 has issues with php, so this function is a workaround...
  */
 function kleosis_shutdown() {
  if (($error = error_get_last())) {
    $msg = 'Error occurred: %le_error';
    $vars = array('%le_error'=> $error['message'] . '; Type: ' . $error['type'] . '; File: ' . $error['file'] . '; Line: ' . $error['line']);
-   watchdog('Kleosis', $msg, $vars, WATCHDOG_ERROR);
+   watchdog('System', $msg, $vars, WATCHDOG_ERROR);
 
    ob_clean();
    ob_flush();
-   global $base_url;
-   header('Location: ' . $base_url . '/' . 'kleosis');
+
+//   global $base_url;
+//   header('Location: ' . $base_url . '/' . 'kleosis');
+
+   $goback = $_SERVER['HTTP_REFERER'];
+   header('Location: ' . $goback);
   }
 }
 
