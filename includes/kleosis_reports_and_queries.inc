@@ -268,7 +268,7 @@ function courses_filter_form_submit($form, &$form_state) {
  */
 function kleosis_queries_courses_list() {
 
-  drupal_set_title(t('Courses List '));
+  drupal_set_title(t('Courses List'));
   drupal_set_message(t('*Note: this report has been temporarily replaced by the list shown from the Courses menu item'));
 
   $header = array(
@@ -400,7 +400,7 @@ function kleosis_queries_courses_list() {
 
 function kleosis_queries_classes_list_form() {
 
-  drupal_set_title(t('Classes List '));
+  drupal_set_title(t('Classes List'));
   drupal_set_message(t('*Note: this report has been temporarily replaced by the list shown from the Classes menu item'));
   $header = array(
     'class_id' => array('data' => t('Class id')),
@@ -426,7 +426,7 @@ function kleosis_queries_classes_list_form() {
 
 function kleosis_queries_students_list_form() {
 
-  drupal_set_title(t('Students List '));
+  drupal_set_title(t('Students List'));
   drupal_set_message(t('*Note: this report has been temporarily replaced by the list shown from the Students menu item'));
   $header = array(
     'student_id' => array('data' => t('Student id')),
@@ -454,7 +454,7 @@ function kleosis_queries_students_list_form() {
 
 function kleosis_queries_instructors_list_form() {
 
-  drupal_set_title(t('Faculty List '));
+  drupal_set_title(t('Faculty List'));
   drupal_set_message(t('*Note: this report will be temporarily replaced by the list shown from the Faculty menu item'));
   $header = array(
     'staff_id' => array('data' => t('Staff id')),

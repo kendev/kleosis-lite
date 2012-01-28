@@ -4,10 +4,10 @@
  * Create the sample enrollments for kleosis
  */
 
-  $studentnames = array('student9000','student9001','student9002','student9003','student9004','student9005','student9006','student9007',
-                        'student9008','student9009','student9010','student9011','student9012','student9013','student9014','student9015',
+  $studentnames = array('student9000', 'student9001', 'student9002', 'student9003', 'student9004', 'student9005', 'student9006', 'student9007',
+                        'student9008', 'student9009', 'student9010', 'student9011', 'student9012', 'student9013', 'student9014', 'student9015',
                         );
-  $classnames = array ('Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1', 'Kleosis sample Art 101 Class - Section 1',
+  $classnames = array('Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1', 'Kleosis sample Art 101 Class - Section 1',
                         'Kleosis sample Computer 101 Class - Section 1', 'Kleosis sample English 101 Class - Section 1',
                         'Kleosis sample English 102 Class - Section 1', 'Kleosis sample Math 101 Class - Section 1',
                         'Kleosis sample Music 101 Class - Section 1', 'Kleosis sample PE 101 Class - Section 1',
@@ -15,12 +15,12 @@
                         'Kleosis Morning Break', 'Kleosis Lunchtime A', 'Kleosis Afternoon Break'
                         );
 
-  foreach($studentnames as $studentname) {
+  foreach ($studentnames as $studentname) {
 
     $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-    $studentid = db_query($sql, array(':name' => $studentname,))->fetchField();
+    $studentid = db_query($sql, array(':name' => $studentname, ))->fetchField();
 
-    foreach($classnames as $classname) {
+    foreach ($classnames as $classname) {
       $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
       $classid = db_query($sql, array(':type' => 'class', ':kleosis' => $classname))->fetchField();
 
@@ -28,7 +28,8 @@
         kleosis_enroll_student_into_class($studentid, $classid, $classname);
       }
       catch (Exception $e) {
-        drupal_set_message('Sample enrollment error: ' . $e->getMessage() );
+        $msg = check_plain($e->getMessage() );
+        drupal_set_message(t('Sample enrollment error:') . ' ' . $msg );
       }
     }
   }
@@ -64,7 +65,7 @@ function kleosis_enroll_student_into_class($studentid, $classid, $classname) {
     $there_already = ks_get_enroll_records($studentid, TRUE, $classid);
     $there_but_unenrolled = ks_get_enroll_records($studentid, FALSE, $classid);
 
-    if  ( (empty($there_already)) &&  (empty($there_but_unenrolled)) ){
+    if ( (empty($there_already)) &&  (empty($there_but_unenrolled)) ) {
       $newrec_id = ks_insert_enroll_record($enroll_record);
 //      drupal_set_message('Student: ' . $studentid . ' was enrolled into class: ' . $classname . ' (class id:) ' .  $classid . ')');
     }

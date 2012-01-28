@@ -1,9 +1,9 @@
 <?php
-// $Id$
+
 /**
-* @file
-*   kleosis DB Library functions
-*/
+ * @file
+ *   kleosis DB Library functions
+ */
 
 /**
  * Retrieve the student current status as a string
@@ -415,7 +415,7 @@ function ks_get_organizations() {
  * @return
  *   the organization as a string
  */
-function get_organization_desc($intorg) {
+function ks_get_organization_desc($intorg) {
 
   $organization = db_query('SELECT organization FROM {ks_organization_desc} WHERE korg_id = :korg_id',
                             array(':korg_id' => $intorg))->fetchField();
@@ -649,19 +649,19 @@ function ks_get_acy_term_dates($academic_year, $term) {
   if (empty($rec[0]->term1_enddate)) {
     $termcount = 0;
   }
-  else if (empty($rec[0]->term2_enddate)) {
+  elseif (empty($rec[0]->term2_enddate)) {
     $termcount = 1;
   }
-  else if (empty($rec[0]->term3_enddate)) {
+  elseif (empty($rec[0]->term3_enddate)) {
     $termcount = 2;
   }
-  else if (empty($rec[0]->term4_enddate)) {
+  elseif (empty($rec[0]->term4_enddate)) {
     $termcount = 3;
   }
-  else if (empty($rec[0]->term5_enddate)) {
+  elseif (empty($rec[0]->term5_enddate)) {
     $termcount = 4;
   }
-  else if (empty($rec[0]->term6_enddate)) {
+  elseif (empty($rec[0]->term6_enddate)) {
     $termcount = 5;
   }
 
@@ -675,7 +675,7 @@ function ks_get_acy_term_dates($academic_year, $term) {
   $query->condition('academic_year', $academic_year, '=');
   $result = $query->execute()->fetch(PDO::FETCH_ASSOC);
 
-  $term_daterange = array($result[$term_startdate],$result[$term_enddate]);
+  $term_daterange = array($result[$term_startdate], $result[$term_enddate]);
 
   return $term_daterange;
 }
@@ -1175,7 +1175,7 @@ function ks_check_exists_userrecord($ks_usertype, $drp_uid ) {
     $query->condition('drp_uid_fk', $drp_uid, '=');
     $result = $query->execute()->fetch(PDO::FETCH_ASSOC);
   }
-  elseif ($ks_usertype == 'ks_instructor'){
+  elseif ($ks_usertype == 'ks_instructor') {
     $query = db_select('ks_users', 'ksuser');
     $query->addField('ksuser', 'drp_uid_fk');
     $query->addField('ksuser', 'mdl_uid_fk');
@@ -1183,7 +1183,7 @@ function ks_check_exists_userrecord($ks_usertype, $drp_uid ) {
     $query->condition('usertype', 1, '=');
     $result = $query->execute()->fetch(PDO::FETCH_ASSOC);
   }
-  elseif ($ks_usertype == 'ks_parent_guardian'){
+  elseif ($ks_usertype == 'ks_parent_guardian') {
     $query = db_select('ks_users', 'ksuser');
     $query->addField('ksuser', 'drp_uid_fk');
     $query->addField('ksuser', 'mdl_uid_fk');
@@ -1191,7 +1191,7 @@ function ks_check_exists_userrecord($ks_usertype, $drp_uid ) {
     $query->condition('usertype', 2, '=');
     $result = $query->execute()->fetch(PDO::FETCH_ASSOC);
   }
-  elseif ($ks_usertype == 'ks_any'){
+  elseif ($ks_usertype == 'ks_any') {
     $query = db_select('ks_users', 'ksuser');
     $query->addField('ksuser', 'drp_uid_fk');
     $query->addField('ksuser', 'mdl_uid_fk');
@@ -1492,7 +1492,7 @@ function ks_insert_enroll_record($ks_enroll_record) {
                       'final_grade' => $ks_enroll_record['final_grade'],
                       'final_attendance' => $ks_enroll_record['final_attendance'],
                       'final_other' => $ks_enroll_record['final_other'],
-                      'remarks' => $ks_enroll_record['remarks'],) )
+                      'remarks' => $ks_enroll_record['remarks'], ) )
       ->execute();
 
   return $cnt;
@@ -1513,7 +1513,7 @@ function ks_update_enroll_record($ks_enroll_record) {
   $enrd->setDate($ks_enroll_record['enrol_date']['year'], $ks_enroll_record['enrol_date']['month'], $ks_enroll_record['enrol_date']['day']);
   $uenrd = new DateTime();
   $uenrd->setDate($ks_enroll_record['unenrol_date']['year'], $ks_enroll_record['unenrol_date']['month'], $ks_enroll_record['unenrol_date']['day']);
-  if($ks_enroll_record['unenrol_date']['year'] == '1900') {
+  if ($ks_enroll_record['unenrol_date']['year'] == '1900') {
     $uenrd = NULL;
   }
 
@@ -1530,7 +1530,7 @@ function ks_update_enroll_record($ks_enroll_record) {
                       'final_grade' => $ks_enroll_record['final_grade'],
                       'final_attendance' => $ks_enroll_record['final_attendance'],
                       'final_other' => $ks_enroll_record['final_other'],
-                      'remarks' => $ks_enroll_record['remarks'],) )
+                      'remarks' => $ks_enroll_record['remarks'], ) )
       ->execute();
 
   return $cnt;
@@ -1708,7 +1708,7 @@ function ks_get_attendance_schedule_records($instructorid, $academic_year, $term
   $query->condition('ksclss.' . 'period_lead', $instructorid, '=');
   $query->condition('ksclss.' . 'period_start_datetime', $daterange, 'BETWEEN');
   $query->condition('ksclss.' . 'kccls_id_fk', $nids_classes, 'IN');
-  if($day) {
+  if  ($day) {
     $query->condition('ksclss.' . 'period_day', $day, '=');
   }
 
@@ -1748,7 +1748,7 @@ function ks_insert_schedule_record($ks_schedule_record) {
                       'period_length' => 0,   //$ks_schedule_record['period_length'],
                       'period_status' => $ks_schedule_record['period_status'],
                       'classroom' => $ks_schedule_record['classroom'],
-                      'period_lead' => $ks_schedule_record['period_lead'],) )
+                      'period_lead' => $ks_schedule_record['period_lead'], ) )
       ->execute();
 
   return $cnt;
@@ -1783,7 +1783,7 @@ function ks_update_schedule_record($ks_schedule_record) {
                       'period_length' => 0,   //$ks_schedule_record['period_length'],
                       'period_status' => $ks_schedule_record['period_status'],
                       'classroom' => $ks_schedule_record['classroom'],
-                      'period_lead' => $ks_schedule_record['period_lead'],) )
+                      'period_lead' => $ks_schedule_record['period_lead'], ) )
       ->execute();
 
   return $cnt;
@@ -1915,7 +1915,7 @@ function ks_insert_attendance_record($ks_attendance_record) {
                       'excused_abs' => $ks_attendance_record['excused_abs'],
                       'excuse_reason' => $ks_attendance_record['excuse_reason'],
                       'remarks_instructor' => $ks_attendance_record['remarks_instructor'],
-                      'remarks_counselor' => $ks_attendance_record['remarks_counselor'],) )
+                      'remarks_counselor' => $ks_attendance_record['remarks_counselor'], ) )
       ->execute();
 
   return $cnt;
@@ -1943,7 +1943,7 @@ function ks_update_attendance_record($ks_attendance_record) {
                       'excused_abs' => $ks_attendance_record['excused_abs'],
                       'excuse_reason' => $ks_attendance_record['excuse_reason'],
                       'remarks_instructor' => $ks_attendance_record['remarks_instructor'],
-                      'remarks_counselor' => $ks_attendance_record['remarks_counselor'],) )
+                      'remarks_counselor' => $ks_attendance_record['remarks_counselor'], ) )
       ->execute();
 
   return $cnt;
@@ -2023,7 +2023,7 @@ function ks_insert_final_grade_record($ks_final_grade_record) {
 //                      'grade_item_3' => $ks_final_grade_record['grade_item_3'],
                       'final_grade' => $ks_final_grade_record['final_grade'],
                       'final_grade_str' => $ks_final_grade_record['final_grade_str'],
-                      'remarks' => $ks_final_grade_record['remarks'],) )
+                      'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
   return $cnt;
@@ -2054,7 +2054,7 @@ function ks_update_final_grade_record($ks_final_grade_record) {
 //                      'grade_item_3' => $ks_final_grade_record['grade_item_3'],
                       'final_grade' => $ks_final_grade_record['final_grade'],
                       'final_grade_str' => $ks_final_grade_record['final_grade_str'],
-                      'remarks' => $ks_final_grade_record['remarks'],) )
+                      'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
   return $cnt;
@@ -2081,7 +2081,7 @@ function ks_insert_final_grade_ls_record($ks_final_grade_record) {
                       'grade_item_2' => $ks_final_grade_record['grade_item_2'],
                       'grade_item_3' => $ks_final_grade_record['grade_item_3'],
                       'final_grade' => $ks_final_grade_record['final_grade'],
-                      'remarks' => $ks_final_grade_record['remarks'],) )
+                      'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
   return $cnt;
@@ -2108,7 +2108,7 @@ function ks_update_final_grade_ls_record($ks_final_grade_record) {
                       'grade_item_2' => $ks_final_grade_record['grade_item_2'],
                       'grade_item_3' => $ks_final_grade_record['grade_item_3'],
                       'final_grade' => $ks_final_grade_record['final_grade'],
-                      'remarks' => $ks_final_grade_record['remarks'],) )
+                      'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
   return $cnt;

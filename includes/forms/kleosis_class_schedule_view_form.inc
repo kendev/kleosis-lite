@@ -17,7 +17,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
 
   drupal_set_breadcrumb($breadcrumb);
 
-  drupal_set_title('Class Schedule');
+  drupal_set_title(t('Class Schedule'));
 //    dpm($form);
 //    dpm($form_state);
 
@@ -31,13 +31,13 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
   $classname = isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '';
 
   if ($classid == 0) {
-    drupal_set_message('Please select a class from the Classes List page');
+    drupal_set_message(t('Please select a class from the Classes List page'));
     drupal_goto('kleosis/classes', array());
   }
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
   $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
-  require_once ($kslib);
+  require_once($kslib);
 
   $defaults = TRUE;
 //  $uid = $_SESSION['student']['id'];
@@ -68,7 +68,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
 //  dpm($classid);
 //  dpm($classname);
 
-  if(empty($period_record)) {
+  if (empty($period_record)) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,

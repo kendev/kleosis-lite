@@ -417,7 +417,7 @@ function kleosis_student_summary_form($form, &$form_state) {
   );
   $form['user_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',
-      '#title' => t('Student Summary for: ') .$name,
+      '#title' => t('Student Summary for:') . ' ' . $name,
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#weight' => -5,
@@ -596,7 +596,7 @@ function kleosis_students_classes($form, &$form_state) {
 
   if ($uid == 0) {
 
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
     drupal_goto($path = 'kleosis/students', $options = array());
 
 //      $build['no_student selected'] = array(
@@ -609,13 +609,13 @@ function kleosis_students_classes($form, &$form_state) {
   $_SESSION['student']['id'] = $uid;
   $_SESSION['student']['name'] = $name;
 
-  $academic_year = variable_get('kleosis_academic_year','2011-2012');
-  $term = variable_get('kleosis_academic_term','fy');
+  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
+  $term = variable_get('kleosis_academic_term', 'fy');
 
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') .': ' . $term,
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term,
     '#weight' => -5,
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
@@ -651,7 +651,7 @@ function kleosis_students_classes($form, &$form_state) {
     '#suffix' => '</div>',
   );
 
-  $text = t('Student <strong>@name</strong> is currently enrolled in the following classes: ', array('@name' => $name));
+  $text = t('Student <strong>@name</strong> is currently enrolled in the following classes:' . ' ', array('@name' => $name));
   $build['theclasses'] = array(
       '#markup' => $text,
       '#prefix' => '',
@@ -663,7 +663,7 @@ function kleosis_students_classes($form, &$form_state) {
 //    'name' => array('data' => t('Username'), 'field' => 'u.name'),
     'title' => 'Class Name',
     'ib_level' => array('data' => t('IB Level'), 'field' => 'ksscc.ib_level'),
-    'course_no' => array('data' => t('Course No'),),
+    'course_no' => array('data' => t('Course No'), ),
     'enrol_date' => array('data' => t('Enrol Date'), 'field' => 'ksscc.enrol_date'),
 //    'completed' => array('data' => t('Completed'), 'field' => 'ksscc.completed'),
 //    'final_grade' => array('data' => t('Current Grade'), 'field' => 'ksscc.final_grade'),
@@ -859,7 +859,7 @@ function kleosis_student_class_schedule($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page'));
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -891,8 +891,8 @@ function kleosis_student_class_schedule($form, &$form_state) {
 
 function kleosis_student_class_schedule_acyt_select_form() {
 
-  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
@@ -936,7 +936,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
     '#suffix' => '</div>',
   );
 
-  $text = t('Class schedule for Student <strong>@name</strong>: ', array('@name' => $name));
+  $text = t('Class schedule for Student <strong>@name</strong>:' . ' ', array('@name' => $name));
   $build['student_schedule'] = array(
       '#markup' => $text,
       '#prefix' => '',
@@ -981,20 +981,20 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
 
 function kleosis_student_class_schedule_list() {
 
-  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
   // the header contains all the fields that will be displayed in the tableselect list
   $header = array(
-    'period' => array('data' => t('Period'),),
-    'monday' => array('data' => t('Monday'),),
-    'tuesday' => array('data' => t('Tuesday'),),
-    'wednesday' => array('data' => t('Wednesday'),),
-    'thursday' => array('data' => t('Thursday'),),
-    'friday' => array('data' => t('Friday'),)
+    'period' => array('data' => t('Period'), ),
+    'monday' => array('data' => t('Monday'), ),
+    'tuesday' => array('data' => t('Tuesday'), ),
+    'wednesday' => array('data' => t('Wednesday'), ),
+    'thursday' => array('data' => t('Thursday'), ),
+    'friday' => array('data' => t('Friday'), )
   );
 
 //  $classid = $_SESSION['kleosis_class_selected_class']['classid'];
@@ -1042,10 +1042,10 @@ function kleosis_student_class_schedule_list() {
   // next, build an array of periods, classes, and days.  This array contains the full class schedule for the student
 
   $schedule_array = array();
-  foreach($schedule_records as $period) {
+  foreach ($schedule_records as $period) {
 
     $enrol_ok = $period->enrol_date > $period->unenrol_date; // check for enrol date greater than the possible unenroll date
-    if($enrol_ok) {
+    if ($enrol_ok) {
       $pstartd = !empty($period->period_start_datetime) ? new DateTime($period->period_start_datetime) : new DateTime('1900-01-02 03:04:05');
       $pendd = !empty($period->period_end_datetime) ? new DateTime($period->period_end_datetime) : new DateTime('1900-01-02 03:04:05');
 
@@ -1064,7 +1064,7 @@ function kleosis_student_class_schedule_list() {
       else {
         $node_course_no =  '';
       }
-      $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day,) ;
+      $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day, ) ;
     }
 
   }
@@ -1074,7 +1074,7 @@ function kleosis_student_class_schedule_list() {
   $day_0 = array();
 
   foreach ($schedule_array as $key => $value) {
-    if(!in_array($value['period'], $day_0)) {
+    if (!in_array($value['period'], $day_0)) {
       $day_0[] = $value['period'];
     }
   }
@@ -1083,13 +1083,13 @@ function kleosis_student_class_schedule_list() {
   //  - note this may be deprecated if the technique changes to creating classes for the breaktimes...
   $breaktimes = kleosis_schedule_breaktimes();
 
-  if($breaktimes[0]['period'] <> '00:00-00:00') {
+  if ($breaktimes[0]['period'] <> '00:00-00:00') {
     $day_0[] = $breaktimes[0]['period'];  // morning break
   }
-  if($breaktimes[1]['period'] <> '00:00-00:00') {
+  if ($breaktimes[1]['period'] <> '00:00-00:00') {
     $day_0[] = $breaktimes[1]['period'];  // lunch break
   }
-  if($breaktimes[2]['period'] <> '00:00-00:00') {
+  if ($breaktimes[2]['period'] <> '00:00-00:00') {
     $day_0[] = $breaktimes[2]['period'];  // afternoon break
   }
   sort($day_0);
@@ -1162,20 +1162,20 @@ function kleosis_student_class_schedule_list() {
   $pkey_lunch = array_search($breaktimes[1]['period'], $day_0); // morning break
   $pkey_afternoon = array_search($breaktimes[2]['period'], $day_0); // morning break
 
-  if($pkey_morning !== FALSE) {
+  if ($pkey_morning !== FALSE) {
     $day_1[$pkey_morning] = t('BREAK') . ' &nbsp;&nbsp;&nbsp;----->';
   }
-  if($pkey_lunch !== FALSE) {
+  if ($pkey_lunch !== FALSE) {
     $day_1[$pkey_lunch] = t('LUNCH') . ' &nbsp;&nbsp;&nbsp;----->';
   }
-  if($pkey_afternoon !== FALSE) {
+  if ($pkey_afternoon !== FALSE) {
     $day_1[$pkey_afternoon] = t('BREAK') . ' &nbsp;&nbsp;&nbsp;----->';
   }
 
   // lastly, build the options array from the day arrays
 
   $options = array();
-  foreach($day_0 as $key => $value) {
+  foreach ($day_0 as $key => $value) {
 
     $options[$key] = array(
       'period' => $value,

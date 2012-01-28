@@ -717,44 +717,6 @@ else {
       ->execute();
 }
 /**
- * populate the ks_ib_level_desc table
- */
-
-  $rec_count = db_query('SELECT count(kibl_id) FROM {ks_ib_level_desc}' )->fetchField();
-
-  if ($rec_count != 0) {
-    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
-    drupal_set_message(t('Description table: ks_ib_level_desc already contains @rec_count entries. @populate', $message));
-  }
-  else {
-    $fields = array(
-      'kibl_id' => 0,
-      'ib_level' => ' ',
-      'description' => 'no IB Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kibl_id' => 1,
-      'ib_level' => 'SL',
-      'description' => 'Standard Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kibl_id' => 2,
-      'ib_level' => 'HL',
-      'description' => 'Higher Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-}
-/**
  * populate the ks_course_status_desc table
  */
 
@@ -1117,6 +1079,44 @@ else {
       ->fields($fields)
       ->execute();
 }
+
+/**
+ * populate the ks_ib_level_desc table
+ */
+  $rec_count = db_query('SELECT count(kibl_id) FROM {ks_ib_level_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_ib_level_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kibl_id' => 0,
+      'ib_level' => ' ',
+      'description' => 'no IB Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 1,
+      'ib_level' => 'SL',
+      'description' => 'Standard Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 2,
+      'ib_level' => 'HL',
+      'description' => 'Higher Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+}
 /**
  * populate the ks_gradelevel_desc table
  */
@@ -1278,6 +1278,53 @@ else {
       'description' => 'Gradelevel 13',
     );
     db_insert('ks_gradelevel_desc')
+      ->fields($fields)
+      ->execute();
+}
+/**
+ * populate the ks_instructor_class_role_desc table
+ */
+
+  $rec_count = db_query('SELECT count(kiclsr_id) FROM {ks_instructor_class_role_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_instructor_class_role_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kiclsr_id' => 0,
+      'rolename' => ' ',
+      'description' => 'not set',
+    );
+    db_insert('ks_instructor_class_role_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kiclsr_id' => 1,
+      'rolename' => 'primary',
+      'description' => 'Primary instructor',
+    );
+    db_insert('ks_instructor_class_role_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kiclsr_id' => 2,
+      'rolename' => 'assistant',
+      'description' => 'Assistant instructor',
+    );
+    db_insert('ks_instructor_class_role_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kiclsr_id' => 3,
+      'rolename' => 'other',
+      'description' => 'Other',
+    );
+    db_insert('ks_instructor_class_role_desc')
       ->fields($fields)
       ->execute();
 }

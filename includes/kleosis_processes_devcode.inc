@@ -174,7 +174,7 @@ dpm($record->final_grade_str);
 
 // force logout of current user
 function force_logout() {
-  drupal_set_message('logging out current user.');
+  drupal_set_message(t('logging out current user.'));
   global $user;
   $tmp = NULL;
   session_destroy();
@@ -214,7 +214,7 @@ dpm($thecourse);
 }
 */
 /*
-function getDayOfWeek($pTimezone) {
+function get_dayofweek($pTimezone) {
 
     $userDateTimeZone = new DateTimeZone($pTimezone);
     $UserDateTime = new DateTime("now", $userDateTimeZone);
@@ -531,7 +531,7 @@ $thenewdatetz = new DateTime($thedate->format('Y') . '-' .  $thedate->format('n'
 dpm($thenewdate);
 dpm($thenewdatetz);
 
-$dow = getDayOfWeek('America/New_York');
+$dow = get_dayofweek('America/New_York');
 dpm($dow);
 
 $aclass = node_load(270);
@@ -593,7 +593,7 @@ $weekdayint = date('N', strtotime($adate->format('Y-m-d')));
 //dpm($weekdayint);
 //dpm($weekday);
 
-$theday = getDayOfWeek('default');
+$theday = get_dayofweek('default');
 //dpm($theday);
 
 $dayint = ks_get_day_int('Friday');

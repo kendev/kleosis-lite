@@ -302,10 +302,10 @@ return $build;
 function kleosis_new_node_validate($node, $form, &$form_state) {
 
   if ($node->type == 'new_node') {
-    if( !isset($form_state['values']['somefield_1']['und'][0]['value']) ) {
+    if ( !isset($form_state['values']['somefield_1']['und'][0]['value']) ) {
         form_set_error('classes', t('Please enter a value for somefield_1.'), $limit_validation_errors = NULL);
       }
-    if( !isset($form_state['values']['somefield_2']['und'][0]['value']) ) {
+    if ( !isset($form_state['values']['somefield_2']['und'][0]['value']) ) {
         form_set_error('classes', t('Please enter a value for somefield_2.'), $limit_validation_errors = NULL);
       }
   }
@@ -361,7 +361,7 @@ function kleosis_new_node_view($callback_arg = '') {
   $nid = arg(3);
   if ($nid && ($nid <> 1)) {  // if nid id is passed, then look up the new_node node and display it
     $node = node_load($nid);
-    if(  !empty($node)  ) {
+    if ( !empty($node) ) {
       $ksop = isset($_GET['ksop']) ? $_GET['ksop'] : '';
       if ($ksop == 'edit') {
         $build['node_edit'] = node_page_edit($node);
@@ -412,7 +412,7 @@ function kleosis_create_new_node_form($form, $form_state) {
   drupal_set_title(t('Create a new_node'));
   $build = array();
 
-  if (  (in_array('administrator', $user->roles))  || (user_access('administer nodes'))  ){
+  if (  (in_array('administrator', $user->roles))  || (user_access('administer nodes'))  ) {
 //    $build['the_new_node'] = node_add('new_node');  // this throws a form expired error, so:
 
         $path = 'node/add/' . 'new_node';   // another technique: redirect to let Drupal launch the node add form
@@ -472,7 +472,7 @@ function new_module_form_alter(&$form, &$form_state, $form_id) {
  *
  *  return user's name
  */
-function ks_new_node_get_users_name($uid){
+function ks_new_node_get_users_name($uid) {
 
   $name = db_query('SELECT name FROM {users} WHERE uid = :uid',
                    array(':uid' => $uid))->fetchField();
@@ -489,7 +489,7 @@ function ks_new_node_get_users_name($uid){
  *
  *  return non-null nid
  */
-function ks_new_node_nid_to_arg($uarg){
+function ks_new_node_nid_to_arg($uarg) {
 
   $arg3 = arg(3);
   $nid = !empty($uarg) ? $uarg : !empty($arg3) ? $arg3 : 1;
@@ -648,36 +648,6 @@ function kleosis_department_values() {  // todo: these values may be defined in 
 }
 */
 
-/**
- * The allowed values for the gradelevel
- *
- * @return
- *    An array of gradelevels to select
- */
- /*
-function kleosis_gradelevel_values() {  // todo: read the ks_gradelevel_desc table for these values
-
-  $le_array = array(
-    'k1' => t('K1'),
-    'k2' => t('K2'),
-    'k3' => t('K3'),
-    '1' => t('1'),
-    '2' => t('2'),
-    '3' => t('3'),
-    '4' => t('4'),
-    '5' => t('5'),
-    '6' => t('6'),
-    '7' => t('7'),
-    '8' => t('8'),
-    '9' => t('9'),
-    '10' => t('10'),
-    '11' => t('11'),
-    '12' => t('12'),
-    '13' => t('13'),
-  );
-  return $le_array;
-}
-*/
 /************************************************************************************************/
 /**
  *

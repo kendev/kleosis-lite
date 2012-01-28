@@ -17,7 +17,7 @@ function kleosis_student_reports_odt($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -53,8 +53,8 @@ function kleosis_student_reports_odt_acyt_select_form() {
     $view_reports = FALSE;
   }
 
-  $academic_year = isset($_SESSION['ks_student_reports_odt_select_filter']['academic_year']) ? $_SESSION['ks_student_reports_odt_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $term = isset($_SESSION['ks_student_reports_odt_select_filter']['term']) ? $_SESSION['ks_student_reports_odt_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $academic_year = isset($_SESSION['ks_student_reports_odt_select_filter']['academic_year']) ? $_SESSION['ks_student_reports_odt_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_reports_odt_select_filter']['term']) ? $_SESSION['ks_student_reports_odt_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
   $report_odt = isset($_SESSION['ks_student_reports_odt_select_filter']['report_odt']) ? $_SESSION['ks_student_reports_odt_select_filter']['report_odt'] : 'none';
 
   $uid = $_SESSION['student']['id'];
@@ -181,7 +181,7 @@ function kleosis_student_reports_odt_download() {
   $report_odt_name = isset($_SESSION['ks_student_reports_odt_select_filter']['report_odt_name']) ? $_SESSION['ks_student_reports_odt_select_filter']['report_odt_name'] : 'none';
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
-  $organization = get_organization_desc(variable_get('kleosis_organization', '1'));
+  $organization = ks_get_organization_desc(variable_get('kleosis_organization', '1'));
   $filename = $academic_year . '_' . $term . '_' . $name . '_' . $report_odt;
 
   if ( $report_odt == 'none' || $report_odt == 'other' ) {
@@ -315,7 +315,7 @@ function kleosis_student_reports_odt_download() {
 
     $odf->exportAsAttachedFile($filename);
 
-//    drupal_set_message(t('Report filename: ') . $filename . ' was successfully downloaded.');
+//    drupal_set_message(t('Report filename:' . ' ') . $filename . ' was successfully downloaded.');
   }
 }
 /**

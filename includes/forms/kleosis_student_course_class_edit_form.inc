@@ -18,7 +18,7 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
 
   drupal_set_breadcrumb($breadcrumb);
 
-  drupal_set_title('Student class enrollment entry edit');
+  drupal_set_title(t('Student class enrollment entry edit'));
 
 /*
   $form['edit_return'] = array(
@@ -133,7 +133,7 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
   $form['class_entry_record']['enrol_status'] = array(
     '#type' => 'select',
     '#title' => t('Enrol Status'),
-    '#options' =>  array('0' => '0', '1' => '1',),
+    '#options' =>  array('0' => '0', '1' => '1', ),
     '#default_value' => ($defaults)? $cerecord['enrol_status'] : '',
     '#prefix' => '<div style="float: left;width:240px" >',
     '#suffix' => '</div><br/>',
@@ -163,7 +163,7 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
   $form['class_entry_record']['completed'] = array(
     '#type' => 'select',
     '#title' => t('Completed'),
-    '#options' =>  array('0' => 'No', '1' => 'Yes',),
+    '#options' =>  array('0' => 'No', '1' => 'Yes', ),
     '#default_value' => ($defaults)? $cerecord['completed'] : '',
     '#prefix' => '<div style="float:left;clear: left;width:240px" >',
     '#suffix' => '</div><br/>',
@@ -236,10 +236,10 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
   if ($form_state['values']['op'] == 'Cancel') {
     return;
   }
-  if( empty($form_state['input']['class_auth']) ) {
+  if ( empty($form_state['input']['class_auth']) ) {
       form_set_error('class_auth', t('Course Authorization must be an integer number.'), $limit_validation_errors = NULL);
     }
-  if( !is_numeric($form_state['input']['class_auth']) ) {
+  if ( !is_numeric($form_state['input']['class_auth']) ) {
       form_set_error('class_auth', t('Course Authorization must be an integer number.'), $limit_validation_errors = NULL);
     }
 }

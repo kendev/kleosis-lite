@@ -185,7 +185,7 @@ function kleosis_block_view($delta = '') {
  */
 function kleosis_block_contents($delta) {
 
-  $moodle_url = variable_get('kleosis_moodle_url','http://localhost/moodle');
+  $moodle_url = variable_get('kleosis_moodle_url', 'http://localhost/moodle');
 
   switch ($delta) {
 
@@ -206,7 +206,7 @@ function kleosis_block_contents($delta) {
       }
 //      return array('#markup' => theme('item_list', array('items' => $items)));  // this is ok, but should return a renderable array
 //      return array('#theme' => 'item_list', '#items' => $items, '#attached' => array('css' => drupal_get_path('module','kleosis') . '/css/kleosis_lms_direct_block.css'));  // this is cool - added some css...
-      return array('#theme' => 'item_list', '#items' => $items,); // this is better because it is a render array
+      return array('#theme' => 'item_list', '#items' => $items, ); // this is better because it is a render array
 
       break;
   case 'my_assignments':
@@ -217,7 +217,7 @@ function kleosis_block_contents($delta) {
       $nbr_assignments_to_display = variable_get('my_assignments_count');
       $assignments = ws_get_assignments();
 
-      if($assignments) {
+      if ($assignments) {
         foreach ($assignments as $key => $val) {
           $items[$val['id']] = l($val['name'], $moodle_url . '/mod/assignment/index.php', array('query' => array('id' => $val['course']), 'attributes' => array('target' => '_blank')));
         }

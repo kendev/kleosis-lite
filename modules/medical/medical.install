@@ -20,9 +20,9 @@ function medical_install() {
     'name' => $t('Medical'),
     'base' => 'node_content',
 //    'base' => 'medical',
-    'description' => t('Basic medical info for a student'),
+    'description' => st('Basic medical info for a student'),
     'has_title' => 1,
-    'help' => t('Provide medical info for a student'),
+    'help' => st('Provide medical info for a student'),
     'promote' => 0,
     'status' => 1,
     'comment' => 0,
@@ -84,7 +84,7 @@ function medical_enable() {
 function _medical_installed_fields() {
   $t = get_t();
   $kleosis_role_ids = array();
-  $kleosis_roles = array('student', 'instructor', 'parent_guardian',);  // kleosis roles
+  $kleosis_roles = array('student', 'instructor', 'parent_guardian', );  // kleosis roles
 
   foreach ($kleosis_roles as $kleosis_role) {
     $role = user_role_load_by_name($kleosis_role);

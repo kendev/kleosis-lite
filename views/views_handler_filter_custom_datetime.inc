@@ -1,15 +1,18 @@
 <?php
 
-/*************      note - this was created by ken   ********************
- *  and is currently a copy of the views_handler_filter_date
- *  with changes to some of the functions...
- *  12 Oct 2011
- *
-*/
-
 /**
+ * @file
  * Filter to handle dates stored as a timestamp.
  */
+
+/**
+ * note - this was created by ken
+ * and is currently a copy of the views_handler_filter_date
+ * with changes to some of the functions...
+ * 12 Oct 2011
+ *
+ */
+
 // class views_handler_filter_date extends views_handler_filter_numeric {
 class views_handler_filter_custom_datetime extends views_handler_filter_custom_numeric {
   function option_definition() {

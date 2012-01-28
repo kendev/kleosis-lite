@@ -24,19 +24,19 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
   $breadcrumb[] = t('Add Schedule');
 
   drupal_set_breadcrumb($breadcrumb);
-  drupal_set_title('Add Class Schedule');
+  drupal_set_title(t('Add Class Schedule'));
 
   $classid = isset($_SESSION['kleosis_class_selected_class']['classid']) ? $_SESSION['kleosis_class_selected_class']['classid'] : 0;
   $classname = isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '';
 
   if ($classid == 0) {
-    drupal_set_message('Please select a class from the Classes List page');
+    drupal_set_message(t('Please select a class from the Classes List page'));
     drupal_goto('kleosis/classes', array());
   }
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
   $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
-  require_once ($kslib);
+  require_once($kslib);
 
   $defaults = TRUE;
   //$uid = $_SESSION['student']['id'];
@@ -240,7 +240,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     );
 
   $form['class_schedule_entry_record']['period_' . $inew] = array(
-      '#markup' => t('New: '),
+      '#markup' => t('New:') . ' ',
       '#prefix' => '<div style="float: left;clear: left;width:60px" ><strong><em>',
       '#suffix' => '</em></strong></div>',
     );

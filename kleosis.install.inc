@@ -42,7 +42,7 @@ function kleosis_install() {
   variable_set('kleosis_moodle_version', '2.x');
   variable_set('kleosis_moodle_username', 'admin');
   variable_set('kleosis_moodle_password', 'moodle');
-  variable_set('kleosis_odtreports_path','/tmp');
+  variable_set('kleosis_odtreports_path', '/tmp');
   variable_set('kleosis_pager_rows', '16');
 
   variable_set('kleosis_morn_break_start_hour', '00');

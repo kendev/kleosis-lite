@@ -30,7 +30,7 @@ function ws_get_user($uid, $uid_field='id') {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
     $userids = array($uid);
 
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, $uid_field);
@@ -71,7 +71,7 @@ function ws_get_users($userids = array(), $userfield = '') {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     // blank array returns all users...
@@ -108,7 +108,7 @@ function ws_get_roles() {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $res = $moodle->get_roles($lr->getClient(), $lr->getSessionKey());
@@ -170,7 +170,7 @@ function ws_users_edit_form_submit_values($form_values) {
 
 try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
   $res = $moodle->edit_users($lr->getClient(), $lr->getSessionKey(), $le_users);
@@ -238,7 +238,7 @@ function ws_add_user($duser) {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $res = $moodle->edit_users($lr->getClient(), $lr->getSessionKey(), $le_users);
@@ -269,7 +269,7 @@ function ws_get_courses() {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $courseids=array();
@@ -289,14 +289,14 @@ function ws_get_courses() {
     $errortype = 'Argument 2 passed to has_capability()';
     $pos = strpos($errormessage, $errortype);
 
-    if($pos === FALSE) {
+    if ($pos === FALSE) {
        // string $errortype NOT found in $e->getMessage()
     drupal_set_message(t('webservices->get_courses returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
       }
     else {
        // string $errortype IS found in $e->getMessage()
-       drupal_set_message(t('No courses were found for user: %user', array('%user' => 'all',)));
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => 'all', )));
       }
 
     return NULL;
@@ -326,7 +326,7 @@ function ws_get_my_courses($ks_user = '') {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
     $courseids=array();
@@ -346,14 +346,14 @@ function ws_get_my_courses($ks_user = '') {
     $errortype = 'Argument 2 passed to has_capability()';
     $pos = strpos($errormessage, $errortype);
 
-    if($pos === FALSE) {
+    if ($pos === FALSE) {
        // string $errortype NOT found in $e->getMessage()
     drupal_set_message(t('webservices->ws_get_my_courses returned an error = %errormessage. %tryagain',
     array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
       }
     else {
        // string $errortype IS found in $e->getMessage()
-       drupal_set_message(t('No courses were found for user: %user', array('%user' => $res['mdl_username'],)));
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $res['mdl_username'], )));
       }
 
     return NULL;
@@ -374,7 +374,7 @@ function ws_get_assignments($course = '') { // todo: complete this...
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $assgtsa = array();
 
@@ -415,7 +415,7 @@ function ws_get_grades($ks_user = '') {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
 
@@ -439,14 +439,14 @@ function ws_get_grades($ks_user = '') {
     $errortype = 'unknown'; // user is unknown, so no courses belong to the user
     $pos2 = strpos($errormessage, $errortype);
 
-    if( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
+    if ( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
       drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
       array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
       }
     else {
        // string $errortype IS found in $e->getMessage()
-       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user,)));
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user, )));
       }
     return NULL;
     }
@@ -474,7 +474,7 @@ function ws_get_grades_by_username($ks_user = '') {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
 
@@ -499,14 +499,14 @@ function ws_get_grades_by_username($ks_user = '') {
     $errortype = 'unknown'; // user is unknown, so no courses belong to the user
     $pos2 = strpos($errormessage, $errortype);
 
-    if( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
+    if ( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
       drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
       array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
       }
     else {
        // string $errortype IS found in $e->getMessage()
-       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user,)));
+       drupal_set_message(t('No courses were found for user: %user', array('%user' => $ks_user, )));
       }
     return NULL;
     }
@@ -530,7 +530,7 @@ function ws_get_course_grades($coursename) {
 
   try {
     $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
     $gradesa = array();
 
@@ -565,8 +565,8 @@ function get_mdl_login() {
 
   global $user;
 
-  $username = variable_get('kleosis_moodle_username','admin');     // set username and password from the Configuration->Development->Kleosis menu path
-  $password = variable_get('kleosis_moodle_password','moodle');   // todo: can encrypt or get from db...
+  $username = variable_get('kleosis_moodle_username', 'admin');     // set username and password from the Configuration->Development->Kleosis menu path
+  $password = variable_get('kleosis_moodle_password', 'moodle');   // todo: can encrypt or get from db...
   $mdl_uid = 0;
   $mdl_username = '';
 
@@ -600,7 +600,7 @@ function get_mdl_login() {
     try {
       $userids = array($user->name);
       $margs = get_wsdl_uri();  // get the params for MoodleWS
-      $moodle = new MoodleWS($margs['wsdl'],$margs['uri']);
+      $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
 
       $lr = $moodle->login($username, $password); // this call uses admin/moodle
       $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, 'username');  // look for the user in Moodle
@@ -628,7 +628,7 @@ function get_mdl_login() {
   }
 }
 
-  $login_user = array('username' => $username, 'password' => $password, 'mdl_uid' => $mdl_uid, 'mdl_username' => $mdl_username,);
+  $login_user = array('username' => $username, 'password' => $password, 'mdl_uid' => $mdl_uid, 'mdl_username' => $mdl_username, );
 
   return $login_user;
 }
@@ -640,9 +640,9 @@ function get_mdl_login() {
  */
 function get_wsdl_uri() {
 
-      $moodle_url = variable_get('kleosis_moodle_url','http://localhost/moodle');
+      $moodle_url = variable_get('kleosis_moodle_url', 'http://localhost/moodle');
       $uri = $moodle_url . '/wspp/wsdl';
-      $wsdl = $moodle_url .'/wspp/wsdl_pp.php';
+      $wsdl = $moodle_url . '/wspp/wsdl_pp.php';
 //      $wsdl = $moodle_url .'/wspp/wsdl_pp2.php';
 
   return array('wsdl' => $wsdl, 'uri' => $uri);

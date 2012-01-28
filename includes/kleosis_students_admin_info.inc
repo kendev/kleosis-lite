@@ -564,7 +564,7 @@ function ks_remove_status_detail($kssid) {
       ->condition('kssd_id', $kssid)
       ->execute();
 
-    drupal_set_message('Student status detail was successfully removed.');
+    drupal_set_message(t('Student status detail was successfully removed.'));
 }
 
 // Implement the delete student status confirm form

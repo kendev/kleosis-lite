@@ -105,7 +105,7 @@ function kleosis_current_grades_select_form() {
   $class_term = isset($_SESSION['ks_final_grades_class_filter']['term']) ? $_SESSION['ks_final_grades_class_filter']['term'] : 'fy';
 
   $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type AND n.status = :status ORDER BY n.title' ;
-  $results = db_query($sql, array(':type' => 'class', ':status' => 1,) );
+  $results = db_query($sql, array(':type' => 'class', ':status' => 1, ) );
   $options = array();
   foreach ($results as $class) {
     $node = node_load($class->nid);
@@ -119,7 +119,7 @@ function kleosis_current_grades_select_form() {
   }
   if (sizeof($options) == 0) {
 //    drupal_set_message('empty result set');
-    $options = array('0' => t('No classes exist for selected year and term'),);
+    $options = array('0' => t('No classes exist for selected year and term'), );
   }
   // create a fieldset for the class selection
   $form['grades_select'] = array(
@@ -219,7 +219,7 @@ function kleosis_current_grades_list() {
 
   if ( $grades_toggle == 'active' ) {  // get the grades from moodle
 
-    $text = t('Current grades from Moodle for class <strong>@classname</strong>: ', array('@classname' => $class_shortname));
+    $text = t('Current grades from Moodle for class<strong>@classname</strong>:' . ' ' , array('@classname' => $class_shortname));
 
     $build['thegrades'] = array(
       '#markup' => $text,
@@ -229,13 +229,13 @@ function kleosis_current_grades_list() {
 
     $header = array(
       'student' => array('data' => t('Student')),
-      'course' => array('data' => t('Course'),),
-      'grade' => array('data' => t('Current Grade (decimal)'),),
-      'str_grade' => array('data' => t('Current Grade (letter)'),),
+      'course' => array('data' => t('Course'), ),
+      'grade' => array('data' => t('Current Grade (decimal)'), ),
+      'str_grade' => array('data' => t('Current Grade (letter)'), ),
       'operations' => array('data' => t('Ops')),
     );
 
-        $moodle_url = variable_get('kleosis_moodle_url','http://localhost/moodle');
+        $moodle_url = variable_get('kleosis_moodle_url', 'http://localhost/moodle');
         $grades = ws_get_course_grades($class_shortname);  // todo: evolve this function
 
         $options = array();
@@ -353,7 +353,7 @@ function kleosis_final_grades_select_form() {
   $class_term = isset($_SESSION['ks_final_grades_class_filter']['term']) ? $_SESSION['ks_final_grades_class_filter']['term'] : 'fy';
 
   $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type AND n.status = :status ORDER BY n.title' ;
-  $results = db_query($sql, array(':type' => 'class', ':status' => 1,) );
+  $results = db_query($sql, array(':type' => 'class', ':status' => 1, ) );
   $options = array();
   foreach ($results as $class) {
     $node = node_load($class->nid);
@@ -367,7 +367,7 @@ function kleosis_final_grades_select_form() {
   }
   if (sizeof($options) == 0) {
 //    drupal_set_message('empty result set');
-    $options = array('0' => t('No classes exist for selected year and term'),);
+    $options = array('0' => t('No classes exist for selected year and term'), );
   }
   // create a fieldset for the class selection
   $form['grades_select'] = array(
@@ -733,7 +733,7 @@ function kleosis_final_grades_edit_form_validate($form, &$form_state) {
   if ($form_state['values']['op'] == 'Cancel') {
     return;
   }
-  if( (empty($form_state['values']['final_grade'])) || (!is_numeric($form_state['values']['final_grade'])) ) {
+  if ( (empty($form_state['values']['final_grade'])) || (!is_numeric($form_state['values']['final_grade'])) ) {
       form_set_error('final_grade', t('Final grade must be a decimal number.'), $limit_validation_errors = NULL);
   }
 }

@@ -11,12 +11,12 @@
  * @return
  *    the day of week as a string
  */
-function getDayOfWeek($pTimezone) {
+function get_dayofweek($p_timezone) {
 
-    if($pTimezone = 'default') {
-      $pTimezone = date_default_timezone_get();
+    if ($p_timezone = 'default') {
+      $p_timezone = date_default_timezone_get();
     }
-    $userDateTimeZone = new DateTimeZone($pTimezone);
+    $userDateTimeZone = new DateTimeZone($p_timezone);
 
     $UserDateTime = new DateTime('now', $userDateTimeZone);
 
@@ -84,7 +84,7 @@ function get_periods_from_schedule_records($class_schedule_records) {
     $pstartm = $pstartd->format('i');
     $pendh = $pendd->format('H');
     $pendm = $pendd->format('i');
-    $period = $pstarth . ':' .  $pstartm .'-' . $pendh . ':' . $pendm;
+    $period = $pstarth . ':' .  $pstartm . '-' . $pendh . ':' . $pendm;
 
     $periods[$period] = $period;
   }
@@ -101,7 +101,7 @@ function get_periods_from_schedule_records($class_schedule_records) {
  */
 function get_hour_and_minute_from_period($period) {
 
-  if(strlen($period) <> 11) {
+  if (strlen($period) <> 11) {
     return FALSE;
   }
 
@@ -149,7 +149,7 @@ function kleosis_dayofweek_values() {  // todo: these values may be defined in t
 function ks_get_day_string($intday) {
 
   $le_days = kleosis_dayofweek_values();
-  if(!$intday) {
+  if (!$intday) {
     return 'none';
   }
   $le_day = $le_days[$intday];
@@ -452,7 +452,7 @@ function ks_map_ks_gradelevel_to_drp($ks_gradelevel) {
  */
 function kleosis_academic_year_values() {
 
-  $options = array('all' => t('All'),);
+  $options = array('all' => t('All'), );
   $results = db_query('SELECT academic_year FROM {ks_academic_year_desc}' )->fetchAll();
   foreach ($results as $iac_year) {
     $options[$iac_year->academic_year] = $iac_year->academic_year;
@@ -492,7 +492,7 @@ function kleosis_room_types_values() {  // todo: these values may be defined in 
   $le_array = array(
     'standard' => t('Standard'),
     'large' => t('Large'),
-    'auditorium' =>t('Auditorium'),
+    'auditorium' => t('Auditorium'),
     'off_campus' => t('Off Campus'),
     'shared' => t('Shared'),
     'temporary' => t('Temporary'),
@@ -533,7 +533,7 @@ function kleosis_course_types_values() {  // todo: these values may be defined i
     'standard' => t('Standard'),
     'non-credit' => t('Non-Credit'),
     'lab' => t('Lab'),
-    'attendance' =>t('Attendance'),
+    'attendance' => t('Attendance'),
     'lunch-breaktime' => t('Lunch-Breaktime'),
     'other' => t('Other'),
   );
@@ -551,7 +551,7 @@ function kleosis_course_status_values() {  // todo: these values may be defined 
   $le_array = array(
     'active' => t('Active'),
     'non_active' => t('Non Active'),
-    'retired' =>t('Retired'),
+    'retired' => t('Retired'),
   );
   return $le_array;
 }
@@ -606,7 +606,7 @@ function kleosis_program_values() {  // todo: these values may be defined in the
     'general_academic' => t('General Academic'),
     'advanced_academic' => t('Advanced Academic'),
     'special_needs' => t('Special Needs'),
-    'certification' =>t('Standards Certification'),
+    'certification' => t('Standards Certification'),
     'other' => t('Other'),
   );
   return $le_array;
@@ -624,7 +624,7 @@ function kleosis_department_values() {  // todo: these values may be defined in 
     'all' => t('All'),
     'languages' => t('Languages'),
     'science' => t('Science'),
-    'art' =>t('Art'),
+    'art' => t('Art'),
     'music' => t('Music'),
     'mathmetics' => t('Mathematics'),
     'general' => t('General'),
@@ -653,9 +653,9 @@ function kleosis_schedule_breaktimes() {
                     '-' . variable_get('kleosis_aft_break_end_hour', '14') . ':' . variable_get('kleosis_aft_break_end_min', '50');
 
 
-  $breaktime_schedule_array[] = array('period' => $morning_break, 'class' => 'morning break', 'day' => 'all',) ;
-  $breaktime_schedule_array[] = array('period' => $lunch_break, 'class' => 'lunch break', 'day' => 'all',) ;
-  $breaktime_schedule_array[] = array('period' => $afternoon_break, 'class' => 'afternoon break', 'day' => 'all',) ;
+  $breaktime_schedule_array[] = array('period' => $morning_break, 'class' => 'morning break', 'day' => 'all', ) ;
+  $breaktime_schedule_array[] = array('period' => $lunch_break, 'class' => 'lunch break', 'day' => 'all', ) ;
+  $breaktime_schedule_array[] = array('period' => $afternoon_break, 'class' => 'afternoon break', 'day' => 'all', ) ;
 
   return $breaktime_schedule_array;
 }

@@ -214,8 +214,8 @@ function kleosis_user_update(&$edit, $account, $category) {
 
     // obtain the newly selected role from $edit
     $newrolea = array();
-    $newrole = array_diff($edit['roles'],$edit['original']->roles);
-    foreach ($newrole as $key=>$value) {  //  should only be one
+    $newrole = array_diff($edit['roles'], $edit['original']->roles);
+    foreach ($newrole as $key => $value) {  //  should only be one
           $newrolea[] = $value;;
     }
    if (!(count($newrolea))) {

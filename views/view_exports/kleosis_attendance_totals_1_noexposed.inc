@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @file
+ * An exported Views attendance report with no user filters
+ */
+
 $view = new view;
 $view->name = 'kleosis_attendance_totals_1';
 $view->description = '';

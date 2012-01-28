@@ -98,56 +98,56 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
   switch ($form_state['values']['op']) {
 
     case 'Populate decription tables':
-      drupal_set_message('Description tables are being populated...');
-        require_once('kleosis_populate_description_tables.inc');
-      drupal_set_message('Description tables have been populated...');
+      drupal_set_message(t('Description tables are being populated...'));
+       require_once('kleosis_populate_description_tables.inc');
+      drupal_set_message(t('Description tables have been populated...'));
 
       break;
 
     case 'Unpopulate decription tables':
-      drupal_set_message('Description tables are being unpopulated...');
+      drupal_set_message(t('Description tables are being unpopulated...'));
       require_once('kleosis_unpopulate_description_tables.inc');
-      drupal_set_message('Description tables have been unpopulated...');
+      drupal_set_message(t('Description tables have been unpopulated...'));
 
       break;
 
     case 'Load sample data':
       $already_loaded = variable_get('kleosis_sample_data', FALSE);
       if (!$already_loaded) {
-//        drupal_set_message('Sample users are being loaded...');
+//        drupal_set_message(t('Sample users are being loaded...'));
         require_once('kleosis_create_sample_users.inc');
-        drupal_set_message('Sample users have been loaded');
+        drupal_set_message(t('Sample users have been loaded'));
 
-//        drupal_set_message('Creating sample courses and classes...');
+//        drupal_set_message(t('Creating sample courses and classes...'));
         require_once('kleosis_create_sample_courses_and_classes.inc');
-        drupal_set_message('Sample courses and classes have been created');
+        drupal_set_message(t('Sample courses and classes have been created'));
 
-//        drupal_set_message('Sample class schedule is being loaded...');
+//        drupal_set_message(t('Sample class schedule is being loaded...'));
         require_once('kleosis_create_sample_schedule.inc');
-        drupal_set_message('Sample class schedule is now loaded');
+        drupal_set_message(t('Sample class schedule is now loaded'));
 
-//        drupal_set_message('Sample enrollments are being loaded...');
+//        drupal_set_message(t('Sample enrollments are being loaded...'));
         require_once('kleosis_create_sample_enrollments.inc');
-        drupal_set_message('Sample enrollments are now loaded');
+        drupal_set_message(t('Sample enrollments are now loaded'));
 
         variable_set('kleosis_sample_data', TRUE);
       }
       else {
-        drupal_set_message('Sample data has already been loaded.');
+        drupal_set_message(t('Sample data has already been loaded.'));
       }
       break;
 
     case 'Remove sample data*':
 // todo: can improve this process by deleting only the sample data related records
-//      drupal_set_message('Sample enrollments are now being removed...');
+//      drupal_set_message(t('Sample enrollments are now being removed...'));
       $cnt_deleted = db_delete('ks_student_course_classes')->execute();
-      drupal_set_message('Enrollments have been removed.');
+      drupal_set_message(t('Enrollments have been removed.'));
 
-//      drupal_set_message('Class schedule is now being removed...');
+//      drupal_set_message(t('Class schedule is now being removed...'));
       $cnt_deleted = db_delete('ks_class_schedule')->execute();
-      drupal_set_message('Class schedule has been removed.');
+      drupal_set_message(t('Class schedule has been removed.'));
 
-//      drupal_set_message('Removing sample classes...');
+//      drupal_set_message(t('Removing sample classes...'));
       $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title like :kleosis';
       $result = db_query($sql, array(':type' => 'class', ':kleosis' => '%Kleosis%'));
       $nids = array();
@@ -156,9 +156,9 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
       }
       // Delete all the nodes at once
       node_delete_multiple($nids);
-      drupal_set_message('Sample classes have been removed');
+      drupal_set_message(t('Sample classes have been removed'));
 
-//      drupal_set_message('Removing sample courses...');
+//      drupal_set_message(t('Removing sample courses...'));
       $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title like :kleosis';
       $result = db_query($sql, array(':type' => 'course', ':kleosis' => '%Kleosis%'));
       $nids = array();
@@ -167,11 +167,11 @@ function kleosis_sample_data_form_submit($form, &$form_state) {
       }
       // Delete all the nodes at once
       node_delete_multiple($nids);
-      drupal_set_message('Sample courses have been removed');
+      drupal_set_message(t('Sample courses have been removed'));
 
-//      drupal_set_message('Sample users are being removed...');
+//      drupal_set_message(t('Sample users are being removed...'));
       require_once('kleosis_delete_sample_users.inc');
-      drupal_set_message('Sample users have been deleted.');
+      drupal_set_message(t('Sample users have been deleted.'));
 
       variable_set('kleosis_sample_data', FALSE);
 

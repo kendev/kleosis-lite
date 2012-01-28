@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @file
+ * An exported Views report that lists students classes
+ */
+
 $view = new view;
 $view->name = 'students_class_list';
 $view->description = '';

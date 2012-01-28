@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @file
+ * An exported Views daily attendance report
+ */
+
 $view = new view;
 $view->name = 'daily_attendance_list';
 $view->description = '';

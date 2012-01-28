@@ -1,13 +1,8 @@
 <?php
-// $Id$
 
 /**
  * @file
- * This module provides the core records management features of Kleosis.
- *
- * Kleosis is a student information system for the K12 learning environment. The main menu
- * items are defined in this file.
- *
+ * Module file for the Kleosis.Student Information System
  */
 
 require_once ('includes/kleosis_user_reg_and_profile.inc');
@@ -42,7 +37,7 @@ function kleosis_permission() {
 
     return array(
     'administer kleosis' => array(
-      'title' =>t('Administer Kleosis'),
+      'title' => t('Administer Kleosis'),
       'description' => t('Load/unload sample data and set various configuration parameters.'),
       'restrict access' => TRUE,
     ),
@@ -790,7 +785,7 @@ function kleosis_views_api() {
   $path = drupal_get_path('module', 'kleosis') . '/views/view_exports';
   $files = drupal_system_listing("/\.inc$/", $path, 'name', 0);
 
-  foreach($files as $file) {
+  foreach ($files as $file) {
     include $file->uri;
     $views[$view->name] = $view;
   }
@@ -908,7 +903,7 @@ function kleosis_settings_form($form, &$form_state) {
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
   $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
-  require_once ($kslib);
+  require_once($kslib);
 
   $form['kleosis_organization'] = array(
     '#type' => 'select',
@@ -922,7 +917,7 @@ function kleosis_settings_form($form, &$form_state) {
     '#title' => t('Academic Year'),
     '#description' => t('The current academic year for Kleosis functions.'),
     '#options' =>  kleosis_academic_year_values(),
-    '#default_value' =>  variable_get('kleosis_academic_year','2011-2012'),
+    '#default_value' =>  variable_get('kleosis_academic_year', '2011-2012'),
   );
   $form['kleosis_academic_term'] = array(
     '#type' => 'select',
@@ -930,20 +925,20 @@ function kleosis_settings_form($form, &$form_state) {
     '#description' => t('The current term for Kleosis functions.'),
     '#options' =>  array('all' => t('All')) + kleosis_academic_term_values(),
 //    '#options' =>  array('0' => ' ','1' => '1','2' => '2','3' => '3','4' => '4','5' => '5','6' => '6','fy' => 'FY'),
-    '#default_value' =>  variable_get('kleosis_academic_term','fy'),
+    '#default_value' =>  variable_get('kleosis_academic_term', 'fy'),
   );
   $form['kleosis_starting_dow'] = array(
     '#type' => 'select',
     '#title' => t('Starting day of week'),
     '#description' => t('The first day of the week (ISO-8601).'),
     '#options' =>  kleosis_dayofweek_values(),
-    '#default_value' =>  variable_get('kleosis_starting_dow','1'),
+    '#default_value' =>  variable_get('kleosis_starting_dow', '1'),
   );
   $form['kleosis_moodle_url'] = array(
     '#type' => 'textfield',
     '#title' => t('The url to your moodle site.'),
     '#description' => t('The url to the moodle instance that will be accessed by Kleosis.'),
-    '#default_value' => variable_get('kleosis_moodle_url','http://localhost/moodle'),
+    '#default_value' => variable_get('kleosis_moodle_url', 'http://localhost/moodle'),
     '#size' => 40,
     '#maxlength' => 120,
     '#required' => TRUE,
@@ -952,7 +947,7 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Moodle version - 1.9.x or 2.x'),
     '#description' => t('The version of the moodle instance that will be accessed by Kleosis.'),
-    '#default_value' => variable_get('kleosis_moodle_version','2.x'),
+    '#default_value' => variable_get('kleosis_moodle_version', '2.x'),
     '#size' => 5,
     '#maxlength' => 10,
     '#required' => TRUE,
@@ -961,7 +956,7 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Moodle default username'),
     '#description' => t('An existing Moodle username with sufficient user permissions.'),
-    '#default_value' => variable_get('kleosis_moodle_username','admin'),
+    '#default_value' => variable_get('kleosis_moodle_username', 'admin'),
     '#size' => 5,
     '#maxlength' => 30,
     '#required' => TRUE,
@@ -970,7 +965,7 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'password',
     '#title' => t('Moodle password for default username'),
     '#description' => t('The Moodle password for the default user.'),
-    '#default_value' => variable_get('kleosis_moodle_password','moodle'),
+    '#default_value' => variable_get('kleosis_moodle_password', 'moodle'),
     '#size' => 5,
     '#maxlength' => 30,
     '#required' => TRUE,
@@ -979,8 +974,8 @@ function kleosis_settings_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Pager rows'),
     '#description' => t('The maximum number of rows displayed on each page.'),
-    '#options' =>  array(8 => '8',12 => '12',16 => '16',18 => '18',20 => '20',22 => '22',24 => '24',28 => '28',36 => '36'),
-    '#default_value' =>  variable_get('kleosis_pager_rows','16'),
+    '#options' =>  array(8 => '8', 12 => '12', 16 => '16', 18 => '18', 20 => '20', 22 => '22', 24 => '24', 28 => '28', 36 => '36', 48 => '48', 64 => '64'),
+    '#default_value' =>  variable_get('kleosis_pager_rows', '16'),
   );
 /*  // todo: implement this variable in Class Odf in file odf.php
   $form['kleosis_odtreports_path'] = array(
@@ -1189,7 +1184,7 @@ $form['kleosis_break'] = array(
 function kleosis_settings_form_validate($form, &$form_state) {
 
   $moodle_url = $form_state['values']['kleosis_moodle_url'];
-  if('/' == $moodle_url[strlen($moodle_url)-1]) {
+  if ('/' == $moodle_url[strlen($moodle_url)-1]) {
     $moodle_url =  substr($moodle_url, 0, -1);  // remove trailing slash if exists
   }
   $form_state['values']['kleosis_moodle_url'] = $moodle_url;
@@ -1200,7 +1195,7 @@ function kleosis_settings_form_validate($form, &$form_state) {
 */
 function kleosis_field_access($op, $field, $entity_type, $entity, $account) {
 
-  if ( ($field['field_name'] == 'field_favorite_color') && (($op == 'view') || ($op == 'edit'))  &&  !(in_array('administrator',$account->roles) ) ) {
+  if ( ($field['field_name'] == 'field_favorite_color') && (($op == 'view') || ($op == 'edit'))  &&  !(in_array('administrator', $account->roles) ) ) {
 //    return user_access('edit field of interest', $account);
 //    return FALSE;  // only admins can access this field !!!
 
@@ -1254,7 +1249,7 @@ function kleosis_field_access($op, $field, $entity_type, $entity, $account) {
  *
  *  return a user's uid
  */
-function kleosis_std_sd_load($uarg){
+function kleosis_std_sd_load($uarg) {
 
   $arg4 = arg(4);
   $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
@@ -1274,7 +1269,7 @@ function kleosis_std_sd_load($uarg){
  *
  *  return non-null uid
  */
-function kleosis_std_sd_to_arg($uarg){
+function kleosis_std_sd_to_arg($uarg) {
 
   $arg4 = arg(4);
   $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
@@ -1295,7 +1290,7 @@ function kleosis_std_sd_to_arg($uarg){
 function kleosis_shutdown() {
  if (($error = error_get_last())) {
    $msg = 'Error occurred: %le_error';
-   $vars = array('%le_error'=> $error['message'] . '; Type: ' . $error['type'] . '; File: ' . $error['file'] . '; Line: ' . $error['line']);
+   $vars = array('%le_error' => $error['message'] . '; Type: ' . $error['type'] . '; File: ' . $error['file'] . '; Line: ' . $error['line']);
    watchdog('System', $msg, $vars, WATCHDOG_ERROR);
 
    ob_clean();

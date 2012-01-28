@@ -162,7 +162,7 @@ function kleosis_students_enrollments_actions_form() {
   $class_term = isset($_SESSION['ks_enrollments_class_filter']['term']) ? $_SESSION['ks_enrollments_class_filter']['term'] : 'fy';
 
   $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type AND n.status = :status ORDER BY n.title' ;
-  $results = db_query($sql, array(':type' => 'class', ':status' => 1,) );
+  $results = db_query($sql, array(':type' => 'class', ':status' => 1, ) );
   $options = array();
   foreach ($results as $class) {
     $node = node_load($class->nid);
@@ -176,7 +176,7 @@ function kleosis_students_enrollments_actions_form() {
   }
   if (sizeof($options) == 0) {
 //    drupal_set_message('empty result set');
-    $options = array('0' => t('No classes exist for selected year and term'),);
+    $options = array('0' => t('No classes exist for selected year and term'), );
   }
   // create a fieldset for the actions
   $form['enroll_actions'] = array(
@@ -200,7 +200,7 @@ function kleosis_students_enrollments_actions_form() {
     '#type' => 'select',
     '#title' => t('Academic Year'),
     '#options' =>  kleosis_academic_year_values(),
-    '#default_value' =>  !empty($class_academic_year) ? $class_academic_year : variable_get('kleosis_academic_year','2011-2012'),
+    '#default_value' =>  !empty($class_academic_year) ? $class_academic_year : variable_get('kleosis_academic_year', '2011-2012'),
     '#weight' => 3,
     '#prefix' => '<div style="float: left;width:130px" >',
     '#suffix' => '</div>',
@@ -209,7 +209,7 @@ function kleosis_students_enrollments_actions_form() {
     '#type' => 'select',
     '#title' => t('Term'),
     '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
-    '#default_value' => !empty($class_term) ? $class_term : variable_get('kleosis_academic_term','fy'),
+    '#default_value' => !empty($class_term) ? $class_term : variable_get('kleosis_academic_term', 'fy'),
     '#weight' => 5,
     '#prefix' => '<div style="float: left;width:80px" >',
     '#suffix' => '</div>',
@@ -327,7 +327,7 @@ else{
   // adjust the query according to the filter values
   if (($field <> 'username') && (!empty($field)))  {
     $thename_key = kleosis_get_enrollment_filter_key($field, $thename);
-    if (($oper == 'like') && (!empty($thename_key)) ){
+    if (($oper == 'like') && (!empty($thename_key)) ) {
         $query->condition('kstu.' . $field, $thename_key . '%', 'like');
     }
     else{
@@ -335,7 +335,7 @@ else{
     }
   }
 
-  if (($field == 'username') && (!empty($thename)) )  {
+  if (($field == 'username') && (!empty($thename)) ) {
     if ($oper == 'is') {
        $query->condition('u.' . 'name', $thename, '=');
     }
@@ -516,7 +516,7 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
 //  drupal_set_message('Enroll clicked, and now in function kleosis_enroll_students_from_list()');
       $enrd = new DateTime('now');
 
-  foreach($form_state['values']['students'] as $key => $value) {
+  foreach ($form_state['values']['students'] as $key => $value) {
 
     if (!empty($value)) {
 
@@ -542,7 +542,7 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
       $there_already = ks_get_enroll_records($value, TRUE, $form_state['values']['class']);
       $there_but_unenrolled = ks_get_enroll_records($value, FALSE, $form_state['values']['class']);
 
-      if  ( (empty($there_already)) &&  (empty($there_but_unenrolled)) ){
+      if  ( (empty($there_already)) &&  (empty($there_but_unenrolled)) ) {
         $newrec_id = ks_insert_enroll_record($enroll_record);
         drupal_set_message('Student: ' . $value . ' was enrolled into class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
       }
@@ -566,14 +566,14 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
 
 //  drupal_set_message('Unenroll clicked, and now in function kleosis_unenroll_students_from_list()');
 
-  foreach($form_state['values']['students'] as $key => $value) {
+  foreach ($form_state['values']['students'] as $key => $value) {
 
     if (!empty($value)) {
 
 //      drupal_set_message('Student: ' . $key . ' has value: ' .  $value . ' and will be unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
 
       $result = ks_get_enroll_records($key, TRUE, $form_state['values']['class']);
-      if(!empty($result)) {
+      if (!empty($result)) {
         $enrd = (!empty($result['enrol_date'])) ? new DateTime($result['enrol_date']) : new DateTime('1900-01-01 0:0:00');
         $uenrd = new DateTime('now');
 
@@ -602,10 +602,10 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
         // can do something more drastic like:
         // $ok = ks_delete_enroll_record($result['ksccl_id']);
         if ($ok) {
-          drupal_set_message('Student: ' . $value . ' was unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+          drupal_set_message('Student:' . ' ' . $value . ' was unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
         }
         else {
-          drupal_set_message('Student: ' . $value . ' was not unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+          drupal_set_message('Student:' . ' ' . $value . ' was not unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
         }
       }
     }

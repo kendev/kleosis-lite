@@ -26,19 +26,19 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 
   drupal_set_breadcrumb($breadcrumb);
 
-  drupal_set_title('Edit Class Schedule');
+  drupal_set_title(t('Edit Class Schedule'));
 
   $classid = isset($_SESSION['kleosis_class_selected_class']['classid']) ? $_SESSION['kleosis_class_selected_class']['classid'] : 0;
   $classname = isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '';
 
   if ($classid == 0) {
-    drupal_set_message('Please select a class from the Classes List page');
+    drupal_set_message(t('Please select a class from the Classes List page'));
     drupal_goto('kleosis/classes', array());
   }
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
   $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
-  require_once ($kslib);
+  require_once($kslib);
 
   $defaults = TRUE;
   //$uid = $_SESSION['student']['id'];
@@ -69,7 +69,7 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 //  dpm($classid);
 //  dpm($classname);
 
-  if(empty($period_record)) {
+  if (empty($period_record)) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,
@@ -289,7 +289,7 @@ function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
   if ($form_state['input']['op'] == 'Cancel') {
     $form_state['redirect'] = 'kleosis/classes/schedule';
   }
-  elseif($num_recs == 0) {
+  elseif ($num_recs == 0) {
     $form_state['redirect'] = 'kleosis/classes/schedule';
   }
   else {
@@ -298,7 +298,7 @@ function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
     $start_date = $theclass->ks_class_start_end_date['und'][0]['value'];
     $class_start_date = new DateTime($start_date);  // create a datetime object for new period
 
-    for($i=1; $i<=$num_recs; $i++) {
+    for ($i=1; $i<=$num_recs; $i++) {
 
       $schedule_record = array();
       $schedule_record['kclss_id'] = $form_state['values']['kclss_id_' . $i];
@@ -354,9 +354,9 @@ function kleosis_class_schedule_delete_confirm_submit($form, &$form_state) {
   $res = ks_delete_schedule_record($kclss_id);
 
   if ($res) {
-    drupal_set_message('The period was successfully deleted.');
+    drupal_set_message(t('The period was successfully deleted.'));
   }
   else {
-    drupal_set_message('The period was not deleted.');
+    drupal_set_message(t('The period was not deleted.'));
   }
 }

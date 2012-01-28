@@ -1,15 +1,17 @@
 <?php
+
 /**
  * @file
  * Contains the custom numeric argument handler.
  */
-/*************      note - this was created by ken   ********************
- *  and is currently a copy of the views_handler_argument_numeric
- *  with changes to some of the functions...
- *  16 Oct 2011
- *
-*/
 
+/**
+ * note - this was created by ken
+ * and is currently a copy of the views_handler_argument_numeric
+ * with changes to some of the functions...
+ * 16 Oct 2011
+ *
+ */
 
 /**
  * Basic argument handler for arguments that are numeric. Incorporates
@@ -104,7 +106,7 @@ class views_handler_argument_custom_numeric extends views_handler_argument {
 
       $daterange = explode("_", $this->argument);
 
-      if(empty($daterange[1])) {
+      if (empty($daterange[1])) {
         $daterange[1] = '2999-01-01 00:00:00';
         }
 

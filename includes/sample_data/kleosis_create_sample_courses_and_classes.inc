@@ -173,7 +173,7 @@ function kleosis_create_sample_course($title, $course_no, $program, $dept, $cour
   $node->ks_grade_item_b_weight['und'][0]['value'] = '0.00' ;
   $node->ks_grade_item_c_weight['und'][0]['value'] = '0.00' ;
 */
-  if($node = node_submit($node)) { // Prepare node for saving
+  if ($node = node_submit($node)) { // Prepare node for saving
       node_save($node);
     //  drupal_set_message('Course: ' . $title . ' with nid: ' . $node->nid . ' created successfully.');
   }
@@ -187,7 +187,7 @@ function kleosis_create_sample_class($title, $course_nid, $term, $class_section,
 
   $start_end_date_s = '2011-08-07T10:30:00';
   $start_end_date_e = '2011-12-10T10:00:00';
-  if($term == 2) {
+  if ($term == 2) {
     $start_end_date_s = '2012-01-07T10:30:00';
     $start_end_date_e = '2012-06-24T10:00:00';
   }
@@ -213,7 +213,7 @@ function kleosis_create_sample_class($title, $course_nid, $term, $class_section,
   $node->ks_class_status['und'][0]['value'] = 'active';
   $node->ks_class_remarks['und'][0]['value'] = $remarks;
 
-  if($node = node_submit($node)) { // Prepare node for saving
+  if ($node = node_submit($node)) { // Prepare node for saving
       node_save($node);
    //   drupal_set_message('Class: ' . $title . ' with nid: ' . $node->nid . ' created successfully.');
   }

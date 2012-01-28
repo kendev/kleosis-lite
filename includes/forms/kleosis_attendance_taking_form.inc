@@ -56,8 +56,8 @@ function kleosis_attnd_instructor_filter_form($form, &$form_state) {
       $instructorid = $user->uid;
       $_SESSION['ks_atnd_instructor_filter'] = array('instructorid' => $instructorid,
                                         'instructorname' => get_ks_username_by_id($instructorid),
-                                        'academic_year' => variable_get('kleosis_academic_year','2011-2012'),
-                                        'term' => variable_get('kleosis_academic_term','fy'),
+                                        'academic_year' => variable_get('kleosis_academic_year', '2011-2012'),
+                                        'term' => variable_get('kleosis_academic_term', 'fy'),
                                         'toggle_classes' => 'inactive',
                                         'toggle_attnd' => 'inactive',
                                        );
@@ -66,8 +66,8 @@ function kleosis_attnd_instructor_filter_form($form, &$form_state) {
 
   $attnd_filter_instructorid = isset($_SESSION['ks_atnd_instructor_filter']['instructorid']) ? $_SESSION['ks_atnd_instructor_filter']['instructorid'] : 0;
   $attnd_filter_instructorname = isset($_SESSION['ks_atnd_instructor_filter']['instructorname']) ? $_SESSION['ks_atnd_instructor_filter']['instructorname'] : 'No instructor selected';
-  $attnd_filter_academic_year = isset($_SESSION['ks_atnd_instructor_filter']['academic_year']) ? $_SESSION['ks_atnd_instructor_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $attnd_filter_term = isset($_SESSION['ks_atnd_instructor_filter']['term']) ? $_SESSION['ks_atnd_instructor_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $attnd_filter_academic_year = isset($_SESSION['ks_atnd_instructor_filter']['academic_year']) ? $_SESSION['ks_atnd_instructor_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $attnd_filter_term = isset($_SESSION['ks_atnd_instructor_filter']['term']) ? $_SESSION['ks_atnd_instructor_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $academic_year_values = kleosis_academic_year_values();
   unset($academic_year_values['all']);
@@ -75,8 +75,8 @@ function kleosis_attnd_instructor_filter_form($form, &$form_state) {
   // create a fieldset with filter elements
   $form['instructor_filter'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Instructor filter: ') . $attnd_filter_instructorname . '&nbsp; &nbsp; &nbsp; ' .
-      ' Academic Year: ' . $attnd_filter_academic_year . '&nbsp; &nbsp; &nbsp; ' .'Term: ' . $attnd_filter_term,
+    '#title' => t('Instructor filter:') . ' ' . $attnd_filter_instructorname . '&nbsp; &nbsp; &nbsp; ' .
+      ' Academic Year: ' . $attnd_filter_academic_year . '&nbsp; &nbsp; &nbsp; ' . 'Term: ' . $attnd_filter_term,
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
@@ -98,7 +98,7 @@ function kleosis_attnd_instructor_filter_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Academic Year'),
     '#options' =>  $academic_year_values,
-    '#default_value' =>  !empty($attnd_filter_academic_year) ? $attnd_filter_academic_year : variable_get('kleosis_academic_year','2011-2012'),
+    '#default_value' =>  !empty($attnd_filter_academic_year) ? $attnd_filter_academic_year : variable_get('kleosis_academic_year', '2011-2012'),
     '#DANGEROUS_SKIP_CHECK' => FALSE,
     '#validated' => TRUE,
     '#weight' => 9,
@@ -109,7 +109,7 @@ function kleosis_attnd_instructor_filter_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Term'),
     '#options' => kleosis_academic_term_values(),
-    '#default_value' => !empty($attnd_filter_term) ? $attnd_filter_term : variable_get('kleosis_academic_term','fy'),
+    '#default_value' => !empty($attnd_filter_term) ? $attnd_filter_term : variable_get('kleosis_academic_term', 'fy'),
     '#DANGEROUS_SKIP_CHECK' => FALSE,
     '#validated' => TRUE,
     '#weight' => 11,
@@ -155,8 +155,8 @@ function kleosis_attnd_class_selection_form($form, &$form_state) {
 
   $attnd_filter_instructorid = isset($_SESSION['ks_atnd_instructor_filter']['instructorid']) ? $_SESSION['ks_atnd_instructor_filter']['instructorid'] : 0;
   $attnd_filter_instructorname = isset($_SESSION['ks_atnd_instructor_filter']['instructorname']) ? $_SESSION['ks_atnd_instructor_filter']['instructorname'] : 'No instructor selected';
-  $attnd_filter_academic_year = isset($_SESSION['ks_atnd_instructor_filter']['academic_year']) ? $_SESSION['ks_atnd_instructor_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $attnd_filter_term = isset($_SESSION['ks_atnd_instructor_filter']['term']) ? $_SESSION['ks_atnd_instructor_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $attnd_filter_academic_year = isset($_SESSION['ks_atnd_instructor_filter']['academic_year']) ? $_SESSION['ks_atnd_instructor_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $attnd_filter_term = isset($_SESSION['ks_atnd_instructor_filter']['term']) ? $_SESSION['ks_atnd_instructor_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   // get the class, day, and period values from the session variable (if any) and set the default values accordingly
 
@@ -211,8 +211,8 @@ drupal_set_message($attnd_date_day);
 //}
 
   $default_period = 'none';
-  if(sizeof($periods) == 1) { // then just get the period from the only period for the class
-    foreach($periods as $period) {
+  if (sizeof($periods) == 1) { // then just get the period from the only period for the class
+    foreach ($periods as $period) {
       $default_period = $period;
     }
   }
@@ -232,9 +232,9 @@ drupal_set_message($attnd_date_day);
   // create a fieldset with search elements
   $form['class_selection'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Class selection: ') . substr($fsclassname,0,42) . '&nbsp; &nbsp; &nbsp; ' .
+    '#title' => t('Class selection:') . ' ' . substr($fsclassname, 0, 42) . '&nbsp; &nbsp; &nbsp; ' .
     $fsmonth . '/' . $fsday . '/' . $fsyear . '&nbsp; &nbsp; &nbsp; ' .
-      ' Day: ' . $fsdaystr . '&nbsp; &nbsp; &nbsp; ' .'Period: ' . $fsperiod,
+      ' Day: ' . $fsdaystr . '&nbsp; &nbsp; &nbsp; ' . 'Period: ' . $fsperiod,
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -320,11 +320,11 @@ function kleosis_attendance_input_form($form, &$form_state) {
 //drupal_set_message('inside kleosis_attendance_input_form');
 
 
-  drupal_set_title('Take Attendance');
+  drupal_set_title(t('Take Attendance'));
 
   $attnd_toggle = isset($_SESSION['ks_atnd_class_select']['toggle_attnd']) ? $_SESSION['ks_atnd_class_select']['toggle_attnd'] : 'inactive';
 
-  if($attnd_toggle == 'inactive') {
+  if ($attnd_toggle == 'inactive') {
         $form['attendance_input']['nothing'] = array(
           '#type' => 'hidden',
           '#default_value' => 'inactive',
@@ -342,7 +342,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
   $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
-  require_once ($kslib);
+  require_once($kslib);
 
 // build the attendance date to the hour and period
   $attnd_select_period = isset($_SESSION['ks_atnd_class_select']['period']) ? $_SESSION['ks_atnd_class_select']['period'] : 'none';
@@ -515,7 +515,7 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
       break;
     case 'Apply':
 
-      if($form_state['input']['op'] == 'Submit Attendance') {  // insert or update attendance records
+      if ($form_state['input']['op'] == 'Submit Attendance') {  // insert or update attendance records
         // build a datetime object for the selected attendance date
         $hma = get_hour_and_minute_from_period($form_state['values']['period']);
         $attnd_select_hour = isset($hma['start_hour']) ? $hma['start_hour'] : '00';
@@ -546,7 +546,7 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
 
         // prepare $ks_attendance_record for insert or update into the ks_student_attendance table
 
-      for($i = 1; $i <= $form_state['input']['student_count']; $i++) {
+      for ($i = 1; $i <= $form_state['input']['student_count']; $i++) {
         $ks_attendance_record = array();
         $ks_attendance_record['ksatnd_id'] = $form_state['input']['ksatnd_id_' . $i];
         $ks_attendance_record['kstu_id_fk'] = $form_state['input']['kstu_id_fk_' . $i];
@@ -612,8 +612,8 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
       break;
     case 'Get Students':
 
-      if($form_state['input']['period'] == 'none') {
-        drupal_set_message('Please select a valid Class and Period.');
+      if ($form_state['input']['period'] == 'none') {
+        drupal_set_message(t('Please select a valid Class and Period.'));
         break;
       }
       $attendance_date = new DateTime();
@@ -695,7 +695,7 @@ function get_classes_by_instructor($instructorid) {
 
   $result = $query->execute()->fetchAll();
   $classlist = array();
-  foreach($result as $class) {
+  foreach ($result as $class) {
     $classlist[$class->nid] = $class->title;
   }
   if (empty($classlist)) {

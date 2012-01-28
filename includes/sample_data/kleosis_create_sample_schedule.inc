@@ -6,7 +6,7 @@
 
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 101 Class - Section 1'))->fetchField();
@@ -21,7 +21,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 101 Class - Section 1'))->fetchField();
@@ -36,7 +36,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 101 Class - Section 1'))->fetchField();
@@ -51,7 +51,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 101 Class - Section 1'))->fetchField();
@@ -66,7 +66,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 101 Class - Section 1'))->fetchField();
@@ -81,7 +81,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 101 Class - Section 1'))->fetchField();
@@ -96,7 +96,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 101 Class - Section 1'))->fetchField();
@@ -111,7 +111,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 101 Class - Section 1'))->fetchField();
@@ -126,7 +126,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 101 Class - Section 1'))->fetchField();
@@ -141,7 +141,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 101 Class - Section 1'))->fetchField();
@@ -156,7 +156,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8403',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8403', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 101 Class - Section 1'))->fetchField();
@@ -171,7 +171,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8403',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8403', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 101 Class - Section 1'))->fetchField();
@@ -186,7 +186,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8403',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8403', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 101 Class - Section 1'))->fetchField();
@@ -201,7 +201,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8403',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8403', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 101 Class - Section 1'))->fetchField();
@@ -216,7 +216,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 101 Class - Section 1'))->fetchField();
@@ -231,7 +231,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 101 Class - Section 1'))->fetchField();
@@ -246,7 +246,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 101 Class - Section 1'))->fetchField();
@@ -261,7 +261,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 101 Class - Section 1'))->fetchField();
@@ -276,7 +276,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 101 Class - Section 1'))->fetchField();
@@ -291,7 +291,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8404',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8404', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample PE 101 Class - Section 1'))->fetchField();
@@ -306,7 +306,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8404',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8404', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample PE 101 Class - Section 1'))->fetchField();
@@ -321,7 +321,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8405',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8405', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Computer 101 Class - Section 1'))->fetchField();
@@ -336,7 +336,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8405',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8405', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Computer 101 Class - Section 1'))->fetchField();
@@ -351,7 +351,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8406',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8406', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Music 101 Class - Section 1'))->fetchField();
@@ -366,7 +366,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8406',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8406', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Music 101 Class - Section 1'))->fetchField();
@@ -381,7 +381,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 102 Class - Section 1'))->fetchField();
@@ -396,7 +396,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 102 Class - Section 1'))->fetchField();
@@ -411,7 +411,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 102 Class - Section 1'))->fetchField();
@@ -426,7 +426,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 102 Class - Section 1'))->fetchField();
@@ -441,7 +441,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 102 Class - Section 1'))->fetchField();
@@ -458,7 +458,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 201 Class - Section 1'))->fetchField();
@@ -473,7 +473,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 201 Class - Section 1'))->fetchField();
@@ -488,7 +488,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 201 Class - Section 1'))->fetchField();
@@ -503,7 +503,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 201 Class - Section 1'))->fetchField();
@@ -518,7 +518,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Science 201 Class - Section 1'))->fetchField();
@@ -533,7 +533,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8404',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8404', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample PE 201 Class - Section 1'))->fetchField();
@@ -548,7 +548,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8404',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8404', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample PE 201 Class - Section 1'))->fetchField();
@@ -563,7 +563,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8406',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8406', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Music 201 Class - Section 1'))->fetchField();
@@ -578,7 +578,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8406',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8406', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Music 201 Class - Section 1'))->fetchField();
@@ -593,7 +593,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 201 Class - Section 1'))->fetchField();
@@ -608,7 +608,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 201 Class - Section 1'))->fetchField();
@@ -623,7 +623,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 201 Class - Section 1'))->fetchField();
@@ -638,7 +638,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 201 Class - Section 1'))->fetchField();
@@ -653,7 +653,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8401',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8401', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Math 201 Class - Section 1'))->fetchField();
@@ -668,7 +668,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 201 Class - Section 1'))->fetchField();
@@ -683,7 +683,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 201 Class - Section 1'))->fetchField();
@@ -698,7 +698,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 201 Class - Section 1'))->fetchField();
@@ -713,7 +713,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 201 Class - Section 1'))->fetchField();
@@ -728,7 +728,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 201 Class - Section 1'))->fetchField();
@@ -743,7 +743,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8405',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8405', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Computer 201 Class - Section 1'))->fetchField();
@@ -758,7 +758,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8405',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8405', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Computer 201 Class - Section 1'))->fetchField();
@@ -773,7 +773,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 202 Class - Section 1'))->fetchField();
@@ -788,7 +788,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 202 Class - Section 1'))->fetchField();
@@ -803,7 +803,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 202 Class - Section 1'))->fetchField();
@@ -818,7 +818,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 202 Class - Section 1'))->fetchField();
@@ -833,7 +833,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8407',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8407', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample English 202 Class - Section 1'))->fetchField();
@@ -848,7 +848,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8408',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8408', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 201 Class - Section 1'))->fetchField();
@@ -863,7 +863,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8408',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8408', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 201 Class - Section 1'))->fetchField();
@@ -878,7 +878,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8408',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8408', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis sample Art 201 Class - Section 1'))->fetchField();
@@ -895,7 +895,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1'))->fetchField();
@@ -910,7 +910,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1'))->fetchField();
@@ -925,7 +925,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1'))->fetchField();
@@ -940,7 +940,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1'))->fetchField();
@@ -955,7 +955,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1'))->fetchField();
@@ -970,7 +970,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1'))->fetchField();
@@ -985,7 +985,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1000,7 +1000,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1015,7 +1015,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1030,7 +1030,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1045,7 +1045,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1'))->fetchField();
@@ -1060,7 +1060,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1'))->fetchField();
@@ -1075,7 +1075,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1'))->fetchField();
@@ -1090,7 +1090,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1'))->fetchField();
@@ -1105,7 +1105,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8400',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1'))->fetchField();
@@ -1120,7 +1120,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1135,7 +1135,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1150,7 +1150,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1165,7 +1165,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1'))->fetchField();
@@ -1180,7 +1180,7 @@
 //---
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
-  $p_l_i = db_query($sql, array(':name' => 'instructor8402',))->fetchField();
+  $p_l_i = db_query($sql, array(':name' => 'instructor8402', ))->fetchField();
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
   $classid = db_query($sql, array(':type' => 'class', ':kleosis' => 'Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1'))->fetchField();

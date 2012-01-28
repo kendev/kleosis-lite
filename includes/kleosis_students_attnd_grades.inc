@@ -65,7 +65,7 @@ function kleosis_students_attendance($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -96,15 +96,15 @@ function kleosis_students_attendance($form, &$form_state) {
 
 function kleosis_student_attnd_acyt_select_form() {
 
-  $academic_year = variable_get('kleosis_academic_year','2011-2012');
-  $term = variable_get('kleosis_academic_term','fy');
+  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
+  $term = variable_get('kleosis_academic_term', 'fy');
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') .': ' . $term,
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term,
     '#weight' => -5,
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
@@ -140,7 +140,7 @@ function kleosis_student_attnd_acyt_select_form() {
     '#suffix' => '</div>',
   );
 
-  $text = t('Current Daily Attendance Totals for student <strong>@name</strong>: ', array('@name' => $name));
+  $text = t('Current Daily Attendance Totals for student <strong>@name</strong>:' . ' ', array('@name' => $name));
 
   $build['theclasses'] = array(
       '#markup' => $text,
@@ -159,8 +159,8 @@ function kleosis_student_attnd_acyt_select_form() {
 
 function kleosis_students_attendance_list() {
 
-  $academic_year = variable_get('kleosis_academic_year','2011-2012');
-  $term = variable_get('kleosis_academic_term','fy');
+  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
+  $term = variable_get('kleosis_academic_term', 'fy');
   $student = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
@@ -186,7 +186,7 @@ function kleosis_students_attendance_list() {
   $attendance_class_nids = ks_get_attendance_class_by_gradelevel($student, $academic_year, $term);
 
   if (empty($attendance_class_nids)) {
-    $text = t('Student <strong>@name</strong> is not enrolled in a Homework-Attendance class ', array('@name' => $name));
+    $text = t('Student <strong>@name</strong> is not enrolled in a Homework-Attendance class.', array('@name' => $name));
 
      $build['theclasses'] = array(
         '#markup' => $text,
@@ -388,7 +388,7 @@ function ks_get_student_atttendance_unexcused_absences($student, $classnids, $da
  * Get the "attendance class" nids for the selected student, academic year, and term
  *
  */
-function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term){
+function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) {
 
   if (($academic_year == 'all') || ($term == 'all') ) {
     return array();
@@ -497,7 +497,7 @@ function kleosis_student_current_grades($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -537,8 +537,8 @@ function kleosis_student_grades_acyt_select_form() {
     $view_grades = FALSE;
   }
 
-  $academic_year = variable_get('kleosis_academic_year','2011-2012');
-  $term = variable_get('kleosis_academic_term','fy');
+  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
+  $term = variable_get('kleosis_academic_term', 'fy');
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
@@ -598,7 +598,7 @@ function kleosis_student_grades_acyt_select_form() {
 
   if ( $grades_toggle == 'active' ) {  // get the grades from moodle
 
-    $text = t('Current grades for student <strong>@name</strong>: ', array('@name' => $name));
+    $text = t('Current grades for student <strong>@name</strong>:' . ' ', array('@name' => $name));
 
     $build['thegrades'] = array(
       '#markup' => $text,
@@ -608,13 +608,13 @@ function kleosis_student_grades_acyt_select_form() {
 
     $header = array(
       'name' => array('data' => t('Username')),
-      'course' => array('data' => t('Course'),),
-      'grade' => array('data' => t('Current Grade (decimal)'),),
-      'str_grade' => array('data' => t('Current Grade (letter)'),),
+      'course' => array('data' => t('Course'), ),
+      'grade' => array('data' => t('Current Grade (decimal)'), ),
+      'str_grade' => array('data' => t('Current Grade (letter)'), ),
       'operations' => array('data' => t('Ops')),
     );
 
-        $moodle_url = variable_get('kleosis_moodle_url','http://localhost/moodle');
+        $moodle_url = variable_get('kleosis_moodle_url', 'http://localhost/moodle');
         $grades = ws_get_grades_by_username($name);  // todo: evolve this function
 
         $options = array();
@@ -691,7 +691,7 @@ function kleosis_student_final_grades($form, &$form_state) {
   $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
 
   if ($uid == 0) {
-    drupal_set_message('Please select a Student by clicking on a Student link.from the Student List page.');
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
     drupal_goto($path = 'kleosis/students', $options = array());
   }
 
@@ -723,8 +723,8 @@ function kleosis_student_final_grades($form, &$form_state) {
 
 function kleosis_student_final_grades_acyt_select_form() {
 
-  $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $term = isset($_SESSION['ks_student_final_grades_select_filter']['term']) ? $_SESSION['ks_student_final_grades_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_final_grades_select_filter']['term']) ? $_SESSION['ks_student_final_grades_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
@@ -814,8 +814,8 @@ function kleosis_student_final_grades_list() {
     drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
   }
 
-  $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year','2011-2012');
-  $term = isset($_SESSION['ks_student_final_grades_select_filter']['term']) ? $_SESSION['ks_student_final_grades_select_filter']['term'] : variable_get('kleosis_academic_term','fy');
+  $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_final_grades_select_filter']['term']) ? $_SESSION['ks_student_final_grades_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
@@ -871,7 +871,7 @@ function kleosis_student_final_grades_list() {
 
     $grade_records = $query->execute()->fetchAll();
 
-    foreach($grade_records as $record) {
+    foreach ($grade_records as $record) {
 
       $class_node = node_load($record->kccls_id_fk);
       $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];

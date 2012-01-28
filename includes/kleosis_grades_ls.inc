@@ -48,7 +48,7 @@ function kleosis_final_grades_ls_select_form() {
   $class_term = isset($_SESSION['ks_final_grades_class_filter']['term']) ? $_SESSION['ks_final_grades_class_filter']['term'] : 'fy';
 
   $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type AND n.status = :status ORDER BY n.title' ;
-  $results = db_query($sql, array(':type' => 'class', ':status' => 1,) );
+  $results = db_query($sql, array(':type' => 'class', ':status' => 1, ) );
   $options = array();
   foreach ($results as $class) {
     $node = node_load($class->nid);
@@ -62,7 +62,7 @@ function kleosis_final_grades_ls_select_form() {
   }
   if (sizeof($options) == 0) {
 //    drupal_set_message('empty result set');
-    $options = array('0' => t('No classes exist for selected year and term'),);
+    $options = array('0' => t('No classes exist for selected year and term'), );
   }
   // create a fieldset for the class selection
   $form['grades_select'] = array(
@@ -140,7 +140,7 @@ drupal_set_title(t('Final Grades-LS'));
 
   $final_exam_grade_exists = $grade_item_1_exists =  $grade_item_2_exists =  $grade_item_3_exists = FALSE;
   $weights = kleosis_get_grade_item_weights($class_id_from_filter);
-  if(isset($weights)) {
+  if (isset($weights)) {
     $final_exam_grade_exists =  ($weights['few'] <> '00.00') ? TRUE : FALSE;
     $grade_item_1_exists =  ($weights['giaw'] <> '00.00') ? TRUE : FALSE;
     $grade_item_2_exists =  ($weights['gibw'] <> '00.00') ? TRUE : FALSE;
@@ -153,9 +153,9 @@ drupal_set_title(t('Final Grades-LS'));
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
       'course_grade' => t('Course Grade'),
       'final_exam_grade' => t('Final Exam'),
-      'grade_item_1' => variable_get('kleosis_grade_item_1_name',t('GradeItem 1')),
-      'grade_item_2' => variable_get('kleosis_grade_item_2_name',t('GradeItem 2')),
-      'grade_item_3' => variable_get('kleosis_grade_item_3_name',t('GradeItem 3')),
+      'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
+      'grade_item_2' => variable_get('kleosis_grade_item_2_name', t('GradeItem 2')),
+      'grade_item_3' => variable_get('kleosis_grade_item_3_name', t('GradeItem 3')),
       'final_grade' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
@@ -166,8 +166,8 @@ drupal_set_title(t('Final Grades-LS'));
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
       'course_grade' => t('Course Grade'),
       'final_exam_grade' => t('Final Exam'),
-      'grade_item_1' => variable_get('kleosis_grade_item_1_name',t('GradeItem 1')),
-      'grade_item_2' => variable_get('kleosis_grade_item_2_name',t('GradeItem 2')),
+      'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
+      'grade_item_2' => variable_get('kleosis_grade_item_2_name', t('GradeItem 2')),
       'final_grade' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
@@ -178,7 +178,7 @@ drupal_set_title(t('Final Grades-LS'));
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
       'course_grade' => t('Course Grade'),
       'final_exam_grade' => t('Final Exam'),
-      'grade_item_1' => variable_get('kleosis_grade_item_1_name',t('GradeItem 1')),
+      'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
       'final_grade' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
@@ -401,7 +401,7 @@ function kleosis_get_student_final_grade_record($studentid, $classid) {
 function kleosis_get_grade_item_weights($classid) {
 
   $theclass = node_load($classid);
-  if( (isset($theclass)) && ($classid <> 0) ) {
+  if ( (isset($theclass)) && ($classid <> 0) ) {
     $thecourse = node_load($theclass->ks_class_course_ref['und'][0]['nid']);
   }
   $cgw = isset($thecourse->ks_course_grade_weight['und'][0]['value']) ? $thecourse->ks_course_grade_weight['und'][0]['value'] : 0.0;
@@ -693,7 +693,7 @@ drupal_set_title(t('Edit Final Grades-LS'));
   );
   $form['grades_edit']['grade_item_2'] = array(
     '#type' => $grade_item_2_exists,
-    '#title' => variable_get('kleosis_grade_item_2_name','Item 2 grade'),
+    '#title' => variable_get('kleosis_grade_item_2_name', 'Item 2 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_2 : '',
     '#size' => 7,
     '#maxlength' => 8,
@@ -704,7 +704,7 @@ drupal_set_title(t('Edit Final Grades-LS'));
   );
   $form['grades_edit']['grade_item_3'] = array(
     '#type' => $grade_item_3_exists,
-    '#title' => variable_get('kleosis_grade_item_3_name','Item 3 grade'),
+    '#title' => variable_get('kleosis_grade_item_3_name', 'Item 3 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_3 : '',
     '#size' => 7,
     '#maxlength' => 8,
@@ -846,10 +846,10 @@ function kleosis_final_grades_ls_edit_form_validate($form, &$form_state) {
   if ($form_state['values']['op'] == 'Cancel') {
     return;
   }
-  if( (empty($form_state['values']['final_exam_grade'])) || (!is_numeric($form_state['values']['final_exam_grade'])) ) {
+  if ( (empty($form_state['values']['final_exam_grade'])) || (!is_numeric($form_state['values']['final_exam_grade'])) ) {
       form_set_error('final_exam_grade', t('Final exam grade must be a decimal number.'), $limit_validation_errors = NULL);
     }
-  if( (empty($form_state['values']['course_grade'])) || (!is_numeric($form_state['values']['course_grade'])) ) {
+  if ( (empty($form_state['values']['course_grade'])) || (!is_numeric($form_state['values']['course_grade'])) ) {
       form_set_error('course_grade', t('Course grade must be a decimal number.'), $limit_validation_errors = NULL);
     }
 //  if( (empty($form_state['values']['final_grade'])) || (!is_numeric($form_state['values']['final_grade'])) ) {

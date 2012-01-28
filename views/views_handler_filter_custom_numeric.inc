@@ -1,14 +1,18 @@
 <?php
 
-/*************      note - this is created by ken   ********************
- *  and is currently a copy of the views_handler_filter_numeric
- *  no changes have been made as of 12 Oct 2011
- *  If no changes are deemed necessary, then can delete and use numeric handler
- *
-*/
 /**
+ * @file
  * Simple filter to handle greater than/less than filters
  */
+
+/**
+ * note - this was created by ken
+ * and is currently a copy of the views_handler_filter_numeric
+ * no changes have been made as of 12 Oct 2011
+ * If no changes are deemed necessary, then can delete and use numeric handler
+ *
+ */
+
 //class views_handler_filter_numeric extends views_handler_filter {
 class views_handler_filter_custom_numeric extends views_handler_filter {
   var $always_multiple = TRUE;
@@ -151,7 +155,7 @@ class views_handler_filter_custom_numeric extends views_handler_filter {
     if ($which == 'all') {
       $form['value']['value'] = array(
         '#type' => 'textfield',
-        '#title' => empty($form_state['exposed']) ? t('Value') : '',
+        '#title' => check_plain(empty($form_state['exposed']) ? t('Value') : ''),
         '#size' => 30,
         '#default_value' => $this->value['value'],
         '#dependency' => array($source => $this->operator_values(1)),
@@ -165,7 +169,7 @@ class views_handler_filter_custom_numeric extends views_handler_filter {
       // the operator is locked.
       $form['value'] = array(
         '#type' => 'textfield',
-        '#title' => empty($form_state['exposed']) ? t('Value') : '',
+        '#title' => check_plain(empty($form_state['exposed']) ? t('Value') : ''),
         '#size' => 30,
         '#default_value' => $this->value['value'],
       );
@@ -177,13 +181,13 @@ class views_handler_filter_custom_numeric extends views_handler_filter {
     if ($which == 'all' || $which == 'minmax') {
       $form['value']['min'] = array(
         '#type' => 'textfield',
-        '#title' => empty($form_state['exposed']) ? t('Min') : '',
+        '#title' => check_plain(empty($form_state['exposed']) ? t('Min') : ''),
         '#size' => 30,
         '#default_value' => $this->value['min'],
       );
       $form['value']['max'] = array(
         '#type' => 'textfield',
-        '#title' => empty($form_state['exposed']) ? t('And max') : t('And'),
+        '#title' => check_plain(empty($form_state['exposed']) ? t('And max') : t('And')),
         '#size' => 30,
         '#default_value' => $this->value['max'],
       );
