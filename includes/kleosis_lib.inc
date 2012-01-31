@@ -125,7 +125,7 @@ function get_hour_and_minute_from_period($period) {
  * @return
  *    An array of days to select
  */
-function kleosis_dayofweek_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_dayofweek_values() {
 
   $le_days = array(
       '1' => t('Monday'),
@@ -178,7 +178,7 @@ function ks_get_day_int($strday) {
  * @return
  *    An array of hours to select
  */
-function kleosis_hours_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_hours_values() {
 
   $le_hours = array(
     '00' => t('00'),
@@ -215,7 +215,7 @@ function kleosis_hours_values() {  // todo: these values may be defined in the l
  * @return
  *    An array of minutes to select
  */
-function kleosis_minutes_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_minutes_values() {
 
   $le_minutes = array(
     '00' => t('00'),
@@ -241,7 +241,7 @@ function kleosis_minutes_values() {  // todo: these values may be defined in the
  * @return
  *    An array of values to select
  */
-function kleosis_grade_weights() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_grade_weights() {
 
   $le_weights = array(
     '00' => t('00'),
@@ -452,13 +452,8 @@ function ks_map_ks_gradelevel_to_drp($ks_gradelevel) {
  */
 function kleosis_academic_year_values() {
 
-  $options = array('all' => t('All'), );
-  $results = db_query('SELECT academic_year FROM {ks_academic_year_desc}' )->fetchAll();
-  foreach ($results as $iac_year) {
-    $options[$iac_year->academic_year] = $iac_year->academic_year;
-  }
-
-  return $options;
+  $le_array = ks_get_academic_years();
+  return $le_array;
 }
 
 /**
@@ -482,61 +477,38 @@ function kleosis_academic_term_values() {
 }
 
 /**
- * The allowed values for the room_type courses field
- *
- * @return
- *    An array of room_types to select
- */
-function kleosis_room_types_values() {  // todo: these values may be defined in the list (text) field directly
-
-  $le_array = array(
-    'standard' => t('Standard'),
-    'large' => t('Large'),
-    'auditorium' => t('Auditorium'),
-    'off_campus' => t('Off Campus'),
-    'shared' => t('Shared'),
-    'temporary' => t('Temporary'),
-    'other' => t('Other'),
-  );
-  return $le_array;
-}
-
-/**
- * The allowed values for the lab_type courses field
- *
- * @return
- *    An array of lab_types to select
- */
-function kleosis_lab_types_values() {  // todo: these values may be defined in the list (text) field directly
-
-  $le_array = array(
-    'standard' => t('Standard'),
-    'large' => t('Large'),
-    'secure_1' => t('Secure Level 1'),
-    'secure_2' => t('Secure Level 2'),
-    'off_campus' => t('Off Campus'),
-    'temporary' => t('Temporary'),
-    'other' => t('Other'),
-  );
-  return $le_array;
-}
-
-/**
  * The allowed values for the types of courses
  *
  * @return
  *    An array of course_types to select
  */
-function kleosis_course_types_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_course_types_values() {
 
-  $le_array = array(
-    'standard' => t('Standard'),
-    'non-credit' => t('Non-Credit'),
-    'lab' => t('Lab'),
-    'attendance' => t('Attendance'),
-    'lunch-breaktime' => t('Lunch-Breaktime'),
-    'other' => t('Other'),
-  );
+  $le_array = ks_get_course_types();
+  return $le_array;
+}
+
+/**
+ * The allowed values for the types of rooms
+ *
+ * @return
+ *    An array of room_types to select
+ */
+function kleosis_room_types_values() {
+
+  $le_array = ks_get_room_types();
+  return $le_array;
+}
+
+/**
+ * The allowed values for the types of labs
+ *
+ * @return
+ *    An array of lab_types to select
+ */
+function kleosis_lab_types_values() {
+
+  $le_array = ks_get_lab_types();
   return $le_array;
 }
 
@@ -546,13 +518,9 @@ function kleosis_course_types_values() {  // todo: these values may be defined i
  * @return
  *    An array of course_statuses to select
  */
-function kleosis_course_status_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_course_status_values() {
 
-  $le_array = array(
-    'active' => t('Active'),
-    'non_active' => t('Non Active'),
-    'retired' => t('Retired'),
-  );
+  $le_array = ks_get_course_statuses();
   return $le_array;
 }
 
@@ -562,16 +530,9 @@ function kleosis_course_status_values() {  // todo: these values may be defined 
  * @return
  *    An array of class_types to select
  */
-function kleosis_class_types_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_class_types_values() {
 
-  $le_array = array(
-    'standard' => t('Standard'),
-    'online' => t('Online'),
-    'night' => t('Night'),
-    'weekend' => t('Weekend'),
-    'summer' => t('Summer'),
-    'other' => t('Other'),
-  );
+  $le_array = ks_get_class_types();
   return $le_array;
 }
 
@@ -581,15 +542,9 @@ function kleosis_class_types_values() {  // todo: these values may be defined in
  * @return
  *    An array of class_statuses to select
  */
-function kleosis_class_status_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_class_status_values() {
 
-  $le_array = array(
-    'active' => t('Active'),
-    'rescheduled' => t('Rescheduled'),
-    'postponed' => t('Postponed'),
-    'cancelled' => t('Cancelled'),
-    'other' => t('Other'),
-  );
+  $le_array = ks_get_class_statuses();
   return $le_array;
 }
 
@@ -599,16 +554,10 @@ function kleosis_class_status_values() {  // todo: these values may be defined i
  * @return
  *    An array of programs to select
  */
-function kleosis_program_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_program_values() {
 
-  $le_array = array(
-    'all' => t('All'),
-    'general_academic' => t('General Academic'),
-    'advanced_academic' => t('Advanced Academic'),
-    'special_needs' => t('Special Needs'),
-    'certification' => t('Standards Certification'),
-    'other' => t('Other'),
-  );
+  $le_array = ks_get_programs();
+
   return $le_array;
 }
 
@@ -618,18 +567,55 @@ function kleosis_program_values() {  // todo: these values may be defined in the
  * @return
  *    An array of departments to select
  */
-function kleosis_department_values() {  // todo: these values may be defined in the list (text) field directly
+function kleosis_department_values() {
 
-  $le_array = array(
-    'all' => t('All'),
-    'languages' => t('Languages'),
-    'science' => t('Science'),
-    'art' => t('Art'),
-    'music' => t('Music'),
-    'mathmetics' => t('Mathematics'),
-    'general' => t('General'),
-  );
+  $le_array = ks_get_departments();
+
   return $le_array;
+}
+
+/**
+ * Get the key|label entries for a _desc table
+ *
+ * @param $ks_field_name
+ *  the drupal field name that contains a _desc_table value
+ *
+ * @return
+ *    An array of key => label entries from the _desc_table
+ */
+function kleosis_get_desc_table_entries($ks_field_name) {
+  $desc_table_entries = array();
+  // get the _desc table values (drupal calls these 'labels')
+  $ks_desc_table_field = field_info_field($ks_field_name);
+  $function = $ks_desc_table_field['settings']['allowed_values_function'];
+  if (function_exists($function)) {
+    $desc_table_entries = $function();
+  }
+  return $desc_table_entries;
+}
+
+/**
+ * Get the label (value) for an entry in a _desc table
+ *
+ * @param $ks_field_name
+ *  the drupal field name that contains a _desc_table value (label)
+ * @param $ks_key
+ *  the key of the entry
+ *
+ * @return
+ *    the entry label (value) associated with the key
+ */
+function kleosis_get_desc_table_label($ks_field_name, $ks_key) {
+  $desc_table_values = array();
+  // get the _desc table values (drupal calls these 'labels')
+  $ks_desc_table_field = field_info_field($ks_field_name);
+  $function = $ks_desc_table_field['settings']['allowed_values_function'];
+  if (function_exists($function)) {
+    $desc_table_values = $function();
+  }
+
+  $label = isset($desc_table_values[$ks_key]) ? $desc_table_values[$ks_key] : '';
+  return $label;
 }
 
 /**

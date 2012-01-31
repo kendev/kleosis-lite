@@ -99,7 +99,7 @@ function _course_installed_fields() {
       'type'        => 'list_text',
       'description' => $t('Program this course belongs to'),
       'settings'    => array(
-        'allowed_values_function'  => 'kleosis_program_values',  // todo: change this to array of values
+        'allowed_values_function'  => 'kleosis_program_values',
         ),
       ),
     'department' => array(
@@ -107,7 +107,7 @@ function _course_installed_fields() {
       'type'        => 'list_text',
       'description' => $t('Department this course belongs to'),
       'settings'    => array(
-        'allowed_values_function'  => 'kleosis_department_values',  // todo: change this to array of values
+        'allowed_values_function'  => 'kleosis_department_values',
         ),
       ),
     'gradelevel' => array(
@@ -115,7 +115,7 @@ function _course_installed_fields() {
       'type'        => 'list_text',
       'description' => $t('Grade level for this course'),
       'settings'    => array(
-        'allowed_values_function'  => 'kleosis_gradelevel_values',  // todo: change this to read db table
+        'allowed_values_function'  => 'kleosis_gradelevel_values',
         ),
       ),
     // date field (date module required)
@@ -135,7 +135,7 @@ function _course_installed_fields() {
       'type'        => 'list_text',
       'description' => $t('The type of course'),
       'settings'    => array(
-        'allowed_values_function'  => 'kleosis_course_types_values',  // todo: change this to read db table
+        'allowed_values_function'  => 'kleosis_course_types_values',
         ),
       ),
     'prerequisite' => array(

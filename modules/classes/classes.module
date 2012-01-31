@@ -412,6 +412,7 @@ drupal_set_title(t('Classes List'));
   $query->orderByHeader($header);
   $results = $query->execute()->fetchAll();
 
+  $class_statuses = kleosis_get_desc_table_entries('ks_class_status');
     /*
       $sql = 'SELECT nid FROM {node} nn WHERE nn.type = :type AND nn.status = :status';
       $results = db_query($sql,
@@ -444,7 +445,7 @@ drupal_set_title(t('Classes List'));
         'class_academic_year' => $node->ks_class_academic_year['und'][0]['value'],
         'class_term' => $node->ks_class_term['und'][0]['value'],
 //        'class_gradelevel' => $node->ks_class_gradelevel['und'][0]['value'],
-        'class_status' => $node->ks_class_status['und'][0]['value'],
+        'class_status' => isset($class_statuses[$node->ks_class_status['und'][0]['value']]) ? $class_statuses[$node->ks_class_status['und'][0]['value']] : 'not set',
 //        'operations' =>  l(t('view'), 'kleosis/classes/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/classes'))) . ' | ' . l(t('edit'), 'kleosis/classes/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/classes'))),
         'operations' => l(t('edit'), 'kleosis/classes/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/classes'))),
         );

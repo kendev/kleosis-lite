@@ -203,7 +203,7 @@ function kleosis_student_reports_odt_download() {
     ->entityCondition('bundle', 'class')
     ->fieldCondition('ks_class_term', 'value', $term, '=')
     ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
-    ->fieldCondition('ks_class_status', 'value', 'active', '=')
+    ->fieldCondition('ks_class_status', 'value', '1', '=')  // 'Active'
     ->propertyCondition('status', 1)  // not needed, just an example...
     // ->fieldCondition('example_field_date', 'value', array('2011-03-01', '2011-03-31'), 'BETWEEN')    // not needed, just an example...
     // ->fieldCondition('example_other_field', 'state', (array) $states, 'IN', 0);   // not needed, just an example.

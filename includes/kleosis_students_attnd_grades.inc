@@ -411,7 +411,7 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'course')
-  ->fieldCondition('ks_course_type', 'value', 'attendance', '=') // todo: change the field name ks_course_type next reinstall...
+  ->fieldCondition('ks_course_type', 'value', '4', '=') // todo: get the actual value for 'Attendance' from the ks_course_type_description table
   ->fieldCondition('ks_course_gradelevel', 'value', $gradelevel, '=');
 
   $result = $query->execute();

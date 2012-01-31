@@ -2371,6 +2371,147 @@ function kleosis_schema() {
     'primary key' => array('kcntry_id'),
   );
 
+  $schema['ks_lab_type_desc'] = array(
+    'description' => 'The types of labs',
+    'fields' => array(
+      'klabty_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'lab_type' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of lab',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of lab type',
+      ),
+    ),
+    'primary key' => array('klabty_id'),
+  );
+
+  $schema['ks_class_status_desc'] = array(
+    'description' => 'Class status',
+    'fields' => array(
+      'kclsts_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Class status',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the class status',
+      ),
+    ),
+    'primary key' => array('kclsts_id'),
+  );
+
+  $schema['ks_course_type_desc'] = array(
+    'description' => 'The type of course',
+    'fields' => array(
+      'kcrsty_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'course_type' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of course',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the course type',
+      ),
+    ),
+    'primary key' => array('kcrsty_id'),
+  );
+
+  $schema['ks_class_type_desc'] = array(
+    'description' => 'The type of class',
+    'fields' => array(
+      'kclsty_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'class_type' => array(
+        'type' => 'varchar',
+        'length' => 48,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The type of class',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the class type',
+      ),
+    ),
+    'primary key' => array('kclsty_id'),
+  );
+
+  $schema['ks_report_odt'] = array(
+    'description' => 'The odt reports',
+    'fields' => array(
+      'krodt_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key',
+      ),
+      'report_name' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the report',
+      ),
+      'report_filename' => array(
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The report filename',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Description of the report',
+      ),
+    ),
+    'primary key' => array('krodt_id'),
+  );
 
   return $schema;
 }

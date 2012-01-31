@@ -152,39 +152,22 @@ function kleosis_courses_list_form($form, &$form_state) {
 function kleosis_organization_filter_form() {
 
   // get the organization values from the session variable (if any) and set the default values accordingly
-  $courses_program = isset($_SESSION['ks_courses_org']['program']) ? $_SESSION['ks_courses_org']['program'] : 'all';
-  $courses_department = isset($_SESSION['ks_courses_org']['department']) ? $_SESSION['ks_courses_org']['department'] : 'all';
+  $courses_program = isset($_SESSION['ks_courses_org']['program']) ? $_SESSION['ks_courses_org']['program'] : '';
+  $courses_department = isset($_SESSION['ks_courses_org']['department']) ? $_SESSION['ks_courses_org']['department'] : '';
+
+  $courses_program_label = kleosis_get_desc_table_label('ks_course_program', $courses_program);
+  $courses_department_label = kleosis_get_desc_table_label('ks_course_department', $courses_department);
 
   // create a fieldset with the organizaton elements
   $form['orgfields'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Organizational filter - Program: ') . $courses_program . '&nbsp; &nbsp; ' . ' Department: ' . $courses_department,
+    '#title' => t('Organizational filter - Program: ') . $courses_program_label . '&nbsp; &nbsp; ' . ' Department: ' . $courses_department_label,
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
-/*
-$form['orgfields']['organization'] = array(
-    '#type' => 'select',
-    '#title' => t('Organization'),
-    '#options' =>  array('universal_k12' => t('Universal K12'), 'global_k12' => t('Global K12'), 'multiverse_k12' => t('Multiverse K12')),
-    '#default_value' => 'universal_k12',
-    '#weight' => 1,
-    '#prefix' => '<div style="float: left;width:145px" >',
-    '#suffix' => '</div>',
-  );
 
-  $form['orgfields']['campus'] = array(
-  '#type' => 'select',
-    '#title' => t('Campus'),
-    '#options' =>  array('main_campus' => t('Main Campus'), 'satellite_campus' => t('Satellite Campus'), 'downtown_campus' => t('Downtown Campus')),
-    '#default_value' => 'main_campus',
-    '#weight' => 5,
-    '#prefix' => '<div style="float: left;width:180px" >',
-    '#suffix' => '</div>',
-  );
-*/
-$form['orgfields']['program'] = array(
+  $form['orgfields']['program'] = array(
   '#type' => 'select',
     '#title' => t('Program'),
     '#options' =>  kleosis_program_values(),
@@ -337,8 +320,11 @@ drupal_set_title(t('Courses List'));
   $course_gradelevel = isset($_SESSION['ks_courses_filter']['gradelevel']) ? $_SESSION['ks_courses_filter']['gradelevel'] : 'all';
 
   // get the organization values from the session variable (if any) and set the default values accordingly
-  $courses_program = isset($_SESSION['ks_courses_org']['program']) ? $_SESSION['ks_courses_org']['program'] : 'all';
-  $courses_department = isset($_SESSION['ks_courses_org']['department']) ? $_SESSION['ks_courses_org']['department'] : 'all';
+  $courses_program = isset($_SESSION['ks_courses_org']['program']) ? $_SESSION['ks_courses_org']['program'] : 0;
+  $courses_department = isset($_SESSION['ks_courses_org']['department']) ? $_SESSION['ks_courses_org']['department'] : 0;
+
+  $courses_program_label = kleosis_get_desc_table_label('ks_course_program', $courses_program);
+  $courses_department_label = kleosis_get_desc_table_label('ks_course_department', $courses_department);
 
   // the header contains all the fields that will be displayed in the tableselect list
   $header = array(
@@ -364,12 +350,15 @@ drupal_set_title(t('Courses List'));
     }
   }
 
-  if ( ($courses_program == 'all') && ($courses_department == 'all')  && ($course_gradelevel == 'all') ) {
-    $query = $query->extend('PagerDefault')->limit(variable_get('kleosis_pager_rows', 16));
-  }
+  if ( ($courses_program_label == 'Unspecified') && ($courses_department_label == 'Unspecified')  && ($course_gradelevel == 'all') ) {
+      $query = $query->extend('PagerDefault')->limit(variable_get('kleosis_pager_rows', 16));
+    }
+
   $query = $query->extend('TableSort');
   $query->orderByHeader($header);
   $results = $query->execute()->fetchAll();
+
+  $course_statuses = kleosis_get_desc_table_entries('ks_course_status');
 
   // Loop through each of the courses nodes and obtain relevant fields
   $options = array();
@@ -383,15 +372,15 @@ drupal_set_title(t('Courses List'));
     $node_gradelevel =   $node->ks_course_gradelevel['und'][0]['value'];
 
     if (  // apply organizational filter on the node
-        ( ($node_program == $courses_program) || ($courses_program == 'all') ) &&
+        ( ($node_program == $courses_program) || ($courses_program_label == 'Unspecified') ) &&
         ( ($node_gradelevel == $course_gradelevel) || ($course_gradelevel == 'all') ) &&
-        ( ($node_department == $courses_department) || ($courses_department == 'all') ) ) {
+        ( ($node_department == $courses_department) || ($courses_department_label == 'Unspecified') ) ) {
 
       $options[$row->nid] = array(
         'title' => l($node->title, 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/courses'))),
         'course_no' => $node->ks_course_no['und'][0]['value'],
         'course_gradelevel' => $node->ks_course_gradelevel['und'][0]['value'],
-        'course_status' => $node->ks_course_status['und'][0]['value'],
+        'course_status' => isset($course_statuses[$node->ks_course_status['und'][0]['value']]) ? $course_statuses[$node->ks_course_status['und'][0]['value']] : 'not set',
 //        'operations' =>  l(t('view'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/courses'))) . ' | ' . l(t('edit'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/courses'))),
         'operations' =>  l(t('edit'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/courses'))),
         );
@@ -411,6 +400,8 @@ drupal_set_title(t('Courses List'));
       '#js_select' => TRUE,
     );
   $build['pager'] = array('#markup' => theme('pager'));
+
+
 
 return $build;
 
@@ -474,10 +465,6 @@ function kleosis_organization_filter_form_submit($form, &$form_state) {
  *
  */
 function kleosis_courses_filter_form_submit($form, &$form_state) {
-
-//dpm('inside kleosis_courses_filter_form_submit()');
-//dpm($form);
-//dpm($form_state);
 
   switch ($form_state['values']['op']) {
 
@@ -581,7 +568,6 @@ function kleosis_create_course_form($form, $form_state) {
     drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
   }
 
-
   // Set Breadcrumbs
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), 'kleosis');
@@ -594,11 +580,11 @@ function kleosis_create_course_form($form, $form_state) {
   $build = array();
 
   if (  (in_array('administrator', $user->roles))  || (user_access('administer nodes'))  ){
-//    $build['the_new_node'] = node_add('course');  // this throws a form expired error (12 July 2011and
+//    $build['the_new_node'] = node_add('course');  // this throws a form expired error (12 July 2011 and
                                                     // the Date widget doesn't work properly, so do this for now:
-        $path = 'node/add/' . 'course';  // another technique: redirect to let Drupal launch the node add form
-        $options = array('query' => array('destination' => 'kleosis/courses') );
-        drupal_goto($path, $options, $http_response_code = 302);
+    $path = 'node/add/' . 'course';  // another technique: redirect to let Drupal launch the node add form
+    $options = array('query' => array('destination' => 'kleosis/courses') );
+    drupal_goto($path, $options, $http_response_code = 302);
   }
   else {
     $build['view_return'] = array(

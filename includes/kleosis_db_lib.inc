@@ -224,6 +224,23 @@ function get_usertype_str_desc($strusertype) {
 }
 
 /**
+ * Get the academic years
+ *
+ * @return
+ *    options - an array of academic years
+ */
+function ks_get_academic_years() {
+
+  $options = array('all' => t('All'), );
+  $results = db_query('SELECT academic_year FROM {ks_academic_year_desc}' )->fetchAll();
+  foreach ($results as $iac_year) {
+    $options[$iac_year->academic_year] = $iac_year->academic_year;
+  }
+
+  return $options;
+}
+
+/**
  * Retrieve the country name as a string
  *
  * @param $intcntry
@@ -452,6 +469,23 @@ function ks_get_programs() {
   }
   return $options;
 }
+
+/**
+ * Get all departments
+ *
+ * @return
+ *    options - an array of departments
+ */
+function ks_get_departments() {
+
+  $options = array();
+  $results = db_query('SELECT kdept_id, department FROM {ks_department_desc}' )->fetchAll();
+  foreach ($results as $department) {
+    $options[$department->kdept_id] = $department->department;
+  }
+  return $options;
+}
+
 /**
  * Retrieve the IB Level as a string
  *
@@ -509,6 +543,96 @@ function get_campuses() {
   $results = db_query('SELECT kcmps_id, campus FROM {ks_campus_desc}' )->fetchAll();
   foreach ($results as $campus) {
     $options[$campus->kcmps_id] = $campus->campus;
+  }
+  return $options;
+}
+/**
+ * Get all course statuses
+ *
+ * @return
+ *    options - an array of course statuses
+ */
+function ks_get_course_statuses() {
+
+  $options = array();
+  $results = db_query('SELECT kcsts_id, status FROM {ks_course_status_desc}' )->fetchAll();
+  foreach ($results as $status) {
+    $options[$status->kcsts_id] = $status->status;
+  }
+  return $options;
+}
+/**
+ * Get all course types
+ *
+ * @return
+ *    options - an array of course types
+ */
+function ks_get_course_types() {
+
+  $options = array();
+  $results = db_query('SELECT kcrsty_id, course_type FROM {ks_course_type_desc}' )->fetchAll();
+  foreach ($results as $type) {
+    $options[$type->kcrsty_id] = $type->course_type;
+  }
+  return $options;
+}
+/**
+ * Get all class statuses
+ *
+ * @return
+ *    options - an array of class statuses
+ */
+function ks_get_class_statuses() {
+
+  $options = array();
+  $results = db_query('SELECT kclsts_id, status FROM {ks_class_status_desc}' )->fetchAll();
+  foreach ($results as $status) {
+    $options[$status->kclsts_id] = $status->status;
+  }
+  return $options;
+}
+/**
+ * Get all class types
+ *
+ * @return
+ *    options - an array of class types
+ */
+function ks_get_class_types() {
+
+  $options = array();
+  $results = db_query('SELECT kclsty_id, class_type FROM {ks_class_type_desc}' )->fetchAll();
+  foreach ($results as $type) {
+    $options[$type->kclsty_id] = $type->class_type;
+  }
+  return $options;
+}
+/**
+ * Get all room types
+ *
+ * @return
+ *    options - an array of room types
+ */
+function ks_get_room_types() {
+
+  $options = array();
+  $results = db_query('SELECT krmtyp_id, room_type FROM {ks_room_type_desc}' )->fetchAll();
+  foreach ($results as $type) {
+    $options[$type->krmtyp_id] = $type->room_type;
+  }
+  return $options;
+}
+/**
+ * Get all lab types
+ *
+ * @return
+ *    options - an array of lab types
+ */
+function ks_get_lab_types() {
+
+  $options = array();
+  $results = db_query('SELECT klabty_id, lab_type FROM {ks_lab_type_desc}' )->fetchAll();
+  foreach ($results as $type) {
+    $options[$type->klabty_id] = $type->lab_type;
   }
   return $options;
 }
@@ -572,6 +696,7 @@ function ks_get_absence_types() {
   }
   return $options;
 }
+
 /**
  * Get all excused absence reasons
  *
@@ -1664,7 +1789,7 @@ function ks_get_attendance_schedule_records($instructorid, $academic_year, $term
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'course')
-  ->fieldCondition('ks_course_type', 'value', 'attendance', '='); // todo: change the field name ks_course_type next reinstall...
+  ->fieldCondition('ks_course_type', 'value', '4', '='); // todo: get the actual value for 'Attendance' from the ks_course_type_description table
 
   $result = $query->execute();
 

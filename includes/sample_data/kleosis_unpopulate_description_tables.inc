@@ -37,6 +37,18 @@
   drupal_set_message(t('ks_class_schedule_status_desc table entries have been removed'));
 
 /**
+ * unpopulate the ks_class_status_desc table
+ */
+  $cnt_deleted = db_delete('ks_class_status_desc')->execute();
+  drupal_set_message(t('ks_class_status_desc table entries have been removed'));
+
+/**
+ * unpopulate the ks_class_type_desc table
+ */
+  $cnt_deleted = db_delete('ks_class_type_desc')->execute();
+  drupal_set_message(t('ks_class_type_desc table entries have been removed'));
+
+/**
  * unpopulate the ks_classroom_desc table
  */
   $cnt_deleted = db_delete('ks_classroom_desc')->execute();
@@ -58,6 +70,12 @@
  */
   $cnt_deleted = db_delete('ks_course_status_desc')->execute();
   drupal_set_message(t('ks_course_status_desc table entries have been removed'));
+
+/**
+ * unpopulate the ks_course_type_desc table
+ */
+  $cnt_deleted = db_delete('ks_course_type_desc')->execute();
+  drupal_set_message(t('ks_course_type_desc table entries have been removed'));
 
 /**
  * unpopulate the ks_department_desc table
@@ -108,6 +126,12 @@
   drupal_set_message(t('ks_instructor_status_desc table entries have been removed'));
 
 /**
+ * unpopulate the ks_lab_type_desc table
+ */
+  $cnt_deleted = db_delete('ks_lab_type_desc')->execute();
+  drupal_set_message(t('ks_lab_type_desc table entries have been removed'));
+
+/**
  * unpopulate the ks_medical_category_desc table
  */
   $cnt_deleted = db_delete('ks_medical_category_desc')->execute();
@@ -130,6 +154,12 @@
  */
   $cnt_deleted = db_delete('ks_program_desc')->execute();
   drupal_set_message(t('ks_program_desc table entries have been removed'));
+
+/**
+ * unpopulate the ks_report_odt table
+ */
+  $cnt_deleted = db_delete('ks_report_odt')->execute();
+  drupal_set_message(t('ks_report_odt table entries have been removed'));
 
 /**
  * unpopulate the ks_residings_desc table

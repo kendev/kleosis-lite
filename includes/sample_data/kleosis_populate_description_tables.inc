@@ -9,7 +9,6 @@
 /**
  * populate the ks_absence_type_desc table
  */
-
 $rec_count = db_query('SELECT count(kabsty_id) FROM {ks_absence_type_desc}' )->fetchField();
 
 if ($rec_count != 0) {
@@ -44,7 +43,6 @@ else {
     ->fields($fields)
     ->execute();
 }
-
 
 /**
  * populate the ks_academic_year_desc table
@@ -340,12 +338,11 @@ else {
   db_insert('ks_academic_year_desc')
     ->fields($fields)
     ->execute();
-
 }
+
 /**
  * populate the ks_assessment_type_desc table
  */
-
   $rec_count = db_query('SELECT count(kasmt_id) FROM {ks_assessment_type_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -355,7 +352,7 @@ else {
   else {
     $fields = array(
       'kasmt_id' => 0,
-      'assessment_type' => ' ',
+      'assessment_type' => 'Unspecified',
       'description' => 'no assessment type',
     );
     db_insert('ks_assessment_type_desc')
@@ -398,10 +395,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_campus_desc table
  */
-
   $rec_count = db_query('SELECT count(kcmps_id) FROM {ks_campus_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -445,10 +442,205 @@ else {
       ->fields($fields)
       ->execute();
 }
+
+/**
+ * populate the ks_class_schedule_status_desc table
+ */
+  $rec_count = db_query('SELECT count(kclsss_id) FROM {ks_class_schedule_status_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_class_schedule_status_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kclsss_id' => 0,
+      'status' => '',
+      'description' => 'no status',
+    );
+    db_insert('ks_class_schedule_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsss_id' => 1,
+      'status' => 'active',
+      'description' => 'active period',
+    );
+    db_insert('ks_class_schedule_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsss_id' => 2,
+      'status' => 'holiday',
+      'description' => 'holiday period',
+    );
+    db_insert('ks_class_schedule_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsss_id' => 3,
+      'status' => 'cancelled',
+      'description' => 'cancelled period',
+    );
+    db_insert('ks_class_schedule_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsss_id' => 4,
+      'status' => 'rescheduled',
+      'description' => 'rescheduled period',
+    );
+    db_insert('ks_class_schedule_status_desc')
+      ->fields($fields)
+      ->execute();
+}
+
+/**
+ * populate the ks_class_status_desc table
+ */
+  $rec_count = db_query('SELECT count(kclsts_id) FROM {ks_class_status_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_class_status_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kclsts_id' => 0,
+      'status' => '',
+      'description' => 'not set',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsts_id' => 1,
+      'status' => 'Active',
+      'description' => 'Active',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsts_id' => 2,
+      'status' => 'Rescheduled',
+      'description' => 'Rescheduled',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsts_id' => 3,
+      'status' => 'Postponed',
+      'description' => 'Postponed',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsts_id' => 4,
+      'status' => 'Cancelled',
+      'description' => 'Cancelled',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsts_id' => 5,
+      'status' => 'Other',
+      'description' => 'Other',
+    );
+    db_insert('ks_class_status_desc')
+      ->fields($fields)
+      ->execute();
+}
+
+/**
+ * populate the ks_class_type_desc table
+ */
+  $rec_count = db_query('SELECT count(kclsty_id) FROM {ks_class_type_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_class_type_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kclsty_id' => 0,
+      'class_type' => 'Unspecified',
+      'description' => 'not set',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 1,
+      'class_type' => 'Standard',
+      'description' => 'Standard',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 2,
+      'class_type' => 'Online',
+      'description' => 'Online',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 3,
+      'class_type' => 'Night',
+      'description' => 'Night',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 4,
+      'class_type' => 'Weekend',
+      'description' => 'Weekend',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 5,
+      'class_type' => 'Summer',
+      'description' => 'Summer',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsty_id' => 6,
+      'class_type' => 'Other',
+      'description' => 'Other',
+    );
+    db_insert('ks_class_type_desc')
+      ->fields($fields)
+      ->execute();
+}
+
 /**
  * populate the ks_classroom_desc table // todo: change name to ks_classroom_desc
  */
-
   $rec_count = db_query('SELECT count(kclsr_id) FROM {ks_classroom_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -533,66 +725,11 @@ else {
       ->fields($fields)
       ->execute();
 }
-/**
- * populate the ks_class_schedule_status_desc table
- */
-  $rec_count = db_query('SELECT count(kclsss_id) FROM {ks_class_schedule_status_desc}' )->fetchField();
 
-  if ($rec_count != 0) {
-    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
-    drupal_set_message(t('Description table: ks_class_schedule_status_desc already contains @rec_count entries. @populate', $message));
-  }
-  else {
-    $fields = array(
-      'kclsss_id' => 0,
-      'status' => '',
-      'description' => 'no status',
-    );
-    db_insert('ks_class_schedule_status_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kclsss_id' => 1,
-      'status' => 'active',
-      'description' => 'active period',
-    );
-    db_insert('ks_class_schedule_status_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kclsss_id' => 2,
-      'status' => 'holiday',
-      'description' => 'holiday period',
-    );
-    db_insert('ks_class_schedule_status_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kclsss_id' => 3,
-      'status' => 'cancelled',
-      'description' => 'cancelled period',
-    );
-    db_insert('ks_class_schedule_status_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kclsss_id' => 4,
-      'status' => 'rescheduled',
-      'description' => 'rescheduled period',
-    );
-    db_insert('ks_class_schedule_status_desc')
-      ->fields($fields)
-      ->execute();
-}
 /**
  * populate the ks_countries_desc table
  */
 // todo: populate entire table...
-
   $rec_count = db_query('SELECT count(kcntry_id) FROM {ks_countries_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -660,10 +797,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_course_auth_desc table
  */
-
   $rec_count = db_query('SELECT count(kcauth_id) FROM {ks_course_auth_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -673,7 +810,7 @@ else {
   else {
     $fields = array(
       'kcauth_id' => 0,
-      'course_auth' => ' ',
+      'course_auth' => '',
       'description' => 'no auth set',
     );
     db_insert('ks_course_auth_desc')
@@ -716,10 +853,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_course_status_desc table
  */
-
   $rec_count = db_query('SELECT count(kcsts_id) FROM {ks_course_status_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -729,7 +866,7 @@ else {
   else {
     $fields = array(
       'kcsts_id' => 0,
-      'status' => ' ',
+      'status' => '',
       'description' => 'not set',
     );
     db_insert('ks_course_status_desc')
@@ -764,9 +901,82 @@ else {
       ->execute();
 }
 /**
+ * populate the ks_course_type_desc table
+ */
+  $rec_count = db_query('SELECT count(kcrsty_id) FROM {ks_course_type_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_course_type_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kcrsty_id' => 0,
+      'course_type' => 'Unspecified',
+      'description' => 'not set',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 1,
+      'course_type' => 'Standard',
+      'description' => 'Standard',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 2,
+      'course_type' => 'Non-Credit',
+      'description' => 'Non-Credit',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 3,
+      'course_type' => 'Lab',
+      'description' => 'Lab',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 4,
+      'course_type' => 'Attendance',
+      'description' => 'Attendance',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 5,
+      'course_type' => 'Lunch-Breaktime',
+      'description' => 'Lunch-Breaktime',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kcrsty_id' => 6,
+      'course_type' => 'Other',
+      'description' => 'Other',
+    );
+    db_insert('ks_course_type_desc')
+      ->fields($fields)
+      ->execute();
+}
+
+/**
  * populate the ks_department_desc table
  */
-
   $rec_count = db_query('SELECT count(kdept_id) FROM {ks_department_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -776,7 +986,7 @@ else {
   else {
     $fields = array(
       'kdept_id' => 0,
-      'department' => ' ',
+      'department' => 'Unspecified',
       'description' => 'not set',
     );
     db_insert('ks_department_desc')
@@ -837,10 +1047,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_english_level_desc table
  */
-
   $rec_count = db_query('SELECT count(kelvl_id) FROM {ks_english_level_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -850,7 +1060,7 @@ else {
   else {
     $fields = array(
       'kelvl_id' => 0,
-      'english_level' => ' ',
+      'english_level' => 'Unspecified',
       'description' => 'no level',
     );
     db_insert('ks_english_level_desc')
@@ -938,10 +1148,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_excused_absence_reason_desc table
  */
-
   $rec_count = db_query('SELECT count(kexcr_id) FROM {ks_excused_absence_reason_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -951,7 +1161,7 @@ else {
   else {
   $fields = array(
       'kexcr_id' => 0,
-      'excuse_reason' => ' ',
+      'excuse_reason' => '',
       'excused' => 0,
       'description' => t('absent (or late) with no reason indicated'),
     );
@@ -1071,6 +1281,16 @@ else {
 
     $fields = array(
       'kexcr_id' => 12,
+      'excuse_reason' => t('authorized (e)'),
+      'excused' => 1,
+      'description' => t('authorized excused absence'),
+    );
+    db_insert('ks_excused_absence_reason_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kexcr_id' => 13,
       'excuse_reason' => t('other exc (e)'),
       'excused' => 1,
       'description' => t('other excused absence'),
@@ -1081,46 +1301,8 @@ else {
 }
 
 /**
- * populate the ks_ib_level_desc table
- */
-  $rec_count = db_query('SELECT count(kibl_id) FROM {ks_ib_level_desc}' )->fetchField();
-
-  if ($rec_count != 0) {
-    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
-    drupal_set_message(t('Description table: ks_ib_level_desc already contains @rec_count entries. @populate', $message));
-  }
-  else {
-    $fields = array(
-      'kibl_id' => 0,
-      'ib_level' => ' ',
-      'description' => 'no IB Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kibl_id' => 1,
-      'ib_level' => 'SL',
-      'description' => 'Standard Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kibl_id' => 2,
-      'ib_level' => 'HL',
-      'description' => 'Higher Level',
-    );
-    db_insert('ks_ib_level_desc')
-      ->fields($fields)
-      ->execute();
-}
-/**
  * populate the ks_gradelevel_desc table
  */
-
   $rec_count = db_query('SELECT count(kgrdl_id) FROM {ks_gradelevel_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1130,7 +1312,7 @@ else {
   else {
     $fields = array(
       'kgrdl_id' => 0,
-      'gradelevel' => ' ',
+      'gradelevel' => '',
       'description' => 'no gradelevel',
     );
     db_insert('ks_gradelevel_desc')
@@ -1281,10 +1463,48 @@ else {
       ->fields($fields)
       ->execute();
 }
+
+/**
+ * populate the ks_ib_level_desc table
+ */
+  $rec_count = db_query('SELECT count(kibl_id) FROM {ks_ib_level_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_ib_level_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'kibl_id' => 0,
+      'ib_level' => '',
+      'description' => 'no IB Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 1,
+      'ib_level' => 'SL',
+      'description' => 'Standard Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kibl_id' => 2,
+      'ib_level' => 'HL',
+      'description' => 'Higher Level',
+    );
+    db_insert('ks_ib_level_desc')
+      ->fields($fields)
+      ->execute();
+}
+
 /**
  * populate the ks_instructor_class_role_desc table
  */
-
   $rec_count = db_query('SELECT count(kiclsr_id) FROM {ks_instructor_class_role_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1294,7 +1514,7 @@ else {
   else {
     $fields = array(
       'kiclsr_id' => 0,
-      'rolename' => ' ',
+      'rolename' => '',
       'description' => 'not set',
     );
     db_insert('ks_instructor_class_role_desc')
@@ -1328,10 +1548,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_instructor_lms_role_desc table
  */
-
   $rec_count = db_query('SELECT count(klmsr_id) FROM {ks_instructor_lms_role_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1341,7 +1561,7 @@ else {
   else {
     $fields = array(
       'klmsr_id' => 0,
-      'rolename' => ' ',
+      'rolename' => '',
       'description' => 'not set',
     );
     db_insert('ks_instructor_lms_role_desc')
@@ -1402,10 +1622,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_instructor_status_desc table
  */
-
   $rec_count = db_query('SELECT count(kinsts_id) FROM {ks_instructor_status_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1415,7 +1635,7 @@ else {
   else {
     $fields = array(
       'kinsts_id' => 0,
-      'status' => ' ',
+      'status' => '',
       'description' => 'no status',
     );
     db_insert('ks_instructor_status_desc')
@@ -1459,9 +1679,91 @@ else {
       ->execute();
 }
 /**
+ * populate the ks_lab_type_desc table
+ */
+  $rec_count = db_query('SELECT count(klabty_id) FROM {ks_lab_type_desc}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_lab_type_desc already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'klabty_id' => 0,
+      'lab_type' => '',
+      'description' => 'not set',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 1,
+      'lab_type' => 'Standard',
+      'description' => 'Standard',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 2,
+      'lab_type' => 'Large',
+      'description' => 'Large',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 3,
+      'lab_type' => 'Secure Level 1',
+      'description' => 'Secure Level 1',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 4,
+      'lab_type' => 'Secure Level 2',
+      'description' => 'Secure Level 2',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 5,
+      'lab_type' => 'Off Campus',
+      'description' => 'Off Campus',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 6,
+      'lab_type' => 'Temporary',
+      'description' => 'Temporary',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'klabty_id' => 7,
+      'lab_type' => 'Other',
+      'description' => 'Other',
+    );
+    db_insert('ks_lab_type_desc')
+      ->fields($fields)
+      ->execute();
+}
+
+/**
  * populate the ks_medical_category_desc table
  */
-
   $rec_count = db_query('SELECT count(ksmedc_id) FROM {ks_medical_category_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1541,10 +1843,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_medical_subject_desc table
  */
-
   $rec_count = db_query('SELECT count(ksmeds_id) FROM {ks_medical_subject_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1885,10 +2187,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_organization_desc table
  */
-
   $rec_count = db_query('SELECT count(korg_id) FROM {ks_organization_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1898,7 +2200,7 @@ else {
   else {
     $fields = array(
       'korg_id' => 0,
-      'organization' => ' ',
+      'organization' => '',
       'description' => 'not set',
     );
     db_insert('ks_organization_desc')
@@ -1923,10 +2225,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_program_desc table
  */
-
   $rec_count = db_query('SELECT count(kpgm_id) FROM {ks_program_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1936,7 +2238,7 @@ else {
   else {
     $fields = array(
       'kpgm_id' => 0,
-      'program' => ' ',
+      'program' => 'Unspecified',
       'description' => 'no program',
     );
     db_insert('ks_program_desc')
@@ -1945,8 +2247,8 @@ else {
 
     $fields = array(
       'kpgm_id' => 1,
-      'program' => 'English Program',
-      'description' => 'Standard English Program',
+      'program' => 'General Academic',
+      'description' => 'General Academic Program',
     );
     db_insert('ks_program_desc')
       ->fields($fields)
@@ -1954,8 +2256,8 @@ else {
 
     $fields = array(
       'kpgm_id' => 2,
-      'program' => 'Advanced Program',
-      'description' => 'Advanced Program',
+      'program' => 'Advanced Academic',
+      'description' => 'Advanced Academic Program',
     );
     db_insert('ks_program_desc')
       ->fields($fields)
@@ -1963,8 +2265,8 @@ else {
 
     $fields = array(
       'kpgm_id' => 3,
-      'program' => 'Language Program',
-      'description' => 'National Language Program',
+      'program' => 'Special Needs',
+      'description' => 'Special Needs Program',
     );
     db_insert('ks_program_desc')
       ->fields($fields)
@@ -1972,17 +2274,77 @@ else {
 
     $fields = array(
       'kpgm_id' => 4,
-      'program' => 'Special Needs Program',
-      'description' => 'Special Needs Program Program',
+      'program' => 'Standards Certification',
+      'description' => 'Standards Certification Program',
+    );
+    db_insert('ks_program_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kpgm_id' => 5,
+      'program' => 'Other',
+      'description' => 'Other Program',
     );
     db_insert('ks_program_desc')
       ->fields($fields)
       ->execute();
 }
+
+/**
+ * populate the ks_report_odt table
+ */
+  $rec_count = db_query('SELECT count(krodt_id) FROM {ks_report_odt}' )->fetchField();
+
+  if ($rec_count != 0) {
+    $message = array('@rec_count' => $rec_count, '@populate' => t('Please delete these entries before re-populating this table,'));
+    drupal_set_message(t('Description table: ks_report_odt already contains @rec_count entries. @populate', $message));
+  }
+  else {
+    $fields = array(
+      'krodt_id' => 0,
+      'report_name' => '',
+      'report_filename' => ' ',
+      'description' => 'not set',
+    );
+    db_insert('ks_report_odt')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'krodt_id' => 1,
+      'report_name' => 'Progress A',
+      'report_filename' => 'progress_a',
+      'description' => 'Progress A report',
+    );
+    db_insert('ks_report_odt')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'krodt_id' => 2,
+      'report_name' => 'Progress B',
+      'report_filename' => 'progress_b',
+      'description' => 'Progress B report',
+    );
+    db_insert('ks_report_odt')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'krodt_id' => 3,
+      'report_name' => 'Other (tbd...)',
+      'report_filename' => 'other',
+      'description' => 'Other (tbd...)',
+    );
+    db_insert('ks_report_odt')
+      ->fields($fields)
+      ->execute();
+}
+
 /**
  * populate the ks_residings_desc table
  */
-
   $rec_count = db_query('SELECT count(kres_id) FROM {ks_residings_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -1992,7 +2354,7 @@ else {
   else {
     $fields = array(
       'kres_id' => 0,
-      'residing_with' => ' ',
+      'residing_with' => 'Unspecified',
       'description' => 'not set',
     );
     db_insert('ks_residings_desc')
@@ -2089,10 +2451,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_room_type_desc table
  */
-
   $rec_count = db_query('SELECT count(krmtyp_id) FROM {ks_room_type_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -2102,7 +2464,7 @@ else {
   else {
     $fields = array(
       'krmtyp_id' => 0,
-      'room_type' => ' ',
+      'room_type' => '',
       'description' => 'not set',
     );
     db_insert('ks_room_type_desc')
@@ -2163,10 +2525,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_student_group_desc table
  */
-
   $rec_count = db_query('SELECT count(ksgrpd_id) FROM {ks_student_group_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -2176,7 +2538,7 @@ else {
   else {
     $fields = array(
       'ksgrpd_id' => 0,
-      'groupname' => ' ',
+      'groupname' => '',
       'description' => 'not set',
     );
     db_insert('ks_student_group_desc')
@@ -2237,6 +2599,7 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_student_status_desc table
  */
@@ -2249,7 +2612,7 @@ else {
   else {
     $fields = array(
       'ksts_id' => 0,
-      'status' => ' ',
+      'status' => '',
       'description' => 'no status',
     );
     db_insert('ks_student_status_desc')
@@ -2319,10 +2682,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_transportation_desc table
  */
-
   $rec_count = db_query('SELECT count(ktrns_id) FROM {ks_transportation_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -2332,7 +2695,7 @@ else {
   else {
     $fields = array(
       'ktrns_id' => 0,
-      'transportation' => ' ',
+      'transportation' => '',
       'description' => 'no transportation',
     );
     db_insert('ks_transportation_desc')
@@ -2375,10 +2738,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_user_relationships_desc table
  */
-
   $rec_count = db_query('SELECT count(kurel_id) FROM {ks_user_relationships_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -2388,7 +2751,7 @@ else {
   else {
     $fields = array(
       'kurel_id' => 0,
-      'relationship' => ' ',
+      'relationship' => '',
       'description' => 'not set',
     );
     db_insert('ks_user_relationships_desc')
@@ -2512,10 +2875,10 @@ else {
       ->fields($fields)
       ->execute();
 }
+
 /**
  * populate the ks_usertypes_desc table
  */
-
   $rec_count = db_query('SELECT count(kutyp_id) FROM {ks_usertypes_desc}' )->fetchField();
 
   if ($rec_count != 0) {
@@ -2525,7 +2888,7 @@ else {
   else {
     $fields = array(
       'kutyp_id' => 0,
-      'usertype' => ' ',
+      'usertype' => '',
       'description' => 'no usertype',
     );
     db_insert('ks_usertypes_desc')
