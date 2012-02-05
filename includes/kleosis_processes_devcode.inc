@@ -172,10 +172,6 @@ dpm($record->final_grade_str);
 
 
 
-
-
-
-
  return array('#markup' => 'Development code goes here...');
 
 }
@@ -554,7 +550,7 @@ dpm($start_date);
 */
 /**************************************************************************************/
 
-//$instrs = get_instructor_names();
+//$instrs = ks_get_instructor_names();
 //$withfirst = array(0 => t('none'));
 //$newarray = $withfirst + $instrs;
 //dpm($newarray);

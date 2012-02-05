@@ -17,72 +17,72 @@ other = 6
 */
   $course_nids = array();
 
-  $course_nids[0] = kleosis_create_sample_course('Kleosis auto generated Math Course 101', 'Math101', '1', '5', '1', '9', 'Description for Kleosis auto generated Math Course 101');
+  $course_nids[0] = kleosis_create_sample_course('Kleosis auto generated Math Course 101', 'Math101', '1', '5', '1', '12', 'Description for Kleosis auto generated Math Course 101');
     kleosis_create_sample_class('Kleosis sample Math 101 Class - Section 1', $course_nids[0], 'fy', '1', 'Remarks for Kleosis sample Math 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 101 Class - Section 2', $course_nids[0], 'fy', '2', 'Remarks for Kleosis sample Math 101 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Math 101 Class - Section 3', $course_nids[0], 'fy', '3', 'Remarks for Kleosis sample Math 101 Class - Section 3');
-  $course_nids[1] = kleosis_create_sample_course('Kleosis auto generated Math Course 102', 'Math102', '1', '5', '1', '9', 'Description for Kleosis auto generated Math Course 102');
+  $course_nids[1] = kleosis_create_sample_course('Kleosis auto generated Math Course 102', 'Math102', '1', '5', '1', '12', 'Description for Kleosis auto generated Math Course 102');
     kleosis_create_sample_class('Kleosis sample Math 102 Class - Section 1', $course_nids[1], '1', '1', 'Remarks for Kleosis sample Math 102 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 102 Class - Section 2', $course_nids[1], '1', '2', 'Remarks for Kleosis sample Math 102 Class - Section 2');
-  $course_nids[2] = kleosis_create_sample_course('Kleosis auto generated Math Course 103', 'Math103', '1', '5', '1', '9', 'Description for Kleosis auto generated Math Course 103');
+  $course_nids[2] = kleosis_create_sample_course('Kleosis auto generated Math Course 103', 'Math103', '1', '5', '1', '12', 'Description for Kleosis auto generated Math Course 103');
     kleosis_create_sample_class('Kleosis sample Math 103 Class - Section 1', $course_nids[2], '2', '1', 'Remarks for Kleosis sample Math 103 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 103 Class - Section 2', $course_nids[2], '2', '2', 'Remarks for Kleosis sample Math 103 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Math 103 Class - Section 3', $course_nids[2], '2', '3', 'Remarks for Kleosis sample Math 103 Class - Section 3');
-  $course_nids[3] = kleosis_create_sample_course('Kleosis auto generated English Course 101', 'English101', '1', '1', '1', '9', 'Description for Kleosis auto generated English Course 101');
+  $course_nids[3] = kleosis_create_sample_course('Kleosis auto generated English Course 101', 'English101', '1', '1', '1', '12', 'Description for Kleosis auto generated English Course 101');
     kleosis_create_sample_class('Kleosis sample English 101 Class - Section 1', $course_nids[3], 'fy', '1', 'Remarks for Kleosis sample English 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample English 101 Class - Section 2', $course_nids[3], 'fy', '2', 'Remarks for Kleosis sample English 101 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample English 101 Class - Section 3', $course_nids[3], 'fy', '3', 'Remarks for Kleosis sample English 101 Class - Section 3');
     kleosis_create_sample_class('Kleosis sample English 101 Class - Section 4', $course_nids[3], 'fy', '4', 'Remarks for Kleosis sample English 101 Class - Section 4');
     kleosis_create_sample_class('Kleosis sample English 101 Class - Section 5', $course_nids[3], 'fy', '5', 'Remarks for Kleosis sample English 101 Class - Section 5');
-  $course_nids[4] = kleosis_create_sample_course('Kleosis auto generated English Course 102', 'English102', '1', '1', '1', '9', 'Description for Kleosis auto generated English Course 102');
+  $course_nids[4] = kleosis_create_sample_course('Kleosis auto generated English Course 102', 'English102', '1', '1', '1', '12', 'Description for Kleosis auto generated English Course 102');
     kleosis_create_sample_class('Kleosis sample English 102 Class - Section 1', $course_nids[4], 'fy', '1', 'Remarks for Kleosis sample English 102 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample English 102 Class - Section 2', $course_nids[4], 'fy', '2', 'Remarks for Kleosis sample English 102 Class - Section 2');
-  $course_nids[5] = kleosis_create_sample_course('Kleosis auto generated Science Course 101', 'Science101', '1', '2', '1', '9', 'Description for Kleosis auto generated Science Course 101');
+  $course_nids[5] = kleosis_create_sample_course('Kleosis auto generated Science Course 101', 'Science101', '1', '2', '1', '12', 'Description for Kleosis auto generated Science Course 101');
     kleosis_create_sample_class('Kleosis sample Science 101 Class - Section 1', $course_nids[5], 'fy', '1', 'Remarks for Kleosis sample Science 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Science 101 Class - Section 2', $course_nids[5], 'fy', '2', 'Remarks for Kleosis sample Science 101 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Science 101 Class - Section 3', $course_nids[5], 'fy', '3', 'Remarks for Kleosis sample Science 101 Class - Section 3');
-  $course_nids[6] = kleosis_create_sample_course('Kleosis auto generated Science Course 102', 'Science102', '1', '2', '1', '9', 'Description for Kleosis auto generated Science Course 102');
+  $course_nids[6] = kleosis_create_sample_course('Kleosis auto generated Science Course 102', 'Science102', '1', '2', '1', '12', 'Description for Kleosis auto generated Science Course 102');
     kleosis_create_sample_class('Kleosis sample Science 102 Class - Section 1', $course_nids[6], '1', '1', 'Remarks for Kleosis sample Science 102 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Science 102 Class - Section 2', $course_nids[6], '1', '2', 'Remarks for Kleosis sample Science 102 Class - Section 2');
 
-  $course_nids[7] = kleosis_create_sample_course('Kleosis auto generated Art Course 201', 'Art201', '1', '3', '1', '10', 'Description for Kleosis auto generated Art Course 201');
+  $course_nids[7] = kleosis_create_sample_course('Kleosis auto generated Art Course 201', 'Art201', '1', '3', '1', '13', 'Description for Kleosis auto generated Art Course 201');
     kleosis_create_sample_class('Kleosis sample Art 201 Class - Section 1', $course_nids[7], 'fy', '1', 'Remarks for Kleosis sample Art 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Art 201 Class - Section 2', $course_nids[7], 'fy', '2', 'Remarks for Kleosis sample Art 201 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Art 201 Class - Section 3', $course_nids[7], 'fy', '3', 'Remarks for Kleosis sample Art 201 Class - Section 3');
-  $course_nids[8] = kleosis_create_sample_course('Kleosis auto generated Art Course 202', 'Art202', 'advanced_academic', '3', '1', '10', 'Description for Kleosis auto generated Art Course 202');
+  $course_nids[8] = kleosis_create_sample_course('Kleosis auto generated Art Course 202', 'Art202', 'advanced_academic', '3', '1', '13', 'Description for Kleosis auto generated Art Course 202');
     kleosis_create_sample_class('Kleosis sample Art 202 Class - Section 1', $course_nids[8], '1', '1', 'Remarks for Kleosis sample Art 202 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Art 202 Class - Section 2', $course_nids[8], '1', '2', 'Remarks for Kleosis sample Art 202 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Art 202 Class - Section 3', $course_nids[8], '1', '3', 'Remarks for Kleosis sample Art 202 Class - Section 3');
     kleosis_create_sample_class('Kleosis sample Art 202 Class - Section 4', $course_nids[8], '1', '4', 'Remarks for Kleosis sample Art 202 Class - Section 4');
-  $course_nids[9] = kleosis_create_sample_course('Kleosis auto generated Art Course 203', 'Art203', 'advanced_academic', '3', '1', '10', 'Description for Kleosis auto generated Art Course 203');
+  $course_nids[9] = kleosis_create_sample_course('Kleosis auto generated Art Course 203', 'Art203', 'advanced_academic', '3', '1', '13', 'Description for Kleosis auto generated Art Course 203');
     kleosis_create_sample_class('Kleosis sample Art 203 Class - Section 1', $course_nids[9], '2', '1', 'Remarks for Kleosis sample Art 203 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Art 203 Class - Section 2', $course_nids[9], '2', '2', 'Remarks for Kleosis sample Art 203 Class - Section 2');
 
-  $course_nids[10] = kleosis_create_sample_course('Kleosis auto generated Math Course 201', 'Math201', '1', '5', '1', '10', 'Description for Kleosis auto generated Math Course 201');
+  $course_nids[10] = kleosis_create_sample_course('Kleosis auto generated Math Course 201', 'Math201', '1', '5', '1', '13', 'Description for Kleosis auto generated Math Course 201');
     kleosis_create_sample_class('Kleosis sample Math 201 Class - Section 1', $course_nids[10], 'fy', '1', 'Remarks for Kleosis sample Math 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 201 Class - Section 2', $course_nids[10], 'fy', '2', 'Remarks for Kleosis sample Math 201 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Math 201 Class - Section 3', $course_nids[10], 'fy', '3', 'Remarks for Kleosis sample Math 201 Class - Section 3');
-  $course_nids[11] = kleosis_create_sample_course('Kleosis auto generated Math Course 202', 'Math202', '1', '5', '1', '10', 'Description for Kleosis auto generated Math Course 202');
+  $course_nids[11] = kleosis_create_sample_course('Kleosis auto generated Math Course 202', 'Math202', '1', '5', '1', '13', 'Description for Kleosis auto generated Math Course 202');
     kleosis_create_sample_class('Kleosis sample Math 202 Class - Section 1', $course_nids[11], '1', '1', 'Remarks for Kleosis sample Math 202 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 202 Class - Section 2', $course_nids[11], '1', '2', 'Remarks for Kleosis sample Math 202 Class - Section 2');
-  $course_nids[12] = kleosis_create_sample_course('Kleosis auto generated Math Course 203', 'Math203', '1', '5', '1', '10', 'Description for Kleosis auto generated Math Course 203');
+  $course_nids[12] = kleosis_create_sample_course('Kleosis auto generated Math Course 203', 'Math203', '1', '5', '1', '13', 'Description for Kleosis auto generated Math Course 203');
     kleosis_create_sample_class('Kleosis sample Math 203 Class - Section 1', $course_nids[12], '2', '1', 'Remarks for Kleosis sample Math 203 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Math 203 Class - Section 2', $course_nids[12], '2', '2', 'Remarks for Kleosis sample Math 203 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Math 203 Class - Section 3', $course_nids[12], '2', '3', 'Remarks for Kleosis sample Math 203 Class - Section 3');
-  $course_nids[13] = kleosis_create_sample_course('Kleosis auto generated English Course 201', 'English201', '1', '1', '1', '10', 'Description for Kleosis auto generated English Course 201');
+  $course_nids[13] = kleosis_create_sample_course('Kleosis auto generated English Course 201', 'English201', '1', '1', '1', '13', 'Description for Kleosis auto generated English Course 201');
     kleosis_create_sample_class('Kleosis sample English 201 Class - Section 1', $course_nids[13], 'fy', '1', 'Remarks for Kleosis sample English 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample English 201 Class - Section 2', $course_nids[13], 'fy', '2', 'Remarks for Kleosis sample English 201 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample English 201 Class - Section 3', $course_nids[13], 'fy', '3', 'Remarks for Kleosis sample English 201 Class - Section 3');
     kleosis_create_sample_class('Kleosis sample English 201 Class - Section 4', $course_nids[13], 'fy', '4', 'Remarks for Kleosis sample English 201 Class - Section 4');
     kleosis_create_sample_class('Kleosis sample English 201 Class - Section 5', $course_nids[13], 'fy', '5', 'Remarks for Kleosis sample English 201 Class - Section 5');
-  $course_nids[14] = kleosis_create_sample_course('Kleosis auto generated English Course 202', 'English202', '1', '1', '1', '10', 'Description for Kleosis auto generated English Course 202');
+  $course_nids[14] = kleosis_create_sample_course('Kleosis auto generated English Course 202', 'English202', '1', '1', '1', '13', 'Description for Kleosis auto generated English Course 202');
     kleosis_create_sample_class('Kleosis sample English 202 Class - Section 1', $course_nids[14], 'fy', '1', 'Remarks for Kleosis sample English 202 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample English 202 Class - Section 2', $course_nids[14], 'fy', '2', 'Remarks for Kleosis sample English 202 Class - Section 2');
-  $course_nids[15] = kleosis_create_sample_course('Kleosis auto generated Science Course 201', 'Science201', '1', '2', '1', '10', 'Description for Kleosis auto generated Science Course 201');
+  $course_nids[15] = kleosis_create_sample_course('Kleosis auto generated Science Course 201', 'Science201', '1', '2', '1', '13', 'Description for Kleosis auto generated Science Course 201');
     kleosis_create_sample_class('Kleosis sample Science 201 Class - Section 1', $course_nids[15], 'fy', '1', 'Remarks for Kleosis sample Science 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Science 201 Class - Section 2', $course_nids[15], 'fy', '2', 'Remarks for Kleosis sample Science 201 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Science 201 Class - Section 3', $course_nids[15], 'fy', '3', 'Remarks for Kleosis sample Science 201 Class - Section 3');
-  $course_nids[16] = kleosis_create_sample_course('Kleosis auto generated Science Course 202', 'Science202', '1', '2', '1', '10', 'Description for Kleosis auto generated Science Course 202');
+  $course_nids[16] = kleosis_create_sample_course('Kleosis auto generated Science Course 202', 'Science202', '1', '2', '1', '13', 'Description for Kleosis auto generated Science Course 202');
     kleosis_create_sample_class('Kleosis sample Science 202 Class - Section 1', $course_nids[16], '2', '1', 'Remarks for Kleosis sample Science 202 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Science 202 Class - Section 2', $course_nids[16], '2', '2', 'Remarks for Kleosis sample Science 202 Class - Section 2');
   $course_nids[17] = kleosis_create_sample_course('Kleosis auto generated Art Course 310', 'Art310', '1', '3', '1', '11', 'Description for Kleosis auto generated Art Course 310');
@@ -97,55 +97,57 @@ other = 6
   $course_nids[19] = kleosis_create_sample_course('Kleosis auto generated Art Course 312', 'Art312', 'advanced_academic', '3', '1', '12', 'Description for Kleosis auto generated Art Course 312');
     kleosis_create_sample_class('Kleosis sample Art 312 Class - Section 1', $course_nids[19], '2', '1', 'Remarks for Kleosis sample Art 312 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Art 312 Class - Section 2', $course_nids[19], '2', '2', 'Remarks for Kleosis sample Art 312 Class - Section 2');
-  $course_nids[20] = kleosis_create_sample_course('Kleosis auto generated Art Course 101', 'Art101', '1', '3', '1', '9', 'Description for Kleosis auto generated Art Course 101');
+  $course_nids[20] = kleosis_create_sample_course('Kleosis auto generated Art Course 101', 'Art101', '1', '3', '1', '12', 'Description for Kleosis auto generated Art Course 101');
     kleosis_create_sample_class('Kleosis sample Art 101 Class - Section 1', $course_nids[20], 'fy', '1', 'Remarks for Kleosis sample Art 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Art 101 Class - Section 2', $course_nids[20], 'fy', '2', 'Remarks for Kleosis sample Art 101 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Art 101 Class - Section 3', $course_nids[20], 'fy', '3', 'Remarks for Kleosis sample Art 101 Class - Section 3');
 
-  $course_nids[21] = kleosis_create_sample_course('Kleosis auto generated PE Course 101', 'PE101', '1', '6', '1', '9', 'Description for Kleosis auto generated PE Course 101');
+  $course_nids[21] = kleosis_create_sample_course('Kleosis auto generated PE Course 101', 'PE101', '1', '6', '1', '12', 'Description for Kleosis auto generated PE Course 101');
     kleosis_create_sample_class('Kleosis sample PE 101 Class - Section 1', $course_nids[21], 'fy', '1', 'Remarks for Kleosis sample PE 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample PE 101 Class - Section 2', $course_nids[21], 'fy', '2', 'Remarks for Kleosis sample PE 101 Class - Section 2');
-  $course_nids[22] = kleosis_create_sample_course('Kleosis auto generated Music Course 101', 'Music101', '1', '6', '1', '9', 'Description for Kleosis auto generated Music Course 101');
+  $course_nids[22] = kleosis_create_sample_course('Kleosis auto generated Music Course 101', 'Music101', '1', '6', '1', '12', 'Description for Kleosis auto generated Music Course 101');
     kleosis_create_sample_class('Kleosis sample Music 101 Class - Section 1', $course_nids[22], 'fy', '1', 'Remarks for Kleosis sample Music 101 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Music 101 Class - Section 2', $course_nids[22], 'fy', '2', 'Remarks for Kleosis sample Music 101 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Music 101 Class - Section 3', $course_nids[22], 'fy', '3', 'Remarks for Kleosis sample Music 101 Class - Section 3');
-  $course_nids[23] = kleosis_create_sample_course('Kleosis auto generated PE Course 201', 'PE201', '1', '6', '1', '10', 'Description for Kleosis auto generated PE Course 201');
+  $course_nids[23] = kleosis_create_sample_course('Kleosis auto generated PE Course 201', 'PE201', '1', '6', '1', '13', 'Description for Kleosis auto generated PE Course 201');
     kleosis_create_sample_class('Kleosis sample PE 201 Class - Section 1', $course_nids[23], 'fy', '1', 'Remarks for Kleosis sample PE 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample PE 201 Class - Section 2', $course_nids[23], 'fy', '2', 'Remarks for Kleosis sample PE 201 Class - Section 2');
-  $course_nids[24] = kleosis_create_sample_course('Kleosis auto generated Music Course 201', 'Music201', '1', '6', '1', '10', 'Description for Kleosis auto generated Music Course 201');
+  $course_nids[24] = kleosis_create_sample_course('Kleosis auto generated Music Course 201', 'Music201', '1', '6', '1', '13', 'Description for Kleosis auto generated Music Course 201');
     kleosis_create_sample_class('Kleosis sample Music 201 Class - Section 1', $course_nids[24], 'fy', '1', 'Remarks for Kleosis sample Music 201 Class - Section 1');
     kleosis_create_sample_class('Kleosis sample Music 201 Class - Section 2', $course_nids[24], 'fy', '2', 'Remarks for Kleosis sample Music 201 Class - Section 2');
     kleosis_create_sample_class('Kleosis sample Music 201 Class - Section 3', $course_nids[24], 'fy', '3', 'Remarks for Kleosis sample Music 201 Class - Section 3');
 
-  $course_nids[25] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Morning Attnd Grade 9', 'HRAttm09', '1', '6', '4', '9', 'Description for Kleosis auto generated Homeroom-Morning Attnd Grade 9');
+  $course_nids[25] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Morning Attnd Grade 9', 'HRAttm09', '1', '6', '4', '12', 'Description for Kleosis auto generated Homeroom-Morning Attnd Grade 9');
     kleosis_create_sample_class('Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1', $course_nids[25], 'fy', '1', 'Remarks for Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1');
     kleosis_create_sample_class('Kleosis Homeroom-Morning Attnd G-9 Class - Sec 2', $course_nids[25], 'fy', '2', 'Remarks for Kleosis Homeroom-Morning Attnd G-9 Class - Sec 2');
 
-  $course_nids[26] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Morning Attnd Grade 10', 'HRAttm10', '1', '6', '4', '10', 'Description for Kleosis auto generated Homeroom-Morning Attnd Grade 10');
+  $course_nids[26] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Morning Attnd Grade 10', 'HRAttm10', '1', '6', '4', '13', 'Description for Kleosis auto generated Homeroom-Morning Attnd Grade 10');
     kleosis_create_sample_class('Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1', $course_nids[26], 'fy', '1', 'Remarks for Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1');
     kleosis_create_sample_class('Kleosis Homeroom-Morning Attnd G-10 Class - Sec 2', $course_nids[26], 'fy', '2', 'Remarks for Kleosis Homeroom-Morning Attnd G-10 Class - Sec 2');
 
-  $course_nids[27] = kleosis_create_sample_course('Kleosis auto generated Computer Course 101', 'Computer101', '1', '6', '1', '9', 'Description for Kleosis auto generated Computer Course 101');
+  $course_nids[27] = kleosis_create_sample_course('Kleosis auto generated Computer Course 101', 'Computer101', '1', '6', '1', '12', 'Description for Kleosis auto generated Computer Course 101');
     kleosis_create_sample_class('Kleosis sample Computer 101 Class - Section 1', $course_nids[27], 'fy', '1', 'Remarks for Kleosis sample Computer 101 Class - Section 1');
-  $course_nids[28] = kleosis_create_sample_course('Kleosis auto generated Computer Course 201', 'Computer201', '1', '6', '1', '10', 'Description for Kleosis auto generated Computer Course 201');
+
+  $course_nids[28] = kleosis_create_sample_course('Kleosis auto generated Computer Course 201', 'Computer201', '1', '6', '1', '13', 'Description for Kleosis auto generated Computer Course 201');
     kleosis_create_sample_class('Kleosis sample Computer 201 Class - Section 1', $course_nids[28], 'fy', '1', 'Remarks for Kleosis sample Computer 201 Class - Section 1');
 
-  $course_nids[29] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 9', 'HRAtta09', '1', '6', '4', '9', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 9');
-   kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1', $course_nids[29], 'fy', '1', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 1');
-    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 2', $course_nids[29], 'fy', '2', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 2');
+  $course_nids[29] = kleosis_create_sample_course('Kleosis Breaktime', 'Break', '1', '6', '5', 'all', 'Description for Kleosis Breaktime');
+    kleosis_create_sample_class('Kleosis Morning Break', $course_nids[29], 'fy', 'M1', 'Remarks for Kleosis Morning Break');
+    kleosis_create_sample_class('Kleosis Afternoon Break', $course_nids[29], 'fy', 'A1', 'Remarks for Kleosis Afternoon Break');
 
-  $course_nids[30] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 10', 'HRAtta10', '1', '6', '4', '10', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 10');
-    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1', $course_nids[30], 'fy', '1', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1');
-    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2', $course_nids[30], 'fy', '2', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2');
+  $course_nids[30] = kleosis_create_sample_course('Kleosis Lunchtime', 'Lunch', '1', '6', '5', 'all', 'Description for Kleosis Lunchtime');
+    kleosis_create_sample_class('Kleosis Lunchtime A', $course_nids[30], 'fy', 'A', 'Remarks for Kleosis Lunchtime A');
+    kleosis_create_sample_class('Kleosis Lunchtime B', $course_nids[30], 'fy', 'B', 'Remarks for Kleosis Lunchtime B');
 
-  $course_nids[31] = kleosis_create_sample_course('Kleosis Breaktime', 'Break', '1', '6', '5', 'all', 'Description for Kleosis Breaktime');
-    kleosis_create_sample_class('Kleosis Morning Break', $course_nids[31], 'fy', 'M1', 'Remarks for Kleosis Morning Break');
-    kleosis_create_sample_class('Kleosis Afternoon Break', $course_nids[31], 'fy', 'A1', 'Remarks for Kleosis Afternoon Break');
+/*
+  $course_nids[31] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 9', 'HRAtta09', '1', '6', '4', '12', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 9');
+   kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1', $course_nids[31], 'fy', '1', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 1');
+    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 2', $course_nids[31], 'fy', '2', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 2');
 
-  $course_nids[32] = kleosis_create_sample_course('Kleosis Lunchtime', 'Lunch', '1', '6', '5', 'all', 'Description for Kleosis Lunchtime');
-    kleosis_create_sample_class('Kleosis Lunchtime A', $course_nids[32], 'fy', 'A', 'Remarks for Kleosis Lunchtime A');
-    kleosis_create_sample_class('Kleosis Lunchtime B', $course_nids[32], 'fy', 'B', 'Remarks for Kleosis Lunchtime B');
-
+  $course_nids[32] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 10', 'HRAtta10', '1', '6', '4', '13', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 10');
+    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1', $course_nids[32], 'fy', '1', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1');
+    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2', $course_nids[32], 'fy', '2', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2');
+*/
 /**
  * Create a Kleosis sample course
  */

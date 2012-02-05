@@ -84,7 +84,7 @@ function ks_attnd_view_instructor_filter_form($form, &$form_state) {
   $form['instructor_filter']['instructor'] = array(
     '#type' => 'select',
     '#title' => t('Instructor'),
-    '#options' =>  array(0 => t('no instructor')) + get_instructor_names(),
+    '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
 //    '#default_value' => $attnd_filter_instructorid ? $attnd_filter_instructorid : 0,
     '#default_value' => $attnd_filter_instructorid ? $attnd_filter_instructorid : ($instructorid ? $instructorid : 0),
     '#DANGEROUS_SKIP_CHECK' => FALSE,

@@ -150,7 +150,10 @@ Optional Kleosis configuration: add a My Courses - LMS Direct block to an existi
 	- Navigate to the new page and click on a courses link in the My Course block
 
 That's it!  To help get started using Kleosis, take a look at the Getting Started page of the Kleosis documentation: 
-http://www.kleosis.org/kleosisdocs/index.php/Getting_Started. Be sure to set permissions so that instructors can access student info and take attendance.  
+http://www.kleosis.org/kleosisdocs/index.php/Getting_Started.
+Be sure to set permissions so that instructors can access student info and take attendance: 
+http://www.kleosis.org/kleosisdocs/index.php/Getting_Started#Applying_roles_and_permissions
+
 Also, if you didn't load the sample data, try creating a basic page first and setting it as your front page.
 
 Have fun and please send us feedback at kleosis.org

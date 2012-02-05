@@ -1017,7 +1017,6 @@ function kleosis_student_class_schedule_list() {
   $options = array();
 
   if ( !empty($result) ) {
-
     $nids = array_keys($result['node']);
     $nodes = entity_load('node', array_keys($result['node']));
 

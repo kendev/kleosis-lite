@@ -129,7 +129,7 @@ function get_ks_username_by_id($ks_drp_uid) {
  * @return
  *    options - an array of instructors
  */
-function get_instructor_names() {
+function ks_get_instructor_names() {
 
   $options = array();
 
@@ -139,6 +139,7 @@ function get_instructor_names() {
   $query->addField('u', 'uid');
   $query->addField('u', 'name');
   $query->condition('r.name', 'instructor', '=');
+  $query->orderBy('u.name', 'ASC');
 
   $results = $query->execute()->fetchAll();
 
@@ -400,7 +401,7 @@ function get_gradelevel_desc($intglevel) {
  * @return
  *    options - an array of gradelevels
  */
-function get_gradelevels() {
+function ks_get_gradelevels() {
 
   $options = array();
   $results = db_query('SELECT kgrdl_id, gradelevel FROM {ks_gradelevel_desc}' )->fetchAll();
@@ -1784,12 +1785,14 @@ function ks_get_attendance_schedule_records($instructorid, $academic_year, $term
   $startdate = $daterange[0];
   $enddate = $daterange[1];
 
-  /* first, get Courses with course_type 'attendance' */
+  /* first, get Courses with course_type 'Attendance' */
+  $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course key
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'course')
-  ->fieldCondition('ks_course_type', 'value', '4', '='); // todo: get the actual value for 'Attendance' from the ks_course_type_description table
+//  ->fieldCondition('ks_course_type', 'value', '4', '='); // todo: get the actual value for 'Attendance' from the ks_course_type_description table
+  ->fieldCondition('ks_course_type', 'value', $attnda[0], '=');
 
   $result = $query->execute();
 
@@ -1798,7 +1801,6 @@ function ks_get_attendance_schedule_records($instructorid, $academic_year, $term
   if ( !empty($result) ) {
     $nids_courses = array_keys($result['node']);  // these nids will be used to filter the following query:
   }
-
 
   /* then, get Classes referenced to Courses with course_type 'attendance' */
   $query = new EntityFieldQuery();

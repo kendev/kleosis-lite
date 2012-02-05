@@ -1043,7 +1043,7 @@
 
   kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
 //---
-
+/*
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
   $p_l_i = db_query($sql, array(':name' => 'instructor8400', ))->fetchField();
 
@@ -1193,7 +1193,7 @@
 
   kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i);
 //---
-
+*/
   $p_l_i = 0;  // No instructor required for lunch and breaks
 
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';

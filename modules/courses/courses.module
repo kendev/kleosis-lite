@@ -171,7 +171,7 @@ function kleosis_organization_filter_form() {
   '#type' => 'select',
     '#title' => t('Program'),
     '#options' =>  kleosis_program_values(),
-    '#default_value' => !empty($courses_program) ? $courses_program : 'all',
+    '#default_value' => !empty($courses_program) ? $courses_program : 'Unspecified',
     '#weight' => 10,
     '#prefix' => '<div style="float: left;width:240px" >',
     '#suffix' => '</div>',
@@ -180,7 +180,7 @@ function kleosis_organization_filter_form() {
   '#type' => 'select',
     '#title' => t('Department'),
     '#options' =>  kleosis_department_values(),
-    '#default_value' =>  !empty($courses_department) ? $courses_department : 'all',
+    '#default_value' =>  !empty($courses_department) ? $courses_department : 'Unspecified',
     '#weight' => 15,
     '#prefix' => '<div style="float: left;width:180px" >',
     '#suffix' => '</div>',
@@ -219,7 +219,7 @@ function kleosis_courses_filter_form() {
   $courses_oper = isset($_SESSION['ks_courses_filter']['oper']) ? $_SESSION['ks_courses_filter']['oper'] : '';
   $courses_operand = isset($_SESSION['ks_courses_filter']['operand']) ? $_SESSION['ks_courses_filter']['operand'] : '';
 
-  $course_gradelevel = isset($_SESSION['ks_courses_filter']['gradelevel']) ? $_SESSION['ks_courses_filter']['gradelevel'] : 'all';
+  $course_gradelevel = isset($_SESSION['ks_courses_filter']['gradelevel']) ? $_SESSION['ks_courses_filter']['gradelevel'] : 'All';
 
   // create a fieldset with search elements
   $form['searchfield'] = array(
@@ -261,8 +261,8 @@ function kleosis_courses_filter_form() {
   $form['searchfield']['gradelevel'] = array(
     '#type' => 'select',
     '#title' => t('Gradelevel'),
-    '#options' =>  kleosis_gradelevel_values(),
-    '#default_value' =>  !empty($course_gradelevel) ? $course_gradelevel : 'all',
+    '#options' =>  array('All' => 'All') + kleosis_gradelevel_values(),
+    '#default_value' =>  !empty($course_gradelevel) ? $course_gradelevel : 'All',
     '#weight' => 12,
     '#prefix' => '<div style="float: left;width:120px" >',
     '#suffix' => '</div>',
@@ -317,7 +317,7 @@ drupal_set_title(t('Courses List'));
   $courses_oper = isset($_SESSION['ks_courses_filter']['oper']) ? $_SESSION['ks_courses_filter']['oper'] : '';
   $courses_operand = isset($_SESSION['ks_courses_filter']['operand']) ? $_SESSION['ks_courses_filter']['operand'] : '';
 
-  $course_gradelevel = isset($_SESSION['ks_courses_filter']['gradelevel']) ? $_SESSION['ks_courses_filter']['gradelevel'] : 'all';
+  $course_gradelevel = isset($_SESSION['ks_courses_filter']['gradelevel']) ? $_SESSION['ks_courses_filter']['gradelevel'] : 'All';
 
   // get the organization values from the session variable (if any) and set the default values accordingly
   $courses_program = isset($_SESSION['ks_courses_org']['program']) ? $_SESSION['ks_courses_org']['program'] : 0;
@@ -350,7 +350,7 @@ drupal_set_title(t('Courses List'));
     }
   }
 
-  if ( ($courses_program_label == 'Unspecified') && ($courses_department_label == 'Unspecified')  && ($course_gradelevel == 'all') ) {
+  if ( ($courses_program_label == 'Unspecified') && ($courses_department_label == 'Unspecified')  && ($course_gradelevel == 'All') ) {
       $query = $query->extend('PagerDefault')->limit(variable_get('kleosis_pager_rows', 16));
     }
 
@@ -359,6 +359,7 @@ drupal_set_title(t('Courses List'));
   $results = $query->execute()->fetchAll();
 
   $course_statuses = kleosis_get_desc_table_entries('ks_course_status');
+  $course_gradelevels = kleosis_get_desc_table_entries('ks_course_gradelevel');
 
   // Loop through each of the courses nodes and obtain relevant fields
   $options = array();
@@ -373,13 +374,14 @@ drupal_set_title(t('Courses List'));
 
     if (  // apply organizational filter on the node
         ( ($node_program == $courses_program) || ($courses_program_label == 'Unspecified') ) &&
-        ( ($node_gradelevel == $course_gradelevel) || ($course_gradelevel == 'all') ) &&
+        ( ($node_gradelevel == $course_gradelevel) || ($course_gradelevel == 'All') ) &&
         ( ($node_department == $courses_department) || ($courses_department_label == 'Unspecified') ) ) {
 
       $options[$row->nid] = array(
         'title' => l($node->title, 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/courses'))),
         'course_no' => $node->ks_course_no['und'][0]['value'],
-        'course_gradelevel' => $node->ks_course_gradelevel['und'][0]['value'],
+//        'course_gradelevel' => $node->ks_course_gradelevel['und'][0]['value'],
+        'course_gradelevel' => isset($course_gradelevels[$node->ks_course_gradelevel['und'][0]['value']]) ? $course_gradelevels[$node->ks_course_gradelevel['und'][0]['value']] : 'Unspecified',
         'course_status' => isset($course_statuses[$node->ks_course_status['und'][0]['value']]) ? $course_statuses[$node->ks_course_status['und'][0]['value']] : 'not set',
 //        'operations' =>  l(t('view'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'view', 'destination' => 'kleosis/courses'))) . ' | ' . l(t('edit'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/courses'))),
         'operations' =>  l(t('edit'), 'kleosis/courses/details/' . $row->nid, array('query' => array('ksop' => 'edit', 'destination' => 'kleosis/courses'))),
@@ -427,7 +429,7 @@ function courses_node_validate($node, $form, &$form_state) {
     if( empty($form_state['values']['ks_course_no']['und'][0]['value']) ) {
         form_set_error('courses', t('Please enter a Course number.'), $limit_validation_errors = NULL);
       }
-    if( empty($form_state['values']['ks_course_gradelevel']['und'][0]['value']) ) {
+    if( !isset($form_state['values']['ks_course_gradelevel']['und'][0]['value']) ) {
         form_set_error('courses', t('Please select a Grade level.'), $limit_validation_errors = NULL);
       }
   }

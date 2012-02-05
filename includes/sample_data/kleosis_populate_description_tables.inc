@@ -672,6 +672,28 @@ else {
 
     $fields = array(
       'kclsr_id' => 2,
+      'room_name' => 'Room 101',
+      'room_type' => 1,
+      'room_building' => 1,
+      'description' => 'A standard room',
+    );
+    db_insert('ks_classroom_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsr_id' => 3,
+      'room_name' => 'Room 102',
+      'room_type' => 1,
+      'room_building' => 1,
+      'description' => 'A standard room',
+    );
+    db_insert('ks_classroom_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kclsr_id' => 4,
       'room_name' => 'Room A1',
       'room_type' => 1,
       'room_building' => 1,
@@ -682,7 +704,7 @@ else {
       ->execute();
 
     $fields = array(
-      'kclsr_id' => 3,
+      'kclsr_id' => 5,
       'room_name' => 'Room A2',
       'room_type' => 1,
       'room_building' => 1,
@@ -693,18 +715,18 @@ else {
       ->execute();
 
     $fields = array(
-      'kclsr_id' => 4,
-      'room_name' => 'Room DHL-370',
+      'kclsr_id' => 6,
+      'room_name' => 'Studio 1',
       'room_type' => 1,
       'room_building' => 1,
-      'description' => 'A room in the DH Library',
+      'description' => 'The Art Studio',
     );
     db_insert('ks_classroom_desc')
       ->fields($fields)
       ->execute();
 
     $fields = array(
-      'kclsr_id' => 5,
+      'kclsr_id' => 7,
       'room_name' => 'PHY-1703',
       'room_type' => 1,
       'room_building' => 1,
@@ -715,7 +737,7 @@ else {
       ->execute();
 
     $fields = array(
-      'kclsr_id' => 6,
+      'kclsr_id' => 8,
       'room_name' => 'Auditorium',
       'room_type' => 1,
       'room_building' => 1,
@@ -1312,7 +1334,7 @@ else {
   else {
     $fields = array(
       'kgrdl_id' => 0,
-      'gradelevel' => '',
+      'gradelevel' => 'Unspecified',
       'description' => 'no gradelevel',
     );
     db_insert('ks_gradelevel_desc')
@@ -2210,7 +2232,7 @@ else {
     $fields = array(
       'korg_id' => 1,
       'organization' => 'Kleosis Sample School',
-      'description' => 'Sample cchool for testing and piloting Kleosis',
+      'description' => 'Sample school for testing and piloting Kleosis',
     );
     db_insert('ks_organization_desc')
       ->fields($fields)
@@ -2705,7 +2727,7 @@ else {
     $fields = array(
       'ktrns_id' => 1,
       'transportation' => 'None Required',
-      'description' => 'No transportaion is required',
+      'description' => 'No transportation is required',
     );
     db_insert('ks_transportation_desc')
       ->fields($fields)
@@ -2714,7 +2736,7 @@ else {
     $fields = array(
       'ktrns_id' => 2,
       'transportation' => 'School Bus',
-      'description' => 'School bus transportaion',
+      'description' => 'School bus transportation',
     );
     db_insert('ks_transportation_desc')
       ->fields($fields)
@@ -2723,7 +2745,7 @@ else {
     $fields = array(
       'ktrns_id' => 3,
       'transportation' => 'By Guardian',
-      'description' => 'Transportaion by guardian',
+      'description' => 'Transportation by guardian',
     );
     db_insert('ks_transportation_desc')
       ->fields($fields)
@@ -2732,7 +2754,7 @@ else {
     $fields = array(
       'ktrns_id' => 4,
       'transportation' => 'By Self',
-      'description' => 'Transportaion provided by student',
+      'description' => 'Transportation provided by student',
     );
     db_insert('ks_transportation_desc')
       ->fields($fields)

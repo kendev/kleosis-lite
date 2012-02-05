@@ -376,7 +376,7 @@ function kleosis_student_status_details_edit_form() {
   $form['status_details']['gradelevel'] = array(
     '#type' => 'select',
     '#title' => t('Gradelevel'),
-    '#options' => get_gradelevels(),
+    '#options' => ks_get_gradelevels(),
     '#default_value' => $studentrec['curr_gradelevel'],
     '#prefix' => '<div style="float:left;width:150px" >',
     '#suffix' => '</div><br/>',

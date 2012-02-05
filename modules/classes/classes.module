@@ -116,7 +116,7 @@ function classes_menu() {
     'page arguments' => array('kleosis_class_schedule_create_form'),
     'file' => '../../includes/forms/kleosis_class_schedule_create_form.inc',
     'access callback' => TRUE,
-    'title' => 'Add Schedule',
+    'title' => 'Add to Schedule',
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
   );
@@ -213,9 +213,9 @@ function kleosis_classes_filter_form() {
   $class_field = isset($_SESSION['ks_class_filter']['field']) ? $_SESSION['ks_class_filter']['field'] : '';
   $class_oper = isset($_SESSION['ks_class_filter']['oper']) ? $_SESSION['ks_class_filter']['oper'] : '';
   $class_operand = isset($_SESSION['ks_class_filter']['operand']) ? $_SESSION['ks_class_filter']['operand'] : '';
-  $class_academic_year = isset($_SESSION['ks_class_filter']['academic_year']) ? $_SESSION['ks_class_filter']['academic_year'] : 'all';
+  $class_academic_year = isset($_SESSION['ks_class_filter']['academic_year']) ? $_SESSION['ks_class_filter']['academic_year'] : 'All';
   $class_term = isset($_SESSION['ks_class_filter']['term']) ? $_SESSION['ks_class_filter']['term'] : 'all';
-//  $class_gradelevel = isset($_SESSION['ks_class_filter']['gradelevel']) ? $_SESSION['ks_class_filter']['gradelevel'] : 'all';
+//  $class_gradelevel = isset($_SESSION['ks_class_filter']['gradelevel']) ? $_SESSION['ks_class_filter']['gradelevel'] : 'All';
 
   // create a fieldset with search elements
   $form['searchfield'] = array(
@@ -276,7 +276,7 @@ function kleosis_classes_filter_form() {
 $form['searchfield']['gradelevel'] = array(
     '#type' => 'select',
     '#title' => t('Gradelevel'),
-    '#options' =>  kleosis_gradelevel_values(),
+    '#options' =>  array('All' => 'All') + kleosis_gradelevel_values(),
     '#default_value' =>  !empty($class_gradelevel) ? $class_gradelevel : 'all',
     '#weight' => 12,
     '#prefix' => '<div style="float: left;width:120px" >',
@@ -352,7 +352,7 @@ drupal_set_title(t('Classes List'));
 
   $class_academic_year = isset($_SESSION['ks_class_filter']['academic_year']) ? $_SESSION['ks_class_filter']['academic_year'] : 'all';
   $class_term = isset($_SESSION['ks_class_filter']['term']) ? $_SESSION['ks_class_filter']['term'] : 'all';
-//  $class_gradelevel = isset($_SESSION['ks_class_filter']['gradelevel']) ? $_SESSION['ks_class_filter']['gradelevel'] : 'all';
+//  $class_gradelevel = isset($_SESSION['ks_class_filter']['gradelevel']) ? $_SESSION['ks_class_filter']['gradelevel'] : 'All';
 
   $course_from_filter = isset($_SESSION['ks_course_filter']['course']) ? $_SESSION['ks_course_filter']['course'] : 'all';
 

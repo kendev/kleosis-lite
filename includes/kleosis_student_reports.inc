@@ -191,7 +191,8 @@ function kleosis_student_reports_odt_download() {
 
     // get the students gradelevel
     $ks_student = ks_get_student_record($uid);
-    $stu_gradelevel = ks_map_ks_gradelevel_to_drp($ks_student['curr_gradelevel']);
+    $stu_gradelevel_label = kleosis_get_desc_table_label('ks_course_gradelevel', $ks_student['curr_gradelevel']);
+
     $fullname = $ks_student['fullname'];
 
   ///  The following section of code will get the course names for classes the current student is enrolled in
@@ -289,7 +290,7 @@ function kleosis_student_reports_odt_download() {
     $odf->setVars('reportname', $reportname);
 
     $odf->setVars('studentname', $fullname);
-    $odf->setVars('gradelevel', $stu_gradelevel);
+    $odf->setVars('gradelevel', $stu_gradelevel_label);
 
     $rpt_date = new DateTime('now');
     $odf->setVars('reportdate', $rpt_date->format('F') . '  ' . $rpt_date->format('Y'));

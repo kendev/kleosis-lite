@@ -358,92 +358,10 @@ function kleosis_grade_weights() {
 
 function kleosis_gradelevel_values() {
 
-  $le_array = array(
-    'all' => t('All'),
-    'k1' => t('K1'),
-    'k2' => t('K2'),
-    'k3' => t('K3'),
-    '1' => t('1'),
-    '2' => t('2'),
-    '3' => t('3'),
-    '4' => t('4'),
-    '5' => t('5'),
-    '6' => t('6'),
-    '7' => t('7'),
-    '8' => t('8'),
-    '9' => t('9'),
-    '10' => t('10'),
-    '11' => t('11'),
-    '12' => t('12'),
-    '13' => t('13'),
-  );
+  $le_array = ks_get_gradelevels();
   return $le_array;
 }
-/**
- * map drupal gradelevel to kleosis gradelevel - this is silly...
- *
- * @param $drp_gradelevel
- *    a drupal string gradelevel value
- *
- * @return
- *    A Kleosis integer gradelevel value
- */
 
-function ks_map_drp_gradelevel_to_ks($drp_gradelevel) {
-
-  $le_array = array(
-    'all' => 0,
-    'k1' => 1,
-    'k2' => 2,
-    'k3' => 3,
-    '1' => 4,
-    '2' => 5,
-    '3' => 6,
-    '4' => 7,
-    '5' => 8,
-    '6' => 9,
-    '7' => 10,
-    '8' => 11,
-    '9' => 12,
-    '10' => 13,
-    '11' => 14,
-    '12' => 15,
-    '13' => 16,
-  );
-  return $le_array[$drp_gradelevel];
-}
-/**
- * map a kleosis gradelevel to a drupal gradelevel - this is silly too...
- *
- * @param $ks_gradelevel
- *    a Kleosis integer gradelevel value
- * @return
- *    A drupal string gradelevel value
- */
-
-function ks_map_ks_gradelevel_to_drp($ks_gradelevel) {
-
-  $le_array = array(
-    0 => t('All'),
-    1 => t('k1'),
-    2 => t('k2'),
-    3 => t('k3'),
-    4 => t('1'),
-    5 => t('2'),
-    6 => t('3'),
-    7 => t('4'),
-    8 => t('5'),
-    9 => t('6'),
-    10 => t('7'),
-    11 => t('8'),
-    12 => t('9'),
-    13 => t('10'),
-    14 => t('11'),
-    15 => t('12'),
-    16 => t('13'),
-  );
-  return $le_array[$ks_gradelevel];
-}
 /**
  * Get the academic years
  *
@@ -606,15 +524,10 @@ function kleosis_get_desc_table_entries($ks_field_name) {
  *    the entry label (value) associated with the key
  */
 function kleosis_get_desc_table_label($ks_field_name, $ks_key) {
-  $desc_table_values = array();
-  // get the _desc table values (drupal calls these 'labels')
-  $ks_desc_table_field = field_info_field($ks_field_name);
-  $function = $ks_desc_table_field['settings']['allowed_values_function'];
-  if (function_exists($function)) {
-    $desc_table_values = $function();
-  }
-
-  $label = isset($desc_table_values[$ks_key]) ? $desc_table_values[$ks_key] : '';
+  $desc_table_entries = array();
+  // get the _desc entries
+  $desc_table_entries = kleosis_get_desc_table_entries($ks_field_name);
+  $label = isset($desc_table_entries[$ks_key]) ? $desc_table_entries[$ks_key] : '';
   return $label;
 }
 

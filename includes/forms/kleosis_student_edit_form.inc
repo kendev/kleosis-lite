@@ -355,7 +355,7 @@ $form['student_biodata']['passport_no'] = array(
   $form['student_admin_info']['curr_gradelevel'] = array(
     '#type' => 'select',
     '#title' => t('Current Grade Level'),
-    '#options' => get_gradelevels(),
+    '#options' => ks_get_gradelevels(),
     '#default_value' => ($defaults)? $ks_user['curr_gradelevel'] : '',
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',

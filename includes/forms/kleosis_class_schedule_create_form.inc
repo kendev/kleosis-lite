@@ -328,7 +328,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     $form['class_schedule_entry_record']['period_lead_' . $inew] = array(
       '#type' => 'select',
       '#title' => t('Lead Instructor'),
-      '#options' =>  array(0 => t('no instructor')) + get_instructor_names(),
+      '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
       '#default_value' => 1,
       '#prefix' => '<div style="float: left;width:110" >',
       '#suffix' => '</div>',

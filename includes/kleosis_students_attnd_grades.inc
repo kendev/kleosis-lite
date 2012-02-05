@@ -404,14 +404,16 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   /* first - get students gradelevel  */
 
   $studentrec = ks_get_student_record($student);
-  $gradelevel = ks_map_ks_gradelevel_to_drp($studentrec['curr_gradelevel']);  // this is too silly...
+  $gradelevel = $studentrec['curr_gradelevel'];
 
-  /* next, get Courses with course_type 'attendance' */
+  /* next, get Courses with course_type 'Attendance' */
+  $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course key
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'course')
-  ->fieldCondition('ks_course_type', 'value', '4', '=') // todo: get the actual value for 'Attendance' from the ks_course_type_description table
+//  ->fieldCondition('ks_course_type', 'value', '4', '=') // todo: get the actual value for 'Attendance' from the ks_course_type_description table
+  ->fieldCondition('ks_course_type', 'value', $attnda[0], '=')
   ->fieldCondition('ks_course_gradelevel', 'value', $gradelevel, '=');
 
   $result = $query->execute();
@@ -422,7 +424,7 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   else {
     drupal_set_message(t('There are no attendance courses defined.'));
     return '';
-}
+  }
 
   /* then, get Classes referenced to Courses with course_type 'attendance' */
 
