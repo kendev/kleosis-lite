@@ -42,7 +42,7 @@ function build_ks_user_student_edit($theuser) {
 
   $form['student_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',
-      '#title' => t('Student Biodata'),
+      '#title' => t('Student Biodata for:') . ' ' . ks_get_usernames_for_display($theuser->uid),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#weight' => -5,

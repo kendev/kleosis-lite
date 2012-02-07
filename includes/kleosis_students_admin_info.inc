@@ -55,10 +55,12 @@ function kleosis_student_relationships_edit_form() {
 
   $student = isset($_GET['ksid']) ? $_GET['ksid'] : $student;   // ksid if coming from edit student...
 
+  $pguard = array_keys(ks_get_user_relationships(), 'Primary Guardian');  // get the Primary Guardian key
+
   // create a fieldset with relationship elements
   $form['setrelation'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Set Relationships for Students'),
+    '#title' => t('Set Relationships for Student') . ': ' . ks_get_usernames_for_display($student),
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -75,8 +77,9 @@ function kleosis_student_relationships_edit_form() {
   $form['setrelation']['relationship'] = array(
     '#type' => 'select',
     '#title' => t('Relationship'),
-    '#options' =>  get_user_relationships(),
-    '#default_value' => !empty($relationship) ? $relationship : 1,
+    '#options' =>  ks_get_user_relationships(),
+//    '#default_value' => !empty($relationship) ? $relationship : $pguard[0],
+    '#default_value' => !empty($relationship) ? $relationship : 0,
     '#prefix' => '<div style="float:left;width:175px" >',
     '#suffix' => '</div>',
   );
@@ -183,7 +186,7 @@ function kleosis_student_relationships_list() {
 
   // the header contains all the fields that will be displayed in the tableselect list
   $header = array(
-    'name' => array('data' => t('Student'), 'field' => 'u.name'),
+    'name' => array('data' => t(''), 'field' => 'u.name'),
     'relationship' => array('data' => t('has a relation'), 'field' => 'reldesc.relationship'),
     'kusr_rel_id_fk' => array('data' => t('with User/Student'), 'field' => 'kurels.kusr_rel_id_fk'),
     'operations' => array('data' => t('Ops')),
@@ -218,7 +221,8 @@ function kleosis_student_relationships_list() {
     $studentname = $relation->name;   // todo: get this a better way
     $options[$relation->krel_id] = array(
 //      'name' => l($relation->name , 'user/' . $relation->kusr_id_fk, array('query' => array('destination' => 'kleosis/students/setrelations'))),
-      'name' => l($relation->name , 'kleosis/students/summary', array('query' => array('a' => $relation->kusr_id_fk, 'b' => $relation->name))),
+//      'name' => l($relation->name , 'kleosis/students/summary', array('query' => array('a' => $relation->kusr_id_fk, 'b' => $relation->name))),
+      'name' => $relation->name,
       'relationship' =>  $relation->relationship,
       'kusr_rel_id_fk' => l(get_ks_username_by_id($relation->kusr_rel_id_fk) , 'user/' . $relation->kusr_rel_id_fk, array('query' => array('destination' => 'kleosis/students/setrelations'))),
       'operations' => l(t('remove'), 'kleosis/students/summary/setrelations/' . $student, array('query' => array('krelid' => $relation->krel_id, 'ksop' => 'remove_link', 'destination' => 'kleosis/students/summary/setrelations/' . $student)))
@@ -331,7 +335,7 @@ function kleosis_student_status_details_edit_form() {
   // create a fieldset with status detail elements
   $form['status_details'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Status Details for Students'),
+    '#title' => t('Status Details for Student: ') . ' ' . ks_get_usernames_for_display($student),
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -476,7 +480,7 @@ function kleosis_student_status_details_list() {
 
   // the header contains all the fields that will be displayed in the tableselect list
   $header = array(
-    'name' => array('data' => t('Student'), 'field' => 'u.name'),
+    'name' => array('data' => t(''), 'field' => 'u.name'),
     'status' => array('data' => t('Status'), 'field' => 'stsdesc.status'),
 //    'status_date' => array('data' => t('Status Date'), 'field' => 'kssd.status_date'),  //  $stdt->format('d-M-Y')
     'status_date' => array('data' => t('Status Date')),
@@ -521,7 +525,8 @@ function kleosis_student_status_details_list() {
   foreach ($results as $statusdetail) {
     $studentname = $statusdetail->name;   // todo: get this a better way
     $options[$statusdetail->kssd_id] = array(
-      'name' => l($statusdetail->name , 'kleosis/students/summary', array('query' => array('a' => $statusdetail->kstu_id_fk, 'b' => $statusdetail->name))),
+//      'name' => l($statusdetail->name , 'kleosis/students/summary', array('query' => array('a' => $statusdetail->kstu_id_fk, 'b' => $statusdetail->name))),
+      'name' => $statusdetail->name,
       'status' =>  $statusdetail->status,
       'status_date' =>  $statusdetail->status_date,
       'status_reason' =>  $statusdetail->status_reason,

@@ -256,12 +256,13 @@ function kleosis_student_reports_odt_download() {
         $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
         $node_course_type =   $course_node->ks_course_type['und'][0]['value'];
 
+        $node_course_no_label = kleosis_get_desc_table_label('ks_course_no', $node_course_no );
+        $node_course_type_label = kleosis_get_desc_table_label('ks_course_type', $node_course_type);
       }
       else {
         $node_course_no =  '';
       }
-
-      if (   $node_course_type != 'attendance' &&  $node_course_type != 'lunch-breaktime'  ) {
+      if ( $node_course_label != 'Attendance' &&  $node_course_type_label != 'Lunch-Breaktime' ) {
       /*
         $enrolled_classes[$node->nid] = array(
           'title' =>  $node->title,

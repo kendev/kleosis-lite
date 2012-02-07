@@ -165,13 +165,14 @@ function kleosis_medical_info_view($callback_arg = '') {
       $usersname = medical_get_users_name(arg(4));  // get users name from the uid
       if(!empty($usersname)) {
 
-        $title = t('@first_part @name', array('@first_part' => t('Click here to add medical info for user'), '@name' => $usersname));
+        $usernames = ks_get_usernames_for_display(arg(4)); // get the display names for this user
+        $title = t('@first_part @name', array('@first_part' => t('Click here to add medical info for user:'), '@name' => $usernames));
 
         $build['the_link']['addit'] = array(
           '#type' => 'link',
           '#title' => $title,
           '#href' => $base_root . url('node/add/medical/' . arg(4), array('query' => array('destination' => 'kleosis/students/summary/' . arg(4)))),
-          '#prefix' => '<br/><div style="float:left;width:400px"><strong>Medical info does not exist for this user</strong><br/><br/>',
+          '#prefix' => '<br/><div style="float:left;width:550px"><strong>Medical info does not exist for this user</strong><br/><br/>',
           '#suffix' => '</div><br/>',
         );
 /*

@@ -54,7 +54,7 @@ $handler->display->display_options['fields']['name']['id'] = 'name';
 $handler->display->display_options['fields']['name']['table'] = 'users';
 $handler->display->display_options['fields']['name']['field'] = 'name';
 $handler->display->display_options['fields']['name']['relationship'] = 'kstu_id_fk';
-$handler->display->display_options['fields']['name']['label'] = 'Student Name';
+$handler->display->display_options['fields']['name']['label'] = 'Username';
 $handler->display->display_options['fields']['name']['alter']['alter_text'] = 0;
 $handler->display->display_options['fields']['name']['alter']['make_link'] = 0;
 $handler->display->display_options['fields']['name']['alter']['absolute'] = 0;
@@ -259,3 +259,4 @@ $handler->display->display_options['filters']['atnd_date']['expose']['multiple']
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
 $handler->display->display_options['path'] = 'kleosis-attendance-totals-2';
+

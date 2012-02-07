@@ -124,6 +124,40 @@ function get_ks_username_by_id($ks_drp_uid) {
 }
 
 /**
+ * Get a student usernames for display
+ *
+ * @param $ks_drp_uid
+ *   The ks_users drp_uid
+ * @return
+ *   the ks_users usernames as a String
+ */
+function ks_get_usernames_for_display($ks_drp_uid) {
+
+  $studentnames = '';
+  $query = db_select('users', 'u');
+  $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
+  $query->addField('u', 'name');
+  $query->addField('kstu', 'fullname');
+  $query->addField('kstu', 'friendlyname');
+  $query->condition('drp_uid_fk', $ks_drp_uid, '=');
+  $studentnames_a = $query->execute()->fetch(PDO::FETCH_ASSOC);
+
+  if ( !empty($studentnames_a) ) {
+
+    if ( empty($studentnames_a['fullname']) ) {
+      $studentnames_a['fullname'] = '(' . $studentnames_a['name'] . ')';
+    }
+    if ( empty($studentnames_a['friendlyname']) ) {
+      $studentnames_a['friendlyname'] = '(' . $studentnames_a['name'] . ')';
+    }
+  $studentnames = $studentnames_a['fullname'] . ' [' . $studentnames_a['friendlyname'] . ']';
+  $studentnames = substr($studentnames, 0, 50);
+  }
+
+  return $studentnames;
+}
+
+/**
  * Get all instructors names and uids
  *
  * @return
@@ -354,7 +388,7 @@ function get_user_relationship_desc($intrelationship) {
  * @return
  *    options - an array of user relationships
  */
-function get_user_relationships() {
+function ks_get_user_relationships() {
 
   $options = array();
   $results = db_query('SELECT kurel_id, relationship FROM {ks_user_relationships_desc}' )->fetchAll();

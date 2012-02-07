@@ -140,7 +140,8 @@ function kleosis_student_attnd_acyt_select_form() {
     '#suffix' => '</div>',
   );
 
-  $text = t('Current Daily Attendance Totals for student <strong>@name</strong>:' . ' ', array('@name' => $name));
+  $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+  $text = t('Current daily attendance totals for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
 
   $build['theclasses'] = array(
       '#markup' => $text,
@@ -552,7 +553,7 @@ function kleosis_student_grades_acyt_select_form() {
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . $name,
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . ks_get_usernames_for_display($uid),
     '#weight' => -5,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -600,11 +601,13 @@ function kleosis_student_grades_acyt_select_form() {
 
   if ( $grades_toggle == 'active' ) {  // get the grades from moodle
 
-    $text = t('Current grades for student <strong>@name</strong>:' . ' ', array('@name' => $name));
+
+    $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+    $text = t('Current grades for student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
 
     $build['thegrades'] = array(
       '#markup' => $text,
-      '#prefix' => '<div style="float: left;clear:left; width:375px" >',
+      '#prefix' => '<div style="float: left;clear:left; width:550px" >',
       '#suffix' => '</div>',
       );
 
@@ -734,7 +737,7 @@ function kleosis_student_final_grades_acyt_select_form() {
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . $name,
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . ks_get_usernames_for_display($uid),
     '#weight' => -5,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -769,6 +772,15 @@ function kleosis_student_final_grades_acyt_select_form() {
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
+
+  $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+  $text = t('Final grades for student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+
+  $build['thegrades'] = array(
+    '#markup' => $text,
+    '#prefix' => '<div style="float: left;clear:left; width:550px" >',
+    '#suffix' => '</div>',
+    );
 
   return $build;
 }
@@ -841,7 +853,7 @@ function kleosis_student_final_grades_list() {
   ->entityCondition('bundle', 'class')
   ->fieldCondition('ks_class_term', 'value', $term, '=')
   ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
-  ->fieldCondition('ks_class_status', 'value', 'active', '=')
+  ->fieldCondition('ks_class_status', 'value', '1', '=')  // 'Active'
   ->propertyCondition('status', 1)  // not needed, just an example...
   ->fieldOrderBy('ks_class_academic_year', 'value', 'ASC');
 

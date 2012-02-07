@@ -43,7 +43,7 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
 
   $account->content['student_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',
-      '#title' => t('Student Biodata'),
+      '#title' => t('Student Biodata for:') . ' ' . ks_get_usernames_for_display($account->uid),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#weight' => -50,

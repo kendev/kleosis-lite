@@ -417,7 +417,7 @@ function kleosis_student_summary_form($form, &$form_state) {
   );
   $form['user_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',
-      '#title' => t('Student Summary for:') . ' ' . $name,
+      '#title' => t('Student Summary for:') . ' ' . ks_get_usernames_for_display($uid),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
       '#weight' => -5,
@@ -651,11 +651,12 @@ function kleosis_students_classes($form, &$form_state) {
     '#suffix' => '</div>',
   );
 
-  $text = t('Student <strong>@name</strong> is currently enrolled in the following classes:' . ' ', array('@name' => $name));
+  $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+  $text = t('Enrolled classes for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
   $build['theclasses'] = array(
       '#markup' => $text,
       '#prefix' => '',
-      '#suffix' => '<br/><br/>',
+      '#suffix' => '<br/>',
     );
 
   // the header contains all the fields that will be displayed in the tableselect list
@@ -937,11 +938,12 @@ function kleosis_student_class_schedule_acyt_select_form() {
     '#suffix' => '</div>',
   );
 
-  $text = t('Class schedule for Student <strong>@name</strong>:' . ' ', array('@name' => $name));
+  $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+  $text = t('Class schedule for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
   $build['student_schedule'] = array(
       '#markup' => $text,
       '#prefix' => '',
-      '#suffix' => '<br/><br/>',
+      '#suffix' => '<br/>',
     );
 
   return $build;
