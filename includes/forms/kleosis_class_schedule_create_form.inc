@@ -21,7 +21,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
   $breadcrumb[] = l(t('Home'), 'kleosis');
   $breadcrumb[] = l(t('Classes'), 'kleosis/classes');
   $breadcrumb[] = l(t('Class Schedule'), 'kleosis/classes/schedule');
-  $breadcrumb[] = t('Add Schedule');
+  $breadcrumb[] = t('Add to Schedule');
 
   drupal_set_breadcrumb($breadcrumb);
   drupal_set_title(t('Add Class Schedule'));
@@ -86,7 +86,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
   $i = 1;
   foreach ($period_record as $period) {
 
-//    dpm($period);
+//  dpm($period);
     $pstartd = !empty($period->period_start_datetime) ? new DateTime($period->period_start_datetime) : new DateTime('1900-01-02 03:04:05');
     $pendd = !empty($period->period_end_datetime) ? new DateTime($period->period_end_datetime) : new DateTime('1900-01-02 03:04:05');
 
@@ -197,7 +197,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     $form['class_schedule_entry_record']['period_lead_' . $i] = array(
       '#type' => 'select',
 //      '#title' => t('Lead instructor'),
-      '#options' =>  array(0 => t('no instructor')) + get_instructor_names(),
+      '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
       '#default_value' => $period->period_lead,
       '#disabled' => TRUE,
       '#prefix' => '<div style="float: left;width:110" >',
