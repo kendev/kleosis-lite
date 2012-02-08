@@ -327,7 +327,7 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Current Main Program'),
     '#markup' => ($defaults)? get_program_desc($ks_user['curr_main_program']) : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['curr_other_program'] = array(
@@ -335,6 +335,13 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#title' => t('Current Other Program'),
     '#markup' => ($defaults)? get_program_desc($ks_user['curr_other_program']) : '',
     '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
+  $account->content['student_admin_info']['application_date'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Application Date'),
+    '#markup' => ($defaults)? $appd->format('d-M-Y') : '',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['acceptance_date'] = array(
@@ -349,13 +356,6 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#title' => t('Anticipated Start Date'),
     '#markup' => ($defaults)? $asd->format('d-M-Y') : '',
     '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $account->content['student_admin_info']['application_date'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Application Date'),
-    '#markup' => ($defaults)? $appd->format('d-M-Y') : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $account->content['student_admin_info']['reg_no'] = array(

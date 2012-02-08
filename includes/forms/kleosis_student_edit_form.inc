@@ -373,7 +373,7 @@ $form['student_biodata']['passport_no'] = array(
     '#title' => t('Current Main Program'),
     '#options' => ks_get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_main_program'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['curr_other_program'] = array(
@@ -381,6 +381,17 @@ $form['student_biodata']['passport_no'] = array(
     '#title' => t('Current Other Program'),
     '#options' => ks_get_programs(),
     '#default_value' => ($defaults)? $ks_user['curr_other_program'] : '',
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
+  $form['student_admin_info']['application_date'] = array(
+    '#type' => 'date',
+    '#title' => t('Application Date'),
+    '#default_value' => array(
+       'month' => $appd->format('n'),
+       'day' => $appd->format('j'),
+       'year' => $appd->format('Y'),
+      ),
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
@@ -404,17 +415,6 @@ $form['student_biodata']['passport_no'] = array(
        'year' => $asd->format('Y'),
       ),
     '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-  $form['student_admin_info']['application_date'] = array(
-    '#type' => 'date',
-    '#title' => t('Application Date'),
-    '#default_value' => array(
-       'month' => $appd->format('n'),
-       'day' => $appd->format('j'),
-       'year' => $appd->format('Y'),
-      ),
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['reg_no'] = array(

@@ -151,7 +151,7 @@ function ks_get_usernames_for_display($ks_drp_uid) {
       $studentnames_a['friendlyname'] = '(' . $studentnames_a['name'] . ')';
     }
   $studentnames = $studentnames_a['fullname'] . ' [' . $studentnames_a['friendlyname'] . ']';
-  $studentnames = substr($studentnames, 0, 50);
+  $studentnames = substr($studentnames, 0, 48);
   }
 
   return $studentnames;

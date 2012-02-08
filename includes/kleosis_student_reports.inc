@@ -63,7 +63,7 @@ function kleosis_student_reports_odt_acyt_select_form() {
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . $name,
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . ks_get_usernames_for_display($uid),
     '#weight' => -5,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,

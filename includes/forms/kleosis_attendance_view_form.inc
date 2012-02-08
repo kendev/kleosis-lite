@@ -353,12 +353,12 @@ function kleosis_attendance_input_form($form, &$form_state) {
   );
   $form['attendance_input']['student_name'] = array(
     '#markup' =>    'Student Name',
-    '#prefix' => '<div style="float: left;clear: left;width:160px"><strong>',
+    '#prefix' => '<div style="float: left;clear: left;width:350px"><strong>',
     '#suffix' => '</strong></div>',
   );
   $form['attendance_input']['absence_type'] = array(
     '#markup' =>    'Absence Type',
-    '#prefix' => '<div style="float: left;width:120px"><strong>',
+    '#prefix' => '<div style="float: left;width:115px"><strong>',
     '#suffix' => '</strong></div>',
   );
   $form['attendance_input']['excuse_reason'] = array(
@@ -368,17 +368,17 @@ function kleosis_attendance_input_form($form, &$form_state) {
   );
   $form['attendance_input']['instructor_remarks'] = array(
     '#markup' =>    'Instructor Remarks',
-    '#prefix' => '<div style="float: left;width:220px"><strong>',
+    '#prefix' => '<div style="float: left;width:190px"><strong>',
     '#suffix' => '</strong></div>',
   );
   $form['attendance_input']['counselor_remarks'] = array(
-    '#markup' =>    'Counselor Remarks',
-    '#prefix' => '<div style="float: left;width:220px"><strong>',
+    '#markup' =>    'Cnslr Rem',
+    '#prefix' => '<div style="float: left;width:80px"><strong>',
     '#suffix' => '</strong></div><br/><br/>',
   );
   $form['attendance_input']['spacer'] = array(
     '#markup' =>    '&nbsp;',
-    '#prefix' => '<div style="float: left;clear: left;width:160px"><strong>',
+    '#prefix' => '<div style="float: left;clear: left;width:60px"><strong>',
     '#suffix' => '</strong></div>',
   );
 
@@ -388,6 +388,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
   foreach ($students as $student) {
 
   $attnd_rec =  ks_get_attendance_records($student->kstu_id_fk, $attnd_select_classid, $pattnd);
+  $student_names = ks_get_usernames_for_display($student->kstu_id_fk);
 
     $form['attendance_input']['ksatnd_id_' . $i] = array(
       '#type' => 'hidden',
@@ -412,9 +413,9 @@ function kleosis_attendance_input_form($form, &$form_state) {
     );
     $form['attendance_input']['student_name_' . $i] = array(
 //      '#markup' =>    $student->name,
-      '#markup' => l($student->name, 'kleosis/students/attendance', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-      '#prefix' => '<div style="float: left;clear: left;width:160px"><strong><em>',
-      '#suffix' => '</em></strong></div>',
+      '#markup' => l($student_names, 'kleosis/students/attendance', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
+      '#prefix' => '<div style="float: left;clear: left;width:350px">',
+      '#suffix' => '</div>',
     );
     $form['attendance_input']['absence_type_' . $i] = array(
       '#type' => 'select',
@@ -423,7 +424,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
       '#DANGEROUS_SKIP_CHECK' => FALSE,
       '#validated' => TRUE,
       '#disabled' => TRUE,
-      '#prefix' => '<div style="float: left;width:120px" >',
+      '#prefix' => '<div style="float: left;width:110px" >',
       '#suffix' => '</div>',
     );
     $form['attendance_input']['excuse_reason_' . $i] = array(
@@ -433,25 +434,25 @@ function kleosis_attendance_input_form($form, &$form_state) {
       '#DANGEROUS_SKIP_CHECK' => FALSE,
       '#validated' => TRUE,
       '#disabled' => TRUE,
-      '#prefix' => '<div style="float: left;width:140px">',
+      '#prefix' => '<div style="float: left;width:145px">',
       '#suffix' => '</div>',
     );
     $form['attendance_input']['instructor_remarks_' . $i] = array(
       '#type' => 'textfield',
       '#default_value' =>   isset($attnd_rec['remarks_instructor']) ? $attnd_rec['remarks_instructor'] : '',
-      '#size' => 30,
+      '#size' => 25,
       '#maxlength' => 120,
       '#disabled' => TRUE,
-      '#prefix' => '<div style="float: left;width:220px">',
+      '#prefix' => '<div style="float: left;width:200px">',
       '#suffix' => '</div>&nbsp;',
     );
     $form['attendance_input']['counselor_remarks_' . $i] = array(
       '#type' => 'textfield',
       '#default_value' =>   isset($attnd_rec['remarks_counselor']) ? $attnd_rec['remarks_counselor'] : '',
-      '#size' => 30,
+      '#size' => 5,
       '#disabled' => TRUE,
       '#maxlength' => 120,
-      '#prefix' => '<div style="float: left;width:220px">',
+      '#prefix' => '<div style="float: left;width:60px">',
       '#suffix' => '</div>',
     );
 
