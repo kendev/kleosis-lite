@@ -184,8 +184,15 @@ function kleosis_student_reports_odt_download() {
   $organization = ks_get_organization_desc(variable_get('kleosis_organization', '1'));
   $filename = $academic_year . '_' . $term . '_' . $name . '_' . $report_odt;
 
-  if ( $report_odt == 'none' || $report_odt == 'other' ) {
-    drupal_set_message(t('Please select a report from the Reports select box.'));
+  // check if the selected report exists
+  $this_dir_name = dirname(__FILE__);
+  $curr_odtreport_dir = '/odtreports/reports/';
+  $fullpath = $this_dir_name . $curr_odtreport_dir . $report_odt . '.odt';
+
+  $file_ok = file_exists("$fullpath");
+
+  if ( $report_odt == 'none' || $report_odt == 'other' || !$file_ok) {
+    drupal_set_message(t('Please select a valid report from the Reports select box.'));
   }
   else {
 
@@ -279,7 +286,6 @@ function kleosis_student_reports_odt_download() {
 
     $kleosispath = drupal_get_path('module', 'kleosis');
     $rptlibpath = $kleosispath . '/includes/odtreports/library/odf.php';
-  //  $reportpath = 'sites/default/files/kleosis_files/odttemplates/' . $report_odt . '.odt';
     $reportpath = $kleosispath . '/includes/odtreports/reports' . '/' . $report_odt . '.odt';
     require_once ($rptlibpath);
 
@@ -312,6 +318,9 @@ function kleosis_student_reports_odt_download() {
   //  $odf->saveToDisk($filename);  // stores in ..kleoport
 
     $filename_with_path = 'sites/default/files/kleosis_files/odtreports/' . $filename;
+
+//file_exists("test.txt");
+
 
   //  $odf->saveToDisk($filename_with_path);
 

@@ -58,6 +58,7 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
   $query->addField('ksclss', 'period_status');
   $query->addField('ksclss', 'classroom');
   $query->addField('ksclss', 'period_lead');
+  $query->addField('ksclss', 'period_sub');
 
   $query->condition('ksclss.' . 'kccls_id_fk', $classid, '=');
   $query->orderBy('ksclss.period_day', 'ASC');
@@ -73,7 +74,7 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:640px" ><br/><strong><p>',
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong><p>',
         '#suffix' => '</strong></p><br/></div>',
       );
     return $form;
@@ -95,6 +96,40 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
       '#weight' => -5,
     );
 */
+
+  // provide a header row for the period schedule columns
+
+  $form['class_schedule_entry_record']['day_of_week'] = array(
+    '#markup' =>    'Day',
+    '#prefix' => '<div style="float: left;clear: left;width:190px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['period duration'] = array(
+    '#markup' =>    'Period Duration',
+    '#prefix' => '<div style="float: left;width:170px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['Room'] = array(
+    '#markup' =>    'Room',
+    '#prefix' => '<div style="float: left;width:150px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_lead'] = array(
+    '#markup' =>    'Instructor',
+    '#prefix' => '<div style="float: left;width:140px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_sub'] = array(
+    '#markup' =>    'Sub',
+    '#prefix' => '<div style="float: left;width:80px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['spacer2'] = array(
+    '#markup' =>    '&nbsp;',
+    '#prefix' => '<div style="float: left;clear: left;width:60px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+
   $i = 1;
   foreach ($period_record as $period) {
 
@@ -187,7 +222,7 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
       '#options' =>  ks_get_classrooms(),
       '#default_value' => $period->classroom,
       '#disabled' => FALSE,
-      '#prefix' => '<div style="float: left;width:200px" >',
+      '#prefix' => '<div style="float: left;width:150px" >',
       '#suffix' => '</div>',
     );
 /*
@@ -205,7 +240,15 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 //      '#title' => t('Lead Instructor'),
       '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
       '#default_value' => $period->period_lead,
-      '#prefix' => '<div style="float: left;width:110" >',
+      '#prefix' => '<div style="float: left;width:140px" >',
+      '#suffix' => '</div>',
+    );
+    $form['class_schedule_entry_record']['period_sub_' . $i] = array(
+      '#type' => 'select',
+//      '#title' => t('Sub Instructor'),
+      '#options' =>  array(0 => t('no sub')) + ks_get_instructor_names(),
+      '#default_value' => $period->period_sub,
+      '#prefix' => '<div style="float: left;width:170px" >',
       '#suffix' => '</div>',
     );
     $form['class_schedule_entry_record']['delete_' . $i] = array(
@@ -315,6 +358,7 @@ function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
 //      $schedule_record['period_status'] = $form_state['values']['period_status_' . $i];
       $schedule_record['period_status'] = 1;  // for Kleosis Lite
       $schedule_record['period_lead'] = $form_state['values']['period_lead_' . $i];
+      $schedule_record['period_sub'] = $form_state['values']['period_sub_' . $i];
 
       $ok = ks_update_schedule_record($schedule_record);
 //    dpm($schedule_record);

@@ -305,7 +305,7 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
   $account->content['student_admin_info']['curr_status'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Current Status'),
-    '#markup' => ($defaults)? get_student_status_desc($ks_user['curr_status']) : '',
+    '#markup' => ($defaults)? ks_get_student_status_desc($ks_user['curr_status']) : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );

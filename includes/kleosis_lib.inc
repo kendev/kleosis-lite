@@ -541,7 +541,7 @@ function kleosis_get_desc_table_label($ks_field_name, $ks_key) {
 function kleosis_schedule_breaktimes() {
 
 //  $breaktime_schedule_array[] = array('period' => $aperiod, 'class' => $period->kccls_id_fk, 'day' => $period->period_day,) ;
-
+/*
   $morning_break = variable_get('kleosis_morn_break_start_hour', '10') . ':' . variable_get('kleosis_morn_break_start_min', '05') .
                     '-' . variable_get('kleosis_morn_break_end_hour', '10') . ':' . variable_get('kleosis_morn_break_end_min', '20');
 
@@ -550,6 +550,15 @@ function kleosis_schedule_breaktimes() {
 
   $afternoon_break = variable_get('kleosis_aft_break_start_hour', '14') . ':' . variable_get('kleosis_aft_break_start_min', '30') .
                     '-' . variable_get('kleosis_aft_break_end_hour', '14') . ':' . variable_get('kleosis_aft_break_end_min', '50');
+*/
+  $morning_break = variable_get('kleosis_morn_break_start_hour', '00') . ':' . variable_get('kleosis_morn_break_start_min', '00') .
+                    '-' . variable_get('kleosis_morn_break_end_hour', '00') . ':' . variable_get('kleosis_morn_break_end_min', '00');
+
+  $lunch_break = variable_get('kleosis_lunch_start_hour', '00') . ':' . variable_get('kleosis_lunch_start_min', '00') .
+                    '-' . variable_get('kleosis_lunch_end_hour', '00') . ':' . variable_get('kleosis_lunch_end_min', '00');
+
+  $afternoon_break = variable_get('kleosis_aft_break_start_hour', '00') . ':' . variable_get('kleosis_aft_break_start_min', '00') .
+                    '-' . variable_get('kleosis_aft_break_end_hour', '00') . ':' . variable_get('kleosis_aft_break_end_min', '00');
 
 
   $breaktime_schedule_array[] = array('period' => $morning_break, 'class' => 'morning break', 'day' => 'all', ) ;
@@ -581,11 +590,7 @@ function kleosis_testname() {
  */
 function kleosis_report_odt_values() {
 
-  $le_array = array(
-    'progress_a' => t('Progress A'),
-    'progress_b' => t('Progress B'),
-    'other' => t('Other (tbd...)'),
-  );
+  $le_array = ks_get_odt_reports();
   return $le_array;
 }
 

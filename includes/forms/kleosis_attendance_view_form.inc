@@ -134,10 +134,6 @@ function ks_attnd_view_instructor_filter_form($form, &$form_state) {
  */
 function ks_attnd_view_class_selection_form($form, &$form_state) {
 
-/*///////////////////////////////////
-  drupal_set_message('inside ks_attnd_view_class_selection_form');
-*/////////////////////////////////////
-
   $today = new DateTime('now');
   if (!isset($_SESSION['ks_atnd_class_select']['attnd_year'])) {  // if not set, then this is the first time into this screen - set default sesion variables
 
@@ -151,6 +147,7 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
   }
 
   // get the instructor, academic year, and term from the session variable (if any) and set the default values accordingly
+  // this is the same as in the above attnd_instructor_filter_form() - need to duplicate because the session-populated variables are local
 
   $attnd_filter_instructorid = isset($_SESSION['ks_atnd_instructor_filter']['instructorid']) ? $_SESSION['ks_atnd_instructor_filter']['instructorid'] : 0;
   $attnd_filter_instructorname = isset($_SESSION['ks_atnd_instructor_filter']['instructorname']) ? $_SESSION['ks_atnd_instructor_filter']['instructorname'] : 'No instructor selected';
@@ -179,18 +176,42 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
   //  - Look up all classes taught (all for admin) and load the Class select box
   //  - Look up the period hours taught for all classes and load the period-hours select box..
   //
-//if ($attnd_select_toggle_classes == 'active') {
-    $class_records = ks_get_attendance_schedule_records($attnd_filter_instructorid, $attnd_filter_academic_year, $attnd_filter_term, $attnd_select_day);
-    if (!empty($class_records)) {
-      $classes = get_classes_from_schedule_records($class_records); // get the class names and class ids for the class select box
-      $days = get_days_from_schedule_records($class_records);  // change this - should be the day from the selected attendance date
-      $periods = get_periods_from_schedule_records($class_records);
+  //if ($attnd_select_toggle_classes == 'active') {
+
+    $class_records_lead = ks_get_attendance_schedule_records($attnd_filter_instructorid, $attnd_filter_academic_year, $attnd_filter_term, $attnd_select_day);
+    $class_records_sub = ks_get_attendance_schedule_records_sub($attnd_filter_instructorid, $attnd_filter_academic_year, $attnd_filter_term, $attnd_select_day);
+
+    if (!empty($class_records_lead)) {
+      $classes_lead = get_classes_from_schedule_records($class_records_lead); // get the class names and class ids for the class select box from the Class node(s)
+      $days_lead = get_days_from_schedule_records($class_records_lead);  // todo: maybe change this - should be the day from the selected attendance date
+      $periods_lead = get_periods_from_schedule_records($class_records_lead);  // e.g an Attendance class normally has only one period - the same one, for all days.
+                                                                               // if an instructor is assigned to two Attendance classes, then expect two periods (times)
     }
     else {
-      $classes = array();
-      $days = array();
-      $periods = array();
+      $classes_lead = array();
+      $days_lead = array();
+      $periods_lead = array();
     }
+    if (!empty($class_records_sub)) {
+      $classes_sub = get_classes_from_schedule_records($class_records_sub); // get the class names and class ids for the class select box from the Class node(s)
+      $days_sub = get_days_from_schedule_records($class_records_sub);  // todo: maybe change this - should be the day from the selected attendance date
+      $periods_sub = get_periods_from_schedule_records($class_records_sub);  // e.g an Attendance class normally has only one period - the same one, for all days.
+                                                                             // if an instructor is assigned to two Attendance classes, then expect two periods (times)
+    }
+    else {
+      $classes_sub = array();
+      $days_sub = array();
+      $periods_sub = array();
+    }
+
+    $classes = $classes_lead + $classes_sub;
+    $days = $days_lead + $days_sub;
+    $periods = $periods_lead + $periods_sub;
+
+//    dpm($classes);
+//    dpm($days);
+//    dpm($periods);
+
 //}
 
   $default_period = 'none';
@@ -272,10 +293,11 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Period'),
     '#options' => array('none' => 'none') + $periods,
-//    '#default_value' => $attnd_select_period ? $attnd_select_period : 'none',
+    //  '#default_value' => $attnd_select_period ? $attnd_select_period : 'none',
     '#default_value' => (sizeof($classes) == 1) ? $default_period : ($attnd_select_period ? $attnd_select_period : 'none'),
     '#DANGEROUS_SKIP_CHECK' => FALSE,
     '#validated' => TRUE,
+    '#disabled' => TRUE,
     '#weight' => -1,
     '#prefix' => '<div style="float: left;width:160px" >',
     '#suffix' => '</div>',
@@ -337,6 +359,15 @@ function kleosis_attendance_input_form($form, &$form_state) {
   $pattnd = new DateTime($attnd_select_year . '-' . $attnd_select_month . '-' . $attnd_select_day . ' ' . $attnd_select_hour . ':' . $attnd_select_minute . ':' . '00');
 
   $students = ks_get_students_in_a_class($attnd_select_classid);
+
+  if( empty($students) ) {
+    $form['no_students'] = array(
+      '#markup' =>    'There are no students enrolled in this attendance course.',
+      '#prefix' => '<div style="float: left;clear: left;width:550px"><strong>',
+      '#suffix' => '</strong></div>',
+    );
+    return $form;
+  }
 
   $attnd_recs = ks_get_attendance_taken($attnd_select_classid, $pattnd);
   $attendance_is_taken = !empty($attnd_recs) ? 1 : 0;
@@ -464,16 +495,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
     '#type' => 'hidden',
     '#default_value' => $i-1,
   );
-/*
-  $form['attendance_input']['update'] = array(
-    '#type' => 'submit',
-    '#value' => t('Update'),
-    '#submit' => array('kleosis_attendance_form_submit'),  // not working...
-    '#weight' => '10',
-    '#prefix' => '<div style="float: right;clear:left;width:200px" >',
-    '#suffix' => '</div>',
-  );
-*/
+
   $_SESSION['ks_atnd_class_select']['toggle_attnd'] = 'inactive';
 
 return $form;
@@ -481,10 +503,6 @@ return $form;
 }
 
 function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
-
-//  dpm('inside ks_attnd_view_class_selection_form_submit()');
-//  dpm($form_state);
-//  dpm($form);  // this causes dpm to stop all output - bug!?
 
   switch ($form_state['values']['op']) {
 
@@ -580,7 +598,7 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
                                         );
       break;
     case 'Get Students':
-
+/*
       if ($form_state['input']['period'] == 'none') {
         drupal_set_message(t('Please select a valid Class and Period.'));
         break;
@@ -601,11 +619,72 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
                                         'toggle_classes' => 'active',
                                         'toggle_attnd' => 'active',
                                         );
-//dpm($_SESSION['ks_atnd_class_select']);
+
       break;
+*/
+
+      // check for proper class/period selection and set period select box accordingly (for multiple classes)
+
+      $node = node_load($form_state['values']['classes']);  // get the classid from the select box
+
+      // then get all the scheduled Attendance classes assigned to the instructor(s) for the selected acy&t and day
+
+      $attnd_filter_instructorid = isset($_SESSION['ks_atnd_instructor_filter']['instructorid']) ? $_SESSION['ks_atnd_instructor_filter']['instructorid'] : 0;
+      $attnd_filter_academic_year = isset($_SESSION['ks_atnd_instructor_filter']['academic_year']) ? $_SESSION['ks_atnd_instructor_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+      $attnd_filter_term = isset($_SESSION['ks_atnd_instructor_filter']['term']) ? $_SESSION['ks_atnd_instructor_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+      $attnd_select_day = isset($_SESSION['ks_atnd_class_select']['day']) ? $_SESSION['ks_atnd_class_select']['day'] : $today->format('N');
+
+      $class_records_lead = ks_get_attendance_schedule_records($attnd_filter_instructorid, $attnd_filter_academic_year, $attnd_filter_term, $attnd_select_day);
+      $class_records_sub = ks_get_attendance_schedule_records_sub($attnd_filter_instructorid, $attnd_filter_academic_year, $attnd_filter_term, $attnd_select_day);
+
+      if (!empty($class_records_lead)) {
+
+        foreach ($class_records_lead as $theclass) {   // look for the selected class to get it's period_starttime
+                                                  // Attendance classes must have the same start time for each day of the week
+          if ($theclass->kccls_id_fk == $form_state['values']['classes']) {
+            // then get the period for just this class
+            $theperiod = get_periods_from_schedule_records(array('0' => $theclass));
+            // set the period selectbox to the actual period of the Attendance class
+            $form_state['values']['period'] = key($theperiod);
+          }
+        }
+      }
+
+      if (!empty($class_records_sub)) {
+
+        foreach ($class_records_sub as $theclass) {   // look for the selected class to get it's period_starttime
+                                                  // Attendance classes must have the same start time for each day of the week
+          if ($theclass->kccls_id_fk == $form_state['values']['classes']) {
+            // then get the period for just this class
+            $theperiod = get_periods_from_schedule_records(array('0' => $theclass));
+            // set the period selectbox to the actual period of the Attendance class
+            $form_state['values']['period'] = key($theperiod);
+          }
+        }
+      }
+
+      // set session variables so when this function returns, the form will refresh and get the proper students
+      $attendance_date = new DateTime();
+      $attendance_date->setDate($form_state['values']['period_attnd_date']['year'], $form_state['values']['period_attnd_date']['month'], $form_state['values']['period_attnd_date']['day']);
+      // find the day for the selected attendance date in prep for getting the classes...
+      $theday = $attendance_date->format('N');
+      $node = node_load($form_state['values']['classes']);
+
+      $_SESSION['ks_atnd_class_select'] = array('classid' => $form_state['values']['classes'],
+                                        'classname' => $node->title,
+                                        'day' => $theday,
+                                        'period' => $form_state['values']['period'],
+                                        'attnd_year' => $form_state['values']['period_attnd_date']['year'],
+                                        'attnd_month' => $form_state['values']['period_attnd_date']['month'],
+                                        'attnd_day' => $form_state['values']['period_attnd_date']['day'],
+                                        'toggle_classes' => 'active',
+                                        'toggle_attnd' => 'active',
+                                        );
+//dpm($_SESSION['ks_atnd_class_select']['classid']);
+
+     break;
     case 'Update':
 //    dpm('Hey - update!'); // This case never happens - see case Apply
-//    dpm($form_state['values']['period_attnd_date']['year']);
       $attendance_date = new DateTime();
       $attendance_date->setDate($form_state['values']['period_attnd_date']['year'], $form_state['values']['period_attnd_date']['month'], $form_state['values']['period_attnd_date']['day']);
       // now, find the day for the selected attendance date in prep for getting the classes...

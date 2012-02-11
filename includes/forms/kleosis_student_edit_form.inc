@@ -338,7 +338,7 @@ $form['student_biodata']['passport_no'] = array(
   $form['student_admin_info']['curr_status'] = array(
     '#type' => 'select',
     '#title' => t('Current Status'),
-    '#options' => get_student_statuses(),
+    '#options' => ks_get_student_statuses(),
     '#default_value' => ($defaults)? $ks_user['curr_status'] : '',
     '#disabled' => TRUE,
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',

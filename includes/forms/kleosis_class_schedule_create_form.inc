@@ -56,6 +56,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
   $query->addField('ksclss', 'period_status');
   $query->addField('ksclss', 'classroom');
   $query->addField('ksclss', 'period_lead');
+  $query->addField('ksclss', 'period_sub');
 
   $query->condition('ksclss.' . 'kccls_id_fk', $classid, '=');
   $query->orderBy('ksclss.period_day', 'ASC');
@@ -82,6 +83,39 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#weight' => -5,
     );
 */
+
+  // provide a header row for the period schedule columns
+
+  $form['class_schedule_entry_record']['day_of_week'] = array(
+    '#markup' =>    'Day',
+    '#prefix' => '<div style="float: left;clear: left;width:190px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['period duration'] = array(
+    '#markup' =>    'Period Duration',
+    '#prefix' => '<div style="float: left;width:170px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['Room'] = array(
+    '#markup' =>    'Room',
+    '#prefix' => '<div style="float: left;width:150px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_lead'] = array(
+    '#markup' =>    'Instructor',
+    '#prefix' => '<div style="float: left;width:140px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_sub'] = array(
+    '#markup' =>    'Sub',
+    '#prefix' => '<div style="float: left;width:80px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['spacer2'] = array(
+    '#markup' =>    '&nbsp;',
+    '#prefix' => '<div style="float: left;clear: left;width:60px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
 
   $i = 1;
   foreach ($period_record as $period) {
@@ -180,7 +214,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#options' =>  ks_get_classrooms(),
       '#default_value' => $period->classroom,
       '#disabled' => TRUE,
-      '#prefix' => '<div style="float: left;width:200px" >',
+      '#prefix' => '<div style="float: left;width:150px" >',
       '#suffix' => '</div>',
     );
 /*
@@ -200,8 +234,17 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
       '#default_value' => $period->period_lead,
       '#disabled' => TRUE,
-      '#prefix' => '<div style="float: left;width:110" >',
+      '#prefix' => '<div style="float: left;width:140px" >',
       '#suffix' => '</div><br/>',
+    );
+    $form['class_schedule_entry_record']['period_sub_' . $i] = array(
+      '#type' => 'select',
+//      '#title' => t('Sub instructor'),
+      '#options' =>  array(0 => t('no sub')) + ks_get_instructor_names(),
+      '#default_value' => $period->period_sub,
+      '#disabled' => TRUE,
+      '#prefix' => '<div style="float: left;width:140px" >',
+      '#suffix' => '</div>',
     );
 
     $i += 1;
@@ -217,7 +260,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 
     $form['class_schedule_entry_record']['hr_' . $inew] = array(
       '#markup' => '-------------------------------------------------',
-      '#prefix' => '<div style="float: left;clear: left;">',
+      '#prefix' => '<br/><div style="float: left;clear: left;">',
       '#suffix' => '</div><br/>',
     );
 
@@ -240,8 +283,8 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     );
 
   $form['class_schedule_entry_record']['period_' . $inew] = array(
-      '#markup' => t('New:') . ' ',
-      '#prefix' => '<div style="float: left;clear: left;width:60px" ><strong><em>',
+      '#markup' => t('New period') . ': ',
+      '#prefix' => '<div style="float: left;clear: left;width:260px" ><strong><em>',
       '#suffix' => '</em></strong></div>',
     );
 /*    $form['class_schedule_entry_record']['period_start_datetime_' . $inew] = array(
@@ -261,7 +304,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#title' => t('Day'),
       '#options' =>  kleosis_dayofweek_values(),
       '#default_value' => 1,
-      '#prefix' => '<div style="float: left;width:80" >',
+      '#prefix' => '<div style="float:left;clear:left;width:80" >',
       '#suffix' => '</div>',
     );
     $form['class_schedule_entry_record']['from_' . $inew] = array(
@@ -308,11 +351,11 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     );
     $form['class_schedule_entry_record']['classroom_' . $inew] = array(
       '#type' => 'select',
-      '#title' => t('Classroom'),
+      '#title' => t('Room'),
       '#options' =>  ks_get_classrooms(),
       '#default_value' => 1,
       '#disabled' => FALSE,
-      '#prefix' => '<div style="float: left;width:200px" >',
+      '#prefix' => '<div style="float: left;width:150px" >',
       '#suffix' => '</div>',
     );
 /*
@@ -329,8 +372,16 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Lead Instructor'),
       '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
-      '#default_value' => 1,
-      '#prefix' => '<div style="float: left;width:110" >',
+      '#default_value' => 0,
+      '#prefix' => '<div style="float: left;width:140px" >',
+      '#suffix' => '</div>',
+    );
+    $form['class_schedule_entry_record']['period_sub_' . $inew] = array(
+      '#type' => 'select',
+      '#title' => t('Sub Instructor'),
+      '#options' =>  array(0 => t('no sub')) + ks_get_instructor_names(),
+      '#default_value' => 0,
+      '#prefix' => '<div style="float: left;width:140px" >',
       '#suffix' => '</div>',
     );
 // end of blank period
@@ -417,6 +468,7 @@ function kleosis_class_schedule_create_form_submit($form, &$form_state) {
 //  $schedule_record['period_status'] = $form_state['values']['period_status_new'];
   $schedule_record['period_status'] = 1;  // for Kleosis Lite
   $schedule_record['period_lead'] = $form_state['values']['period_lead_new'];
+  $schedule_record['period_sub'] = $form_state['values']['period_sub_new'];
 
   $ok = ks_insert_schedule_record($schedule_record);
 

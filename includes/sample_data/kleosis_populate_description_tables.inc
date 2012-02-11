@@ -2325,8 +2325,8 @@ else {
   else {
     $fields = array(
       'krodt_id' => 0,
-      'report_name' => '',
-      'report_filename' => ' ',
+      'report_name' => 'Unspecified',
+      'report_filename' => 'none',
       'description' => 'not set',
     );
     db_insert('ks_report_odt')

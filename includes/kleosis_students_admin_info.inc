@@ -68,7 +68,7 @@ function kleosis_student_relationships_edit_form() {
   $form['setrelation']['student'] = array(
     '#type' => 'select',
     '#title' => t('Student'),
-    '#options' =>  get_all_students(),
+    '#options' =>  ks_get_all_students(),
     '#default_value' => !empty($student) ? $student : 1,
     '#prefix' => '<div style="float: left; clear:left;width:250px" >',
     '#disabled' => TRUE,
@@ -88,7 +88,7 @@ function kleosis_student_relationships_edit_form() {
     '#title' => t('User/Student'),
 //    '#options' =>  array('student01_key' => t('student01_value'),'student02_key' => t('student02_value')),
 //    '#default_value' => 'student02_key',
-    '#options' =>  get_all_ks_users() + get_all_students(),
+    '#options' =>  ks_get_all_ks_users() + ks_get_all_students(),
     '#default_value' => !empty($user_student) ? $user_student : 1,
     '#prefix' => '<div style="float:left;width:150px" >',
     '#suffix' => '</div>',
@@ -343,7 +343,7 @@ function kleosis_student_status_details_edit_form() {
   $form['status_details']['student'] = array(
     '#type' => 'select',
     '#title' => t('Student'),
-    '#options' =>  get_all_students(),
+    '#options' =>  ks_get_all_students(),
     '#default_value' => !empty($student) ? $student : 1,
     '#disabled' => TRUE,
     '#prefix' => '<div style="float: left; clear:left;width:250px" >',
@@ -352,7 +352,7 @@ function kleosis_student_status_details_edit_form() {
   $form['status_details']['status'] = array(
     '#type' => 'select',
     '#title' => t('Status'),
-    '#options' =>  get_student_statuses(),
+    '#options' =>  ks_get_student_statuses(),
     '#default_value' => $studentrec['curr_status'],
     '#prefix' => '<div style="float:left;width:150px" >',
     '#suffix' => '</div>',
@@ -439,7 +439,7 @@ function kleosis_student_status_details_edit_form_submit($form, &$form_state) {
                           ) )
           ->execute();
 
-      $cnt = set_student_status($form_state['values']['student'], $form_state['values']['status']);  // update the current status in the students record
+      $cnt = ks_set_student_status($form_state['values']['student'], $form_state['values']['status']);  // update the current status in the students record
 
      drupal_set_message(t('New student status was successfully added.'));
     }

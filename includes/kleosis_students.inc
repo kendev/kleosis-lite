@@ -463,7 +463,7 @@ function kleosis_student_summary_form($form, &$form_state) {
   $form['user_biodata']['curr_status'] = array(
     '#type' => 'item',
     '#title' => t('Current Status'),
-    '#markup' => ($defaults)? get_student_status_desc($ks_user['curr_status']) : '',
+    '#markup' => ($defaults)? ks_get_student_status_desc($ks_user['curr_status']) : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
@@ -609,10 +609,11 @@ function kleosis_students_classes($form, &$form_state) {
   $_SESSION['student']['id'] = $uid;
   $_SESSION['student']['name'] = $name;
 
-  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
-  $term = variable_get('kleosis_academic_term', 'fy');
 
-  // create a fieldset for the class academic year and term selection
+  $academic_year = isset($_SESSION['kleosis_students_classes']['academic_year']) ? $_SESSION['kleosis_students_classes']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['kleosis_students_classes']['term']) ? $_SESSION['kleosis_students_classes']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+ // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
     '#type' => 'fieldset',
     '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term,
@@ -626,7 +627,7 @@ function kleosis_students_classes($form, &$form_state) {
     '#title' => t('Academic Year'),
     '#options' =>  kleosis_academic_year_values(),
     '#default_value' =>  $academic_year,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 1,
     '#prefix' => '<div style="float: left;clear:left;width:130px" >',
     '#suffix' => '</div>',
@@ -636,7 +637,7 @@ function kleosis_students_classes($form, &$form_state) {
     '#title' => t('Term'),
     '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
     '#default_value' => $term,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 3,
     '#prefix' => '<div style="float: left;width:100px" >',
     '#suffix' => '</div>',
@@ -646,7 +647,7 @@ function kleosis_students_classes($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Apply'),
     '#weight' => 5,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
@@ -694,6 +695,14 @@ function kleosis_students_classes($form, &$form_state) {
 
   if ( !empty($result) ) {
     $nids = array_keys($result['node']);  // these nids will be used to filter the following query:
+  }
+  else {
+    $build['no_classes'] = array(
+      '#markup' => 'There are no classes defined for the selected academic year and term.',
+      '#prefix' => '<br/><div style="float: left;clear: left;width:550px"><strong>',
+      '#suffix' => '</strong></div>',
+    );
+    return $build;
   }
 
   $query = db_select('ks_student_course_classes', 'ksscc');
@@ -778,6 +787,20 @@ function kleosis_students_classes($form, &$form_state) {
 
   return $build;
 
+}
+
+
+function kleosis_students_classes_submit($form, &$form_state) {
+
+  switch ($form_state['values']['op']) {
+
+    case 'Apply':
+
+      $_SESSION['kleosis_students_classes'] = array('academic_year' => $form_state['values']['academic_year'],
+                                                    'term' => $form_state['values']['term'],
+                                                    );
+      break;
+  }
 }
 
 /**

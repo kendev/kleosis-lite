@@ -424,7 +424,7 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   }
   else {
     drupal_set_message(t('There are no attendance courses defined.'));
-    return '';
+    return array();
   }
 
   /* then, get Classes referenced to Courses with course_type 'attendance' */

@@ -167,8 +167,6 @@ dpm($record->final_grade_str);
 
 
 
-
-
  return array('#markup' => 'Development code goes here...');
 
 }

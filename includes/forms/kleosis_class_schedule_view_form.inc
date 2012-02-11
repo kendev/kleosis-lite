@@ -57,6 +57,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
   $query->addField('ksclss', 'period_status');
   $query->addField('ksclss', 'classroom');
   $query->addField('ksclss', 'period_lead');
+  $query->addField('ksclss', 'period_sub');
 
   $query->condition('ksclss.' . 'kccls_id_fk', $classid, '=');
   $query->orderBy('ksclss.period_day', 'ASC');
@@ -72,7 +73,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:640px" ><br/><strong><p>',
+        '#prefix' => '<div style="float: left;clear: left;width:7000px" ><br/><strong><p>',
         '#suffix' => '</strong></p><br/></div>',
       );
     return $form;
@@ -94,6 +95,39 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
       '#weight' => -5,
     );
 */
+
+  // provide a header row for the period schedule columns
+
+  $form['class_schedule_entry_record']['day_of_week'] = array(
+    '#markup' =>    'Day',
+    '#prefix' => '<div style="float: left;clear: left;width:105px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['period duration'] = array(
+    '#markup' =>    'Period Duration',
+    '#prefix' => '<div style="float: left;width:170px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['Room'] = array(
+    '#markup' =>    'Room',
+    '#prefix' => '<div style="float: left;width:125px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_lead'] = array(
+    '#markup' =>    'Instructor',
+    '#prefix' => '<div style="float: left;width:155px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['instructor_sub'] = array(
+    '#markup' =>    'Sub',
+    '#prefix' => '<div style="float: left;width:80px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
+  $form['class_schedule_entry_record']['spacer2'] = array(
+    '#markup' =>    '&nbsp;',
+    '#prefix' => '<div style="float: left;clear: left;width:60px"><strong>',
+    '#suffix' => '</strong></div>',
+  );
 
   $i = 1;
   foreach ($period_record as $period) {
@@ -176,7 +210,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
       '#prefix' => '<div style="float: left;width:120" >',
       '#suffix' => '</div>',
     );
-  $form['class_schedule_entry_record']['spacer_' . $i] = array(
+    $form['class_schedule_entry_record']['spacer1_' . $i] = array(
       '#markup' => '&nbsp;&nbsp;',
       '#prefix' => '<div style="float: left;width:25px" >&nbsp;&nbsp;',
       '#suffix' => '&nbsp;&nbsp;</div>',
@@ -201,6 +235,18 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
       '#type' => 'item',
 //      '#title' => t('Status'),
       '#markup' =>  ($defaults) ? (get_ks_username_by_id($period->period_lead) ? get_ks_username_by_id($period->period_lead) : 'no instructor') : '',
+      '#prefix' => '<div style="float: left;width:130px" >',
+      '#suffix' => '</div>',
+    );
+    $form['class_schedule_entry_record']['spacer2_' . $i] = array(
+      '#markup' => '&nbsp;&nbsp;',
+      '#prefix' => '<div style="float: left;width:25px" >&nbsp;&nbsp;',
+      '#suffix' => '&nbsp;&nbsp;</div>',
+    );
+    $form['class_schedule_entry_record']['period_sub_' . $i] = array(
+      '#type' => 'item',
+//      '#title' => t('Status'),
+      '#markup' =>  ($defaults) ? (get_ks_username_by_id($period->period_sub) ? get_ks_username_by_id($period->period_sub) : 'no sub') : '',
       '#prefix' => '<div style="float: left;width:100" >',
       '#suffix' => '</div>',
     );

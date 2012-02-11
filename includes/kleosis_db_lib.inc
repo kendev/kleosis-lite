@@ -13,7 +13,7 @@
  * @return
  *   the student current status as a string
  */
-function get_student_status_desc($intstatus) {
+function ks_get_student_status_desc($intstatus) {
 
 //  can do dynamic query instead:
 //  $query = db_select('ks_student_status_desc', 'kstat');
@@ -32,7 +32,7 @@ function get_student_status_desc($intstatus) {
  * @return
  *    options - an array of student statuses
  */
-function get_student_statuses() {
+function ks_get_student_statuses() {
 
   $options = array();
   $results = db_query('SELECT ksts_id, status FROM {ks_student_status_desc}' )->fetchAll();
@@ -53,7 +53,7 @@ function get_student_statuses() {
  * @return
  *    $cnt - the count of records updated (normally 1, but will be 0 if no changes...
  */
-function set_student_status($uid, $intstatus) {
+function ks_set_student_status($uid, $intstatus) {
 
   $cnt = db_update('ks_students')
          ->condition('drp_uid_fk', $uid, '=')
@@ -68,7 +68,7 @@ function set_student_status($uid, $intstatus) {
  * @return
  *    options - an array of students (key and value)
  */
-function get_all_students() {
+function ks_get_all_students() {
 
   $students = array();
   $query = db_select('users', 'u');
@@ -91,7 +91,7 @@ function get_all_students() {
  * @return
  *    options - an array of ks_users (key and value)
  */
-function get_all_ks_users($ks_int_usertype = 0) {
+function ks_get_all_ks_users($ks_int_usertype = 0) {
 
   $ks_users = array();
   $query = db_select('users', 'u');
@@ -901,6 +901,21 @@ function get_transportation_types() {
   return $options;
 }
 
+/**
+ * Get the odt_reports years
+ *
+ * @return
+ *    options - an array of odt_reports
+ */
+function ks_get_odt_reports() {
+
+  $options = array();
+  $results = db_query('SELECT report_name, report_filename FROM {ks_report_odt}' )->fetchAll();
+  foreach ($results as $report) {
+    $options[$report->report_filename] = $report->report_name;
+  }
+  return $options;
+}
 /**
  *
  * get a student user record from the ks_students custom table
@@ -1728,6 +1743,7 @@ function ks_get_students_in_a_class($classid) {
   $query = db_select('ks_student_course_classes', 'ksscc');
   $query->innerJoin('users', 'u', 'u.uid = ksscc.kstu_id_fk');
   $query->addField('ksscc', 'kstu_id_fk');
+  $query->addField('ksscc', 'kccls_id_fk');
   $query->addField('u', 'name');
 
   $query->condition('ksscc.' . 'kccls_id_fk', $classid, '=');
@@ -1883,6 +1899,90 @@ function ks_get_attendance_schedule_records($instructorid, $academic_year, $term
 
 /**
  *
+ * get daily attendance schedule records from the ks_class_schedule table for a substitute instructor
+ *
+ * @param $instructorid_sub
+ *    substitute instructor id
+ * @param $academic_year
+ *    academic_year
+ * @param $term
+ *    term
+ * @return
+ *    array of schedule records
+ */
+function ks_get_attendance_schedule_records_sub($instructorid_sub, $academic_year, $term, $day = 0) {
+
+  if (($academic_year == 'all') || ($term == 'all') ) {
+    return NULL;
+  }
+  $daterange = ks_get_acy_term_dates($academic_year, $term);
+
+  $startdate = $daterange[0];
+  $enddate = $daterange[1];
+
+  /* first, get Courses with course_type 'Attendance' */
+  $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course key
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', 'course')
+  ->fieldCondition('ks_course_type', 'value', $attnda[0], '=');
+
+  $result = $query->execute();
+
+  $nids_courses = array(0);
+
+  if ( !empty($result) ) {
+    $nids_courses = array_keys($result['node']);  // these nids will be used to filter the following query:
+  }
+
+  /* then, get Classes referenced to Courses with course_type 'attendance' */
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', 'class')
+  ->fieldCondition('ks_class_term', 'value', $term, '=')
+  ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
+  ->fieldCondition('ks_class_course_ref', 'nid', $nids_courses, 'IN', 0)
+  ->propertyCondition('status', 1);  // not needed, just an example...
+
+  $result = $query->execute();
+
+  $nids_classes = array(0);
+  if ( !empty($result) ) {
+    $nids_classes = array_keys($result['node']);  // these nids will be used to filter the following query:
+  }
+
+  /* lastly, get Classes scheduled for the selected instructor, acyt, and day */
+
+  $query = db_select('ks_class_schedule', 'ksclss');
+  $query->addField('ksclss', 'kclss_id');
+  $query->addField('ksclss', 'kccls_id_fk');
+  $query->addField('ksclss', 'period_start_datetime');  // M-D-Y part is the class start date
+  $query->addField('ksclss', 'period_end_datetime');    // M-D-Y part is also the class start date
+  $query->addField('ksclss', 'period_day');             // Day of the week (ISO-8601)
+  $query->addField('ksclss', 'period_hour');            // not currently used
+  $query->addField('ksclss', 'period_length');          // not currently used
+  $query->addField('ksclss', 'period_status');
+  $query->addField('ksclss', 'classroom');
+  $query->addField('ksclss', 'period_lead');
+
+  $query->condition('ksclss.' . 'period_sub', $instructorid_sub, '=');
+  $query->condition('ksclss.' . 'period_start_datetime', $daterange, 'BETWEEN');
+  $query->condition('ksclss.' . 'kccls_id_fk', $nids_classes, 'IN');
+  if  ($day) {
+    $query->condition('ksclss.' . 'period_day', $day, '=');
+  }
+
+//  $query->orderBy('ksclss.period_day', 'ASC');
+//  $query->orderBy('ksclss.period_start_datetime', 'ASC');
+
+  $schedule_records = $query->execute()->fetchAll();
+
+  return $schedule_records;
+}
+
+/**
+ *
  * insert a class schedule record into the ks_class_schedule table
  *
  * @param $ks_schedule_record
@@ -1909,7 +2009,8 @@ function ks_insert_schedule_record($ks_schedule_record) {
                       'period_length' => 0,   //$ks_schedule_record['period_length'],
                       'period_status' => $ks_schedule_record['period_status'],
                       'classroom' => $ks_schedule_record['classroom'],
-                      'period_lead' => $ks_schedule_record['period_lead'], ) )
+                      'period_lead' => $ks_schedule_record['period_lead'],
+                      'period_sub' => $ks_schedule_record['period_sub'], ) )
       ->execute();
 
   return $cnt;
@@ -1944,7 +2045,8 @@ function ks_update_schedule_record($ks_schedule_record) {
                       'period_length' => 0,   //$ks_schedule_record['period_length'],
                       'period_status' => $ks_schedule_record['period_status'],
                       'classroom' => $ks_schedule_record['classroom'],
-                      'period_lead' => $ks_schedule_record['period_lead'], ) )
+                      'period_lead' => $ks_schedule_record['period_lead'],
+                      'period_sub' => $ks_schedule_record['period_sub'], ) )
       ->execute();
 
   return $cnt;
