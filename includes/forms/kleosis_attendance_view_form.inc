@@ -624,9 +624,6 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
 */
 
       // check for proper class/period selection and set period select box accordingly (for multiple classes)
-
-      $node = node_load($form_state['values']['classes']);  // get the classid from the select box
-
       // then get all the scheduled Attendance classes assigned to the instructor(s) for the selected acy&t and day
 
       $attnd_filter_instructorid = isset($_SESSION['ks_atnd_instructor_filter']['instructorid']) ? $_SESSION['ks_atnd_instructor_filter']['instructorid'] : 0;
@@ -671,7 +668,7 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
       $node = node_load($form_state['values']['classes']);
 
       $_SESSION['ks_atnd_class_select'] = array('classid' => $form_state['values']['classes'],
-                                        'classname' => $node->title,
+                                        'classname' => isset($node->title) ? $node->title : 0,
                                         'day' => $theday,
                                         'period' => $form_state['values']['period'],
                                         'attnd_year' => $form_state['values']['period_attnd_date']['year'],
@@ -692,7 +689,7 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
       $node = node_load($form_state['values']['classes']);
 
       $_SESSION['ks_atnd_class_select'] = array('classid' => $form_state['values']['classes'],
-                                        'classname' => $node->title,
+                                        'classname' => isset($node->title) ? $node->title : 0,
                                         'day' => $theday,
                                         'period' => $form_state['values']['period'],
                                         'attnd_year' => $form_state['values']['period_attnd_date']['year'],
