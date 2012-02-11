@@ -84,7 +84,7 @@ Views:
 	  Title (or Description): Student Info System
 	  
     - Kleosis will show up as a Main Menu item that points to an information page.  The Kleosis menu will be added to this page: 
-	- Select Structure, Blocks menu item from the Administration menu, scroll down and click on the configure link accross from the Disabled Kleosis menu
+	- Select Structure, Blocks menu item from the Administration menu, scroll down and click on the configure link across from the Disabled Kleosis menu
 	- In the Kleosis Bartik (default theme) select box, select Sidebar first
 	- In the 'Show block on specific pages' section, click on the 'Only the listed pages' radio button and then enter the following two lines in the textarea:
 		kleosis

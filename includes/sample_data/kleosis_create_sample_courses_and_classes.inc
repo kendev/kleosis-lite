@@ -143,11 +143,11 @@ other = 6
   $course_nids[31] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 9', 'HRAtta09', '1', '6', '4', '12', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 9');
    kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 1', $course_nids[31], 'fy', '1', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 1');
     kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-9 Class - Sec 2', $course_nids[31], 'fy', '2', 'Remarks for Kleosis sample Homeroom-Afternoon Grade 9 Class - Section 2');
-
+*/
   $course_nids[32] = kleosis_create_sample_course('Kleosis auto generated Homeroom-Afternoon Attnd Grade 10', 'HRAtta10', '1', '6', '4', '13', 'Description for Kleosis auto generated Homeroom-Afternoon Attnd Grade 10');
     kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1', $course_nids[32], 'fy', '1', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 1');
     kleosis_create_sample_class('Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2', $course_nids[32], 'fy', '2', 'Remarks for Kleosis Homeroom-Afternoon Attnd G-10 Class - Sec 2');
-*/
+
 /**
  * Create a Kleosis sample course
  */

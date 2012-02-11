@@ -1424,6 +1424,7 @@ function kleosis_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h
   $schedule_record['classroom'] = $cl_rm;
   $schedule_record['period_status'] = 1;  // for Kleosis Lite
   $schedule_record['period_lead'] = $p_l_i;
+  $schedule_record['period_sub'] = 0;
 
   $ok = ks_insert_schedule_record($schedule_record);
 }
