@@ -169,16 +169,6 @@ dpm($record->final_grade_str);
 
 
 
-//$some_groups = array(2 => 2, 4 => 4);
-$some_groups = array();
-$stu_id = 1150;  // student9001
-
-
-
-$res = ks_update_student_groups($stu_id, $some_groups);
-
-
-dpm($res);
 
 
 
