@@ -493,6 +493,19 @@ function kleosis_department_values() {
 }
 
 /**
+ * The allowed values for the student groups
+ *
+ * @return
+ *    An array of groups to select
+ */
+
+function kleosis_student_group_values() {
+
+  $le_array = ks_get_student_groups();
+  return $le_array;
+}
+
+/**
  * Get the key|label entries for a _desc table
  *
  * @param $ks_field_name

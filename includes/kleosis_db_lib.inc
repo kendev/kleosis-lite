@@ -445,6 +445,59 @@ function ks_get_gradelevels() {
   return $options;
 }
 /**
+ * Get all student groups
+ *
+ * @return
+ *    options - an array of groups
+ */
+
+function ks_get_student_groups() {
+
+  $options = array();
+  $results = db_query('SELECT ksgrpd_id, groupname FROM {ks_student_group_desc}' )->fetchAll();
+  foreach ($results as $group) {
+    $options[$group->ksgrpd_id] = $group->groupname;
+  }
+  return $options;
+}
+/**
+ * Get a list of student groups by student id
+ *
+ * @return
+ *    options - an array of group ids
+ */
+
+function ks_get_student_groups_by_id($stu_id) {
+
+  $options = array();
+  $results = db_query('SELECT ksgrp_id, kstu_id_fk, ksgrpd_id_fk, start_date, end_date, remarks FROM {ks_student_groups} WHERE kstu_id_fk = :stu_id',
+                      array(':stu_id' => $stu_id))->fetchAll();
+  foreach ($results as $group) {
+    $options[] = $group->ksgrpd_id_fk;
+  }
+  return $options;
+}
+/**
+ * Get a markup list of student groups by student id for display
+ *
+ * @return
+ *    options - a string of group names for display
+ */
+
+function ks_get_student_groups_markup_by_id($stu_id) {
+
+  $groupnames = '';
+  $query = db_select('ks_student_groups', 'kstg');
+  $query->innerJoin('ks_student_group_desc', 'kstg_desc', 'kstg_desc.ksgrpd_id = kstg.ksgrpd_id_fk');
+  $query->addField('kstg_desc', 'groupname');
+  $query->condition('kstg.kstu_id_fk', $stu_id, '=');
+  $results = $query->execute()->fetchAll();
+  foreach ($results as $legroup) {
+    $groupnames .= $legroup->groupname . '<br/>';
+  }
+  return $groupnames;
+}
+/**
  * Get all organizations
  *
  * @return
@@ -999,6 +1052,8 @@ function ks_get_student_record($drupaluserid) {
  */
 function ks_update_student_record(&$edit) {
 
+//dpm($edit);
+
   $dob = new DateTime();
   $pped = new DateTime();
   $appd = new DateTime();
@@ -1066,7 +1121,7 @@ function ks_update_student_record(&$edit) {
                         'website' => $edit['website'],
                         'remarks' => $edit['remarks'] ) )
           ->execute();
-
+  $res = ks_update_student_groups($edit['original']->uid, $edit['student_groups']);
   return $cnt;
 }
 /**
@@ -2352,7 +2407,7 @@ function ks_insert_final_grade_ls_record($ks_final_grade_record) {
 
 /**
  *
- * update an final grade record in the ks_student_course_class_grades table (for LIST)
+ * update a final grade record in the ks_student_course_class_grades table (for LIST)
  *
  * @param $ks_final_grade_record
  *    Final grade record
@@ -2375,6 +2430,39 @@ function ks_update_final_grade_ls_record($ks_final_grade_record) {
       ->execute();
 
   return $cnt;
+}
 
+/**
+ *
+ * update the groups for a student in the ks_student_groups table
+ *
+ * the update is accomplished by a delete and insert
+ *
+ * @param $stu_id
+ *    the student id
+ * @param $groups
+ *    array of groupids
+ * @return
+ *    TRUE
+ */
+function ks_update_student_groups($stu_id, $groups) {
+
+  $start_date = new DateTime('now');
+  $end_date = new DateTime('now');  // todo: change this to a NULL
+
+
+  $cnt_deleted = db_delete('ks_student_groups')
+            ->condition('kstu_id_fk', $stu_id, '=')
+            ->execute();
+
+  foreach ($groups as $group) {
+    $cnt = db_insert('ks_student_groups')
+          ->fields(array( 'kstu_id_fk' => $stu_id,
+                          'ksgrpd_id_fk' => $group,
+                          'start_date' => $start_date->format('Y-m-d'),
+                          'end_date' => $end_date->format('Y-m-d'), ) )
+          ->execute();
+  }
+  return TRUE;
 }
 

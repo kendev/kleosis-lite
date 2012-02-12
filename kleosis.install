@@ -1684,7 +1684,7 @@ function kleosis_schema() {
         'mysql_type' => 'DATETIME',
         'type' => 'int',
         'size' => 'big',
-        'not null' => TRUE,
+        'not null' => FALSE,
         'description' => 'date group was unassigned',
       ),
       'remarks' => array(

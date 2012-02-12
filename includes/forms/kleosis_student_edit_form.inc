@@ -384,6 +384,15 @@ $form['student_biodata']['passport_no'] = array(
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
+  $form['student_admin_info']['student_groups'] = array(
+    '#type' => 'select',
+    '#title' => t('Student Groups'),
+    '#options' => kleosis_student_group_values(),
+    '#default_value' => ($defaults)? ks_get_student_groups_by_id($theuser->uid) : 0,
+    '#multiple' => TRUE,
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
   $form['student_admin_info']['application_date'] = array(
     '#type' => 'date',
     '#title' => t('Application Date'),
@@ -423,7 +432,7 @@ $form['student_biodata']['passport_no'] = array(
     '#size' => 20,
     '#maxlength' => 24,
     '#default_value' => ($defaults)? $ks_user['reg_no'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
   $form['student_admin_info']['application_forms_signed'] = array(

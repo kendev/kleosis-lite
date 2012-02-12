@@ -282,7 +282,6 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-
   $account->content['student_admin_info'] = array(  // fieldset for admin info
       '#type' => 'fieldset',
       '#title' => t('Student Admin Info'),
@@ -334,6 +333,13 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Current Other Program'),
     '#markup' => ($defaults)? get_program_desc($ks_user['curr_other_program']) : '',
+    '#prefix' => '<div style="float:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
+  $account->content['student_admin_info']['student_groups'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Student Groups'),
+    '#markup' => ks_get_student_groups_markup_by_id($account->uid),
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );

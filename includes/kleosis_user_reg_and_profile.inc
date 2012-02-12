@@ -263,8 +263,6 @@ function kleosis_user_update(&$edit, $account, $category) {
      return;
   }
 
-//dpm($edit);
-
   if (isset($edit['ks_student_type'])) {
 //    $cnt = ks_update_student_record(&$edit);
     $cnt = ks_update_student_record($edit);
