@@ -856,7 +856,7 @@ function get_schedule_period_status($intstatus) {
  */
 function ks_get_acy_term_dates($academic_year, $term) {
 
-    // get termcount
+  $lastsummer = variable_get('kleosis_last_term_in_fy', '0');  // '0' is yes
   $termcount = 6;
   $rec = db_query('SELECT * FROM {ks_academic_year_desc} LIMIT 1' )->fetchAll();
   if (empty($rec[0]->term1_enddate)) {
@@ -876,6 +876,10 @@ function ks_get_acy_term_dates($academic_year, $term) {
   }
   elseif (empty($rec[0]->term6_enddate)) {
     $termcount = 5;
+  }
+
+  if ($lastsummer && $termcount > 1) {
+    $termcount = $termcount -1;
   }
 
   $term_startdate =  ($term == 'fy') ? 'term1' . '_startdate' : 'term' . $term . '_startdate';

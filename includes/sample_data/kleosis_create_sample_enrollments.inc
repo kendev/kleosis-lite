@@ -15,14 +15,147 @@
                         'Kleosis Morning Break', 'Kleosis Lunchtime A', 'Kleosis Afternoon Break'
                         );
 
-  foreach ($studentnames as $studentname) {
+  foreach ($studentnames as $studentname) {  // enroll into classes with academic year = 2011-2012 and term = fy
 
     $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
     $studentid = db_query($sql, array(':name' => $studentname, ))->fetchField();
 
     foreach ($classnames as $classname) {
-      $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.title = :kleosis';
-      $classid = db_query($sql, array(':type' => 'class', ':kleosis' => $classname))->fetchField();
+
+        $classid = array();
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'class')
+        ->fieldCondition('ks_class_academic_year', 'value', '2011-2012', '=')
+        ->fieldCondition('ks_class_term', 'value', 'fy', '=')
+        ->fieldCondition('ks_class_status', 'value', 1, '=') // 'active'
+        ->propertyCondition('title', $classname);
+
+        $result = $query->execute();
+
+        if ( !empty($result) ) {
+          $classid = array_keys($result['node']);
+        }
+
+      try {
+        kleosis_enroll_student_into_class($studentid, $classid, $classname);
+      }
+      catch (Exception $e) {
+        $msg = check_plain($e->getMessage() );
+        drupal_set_message(t('Sample enrollment error:') . ' ' . $msg );
+      }
+    }
+  }
+
+  $classnames = array('Kleosis Homeroom-Morning Attnd G-9 Class - Sec S1', 'Kleosis sample Art 101 Class - Section S1',
+                        'Kleosis sample Computer 101 Class - Section S1', 'Kleosis sample English 101 Class - Section S1',
+                        'Kleosis sample Music 101 Class - Section S1', 'Kleosis sample PE 101 Class - Section S1',
+                        'Kleosis sample Science 101 Class - Section S1',
+                        'Kleosis Morning Break S1', 'Kleosis Lunchtime S1'
+                        );
+
+
+  foreach ($studentnames as $studentname) {  // enroll into classes with academic year = 2011-2012 and term = 3 (summer)
+
+    $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
+    $studentid = db_query($sql, array(':name' => $studentname, ))->fetchField();
+
+    foreach ($classnames as $classname) {
+
+        $classid = array();
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'class')
+        ->fieldCondition('ks_class_academic_year', 'value', '2011-2012', '=')
+        ->fieldCondition('ks_class_term', 'value', '3', '=')
+        ->fieldCondition('ks_class_status', 'value', 1, '=') // 'active'
+        ->propertyCondition('title', $classname);
+
+        $result = $query->execute();
+
+        if ( !empty($result) ) {
+          $classid = array_keys($result['node']);
+        }
+
+      try {
+        kleosis_enroll_student_into_class($studentid, $classid, $classname);
+      }
+      catch (Exception $e) {
+        $msg = check_plain($e->getMessage() );
+        drupal_set_message(t('Sample enrollment error:') . ' ' . $msg );
+      }
+    }
+  }
+
+  $classnames = array('Kleosis Homeroom-Morning Attnd G-10 Class - Sec 1', 'Kleosis sample Art 201 Class - Section 1',
+                        'Kleosis sample Computer 201 Class - Section 1', 'Kleosis sample English 201 Class - Section 1',
+                        'Kleosis sample English 202 Class - Section 1', 'Kleosis sample Math 201 Class - Section 1',
+                        'Kleosis sample Music 201 Class - Section 1', 'Kleosis sample PE 201 Class - Section 1',
+                        'Kleosis sample Science 201 Class - Section 1',
+                        'Kleosis Morning Break', 'Kleosis Lunchtime A', 'Kleosis Afternoon Break'
+                        );
+
+  foreach ($studentnames as $studentname) {  // enroll into classes with academic year = 2012-2013 and term = fy
+
+    $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
+    $studentid = db_query($sql, array(':name' => $studentname, ))->fetchField();
+
+    foreach ($classnames as $classname) {
+
+        $classid = array();
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'class')
+        ->fieldCondition('ks_class_academic_year', 'value', '2012-2013', '=')
+        ->fieldCondition('ks_class_term', 'value', 'fy', '=')
+        ->fieldCondition('ks_class_status', 'value', 1, '=') // 'active'
+        ->propertyCondition('title', $classname);
+
+        $result = $query->execute();
+
+        if ( !empty($result) ) {
+          $classid = array_keys($result['node']);
+        }
+
+      try {
+        kleosis_enroll_student_into_class($studentid, $classid, $classname);
+      }
+      catch (Exception $e) {
+        $msg = check_plain($e->getMessage() );
+        drupal_set_message(t('Sample enrollment error:') . ' ' . $msg );
+      }
+    }
+  }
+
+  $classnames = array('Kleosis Homeroom-Morning Attnd G-10 Class - Sec S1', 'Kleosis sample Art 201 Class - Section S1',
+                        'Kleosis sample Computer 201 Class - Section S1', 'Kleosis sample English 201 Class - Section S1',
+                        'Kleosis sample Music 201 Class - Section S1', 'Kleosis sample PE 201 Class - Section S1',
+                        'Kleosis sample Science 201 Class - Section S1',
+                        'Kleosis Morning Break S1', 'Kleosis Lunchtime S1'
+                        );
+
+
+  foreach ($studentnames as $studentname) {  // enroll into classes with academic year = 2012-2013 and term = 3 (summer)
+
+    $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
+    $studentid = db_query($sql, array(':name' => $studentname, ))->fetchField();
+
+    foreach ($classnames as $classname) {
+
+        $classid = array();
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'class')
+        ->fieldCondition('ks_class_academic_year', 'value', '2012-2013', '=')
+        ->fieldCondition('ks_class_term', 'value', '3', '=')
+        ->fieldCondition('ks_class_status', 'value', 1, '=') // 'active'
+        ->propertyCondition('title', $classname);
+
+        $result = $query->execute();
+
+        if ( !empty($result) ) {
+          $classid = array_keys($result['node']);
+        }
 
       try {
         kleosis_enroll_student_into_class($studentid, $classid, $classname);

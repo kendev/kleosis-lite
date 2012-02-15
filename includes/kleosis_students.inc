@@ -916,8 +916,11 @@ function kleosis_student_class_schedule($form, &$form_state) {
 
 function kleosis_student_class_schedule_acyt_select_form() {
 
-  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
-  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+//  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+//  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+  $academic_year = isset($_SESSION['kleosis_students_classes']['academic_year']) ? $_SESSION['kleosis_students_classes']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['kleosis_students_classes']['term']) ? $_SESSION['kleosis_students_classes']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
@@ -1007,8 +1010,11 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
 
 function kleosis_student_class_schedule_list() {
 
-  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
-  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+//  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+//  $term = isset($_SESSION['ks_student_class_schedule_select_filter']['term']) ? $_SESSION['ks_student_class_schedule_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+  $academic_year = isset($_SESSION['kleosis_students_classes']['academic_year']) ? $_SESSION['kleosis_students_classes']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['kleosis_students_classes']['term']) ? $_SESSION['kleosis_students_classes']['term'] : variable_get('kleosis_academic_term', 'fy');
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];

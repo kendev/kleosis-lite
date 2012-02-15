@@ -48,6 +48,7 @@ function kleosis_uninstall() {
   variable_del('kleosis_organization');
   variable_del('kleosis_academic_year');
   variable_del('kleosis_academic_term');
+  variable_del('kleosis_last_term_in_fy');
   variable_del('kleosis_starting_dow');
   variable_del('kleosis_moodle_url');
   variable_del('kleosis_moodle_version');

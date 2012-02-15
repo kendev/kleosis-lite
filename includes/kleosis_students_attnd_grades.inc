@@ -96,8 +96,12 @@ function kleosis_students_attendance($form, &$form_state) {
 
 function kleosis_student_attnd_acyt_select_form() {
 
-  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
-  $term = variable_get('kleosis_academic_term', 'fy');
+  global $user;
+
+  $academic_year = isset($_SESSION['ks_student_attnd_acyt_select']['academic_year']) ? $_SESSION['ks_student_attnd_acyt_select']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_attnd_acyt_select']['term']) ? $_SESSION['ks_student_attnd_acyt_select']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
@@ -115,7 +119,7 @@ function kleosis_student_attnd_acyt_select_form() {
     '#title' => t('Academic Year'),
     '#options' =>  kleosis_academic_year_values(),
     '#default_value' =>  $academic_year,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 1,
     '#prefix' => '<div style="float: left;clear:left;width:130px" >',
     '#suffix' => '</div>',
@@ -125,7 +129,7 @@ function kleosis_student_attnd_acyt_select_form() {
     '#title' => t('Term'),
     '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
     '#default_value' => $term,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 3,
     '#prefix' => '<div style="float: left;width:100px" >',
     '#suffix' => '</div>',
@@ -135,7 +139,7 @@ function kleosis_student_attnd_acyt_select_form() {
     '#type' => 'submit',
     '#value' => t('Apply'),
     '#weight' => 5,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
@@ -160,8 +164,9 @@ function kleosis_student_attnd_acyt_select_form() {
 
 function kleosis_students_attendance_list() {
 
-  $academic_year = variable_get('kleosis_academic_year', '2011-2012');
-  $term = variable_get('kleosis_academic_term', 'fy');
+  $academic_year = isset($_SESSION['ks_student_attnd_acyt_select']['academic_year']) ? $_SESSION['ks_student_attnd_acyt_select']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_attnd_acyt_select']['term']) ? $_SESSION['ks_student_attnd_acyt_select']['term'] : variable_get('kleosis_academic_term', 'fy');
+
   $student = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
@@ -183,7 +188,6 @@ function kleosis_students_attendance_list() {
   );
 
 //  get the "attendance class" nids for the selected student, academic year, and term
-//  for testing: $attendance_class_nids = array(0 => 1076);  //  Kleosis Homeroom-Morning Attnd G-9 Class - Sec 1
   $attendance_class_nids = ks_get_attendance_class_by_gradelevel($student, $academic_year, $term);
 
   if (empty($attendance_class_nids)) {
@@ -284,11 +288,10 @@ function kleosis_student_attnd_acyt_select_form_submit($form, &$form_state) {
 
     case 'Apply':
 
-//      $_SESSION['ks_student_attnd_acyt_select'] = array(
-//                                        'class_id' => 0,
-//                                        'academic_year' => $form_state['values']['academic_year'],
-//                                        'term' => $form_state['values']['term'],
-//                                        );
+      $_SESSION['ks_student_attnd_acyt_select'] = array(
+                                        'academic_year' => $form_state['values']['academic_year'],
+                                        'term' => $form_state['values']['term'],
+                                        );
 
       break;
   }
@@ -413,9 +416,8 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'course')
-//  ->fieldCondition('ks_course_type', 'value', '4', '=') // todo: get the actual value for 'Attendance' from the ks_course_type_description table
-  ->fieldCondition('ks_course_type', 'value', $attnda[0], '=')
-  ->fieldCondition('ks_course_gradelevel', 'value', $gradelevel, '=');
+  ->fieldCondition('ks_course_type', 'value', $attnda[0], '=');  // course_type = 'Attendance' from the ks_course_type_description table
+//  ->fieldCondition('ks_course_gradelevel', 'value', $gradelevel, '=');  // todo: review this
 
   $result = $query->execute();
 
@@ -443,7 +445,6 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
     $nids_classes = array_keys($result['node']);  // these nids are the 'attendance classes'
   }
 
-//  return array(0 => 1076, 1 => 991);  // test...
   return $nids_classes;
 }
 

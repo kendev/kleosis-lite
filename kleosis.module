@@ -924,8 +924,14 @@ function kleosis_settings_form($form, &$form_state) {
     '#title' => t('Academic Term'),
     '#description' => t('The current term for Kleosis functions.'),
     '#options' =>  array('all' => t('All')) + kleosis_academic_term_values(),
-//    '#options' =>  array('0' => ' ','1' => '1','2' => '2','3' => '3','4' => '4','5' => '5','6' => '6','fy' => 'FY'),
     '#default_value' =>  variable_get('kleosis_academic_term', 'fy'),
+  );
+  $form['kleosis_last_term_in_fy'] = array(
+    '#type' => 'radios',
+    '#title' => t('Include last Academic Term'),
+    '#description' => t('The last term defined is included in the date range for a full year (fy).'),
+    '#options' =>  array(t('Yes'), t('No')),
+    '#default_value' =>  variable_get('kleosis_last_term_in_fy', '0'),
   );
   $form['kleosis_starting_dow'] = array(
     '#type' => 'select',

@@ -166,10 +166,8 @@ dpm($record->final_grade_str);
 /****************  new dev code can go here:  ***************/
 
 
-
-
-
-
+//$academic_year = variable_get('kleosis_academic_year','2012-2013');
+//$term = variable_get('kleosis_academic_term','fy');
 
 
 
@@ -179,6 +177,66 @@ dpm($record->final_grade_str);
  return array('#markup' => 'Development code goes here...');
 
 }
+
+
+
+
+
+/**
+ * function to write a record into the the ks_class_schedule table
+ * uses ks_insert_schedule_record() in ks_db_lib.inc
+ *
+ */
+/*function kleosis_dev_sample_schedule_entry($classid, $class_start_date, $p_d, $p_s_h, $p_s_m, $p_e_h, $p_e_m, $cl_rm, $p_l_i) {
+  $schedule_record = array();
+//  $schedule_record['kclss_id'] = $id;
+  $schedule_record['kccls_id_fk'] = $classid;
+  $schedule_record['period_start_datetime']['year'] = $class_start_date->format('Y');
+  $schedule_record['period_start_datetime']['month'] = $class_start_date->format('n');
+  $schedule_record['period_start_datetime']['day'] = $class_start_date->format('j');
+  $schedule_record['period_day'] = $p_d;
+  $schedule_record['period_start_hour'] = $p_s_h;
+  $schedule_record['period_start_minute'] = $p_s_m;
+  $schedule_record['period_end_hour'] = $p_e_h;
+  $schedule_record['period_end_minute'] = $p_e_m;
+  $schedule_record['classroom'] = $cl_rm;
+  $schedule_record['period_status'] = 1;  // for Kleosis Lite
+  $schedule_record['period_lead'] = $p_l_i;
+  $schedule_record['period_sub'] = 0;
+
+  $ok = ks_insert_schedule_record($schedule_record);
+}
+*/
+/**
+ * function to return the class id for a specific class
+ *
+ * @param  $class_title
+ * @param  $academic_year
+ *
+ * @return the class id
+ *
+ */
+/*function kleosis_sample_get_classid($class_title, $academic_year) {
+
+  $nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', 'class')
+  ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
+  ->fieldCondition('ks_class_status', 'value', 1, '=') // 'active'
+  ->propertyCondition('title', $class_title);
+
+  $result = $query->execute();
+
+    if ( !empty($result) ) {
+      $nids = array_keys($result['node']);
+    }
+    else {
+        $nids = array(0);
+  }
+  return $nids;
+}
+*/
 
 // force logout of current user
 function force_logout() {

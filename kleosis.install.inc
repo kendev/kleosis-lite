@@ -37,6 +37,7 @@ function kleosis_install() {
   variable_set('kleosis_sample_data', FALSE);
   variable_set('kleosis_academic_year', '2011-2012');
   variable_set('kleosis_academic_term', 'fy');
+  variable_set('kleosis_last_term_in_fy','0');
   variable_set('kleosis_starting_dow', '1');
   variable_set('kleosis_moodle_url', 'http://localhost/moodle');
   variable_set('kleosis_moodle_version', '2.x');
