@@ -1,18 +1,19 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis View Attendance
+ *   Kleosis View Attendance functions
  *
  * The kleosis_attendance_view_form provides the display of class attendance
  *
  */
+
 $ks_libpath = drupal_get_path('module', 'kleosis');
 $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
 require_once ($kslib);
 
 /**
- * Build the Attendance Viewform.
+ * Build the Attendance View form.
  *
  * Returned form has a class selection form and a list of student/class periods for attendance
  *
@@ -41,10 +42,6 @@ function kleosis_attendance_view_form($form, &$form_state) {
  */
 
 function ks_attnd_view_instructor_filter_form($form, &$form_state) {
-
-/*///////////////////////////////////
-  drupal_set_message('inside ks_attnd_view_instructor_filter_form');
-*/////////////////////////////////////
 
   // get the instructor, academic year, and term from the session variable (if any) and set the default values accordingly
 
@@ -208,10 +205,6 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
     $days = $days_lead + $days_sub;
     $periods = $periods_lead + $periods_sub;
 
-//    dpm($classes);
-//    dpm($days);
-//    dpm($periods);
-
 //}
 
   $default_period = 'none';
@@ -318,7 +311,6 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
  * Attendance input form - filters by course
  *
  */
-
 function kleosis_attendance_input_form($form, &$form_state) {
 
   drupal_set_title(t('View Attendance'));
@@ -360,7 +352,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
 
   $students = ks_get_students_in_a_class($attnd_select_classid);
 
-  if( empty($students) ) {
+  if ( empty($students) ) {
     $form['no_students'] = array(
       '#markup' =>    'There are no students enrolled in this attendance course.',
       '#prefix' => '<div style="float: left;clear: left;width:550px"><strong>',
@@ -502,6 +494,11 @@ return $form;
 
 }
 
+/**
+ *
+ * Implementation of hook_submit() for the Attnd Class Selection form.
+ *
+ */
 function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
 
   switch ($form_state['values']['op']) {
@@ -677,8 +674,6 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
                                         'toggle_classes' => 'active',
                                         'toggle_attnd' => 'active',
                                         );
-//dpm($_SESSION['ks_atnd_class_select']['classid']);
-
      break;
     case 'Update':
 //    dpm('Hey - update!'); // This case never happens - see case Apply
@@ -700,22 +695,15 @@ function ks_attnd_view_class_selection_form_submit($form, &$form_state) {
                                         );
       break;
   }
-
 }
 
 function ks_attnd_view_input_form_submit($form, &$form_state) {
 
 //  dpm('inside kleosis_attendance_input_form_submit()');
-//  dpm($form);
-//  dpm($form_state);
-
 }
 
 function ks_attnd_view_form_submit($form, &$form_state) {
 
 //  dpm('inside kleosis_attendance_form_submit()');
-//  dpm($form);
-//  dpm($form_state);
-
 }
 

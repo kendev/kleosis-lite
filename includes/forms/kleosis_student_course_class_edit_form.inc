@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Student Course-Class edit form
+ *  Kleosis Student Course-Class edit form
+ *
  *  Provides the edit form for a record in the student course class list table
  */
 
@@ -20,12 +20,6 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
 
   drupal_set_title(t('Student class enrollment entry edit'));
 
-/*
-  $form['edit_return'] = array(
-   '#type' => 'markup',
-   '#markup' => '<p><br/>' . t('This is the kleosis_student_course_class_edit_form - tbd') . '</p>',
-      );
-*/
   $erid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : 0;
 
  if ($erid == 0) {
@@ -228,9 +222,8 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
 }
 
 /*
-* Validate function for the kleosis_student_course_class_edit_form
-*/
-
+ * Validate function for the kleosis_student_course_class_edit_form
+ */
   function kleosis_student_course_class_edit_form_validate($form, &$form_state) {
 
   if ($form_state['values']['op'] == 'Cancel') {
@@ -245,8 +238,8 @@ function kleosis_student_course_class_edit_form($form, &$form_state) {
 }
 
 /*
-* Submit function for the kleosis_student_course_class_edit_form
-*/
+ * Submit function for the kleosis_student_course_class_edit_form
+ */
 function kleosis_student_course_class_edit_form_submit($form, &$form_state) {
 
   switch ($form_state['values']['op']) {
@@ -284,5 +277,4 @@ function kleosis_student_course_class_edit_form_submit($form, &$form_state) {
       break;
     }
       $form_state['redirect'] = 'kleosis/students/classes';
-
 }

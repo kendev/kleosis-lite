@@ -1,9 +1,8 @@
 <?php
-// $Id$
 
 /**
  * @file
- * Wrapper functions for the OK Tech webservices layer to Moodle
+ *   Wrapper functions for the OK Tech webservices layer to Moodle
  */
 
 require_once ('kleosis_db_lib.inc');
@@ -168,24 +167,24 @@ function ws_users_edit_form_submit_values($form_values) {
   //  dpm("Input to moodle->edit_user: ");
   //  dpm($leUsers);
 
-try {
-    $margs = get_wsdl_uri();  // get the params for MoodleWS
-    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
-    $lr = $moodle->login($res['username'], $res['password']);
+  try {
+      $margs = get_wsdl_uri();  // get the params for MoodleWS
+      $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
+      $lr = $moodle->login($res['username'], $res['password']);
 
-  $res = $moodle->edit_users($lr->getClient(), $lr->getSessionKey(), $le_users);
-  //  dpm('Output from moodle->edit_user: ');
-  //  dpm($res);
+    $res = $moodle->edit_users($lr->getClient(), $lr->getSessionKey(), $le_users);
+    //  dpm('Output from moodle->edit_user: ');
+    //  dpm($res);
 
-  $moodle->logout($lr->getClient(), $lr->getSessionKey());
+    $moodle->logout($lr->getClient(), $lr->getSessionKey());
 
-  }
-catch (Exception $e) {
-  drupal_set_message(t('webservices->edit_users returned an error = %errormessage. %tryagain',
-  array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
-  return NULL;
-  }
-  return;  // todo: update this with a return value
+    }
+  catch (Exception $e) {
+    drupal_set_message(t('webservices->edit_users returned an error = %errormessage. %tryagain',
+    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+    return NULL;
+    }
+    return;  // todo: update this with a return value
 }
 
 /**
@@ -632,6 +631,7 @@ function get_mdl_login() {
 
   return $login_user;
 }
+
 /**
  * Set the Moodle wsdl and uri parameters for ws function calls
  *
@@ -646,6 +646,5 @@ function get_wsdl_uri() {
 //      $wsdl = $moodle_url .'/wspp/wsdl_pp2.php';
 
   return array('wsdl' => $wsdl, 'uri' => $uri);
-
 }
 

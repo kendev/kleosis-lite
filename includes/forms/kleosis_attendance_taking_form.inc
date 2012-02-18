@@ -1,12 +1,13 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis Take Attendance
+ *   Kleosis Take Attendance functions
  *
  * The kleosis_attendance_taking_form provides attendance-taking features
  *
  */
+
 $ks_libpath = drupal_get_path('module', 'kleosis');
 $kslib = $ks_libpath . '/includes/kleosis_lib.inc';
 require_once ($kslib);
@@ -39,7 +40,6 @@ function kleosis_attendance_taking_form($form, &$form_state) {
  * Instructor filter - filters by instructor, academic year, and term
  *
  */
-
 function kleosis_attnd_instructor_filter_form($form, &$form_state) {
 
   // get the instructor, academic year, and term from the session variable (if any) and set the default values accordingly
@@ -203,10 +203,6 @@ function kleosis_attnd_class_selection_form($form, &$form_state) {
     $days = $days_lead + $days_sub;
     $periods = $periods_lead + $periods_sub;
 
-//    dpm($classes);
-//    dpm($days);
-//    dpm($periods);
-
 //}
 
   $default_period = 'none';
@@ -314,7 +310,6 @@ function kleosis_attnd_class_selection_form($form, &$form_state) {
  * Attendance input form - filters by course
  *
  */
-
 function kleosis_attendance_input_form($form, &$form_state) {
 
   drupal_set_title(t('Take Attendance'));
@@ -356,7 +351,7 @@ function kleosis_attendance_input_form($form, &$form_state) {
 
   $students = ks_get_students_in_a_class($attnd_select_classid);
 
-  if( empty($students) ) {
+  if ( empty($students) ) {
     $form['no_students'] = array(
       '#markup' =>    'There are no students enrolled in this attendance course.',
       '#prefix' => '<div style="float: left;clear: left;width:550px"><strong>',
@@ -518,6 +513,11 @@ function kleosis_attendance_input_form($form, &$form_state) {
 
 }
 
+/**
+ *
+ * Implementation of hook_submit() for the Attnd Class Selection form.
+ *
+ */
 function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
 
   switch ($form_state['values']['op']) {
@@ -679,7 +679,6 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
                                         'toggle_classes' => 'active',
                                         'toggle_attnd' => 'active',
                                         );
-//dpm($_SESSION['ks_atnd_class_select']['classid']);
 
       break;
     case 'Submit Attendance':
@@ -703,25 +702,17 @@ function kleosis_attnd_class_selection_form_submit($form, &$form_state) {
                                         );
       break;
   }
-
 }
 
 function kleosis_attendance_input_form_submit($form, &$form_state) {
 
 //  dpm('inside kleosis_attendance_input_form_submit()');
-//  dpm($form);
-//  dpm($form_state);
-
 }
 
 function kleosis_attendance_form_submit($form, &$form_state) {
 
 //  dpm('inside kleosis_attendance_form_submit()');
-//  dpm($form);
-//  dpm($form_state);
-
 }
-
 
 /**
  * Get all classes assigned to an instructor - legacy code - not currently used...

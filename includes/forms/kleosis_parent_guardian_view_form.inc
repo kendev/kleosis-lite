@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Parent_Guardian Biodata view form
+ *  Kleosis Parent_Guardian Biodata view form
+ *
  *  Provides the view form for the additional parent_guardian fields from the custom tables
  */
 
@@ -259,6 +259,5 @@ function build_ks_user_parent_guardian_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-
 }
 

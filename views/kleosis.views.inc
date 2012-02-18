@@ -1,17 +1,16 @@
 <?php
-// $Id$
 
 /**
  * @file
- * Provide Views data for the Kleosis module
- * This file is currently being updated/rewritten to work with the current schema
- * as well as Views 3.
+ *  Provide Views data for the Kleosis module
+ *
+ *  This file has been updated/rewritten to work with the current schema
+ *  as well as Views 3.
  */
 
 /**
  * Implementation of hook_views_handlers().
  */
-
 function kleosis_views_handlers() {
   return array(
     'info' => array(

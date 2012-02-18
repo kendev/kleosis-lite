@@ -1,10 +1,9 @@
-
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis User Login and Registration functions
+ *   Kleosis User Login and Registration functions
+ *
  *  Provides the forms and functionality for the additional user fields from the custom tables
  */
 
@@ -119,7 +118,7 @@ function kleosis_form_alter(&$form, &$form_state, $form_id) {
 
 /**
  *
- * Implementation of form_validate() for the Users SIMS Info data.
+ * Implementation of form_validate() for the Users biodata.
  *
  */
 function kleosis_user_profile_form_validate($form, &$form_state) {
@@ -130,7 +129,7 @@ function kleosis_user_profile_form_validate($form, &$form_state) {
 
 /**
  *
- * Implementation of form_submit() for the Users SIMS Info data.
+ * Implementation of form_submit() for the Users biodata.
  *
  */
 function kleosis_user_profile_form_submit($form, &$form_state) {
@@ -196,8 +195,6 @@ function kleosis_user_update(&$edit, $account, $category) {
     //    if not, then add the user's info from the populated table to the unpopulated one and
     //        set the usertype in the ks_users table (if appropriate)
     //    return
-
-//dpm('inside user_update()');
     if (!ks_user_has_multiple_roles($account)) {
         return;
     }

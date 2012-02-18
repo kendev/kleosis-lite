@@ -1,14 +1,13 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis New Node Code Template
- * Provides a code skeleton for developing modules for new nodes
+ *  Kleosis New Node Code Template
+ *  Provides a code skeleton for developing modules for new nodes
  *
- * Replace "new_node" with the node name
- * Replace "new_module" with the module name
- * Replace "..field.." with whatever
- *
+ *  Replace "new_node" with the node name
+ *  Replace "new_module" with the module name
+ *  Replace "..field.." with whatever
  *
 */
 
@@ -79,12 +78,12 @@ function kleosis_new_module_list_form() {
 
   return $build;
 }
+
 /**
  *
  * New Nodes filters form
  *
  */
-
 function kleosis_new_module_filter_form() {
 
   // get the filter values from the session variable (if any) and set the default values accordingly
@@ -185,10 +184,9 @@ function new_node_fill_updateoptions_items() {
  * Provides a list of New Nodes in a Table
  *
  */
-
 function kleosis_new_module_list() {
 
-drupal_set_title(t('New Node List'));
+  drupal_set_title(t('New Node List'));
 
   $form = array();
 
@@ -319,14 +317,14 @@ function kleosis_new_node_validate($node, $form, &$form_state) {
  */
 function kleosis_new_node_filter_form_submit($form, &$form_state) {
 
-    if ($form_state['values']['op'] == 'Clear') {
-        $_SESSION['new_node_filter'] = array();
-    }
-    else {
-        $_SESSION['new_node_filter'] = array('field' => $form_state['values']['field'],
-                                        'oper' => $form_state['values']['oper'],
-                                        'operand' => $form_state['values']['operand'], );
-    }
+  if ($form_state['values']['op'] == 'Clear') {
+      $_SESSION['new_node_filter'] = array();
+  }
+  else {
+      $_SESSION['new_node_filter'] = array('field' => $form_state['values']['field'],
+                                      'oper' => $form_state['values']['oper'],
+                                      'operand' => $form_state['values']['operand'], );
+  }
 }
 
 /************************************************************************************************/
@@ -413,11 +411,11 @@ function kleosis_create_new_node_form($form, $form_state) {
   $build = array();
 
   if (  (in_array('administrator', $user->roles))  || (user_access('administer nodes'))  ) {
-//    $build['the_new_node'] = node_add('new_node');  // this throws a form expired error, so:
+//  $build['the_new_node'] = node_add('new_node');  // this throws a form expired error, so:
 
-        $path = 'node/add/' . 'new_node';   // another technique: redirect to let Drupal launch the node add form
-        $options = array('query' => array('destination' => 'kleosis/new_module') );
-        drupal_goto($path, $options, $http_response_code = 302);
+    $path = 'node/add/' . 'new_node';   // another technique: redirect to let Drupal launch the node add form
+    $options = array('query' => array('destination' => 'kleosis/new_module') );
+    drupal_goto($path, $options, $http_response_code = 302);
   }
   else {
     $build['view_return'] = array(
@@ -436,8 +434,6 @@ function kleosis_create_new_node_form($form, $form_state) {
  *
  */
 function new_module_form_alter(&$form, &$form_state, $form_id) {
-
-//dpm('inside new_module_form_alter()');
 
 /*
   if( ($form_id == 'new_module_node_form') && (!empty($form['#node_edit_form'])) ) {
@@ -523,9 +519,9 @@ function new_module_node_insert($node) {
 function new_module_node_load($nodes, $types) {
 
 //  used primarily when this new_node module uses a custom table
+//  dpm('inside new_module_node_load() - not currently implemented - ' . $node->title);
 //  foreach ($nodes as $node) {
 //    dpm($node);
-//    dpm('inside new_module_node_load() - not currently implemented - ' . $node->title);
 //  }
 }
 
@@ -579,7 +575,6 @@ function new_module_help($path, $arg) {
       ) . "</p>";
   }
 }
-
 
 /***********************************************************************************
 

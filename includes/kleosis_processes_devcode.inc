@@ -1,9 +1,15 @@
 <?php
-// $Id$
+
 /**
-* @file
-* kleosis general development code functions (temporary)
-*/
+ * @file
+ * Kleosis general development code, experimentations, and examples
+ */
+
+/**
+ *
+ *  This code file is not for public display :)
+ *
+ */
 
 //require_once ('kleosis_ws.inc');  // webservices wrapper functions
 
@@ -163,11 +169,11 @@ dpm($record->final_grade_str);
 
 /****************  end dev code  ***************/
 
+
 /****************  new dev code can go here:  ***************/
 
 
-//$academic_year = variable_get('kleosis_academic_year','2012-2013');
-//$term = variable_get('kleosis_academic_term','fy');
+
 
 
 
@@ -175,11 +181,7 @@ dpm($record->final_grade_str);
 
 
  return array('#markup' => 'Development code goes here...');
-
 }
-
-
-
 
 
 /**
@@ -556,7 +558,7 @@ $form['pagehelp']['pageinfo'] = array(
 return $form;
 }
 */
-/************************************    more sample and test code   **************************************************/
+/************************************    more sample and early test code   **************************************************/
 /*
 //$result = ks_get_enroll_records($drupaluserid, $unenroll_is_null = TRUE, $class_id = '', $enrol_date = '') {
 $result = ks_get_enroll_records(368, TRUE, 249);
@@ -691,6 +693,43 @@ $hey =  (variable_get('kleosis_course_grade_item_3_weight', '00.00') <> '00.00')
 dpm(variable_get('kleosis_course_grade_item_3_weight', '0'));
 dpm($hey);
 
+*/
+/**
+ *
+ * Retrieve the current user name from the session variable
+ *
+ * @param $uid
+ *   The user id from the url
+ *
+ *  return user's uid
+ */
+/*function kleosis_student_to_arg($uarg){
+
+  $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : '');
+  dpm('inside kleosis_student_to_arg');
+  dpm($uarg);
+
+  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
+    dpm('here is the ksopid:');
+    dpm($_GET['ksopid']);
+
+  }
+  dpm($uid);
+
+  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
+  $uid = $uid . '?ksopid=' . $uid;
+  }
+  if ( isset( $_GET['kssid'] ) && !empty( $_GET['kssid'] )) {
+  $uid = $uid . '&kssid=' . $_GET['kssid'];
+  }
+  if ( isset( $_GET['ksop'] ) && !empty( $_GET['ksop'] )) {
+  $uid = $uid . '&ksop=' . $_GET['ksop'];
+  }
+  dpm('here is the returning param');
+  dpm($uid);
+
+  return $uid;
+}
 */
 /**************************************************************************************/
 

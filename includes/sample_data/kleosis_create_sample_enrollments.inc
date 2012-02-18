@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Create the sample enrollments for kleosis
+ *  Create the sample enrollments for kleosis
  */
 
   $studentnames = array('student9000', 'student9001', 'student9002', 'student9003', 'student9004', 'student9005', 'student9006', 'student9007',
@@ -167,12 +168,11 @@
     }
   }
 
-
 /*
  * Function to enroll a student into a class
  * ks_insert_enroll_record() or ks_update_enroll_record() in ks_db_lib.inc
  *
-*/
+ */
 function kleosis_enroll_student_into_class($studentid, $classid, $classname) {
 
     $enrd = new DateTime('now');

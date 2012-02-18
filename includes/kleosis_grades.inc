@@ -1,23 +1,15 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis Grades
-*/
-
 
 /**
- * Provides Grades functions available in kleosis available in Kleosis
- *
- * @return
- *   tbd
+ * @file
+ * Kleosis Grades functions
  */
 
 /**
- * Defines a current grades placeholder tab
+ * Defines a Current grades placeholder tab
  *
  * @return
- *    a markup blurb...
+ *    redirects to kleosis_current_grades_by_class()
  */
 function kleosis_current_grades($form, &$form_state) {
 
@@ -29,7 +21,7 @@ function kleosis_current_grades($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
- drupal_set_title(t('Current Grades by Class'));
+  drupal_set_title(t('Current Grades by Class'));
 
 
 $page_desc = <<<EOT
@@ -39,25 +31,25 @@ EOT;
 
 // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Current Grades'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Current Grades'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-drupal_goto($path = 'kleosis/grades/current_grades', $options = array());
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  drupal_goto($path = 'kleosis/grades/current_grades', $options = array());
+  return $form;
 }
 
 /**
- * Defines a grades placeholder tab
+ * Retrieves the current grades for all students in a class (from Moodle)
  *
  * @return
- *    a markup blurb...
+ *    a list of current grades
  */
 function kleosis_current_grades_by_class($form, &$form_state) {
 
@@ -83,7 +75,6 @@ function kleosis_current_grades_by_class($form, &$form_state) {
  * Current grades filter by academic year, term, and class form
  *
  */
-
 function kleosis_current_grades_select_form() {
 
   // check permissions
@@ -219,7 +210,7 @@ function kleosis_current_grades_list() {
 
   if ( $grades_toggle == 'active' ) {  // get the grades from moodle
 
-    $text = t('Current grades from Moodle for class<strong>@classname</strong>:' . ' ' , array('@classname' => $class_shortname));
+    $text = t('Current grades from Moodle for class<strong>@classname</strong>' . ': ' , array('@classname' => $class_shortname));
 
     $build['thegrades'] = array(
       '#markup' => $text,
@@ -335,7 +326,6 @@ function kleosis_final_grades_by_class($form, &$form_state) {
  * Final grades filter by academic year, term, and class form
  *
  */
-
 function kleosis_final_grades_select_form() {
 
   // check permissions
@@ -715,10 +705,6 @@ function kleosis_final_grades_edit_form($form, &$form_state) {
     '#suffix' => '</div>',
   );
 
-//  dpm('inside kleosis_final_grades_edit_form');
-//  dpm($form);
-//  dpm($form_state);
-
   return $form;
 }
 
@@ -814,27 +800,26 @@ function kleosis_current_grades_by_student($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
- drupal_set_title(t('Current Grades by Student'));
-
+  drupal_set_title(t('Current Grades by Student'));
 
 $page_desc = <<<EOT
     <br/>This is the kleosis_current_grades_by_student form.<br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Current Grades by Student'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Current Grades by Student'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  return $form;
 }
 
 /**
@@ -854,27 +839,27 @@ function kleosis_final_grades_by_student($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
-drupal_set_title(t('Final Grades by Student'));
+  drupal_set_title(t('Final Grades by Student'));
 
 $page_desc = <<<EOT
     <br/>This is the kleosis_final_grades_by_student form.
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Final Grades by Student'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Final Grades by Student'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
 
-return $form;
+  return $form;
 }
 
 /**
@@ -893,25 +878,25 @@ function kleosis_edit_final_grades($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
-drupal_set_title(t('Edit Final Grades'));
+  drupal_set_title(t('Edit Final Grades'));
 
 $page_desc = <<<EOT
     <br/>This is the kleosis_edit_final_grades form.
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Edit Final Grades'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Edit Final Grades'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
 
 return $form;
 }
@@ -932,7 +917,7 @@ function kleosis_grade_scales($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
-drupal_set_title(t('Grade Scales'));
+  drupal_set_title(t('Grade Scales'));
 
 $page_desc = <<<EOT
     <br/>This is the kleosis_grade_scales form.
@@ -941,17 +926,16 @@ EOT;
 
 // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Grade Scales'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Grade Scales'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  return $form;
 }
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for Kleosis classes module.
+ *  Install file for Kleosis classes module.
  *
 
 /**
@@ -86,7 +86,6 @@ function _class_installed_fields() {
   $t = get_t();
 
   return array(
-
 
       // node refererence auto complete field (see the instance), referencing a content-type called 'courses'
     'class_course_ref' => array(
@@ -260,7 +259,6 @@ function _class_installed_instances() {
     ),
   );
 }
-
 
 /**
  * Implements hook_uninstall().

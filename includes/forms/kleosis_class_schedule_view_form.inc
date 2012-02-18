@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Class Schedule view form
+ *  Kleosis Class Schedule view form
+ *
  *  Provides the view form for a Class schedule
  */
 
@@ -18,15 +18,7 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
   drupal_set_breadcrumb($breadcrumb);
 
   drupal_set_title(t('Class Schedule'));
-//    dpm($form);
-//    dpm($form_state);
 
-/*
-  $form['edit_return'] = array(
-   '#type' => 'markup',
-   '#markup' => '<p><br/>' . t('This is the kleosis_class_schedule_view_form - tbd') . '</p>',
-      );
-*/
   $classid = isset($_SESSION['kleosis_class_selected_class']['classid']) ? $_SESSION['kleosis_class_selected_class']['classid'] : 0;
   $classname = isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '';
 
@@ -64,10 +56,6 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
 //  $query->orderBy('ksclss.period_start_datetime', 'ASC');
 
   $period_record = $query->execute()->fetchAll();
-
-//  dpm($period_record);
-//  dpm($classid);
-//  dpm($classname);
 
   if (empty($period_record)) {
     $form['no_schedule'] = array(

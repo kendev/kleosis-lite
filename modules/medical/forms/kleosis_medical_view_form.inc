@@ -1,13 +1,11 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Medical view form
+ *  Kleosis Medical view form
+ *
  *  Provides the view form for the additional medical info fields from the custom tables
  */
-
-// dpm('inside medical view form');
 
   $yes_no = 0;
 

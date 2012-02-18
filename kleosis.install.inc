@@ -1,5 +1,4 @@
 <?php
-// $Id: kleosis.install.inc,v 1.2 2011/03/29 01:53:21 kendev Exp $
 
 /**
  * @file
@@ -26,7 +25,7 @@ function kleosis_install() {
     $role_exists = ($role) ? TRUE : FALSE;
     variable_set('kleosis_' . $kleosis_role . '_role_exists', $role_exists);
   }
-// create the kleosis roles first
+  // create the kleosis roles first
 
   $role_id_student = ks_create_new_role('student');  // will not create the role if exists already
   $role_id_instructor = ks_create_new_role('instructor');
@@ -37,7 +36,7 @@ function kleosis_install() {
   variable_set('kleosis_sample_data', FALSE);
   variable_set('kleosis_academic_year', '2011-2012');
   variable_set('kleosis_academic_term', 'fy');
-  variable_set('kleosis_last_term_in_fy','0');
+  variable_set('kleosis_last_term_in_fy', '0');
   variable_set('kleosis_starting_dow', '1');
   variable_set('kleosis_moodle_url', 'http://localhost/moodle');
   variable_set('kleosis_moodle_version', '2.x');

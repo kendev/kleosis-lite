@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Student Biodata edit form
+ *  Kleosis Student Biodata edit form
+ *
  *  Provides the edit form for the additional student fields from the custom tables
  */
 
@@ -204,25 +204,25 @@ function build_ks_user_student_edit($theuser) {
     '#suffix' => '</div><br/>',
   );
 
-$form['student_biodata']['other_phone_2'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Other Phone 2'),
-    '#size' => 24,
-    '#maxlength' => 30,
-    '#default_value' => ($defaults)? $ks_user['other_phone_2'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
+  $form['student_biodata']['other_phone_2'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Other Phone 2'),
+      '#size' => 24,
+      '#maxlength' => 30,
+      '#default_value' => ($defaults)? $ks_user['other_phone_2'] : '',
+      '#prefix' => '<div style="float:left;width:275px" >',
+      '#suffix' => '</div><br/>',
+    );
 
-$form['student_biodata']['passport_no'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Passport No.'),
-    '#size' => 24,
-    '#maxlength' => 30,
-    '#default_value' => ($defaults)? $ks_user['passport_no'] : '',
-    '#prefix' => '<div style="float:left;;clear:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
+  $form['student_biodata']['passport_no'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Passport No.'),
+      '#size' => 24,
+      '#maxlength' => 30,
+      '#default_value' => ($defaults)? $ks_user['passport_no'] : '',
+      '#prefix' => '<div style="float:left;;clear:left;width:275px" >',
+      '#suffix' => '</div><br/>',
+    );
   $form['student_biodata']['passport_expiry_dt'] = array(
     '#type' => 'date',
     '#title' => t('Passport Expiry Date'),

@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Class Schedule create form
+ *  Kleosis Class Schedule create form
+ *
  *  Provides the create form for a Class schedule
  */
 
@@ -63,10 +63,6 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 //  $query->orderBy('ksclss.period_start_datetime', 'ASC');
 
   $period_record = $query->execute()->fetchAll();
-
-//  dpm($period_record);
-//  dpm($classid);
-//  dpm($classname);
 
   $form['classname'] = array(
       '#markup' => t('Weekly schedule for class: @class', array('@class' => $classname)),
@@ -251,7 +247,6 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 
     } // end foreach()
 
-
 // Now, display a blank period
 
     $pstartd = new DateTime('now');
@@ -282,7 +277,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#suffix' => '</div>',
     );
 
-  $form['class_schedule_entry_record']['period_' . $inew] = array(
+    $form['class_schedule_entry_record']['period_' . $inew] = array(
       '#markup' => t('New period') . ': ',
       '#prefix' => '<div style="float: left;clear: left;width:260px" ><strong><em>',
       '#suffix' => '</em></strong></div>',
@@ -386,7 +381,6 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     );
 // end of blank period
 
-
     $form['class_schedule_entry_record']['spacer'] = array(
       '#markup' =>    '&nbsp;',
       '#prefix' => '<div style="float: left;clear: left;width:1px">',
@@ -412,14 +406,10 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 }
 
 /*
-* Validate function for the kleosis_class_schedule_create_form
-*/
-
+ * Validate function for the kleosis_class_schedule_create_form
+ */
   function kleosis_class_schedule_create_form_validate($form, &$form_state) {
 
-//    dpm('inside kleosis_class_schedule_create_form_submit');
-//   dpm($form);
-//   dpm($form_state);
 //    form_set_error('validate_category','this is a test error message from the validate function ' .
 //      ' - will cause a return to edit form with no call to the submit function');
 /*
@@ -435,13 +425,9 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 }
 
 /*
-* Submit function for the kleosis_class_schedule_create_form
-*/
+ * Submit function for the kleosis_class_schedule_create_form
+ */
 function kleosis_class_schedule_create_form_submit($form, &$form_state) {
-
-//  dpm('inside kleosis_class_schedule_create_form_submit');
-//  dpm($form_state['values']);
-//  dpm($form_state['input']['op']);
 
   if ($form_state['input']['op'] == 'Cancel') {
 
@@ -472,9 +458,5 @@ function kleosis_class_schedule_create_form_submit($form, &$form_state) {
 
   $ok = ks_insert_schedule_record($schedule_record);
 
-// dpm($schedule_record);
-// dpm($ok);
-
   $form_state['redirect'] = 'kleosis/classes/schedule/create';
-
 }

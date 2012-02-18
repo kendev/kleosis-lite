@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for Kleosis courses module.
+ *  Install file for Kleosis courses module.
  *
 
 /**
@@ -40,7 +40,6 @@ function courses_install() {
 
   // Hide date and author information
   variable_set('node_submitted_course', FALSE);
- //ken--   variable_set('node_submitted_course', 0);
 
   // Create all the fields that are to be added to the course content type.
   foreach (_course_installed_fields() as $field) {
@@ -437,7 +436,6 @@ function _course_installed_instances() {
 */
   );
 }
-
 
 /**
  * Implements hook_uninstall().

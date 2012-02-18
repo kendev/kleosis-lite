@@ -1,10 +1,11 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis Students admin info
+ *   Kleosis Students Admin Info
+ *
  * Provides more kleosis Students functions
-*/
+ */
 
 /**
  * Set the relationships for students
@@ -12,7 +13,6 @@
  * @return
  *   Form for the rendered list
  */
-
 function kleosis_student_setrelations($callback_arg = '') {
 
   // check permissions
@@ -86,8 +86,6 @@ function kleosis_student_relationships_edit_form() {
   $form['setrelation']['user_student'] = array(
     '#type' => 'select',
     '#title' => t('User/Student'),
-//    '#options' =>  array('student01_key' => t('student01_value'),'student02_key' => t('student02_value')),
-//    '#default_value' => 'student02_key',
     '#options' =>  ks_get_all_ks_users() + ks_get_all_students(),
     '#default_value' => !empty($user_student) ? $user_student : 1,
     '#prefix' => '<div style="float:left;width:150px" >',
@@ -124,6 +122,11 @@ function kleosis_student_relationships_edit_form() {
   return $form;
 
 }
+
+/**
+ * Implementation of hook_submit
+ *
+ */
 function kleosis_student_relationships_edit_form_submit($form, &$form_state) {
 
     $_SESSION['student_relationships'] = array('student' => $form_state['values']['student'],
@@ -170,7 +173,6 @@ function kleosis_student_relationships_edit_form_submit($form, &$form_state) {
  * @return
  *   tbd
  */
-
 function kleosis_student_relationships_list() {
 
   drupal_set_title(t('Student Relationships'));
@@ -255,14 +257,16 @@ return $form;
  */
 function ks_remove_rel_link($krelid) {
 
-    db_delete('ks_user_relationships')
-      ->condition('krel_id', $krelid)
-      ->execute();
+  db_delete('ks_user_relationships')
+    ->condition('krel_id', $krelid)
+    ->execute();
 
-    drupal_set_message(t('Relationship was successfully removed.'));
+  drupal_set_message(t('Relationship was successfully removed.'));
 }
 
-// Implement the delete relationship confirm form
+/**
+ * Implement the delete relationship confirm form
+ */
 function ks_user_rel_delete_confirm($form, &$form_state, $krelid) {
 
   // todo: get this working...
@@ -281,7 +285,9 @@ function ks_user_rel_delete_confirm($form, &$form_state, $krelid) {
                       t('Remove'), t('Cancel'));
 }
 
-// hook_submit for the above confirm form
+/**
+ * Implements hook_submit for the above confirm form
+ */
 function ks_user_rel_delete_confirm_submit($form, &$form_state) {
 
   // Very interesting: this submit is called instead of the original form one...
@@ -300,7 +306,6 @@ function ks_user_rel_delete_confirm_submit($form, &$form_state) {
  * @return
  *   Form for the rendered list
  */
-
 function kleosis_student_set_status($callback_arg = '') {
 
 
@@ -323,6 +328,12 @@ function kleosis_student_set_status($callback_arg = '') {
   return $build;
 }
 
+/**
+ * Student Status Details List
+ *
+ * @return
+ *   Form for the rendered list
+ */
 function kleosis_student_status_details_edit_form() {
 //  get the filter values from the session variable (if any) and set the default values accordingly
 //  $student = isset($_SESSION['student_status']['student']) ? $_SESSION['student_status']['student'] : '';
@@ -335,7 +346,7 @@ function kleosis_student_status_details_edit_form() {
   // create a fieldset with status detail elements
   $form['status_details'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Status Details for Student: ') . ' ' . ks_get_usernames_for_display($student),
+    '#title' => t('Status Details for Student') . ': ' . ks_get_usernames_for_display($student),
     '#weight' => -10,
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
@@ -417,6 +428,11 @@ $form['status_details']['getstatuses'] = array(
   return $form;
 }
 
+/**
+ *
+ * Implementation of hook_submit() for the Student Status Details Edit form.
+ *
+ */
 function kleosis_student_status_details_edit_form_submit($form, &$form_state) {
 
     $_SESSION['student_status'] = array('student' => $form_state['values']['student']);
@@ -451,7 +467,6 @@ function kleosis_student_status_details_edit_form_submit($form, &$form_state) {
  * @return
  *   tbd
  */
-
 function kleosis_student_status_details_list() {
 
   // check permissions
@@ -572,7 +587,9 @@ function ks_remove_status_detail($kssid) {
     drupal_set_message(t('Student status detail was successfully removed.'));
 }
 
-// Implement the delete student status confirm form
+/**
+ * Implement the delete student status confirm form
+ */
 function ks_student_status_delete_confirm($form, &$form_state, $kssid) {
 
   // todo: review this...
@@ -591,7 +608,9 @@ function ks_student_status_delete_confirm($form, &$form_state, $kssid) {
                       t('Delete'), t('Cancel'));
 }
 
-// hook_submit for the above confirm form
+/**
+ * Implements hook_submit for the above confirm form
+ */
 function ks_student_status_delete_confirm_submit($form, &$form_state) {
 
   // Very interesting: this submit is called instead of the original form one...
@@ -620,6 +639,15 @@ function kleosis_biodata_details_view($callback_arg = '') {
     }
 }
 */
+
+/**
+ * Provides the student biodata form
+ *
+ * calls user_load for viewing and editing the biodata
+ *
+ * @return
+ *   user form
+ */
 function kleosis_biodata_details_view($callback_arg = '') {
 
   // check permissions
@@ -651,7 +679,7 @@ function kleosis_biodata_details_view($callback_arg = '') {
 }
 
 /*
-//////////////////////This is just a bunch of early test code:  ////////////////////////
+////////////////////// This is just some early test code:  ////////////////////////
 
 //  $roles = user_roles();
 //  $rolesarray = array(array_search('student', $roles) => 4);

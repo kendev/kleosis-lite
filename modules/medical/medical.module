@@ -2,11 +2,13 @@
 
 /**
  * @file
- * This is a simple medical node that allows medical information
- * to be maintained by the Kleosis module for students
- * - NOTE - This module contains some early code from the Drupal examples module - NOTE -
- * The code has been improved in the Course and Class modules...
- * todo: clean-up the code in this module
+ *  Kleosis Medical Info Module
+ *
+ *  This is a simple medical node that allows medical information
+ *  to be maintained by the Kleosis module for students
+ *  - NOTE - This module contains some early code from the Drupal examples module
+ *  The code has been improved in the Course and Class modules...
+ *  todo: clean-up the code in this module
  */
 
  module_load_include('pages.inc', 'node', 'node');
@@ -86,7 +88,6 @@ function kleosis_medical_list() {
  * Medinfo node page - blank and not currently used
  *
  */
-
 function kleosis_medical_medinfo_page($callback_arg = '') {
 
   global $base_root;
@@ -94,7 +95,7 @@ function kleosis_medical_medinfo_page($callback_arg = '') {
 // later...
     $build['no_page_yet'] = array(
       '#type' => 'markup',
-      '#markup' => '<p>' . t('Info page here....') . '<br/>' . '<br/>' . t('<a href="!url">Go to students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',);
+      '#markup' => '<p>' . t('Info page here....') . '<br/>' . '<br/>' . t('<a href="!url">Go to students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>', );
 
     return $build;
 }
@@ -105,7 +106,6 @@ function kleosis_medical_medinfo_page($callback_arg = '') {
  * @return
  *   Form for the rendered medical info or link to create the info
  */
-
 function kleosis_medical_info_view($callback_arg = '') {
 
   // check permissions
@@ -132,7 +132,6 @@ function kleosis_medical_info_view($callback_arg = '') {
   $breadcrumb[] = t('Medical Info');
 
   drupal_set_breadcrumb($breadcrumb);
-
 
     if (arg(4)) {  // if user id is passed, then look up the medical node and display it
 
@@ -163,7 +162,7 @@ function kleosis_medical_info_view($callback_arg = '') {
     if (in_array('administrator', $user->roles))  {
 
       $usersname = medical_get_users_name(arg(4));  // get users name from the uid
-      if(!empty($usersname)) {
+      if (!empty($usersname)) {
 
         $usernames = ks_get_usernames_for_display(arg(4)); // get the display names for this user
         $title = t('@first_part @name', array('@first_part' => t('Click here to add medical info for user:'), '@name' => $usernames));
@@ -196,7 +195,7 @@ function kleosis_medical_info_view($callback_arg = '') {
 
       $build['student_id_not_found'] = array(
         '#type' => 'markup',
-        '#markup' => '<p>' . t('Student id not found. New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',);
+        '#markup' => '<p>' . t('Student id not found. New medical info for a student is currently created starting from the Student List page.') . '<br/> ' . t('From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>', );
 
         return $build;
       }
@@ -208,11 +207,10 @@ function kleosis_medical_info_view($callback_arg = '') {
     //     with autocomplete textbox to select user
     $build['no_id'] = array(
       '#type' => 'markup',
-      '#markup' => '<p>' . t('New medical info for a student is currently created starting from the Student List page.') . '<br/>' . t(' From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',
+      '#markup' => '<p>' . t('New medical info for a student is currently created starting from the Student List page.') . '<br/> ' . t('From there select a student, then click on the Medical Info sub-tab.') . '<br/><br/>' . t('<a href="!url">Students List page</a>', array('!url' => $base_root . url('kleosis/students')) ) . '</p>',
     );
     return $build;
 }
-
 
 /**
  * Implements hook_form_alter().
@@ -223,22 +221,12 @@ function kleosis_medical_info_view($callback_arg = '') {
 //function medical_simple_medical_node_form_alter(&$form, &$form_state, $form_id) { //  can allegedly use either of the function signatures
 function medical_form_alter(&$form, &$form_state, $form_id) {
 
-//dpm('inside medical_form_alter()');
+  if ( ($form_id == 'medical_node_form') && (!empty($form['#node_edit_form'])) ) {
 
+    $elem1 = (isset($form['medical_user_ref'][LANGUAGE_NONE][0])) ? $form['medical_user_ref'][LANGUAGE_NONE][0] : NULL;
+    $elem2 = (isset($form['title']['#default_value'])) ? $form['title']['#default_value'] : NULL;
 
-  if( ($form_id == 'medical_node_form') && (!empty($form['#node_edit_form'])) ) {
-
-//dpm($form_id);
-//dpm($form);
-//dpm($form_state);
-//dpm($form['nid']['#value']);
-
-
-
-    $elem1 = (isset($form['medical_user_ref'][LANGUAGE_NONE][0])) ? $form['medical_user_ref'][LANGUAGE_NONE][0] : null;
-    $elem2 = (isset($form['title']['#default_value'])) ? $form['title']['#default_value'] : null;
-
-    if(arg(3)) { //arg(3) is the uid in the url.
+    if (arg(3)) { //arg(3) is the uid in the url.
 
       $title = t('@first_part @name', array('@first_part' => t('Medical info for'), '@name' => medical_get_users_name(arg(3))));
       $form['title']['#default_value'] = ($elem2) ? $elem2 : $title;
@@ -253,9 +241,8 @@ function medical_form_alter(&$form, &$form_state, $form_id) {
 
 /**********************/
 
-  $med_nid = $form['nid']['#value'];
-  require_once ('forms/kleosis_medical_edit_form.inc');
-
+    $med_nid = $form['nid']['#value'];
+    require_once('forms/kleosis_medical_edit_form.inc');
   }
 }
 
@@ -268,7 +255,7 @@ function medical_form_alter(&$form, &$form_state, $form_id) {
  *
  *  return medical node id or FALSE if no id
  */
-function medical_get_node_id($uid){
+function medical_get_node_id($uid) {
 
   $nid = db_query('SELECT revision_id FROM {field_revision_medical_user_ref} WHERE medical_user_ref_uid = :uid',
                    array(':uid' => $uid))->fetchField();
@@ -284,7 +271,7 @@ function medical_get_node_id($uid){
  *
  *  return user's name
  */
-function medical_get_users_name($uid){
+function medical_get_users_name($uid) {
 
   $name = db_query('SELECT name FROM {users} WHERE uid = :uid',
                    array(':uid' => $uid))->fetchField();
@@ -301,7 +288,7 @@ function medical_get_users_name($uid){
  *
  *  return non-null uid
  */
-function kleosis_student_to_arg($uarg){
+function kleosis_student_to_arg($uarg) {
 
   $arg4 = arg(4);
   $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
@@ -330,22 +317,19 @@ function medical_node_delete($node) {
 function medical_node_view($node, $view_mode, $langcode) {
 
 //  used primarily when this medical node uses a custom table (in addition to medical_form_alter)
-//  dpm('inside medical_node_view() - not currently implemented');
-//  dpm($node->type);
-//  dpm($node->content);
 
-if ($node->type == 'medical') {
+  if ($node->type == 'medical') {
 
-  //$medicalform = $kleosispath . '/modules/forms/kleosis_medical_view_form.inc';
-  //require_once ($medicalform);
+    //$medicalform = $kleosispath . '/modules/forms/kleosis_medical_view_form.inc';
+    //require_once ($medicalform);
 
-  $med_nid = $node->nid;
+    $med_nid = $node->nid;
 
-  require_once ('forms/kleosis_medical_view_form.inc');
+    require_once('forms/kleosis_medical_view_form.inc');
 
-  return $node;
+    return $node;
 
-  }
+    }
 }
 
 /**
@@ -449,20 +433,13 @@ function medical_condition($variables) {
 
 
 /**
-*
-* Implement hook_form() with the standard default form
-*
-*  (Drupal documentation 17 June 2011 is not "complete" on this function, so it's not currently used)
-*/
+ *
+ * Implement hook_form() with the standard default form
+ *
+ *  (Drupal documentation 17 June 2011 is not "complete" on this function, so it's not currently used)
+ */
 /*
 function medical_node_form($node, &$form_state) {
-
-//dpm('medical_form() called');
-//dpm($node);
-//dpm(&$form_state);
-//dpm($form_state['build_info']['args'][0]);
-//$node = $form_state['build_info']['args'][0];
-//dpm($node);
 
   global $user;
   $type = 'medical';
@@ -535,21 +512,16 @@ function ks_get_med_subject_record($med_nid, $category) {
  */
 function ks_update_med_subject_record($subject_record) {
 
-//dpm('inside ks_update_med_subject_record()');
-//dpm($subject_record);
-
-
   $cnt = db_update('ks_medical_info')
       ->condition('ksmi_id', $subject_record['ksmi_id'])
       ->fields(array('med_nid_fk' => $subject_record['med_nid_fk'],
                     'med_category' => $subject_record['med_category'],
                     'med_subject' => $subject_record['med_subject'],
                     'yes_no' => $subject_record['yes_no'],
-                    'description' => $subject_record['description'],) )
+                    'description' => $subject_record['description'], ) )
       ->execute();
 
   return $cnt;
-
  }
 
 /**
@@ -568,18 +540,15 @@ function ks_update_med_subject_record($subject_record) {
  */
 function ks_insert_med_subject_record($subject_record) {
 
-//  dpm('inside ks_insert_med_subject_record');
-
   $cnt = db_insert('ks_medical_info')
       ->fields(array('med_nid_fk' => $subject_record['med_nid_fk'],
                     'med_category' => $subject_record['med_category'],
                     'med_subject' => $subject_record['med_subject'],
                     'yes_no' => $subject_record['yes_no'],
-                    'description' => $subject_record['description'],) )
+                    'description' => $subject_record['description'], ) )
       ->execute();
 
   return $cnt;
-
  }
 
 /**
@@ -607,8 +576,6 @@ function ks_delete_med_subject_record($med_nid) {
  *
  */
 function medical_node_insert($node) {
-
-// dpm('inside medical_node_insert()');
 
 if ($node->type <> 'medical') {
 //  dpm('not medical_node_insert');
@@ -1293,7 +1260,6 @@ function medical_node_update($node) {
   $subject_record['yes_no'] = $node->ad_yes_no_med_can_take;
   $subject_record['description'] = $node->ad_details_med_can_take;
   $ok = ks_update_med_subject_record($subject_record);
-
 }
 
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * An exported Views report that lists students classes
+ *  An exported Views report that lists students classes
  */
 
 $view = new view;

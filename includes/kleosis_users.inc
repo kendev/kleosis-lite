@@ -1,10 +1,11 @@
 <?php
-// $Id$
 
 /**
  * @file
- * kleosis Users functions - most of this is early legacy code to demonstrate Moodle
- * API access via the webservices layer
+ *   Kleosis Users functions (Moodle)
+ *
+ * most of this is early legacy code to demonstrate Moodle API
+ * access via the webservices layer
  *
  * needs to be rewritten/updated or possibly removed :)
  */
@@ -20,8 +21,8 @@ require_once ('kleosis_ws.inc');  // webservices wrapper functions
  *   The Edit Users form for kleosis
  */
 function kleosis_users_edit($optarg) {
-  //  dpm('Inside the new link function!');
-    drupal_set_title(t('Edit Moodle User Data - demo'));
+
+  drupal_set_title(t('Edit Moodle User Data - demo'));
 
   return drupal_get_form('kleosis_users_edit_form');
 }
@@ -160,6 +161,7 @@ function kleosis_users_list_form($form, &$form_state) {
   }
   return $form;
 }
+
 /**
  *
  * This function is the main form for listing Moodle users
@@ -218,8 +220,6 @@ function theme_kleosis_users_list_form($form) {
 function kleosis_users_list_form_submit($form, &$form_state) {
 
 //  Nothing to do really...
-//  dpm('list_form_submit:');
-//  dpm($form_state);
 }
 
 /**
@@ -229,9 +229,7 @@ function kleosis_users_list_form_submit($form, &$form_state) {
  */
 function kleosis_users_list_form_validate($form, &$form_state) {
 
-//  Nothing to do really...
-//  dpm('list_form_validate:');
-//  dpm($form_state);
+//  No validation yet...
 }
 
 /**
@@ -323,12 +321,10 @@ function kleosis_users_edit_form($form, &$form_state) {
 
  // todo: make this work when cancelled with the Cancel Button in the form
 
+  if ($form_state['clicked_button']['#value'] == 'Cancel') {
 
-if ($form_state['clicked_button']['#value'] == 'Cancel') {
-
-    drupal_set_message(t('The clicked-button value was set.'));
-
-}
+      drupal_set_message(t('The clicked-button value was set.'));
+  }
 
   ws_users_edit_form_submit_values($form_state['values']);  // pass the data to kleosis_ws.inc
 
@@ -336,8 +332,6 @@ if ($form_state['clicked_button']['#value'] == 'Cancel') {
   drupal_set_message(t('User @user @updated', $message));
 
   $form_state['redirect'] = 'kleosis/lms_direct/list';   // d7:
-//  dpm('edit_form_submit:');
-//  dpm($form_state);
 
   return;
 }
@@ -350,8 +344,6 @@ if ($form_state['clicked_button']['#value'] == 'Cancel') {
 function kleosis_users_edit_form_validate($form, &$form_state) {
 
 //  drupal_set_message('User '.$form_state['values']['username'].' has been validated.');  // todo: update this with real validation...
-//  dpm('edit_form_validate:');
-//  dpm($form_state['values']);
 }
 
 /**
@@ -365,8 +357,6 @@ function kleosis_users_edit_form_validate($form, &$form_state) {
 
 //  drupal_set_message('the triggering_element: ' . $form['triggering_element']);
 //  drupal_goto($path = 'kleosis/users/list', $options = array(), $http_response_code = 302);
-//  dpm('edit_form_cancel:');
-//  dpm($form_state);
 
   return;
 }

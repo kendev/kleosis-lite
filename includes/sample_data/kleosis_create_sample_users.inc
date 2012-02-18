@@ -1,9 +1,10 @@
 <?php
-// $Id: kleosis_create_sample_users.inc,v 1.8 2011/11/21 01:53:21 kendev Exp $
 
 /**
  * @file
- * Default entries for kleosis tables after install.
+ *  Default entries for Kleosis users after install
+ *
+ *  Creates Kleosis sample students, instructors, and parent_guardians
  */
 
   $role_id_student = ks_create_new_role('student');  // will not create the role if exists already
@@ -4087,9 +4088,9 @@
     ->execute();
 
 /*
-* function to create a student_status_details record with status of student
-*
-*/
+ * function to create a student_status_details record with status of student
+ *
+ */
 function kleosis_set_student_status_details($ssd_drp_uid, $ssd_gradelevel) {
 
         $stdt = new DateTime('now');

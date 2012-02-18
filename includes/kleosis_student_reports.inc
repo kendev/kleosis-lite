@@ -1,7 +1,8 @@
 <?php
+
  /**
  * @file
- * kleosis Reports
+ *   Kleosis Reports
  */
 
 /**
@@ -10,7 +11,6 @@
  * @return
  *   a downloaded .odt file
  */
-
 function kleosis_student_reports_odt($form, &$form_state) {
 
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
@@ -326,7 +326,7 @@ function kleosis_student_reports_odt_download() {
 
     $odf->exportAsAttachedFile($filename);
 
-//    drupal_set_message(t('Report filename:' . ' ') . $filename . ' was successfully downloaded.');
+//    drupal_set_message(t('Report filename' . ': ') . $filename . ' was successfully downloaded.');
   }
 }
 /**

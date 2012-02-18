@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Class Schedule edit form
+ *  Kleosis Class Schedule edit form
+ *
  *  Provides the edit form for a Class schedule
  */
 
@@ -65,10 +65,6 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 //  $query->orderBy('ksclss.period_start_datetime', 'ASC');
 
   $period_record = $query->execute()->fetchAll();
-
-//  dpm($period_record);
-//  dpm($classid);
-//  dpm($classname);
 
   if (empty($period_record)) {
     $form['no_schedule'] = array(
@@ -287,8 +283,6 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
       '#prefix' => '<div style="float: left; width:125px" >',
       '#suffix' => '</div>',
     );
-//dpm($form);
-//dpm($form_state);
 
   return $form;
 }
@@ -299,9 +293,6 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 
   function kleosis_class_schedule_edit_form_validate($form, &$form_state) {
 
-//    dpm('inside kleosis_class_schedule_edit_form_validate');
-//   dpm($form);
-//   dpm($form_state);
 //    form_set_error('validate_category','this is a test error message from the validate function ' .
 //      ' - will cause a return to edit form with no call to the submit function');
 /*
@@ -317,16 +308,9 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 }
 
 /*
-* Submit function for the kleosis_class_schedule_edit_form
-*/
+ * Submit function for the kleosis_class_schedule_edit_form
+ */
 function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
-
-
-//  $formd_temp = $form;
-//  $formstate_temp = $form_state;
-//  dpm('inside kleosis_class_schedule_edit_form_submit');
-//  dpm($form_state['values']);
-//  dpm($form_state['input']['op']);
 
   $num_recs = $form_state['values']['num_periods'] ;
   if ($form_state['input']['op'] == 'Cancel') {
@@ -363,6 +347,7 @@ function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
       $ok = ks_update_schedule_record($schedule_record);
 //    dpm($schedule_record);
     }
+    drupal_set_message(t('The class schedule was successfully updated.'));
     $form_state['redirect'] = 'kleosis/classes/schedule/edit';
   }
 }
@@ -373,7 +358,6 @@ function kleosis_class_schedule_edit_form_submit($form, &$form_state) {
 function kleosis_class_schedule_delete_page() {
   return drupal_get_form('kleosis_class_schedule_delete_confirm');
 }
-
 
 /**
  * Build a confirm form for deletion of schedule periods
@@ -386,7 +370,6 @@ function kleosis_class_schedule_delete_confirm($form, &$form_state) {
   $no = t('Cancel');
   return confirm_form($form, $heading, $cancel_path, $caption, $yes, $no);
 }
-
 
 /**
  * Submit function for the confirm deletion form.

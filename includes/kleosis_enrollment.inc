@@ -1,9 +1,9 @@
 <?php
-// $Id$
+
 /**
-* @file
-* kleosis Enrollment
-*/
+ * @file
+ * Kleosis Enrollment functions
+ */
 
 /**
  * Render a filtered list of students for enrollment
@@ -151,7 +151,6 @@ function fill_updateoptions_items() {
  * Enrollments actions form
  *
  */
-
 function kleosis_students_enrollments_actions_form() {
 
   // get the course value from the session variable (if any) and set the default value accordingly
@@ -225,13 +224,13 @@ function kleosis_students_enrollments_actions_form() {
 
   return $form;
 }
+
 /**
  * Provides a searchable list of students
  *
  * @return
  *   tbd
  */
-
 function kleosis_enrollments_students_list() {
 
   // check permissions
@@ -462,9 +461,6 @@ function kleosis_enrollments_students_list_submit($form, &$form_state) {
  */
 function kleosis_students_enrollments_filter_form_submit($form, &$form_state) {
 
-//dpm('inside kleosis_students_enrollments_filter_form_submit()');
-//dpm($form_state);
-
   switch ($form_state['values']['op']) {
 
     case 'Clear':
@@ -492,7 +488,6 @@ function kleosis_students_enrollments_filter_form_submit($form, &$form_state) {
                                         'academic_year' => $form_state['values']['academic_year'],
                                         'term' => $form_state['values']['term'],
                                         );
-//      kleosis_enroll_students_from_list($form, &$form_state);
       kleosis_enroll_students_from_list($form, $form_state);
       break;
 
@@ -502,15 +497,15 @@ function kleosis_students_enrollments_filter_form_submit($form, &$form_state) {
                                         'academic_year' => $form_state['values']['academic_year'],
                                         'term' => $form_state['values']['term'],
                                         );
-//      kleosis_unenroll_students_from_list($form, &$form_state);
       kleosis_unenroll_students_from_list($form, $form_state);
       break;
   }
 }
+
 /*
-  * Function to iterate through the selected students and enroll them in a class
-  *
-*/
+ * Function to iterate through the selected students and enroll them in a class
+ *
+ */
 function kleosis_enroll_students_from_list($form, &$form_state) {
 
 //  drupal_set_message('Enroll clicked, and now in function kleosis_enroll_students_from_list()');
@@ -559,9 +554,9 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
 }
 
 /*
-  * Function to iterate through the selected students and unenroll them from a class
-  *
-*/
+ * Function to iterate through the selected students and unenroll them from a class
+ *
+ */
 function kleosis_unenroll_students_from_list($form, &$form_state) {
 
 //  drupal_set_message('Unenroll clicked, and now in function kleosis_unenroll_students_from_list()');
@@ -616,9 +611,9 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
 }
 
 /*
-* Implement the confirm form - todo:  get this working...
-*
-*/
+ * Implement the confirm form - todo:  get this working...
+ *
+ */
 function kleosis_enroll_users_confirm_form($form, &$form_state) {
 
   drupal_set_message('kleosis_enroll_users_confirm_form() called.');
@@ -633,6 +628,5 @@ function kleosis_enroll_users_confirm_form($form, &$form_state) {
 // Implement the confirm form submit
 function kleosis_enroll_users_confirm_form_submit($form, &$form_state) {
 
-  drupal_set_message('kleosis_enroll_users_confirm_form_submit() called.');
-
+//  drupal_set_message('kleosis_enroll_users_confirm_form_submit() called.');
 }

@@ -16,14 +16,13 @@ function get_dayofweek($p_timezone) {
     if ($p_timezone = 'default') {
       $p_timezone = date_default_timezone_get();
     }
-    $userDateTimeZone = new DateTimeZone($p_timezone);
+    $user_datetime_zone = new DateTimeZone($p_timezone);
 
-    $UserDateTime = new DateTime('now', $userDateTimeZone);
+    $user_datetime = new DateTime('now', $user_datetime_zone);
 
-    $offsetSeconds = $UserDateTime->getOffset();
-    //echo $offsetSeconds;
+    $offset_seconds = $user_datetime->getOffset();
 
-    return gmdate("l", time() + $offsetSeconds);
+    return gmdate("l", time() + $offset_seconds);
 }
 
 /**

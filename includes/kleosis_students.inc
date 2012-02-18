@@ -1,15 +1,14 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis Students
- * Provides kleosis Students functions
-*/
+ *   Kleosis Students functions
+ */
 
 /**
  * Render a filtered list of students in the database.
  *
- * @see db_select()
+ * This can be considered as the Kleosis 'Main Page'
  *
  */
 function kleosis_students_list_form() {
@@ -20,12 +19,12 @@ function kleosis_students_list_form() {
 
   return $form;
 }
+
 /**
  *
  * Students filters form
  *
  */
-
 function kleosis_students_filter_form() {
 
   // get the filter values from the session variable (if any) and set the default values accordingly
@@ -184,14 +183,14 @@ drupal_set_title(t('Student List'));
   );
 //    'identity_id' => array('data' => t('Identity id'), 'field' => 'kstu.identity_id'),
 
-if (($field == 'username'))  {
-  $query = db_select('users', 'u');
-  $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
-}
-else{
-  $query = db_select('ks_students', 'kstu');
-  $query->innerJoin('users', 'u', 'u.uid = kstu.drp_uid_fk');
-}
+  if (($field == 'username'))  {
+    $query = db_select('users', 'u');
+    $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
+  }
+  else{
+    $query = db_select('ks_students', 'kstu');
+    $query->innerJoin('users', 'u', 'u.uid = kstu.drp_uid_fk');
+  }
   $query->innerJoin('ks_program_desc', 'kpgm', 'kpgm.kpgm_id = kstu.curr_main_program');
   $query->innerJoin('ks_gradelevel_desc', 'kgrdl', 'kgrdl.kgrdl_id = kstu.curr_gradelevel');
   $query->innerJoin('ks_student_status_desc', 'ksts', 'ksts.ksts_id = kstu.curr_status');
@@ -341,7 +340,7 @@ function kleosis_students_filter_form_submit($form, &$form_state) {
  * @param $optarg
  *   An optional argument placeholder (not used yet)
  * @return
- *   The Summary Student form for kleosis
+ *   The Summary Student form for Kleosis
  */
 function kleosis_student_summary($optarg) {
 
@@ -507,8 +506,6 @@ function kleosis_student_summary_form($form, &$form_state) {
     '#title' => t('Primary Guardian'),
 //    '#markup' => ($guardian)? l($ks_primary_guardian['fullname'] , 'user/' . $ks_primary_guardian_id, array('query' => array())) : 'not set',
     '#markup' => ($guardian)? l($ks_primary_guardian['fullname'] , 'user/' . $ks_primary_guardian_id, array('query' => array('ksopid' => $uid, 'ksop' => $name))) : 'not set',
-//  //      'operations' =>  l(t('Summary page'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
-
 //    '#markup' => ($guardian)? $ks_primary_guardian['fullname'] : 'not set',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
@@ -571,7 +568,6 @@ function kleosis_student_summary_form_validate($form, &$form_state) {
  * @return
  *   tbd
  */
-
 function kleosis_students_classes($form, &$form_state) {
 
   // check permissions
@@ -653,7 +649,7 @@ function kleosis_students_classes($form, &$form_state) {
   );
 
   $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
-  $text = t('Enrolled classes for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+  $text = t('Enrolled classes for Student <strong>@name</strong>' . ': ', array('@name' => $usernames));
   $build['theclasses'] = array(
       '#markup' => $text,
       '#prefix' => '',
@@ -735,7 +731,7 @@ function kleosis_students_classes($form, &$form_state) {
   $options = array();
 
   $results = $query->execute()->fetchAll();
-//dpm($results);
+
   foreach ($results as $student) {
 
     $node = node_load($student->kccls_id_fk);
@@ -789,7 +785,11 @@ function kleosis_students_classes($form, &$form_state) {
 
 }
 
-
+/**
+ *
+ * Implementation of hook_submit() for the Students Classes form.
+ *
+ */
 function kleosis_students_classes_submit($form, &$form_state) {
 
   switch ($form_state['values']['op']) {
@@ -809,7 +809,6 @@ function kleosis_students_classes_submit($form, &$form_state) {
  * @return
  *   the form
  */
-
 function kleosis_student_course_class_view() {
 
   require_once('forms/kleosis_student_course_class_view_form.inc');
@@ -823,7 +822,6 @@ function kleosis_student_course_class_view() {
  * @return
  *   the form
  */
-
 function kleosis_student_course_class_edit() {
 
   require_once('forms/kleosis_student_course_class_edit_form.inc');
@@ -855,29 +853,28 @@ $page_desc = <<<EOT
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Student Classes'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Classes'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-drupal_goto($path = 'kleosis/students/classes/enrolled_classes', $options = array());
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  drupal_goto($path = 'kleosis/students/classes/enrolled_classes', $options = array());
+  return $form;
 }
 
 /**
  * Provides the class schedule for a student
  *
  * @return
- *   tbd
+ *   The student class schedule form
  */
-
 function kleosis_student_class_schedule($form, &$form_state) {
 
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
@@ -913,7 +910,6 @@ function kleosis_student_class_schedule($form, &$form_state) {
  * Academic year and term selection for the Students Class Schedule List form
  *
  */
-
 function kleosis_student_class_schedule_acyt_select_form() {
 
 //  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
@@ -965,7 +961,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
   );
 
   $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
-  $text = t('Class schedule for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+  $text = t('Class schedule for Student <strong>@name</strong>' . ': ', array('@name' => $usernames));
   $build['student_schedule'] = array(
       '#markup' => $text,
       '#prefix' => '',
@@ -974,7 +970,6 @@ function kleosis_student_class_schedule_acyt_select_form() {
 
   return $build;
 }
-
 
 /**
  *
@@ -989,10 +984,6 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
   switch ($form_state['values']['op']) {
 
     case 'Apply':
-//dpm('inside submit');
-//dpm($form);
-//dpm($form_state
-
       $_SESSION['ks_student_class_schedule_select_filter'] = array(
                                         'academic_year' => $form_state['values']['academic_year'],
                                         'term' => $form_state['values']['term'],
@@ -1007,7 +998,6 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
  * @return
  *   build of the class schedule
  */
-
 function kleosis_student_class_schedule_list() {
 
 //  $academic_year = isset($_SESSION['ks_student_class_schedule_select_filter']['academic_year']) ? $_SESSION['ks_student_class_schedule_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');

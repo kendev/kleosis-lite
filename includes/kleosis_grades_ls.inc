@@ -682,7 +682,7 @@ drupal_set_title(t('Edit Final Grades-LS'));
   );
   $form['grades_edit']['grade_item_1'] = array(
     '#type' => $grade_item_1_exists,
-    '#title' => variable_get('kleosis_grade_item_1_name','Item 1 grade'),
+    '#title' => variable_get('kleosis_grade_item_1_name', 'Item 1 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_1 : '',
     '#size' => 7,
     '#maxlength' => 8,

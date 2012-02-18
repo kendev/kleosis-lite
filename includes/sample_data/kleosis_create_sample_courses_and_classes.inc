@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Create the sample courses and classes for kleosis
+ *  Create the sample courses and classes for kleosis
  */
 /*
 general academic = 1
@@ -364,6 +365,7 @@ function kleosis_create_sample_class_2011_2012($title, $course_nid, $term, $clas
   }
   return $node->nid;
 }
+
 /**
  * Create a Kleosis sample class for academic year 2012-2013
  */

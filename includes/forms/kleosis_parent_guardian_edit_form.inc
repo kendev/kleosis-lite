@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Parent_Guardian Biodata edit form
+ *  Kleosis Parent_Guardian Biodata edit form
+ *
  *  Provides the edit form for the additional parent_guardian fields from the custom tables
  */
 
@@ -24,7 +24,6 @@ function build_ks_user_parent_guardian_edit($theuser) {
   $endd = (!empty($ks_user['end_date'])) ? new DateTime($ks_user['end_date']) : new DateTime('1900-01-01 0:0:00');
 
   $defaults = TRUE;  // will allow the form fields to show the user data
-
 
   $form['parent_guardian_biodata'] = array(  // fieldset for biodata
       '#type' => 'fieldset',

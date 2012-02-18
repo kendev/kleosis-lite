@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Student Biodata view form
+ *  Kleosis Student Biodata view form
+ *
  *  Provides the view form for the additional student fields from the custom tables
  */
 
@@ -108,32 +108,32 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
   );
 /*
   if (!(empty($fullname_t))) {
-  $account->content['student_biodata']['fullname_t'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Name (national)'),
-    '#markup' => ($defaults)? $ks_user['fullname_t'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
-    '#suffix' => '</div>',
-  );
-}
+    $account->content['student_biodata']['fullname_t'] = array(
+      '#type' => 'user_profile_item',
+      '#title' => t('Name (national)'),
+      '#markup' => ($defaults)? $ks_user['fullname_t'] : '',
+      '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+      '#suffix' => '</div>',
+    );
+  }
   if (!(empty($friendlyname_t))) {
-  $account->content['student_biodata']['friendlyname_t'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Friendly Name (national)'),
-    '#markup' => ($defaults)? $ks_user['friendlyname_t'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-}
+    $account->content['student_biodata']['friendlyname_t'] = array(
+      '#type' => 'user_profile_item',
+      '#title' => t('Friendly Name (national)'),
+      '#markup' => ($defaults)? $ks_user['friendlyname_t'] : '',
+      '#prefix' => '<div style="float:left;width:275px" >',
+      '#suffix' => '</div><br/>',
+    );
+  }
   if (!(empty($familyname_t))) {
-  $account->content['student_biodata']['familyname_t'] = array(
-    '#type' => 'user_profile_item',
-    '#title' => t('Family Name (national)'),
-    '#markup' => ($defaults)? $ks_user['familyname_t'] : '',
-    '#prefix' => '<div style="float:left;width:275px" >',
-    '#suffix' => '</div><br/>',
-  );
-}
+    $account->content['student_biodata']['familyname_t'] = array(
+      '#type' => 'user_profile_item',
+      '#title' => t('Family Name (national)'),
+      '#markup' => ($defaults)? $ks_user['familyname_t'] : '',
+      '#prefix' => '<div style="float:left;width:275px" >',
+      '#suffix' => '</div><br/>',
+    );
+  }
 */
   $account->content['student_biodata']['nationality'] = array(
     '#type' => 'user_profile_item',
@@ -590,7 +590,6 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px">',
     '#suffix' => '</div><br/>',
   );
-
 }
 
 
