@@ -100,6 +100,7 @@ Views:
 	- Enter in or select settings such as:
 		- Organization
 		- Academic Year and Term
+		- Include last Academic Year (set to No if you anticipate using the Sample school data)
 		- Starting day of week
 	- Then enter info (or use defaults if not connecting to Moodle) for the following fields:
 		- The url to your Moodle instance

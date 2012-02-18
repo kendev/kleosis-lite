@@ -1,9 +1,9 @@
 <?php
-// $Id$
+
 /**
-* @file
-* kleosis Processes functions
-*/
+ * @file
+ * Kleosis Processes functions
+ */
 
 require_once ('kleosis_ws.inc');  // webservices wrapper functions
 
@@ -12,10 +12,12 @@ require_once ('kleosis_ws.inc');  // webservices wrapper functions
 //require_once ($kwspath);
 
 /**
- * Display a list of Processes in kleosis (callback function)
+ * Display a list of Processes in Kleosis (callback function)
+ *
+ * This is early code and will be updated during the next phase of Kleosis development
  *
  * @return
- *   List of Processes in kleosis
+ *   List of Processes in Kleosis
  */
 function kleosis_processes() {
 
@@ -95,10 +97,6 @@ function kleosis_processes_usersync() {
   // Make sure we only get items 0-999, for scalability reasons.
   $select->range(0, 1000);
 
-/*******************************************************************************/
-
-/*******************************************************************************/
-
   // Now, loop all these entries and show them in a table. Note that there is no
   // db_fetch_* object or array function being called here. Also note that the
   // following line could have been written as
@@ -126,13 +124,13 @@ function kleosis_processes_usersync() {
 
   $output .= t("<br/>The following table displays the contents of the Web Portal (Drupal) users table:");
 
-      $select = db_select('users', 'u');
-      // Select these specific fields for the output.
-      $select->addField('u', 'uid');
-      $select->addField('u', 'name', 'username');
-      $select->addField('u', 'mail');
-      $select->addField('u', 'status');
-      $select->range(0, 1000);
+  $select = db_select('users', 'u');
+  // Select these specific fields for the output.
+  $select->addField('u', 'uid');
+  $select->addField('u', 'name', 'username');
+  $select->addField('u', 'mail');
+  $select->addField('u', 'status');
+  $select->range(0, 1000);
 
   $entries = $select->execute()->fetchAll(PDO::FETCH_ASSOC);
 
@@ -174,8 +172,7 @@ function kleosis_processes_usersync() {
     drupal_set_message(t('No entries in the Web Portal users table?'));
   }
 
-
-// ToDo: Maybe create another tab to actually perform the syncronization - be sure to backup before testing...
+// ToDo: Maybe create another tab to actually perform the syncronization...
 
   return $output;
 }

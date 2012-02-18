@@ -2,11 +2,10 @@
 
 /**
  * @file
- * Remove the Kleosis sample users and their data in related tables
+ *  Remove the Kleosis sample users and their data in related tables
  */
 
 // todo: can improve this process by deleting only the sample user data related records
-// drupal_set_message('Removing sample students...');
   $kleosis_users = array('student9000', 'student9001', 'student9002', 'student9003', 'student9004',
                         'student9005', 'student9006', 'student9007', 'student9008', 'student9009',
                         'student9010', 'student9011', 'student9012', 'student9013', 'student9014', 'student9015',

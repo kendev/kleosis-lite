@@ -2,9 +2,9 @@
 
 /**
  * @file
- * Simple test case for medical module.
+ *  Simple test case for medical module.
  *
- * Verify example module functionality.
+ *  Verify example module functionality.
  */
 
 /**
@@ -49,7 +49,6 @@ class MedicalTestCase extends DrupalWebTestCase {
     $this->drupalGet('kleosis/students/medical');
     $this->assertText($edit['title'], "Found random title string");
     $this->assertPattern("/red.*green.*blue/", "Correct 'colors available' on medical page");
-
   }
 }
 

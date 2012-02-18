@@ -1,10 +1,10 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis User Blocks
- *  Provides the blocks and ui functionality for kleosis users
+ *  Kleosis User Blocks
+ *
+ *  Provides the blocks and ui functionality for Kleosis users
  */
 
 require_once ('kleosis_ws.inc');  // webservices wrapper functions
@@ -180,6 +180,7 @@ function kleosis_block_view($delta = '') {
       break;
   }
 }
+
 /**
  *  The Kleosis block content functions go here...
  */
@@ -271,5 +272,4 @@ function kleosis_block_contents($delta) {
 
       break;
   }
-
 }

@@ -1,46 +1,18 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis queries - currently, this is mostly stub and legacy example code.
-*/
 
 /**
- * Display a list of Reports and Queries in kleosis (callback function)
+ * @file
+ * Kleosis reports and queries page
  *
- * @return
- *   List of Reports and Queries in kleosis
+ * This is early code. todo: update this...
+ *
  */
-/*
-function kleosis_reports_and_queries_page($form, &$form_state) {
 
-$page_desc = <<<EOT
-    <br/>This is the base page for the kleosis Reports and Queries functions.
-    A description of the Reports and Queries accessable from above tabs will go here.<br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-*/
 /**
  * Display a list of Reports and Queries in kleosis (callback function)
  *
  * @return
- *   List of Reports and Queries in kleosis
+ *   List of Reports and Queries in Kleosis
  */
 
 function kleosis_reports_and_queries_page($form, &$form_state) {
@@ -97,10 +69,14 @@ function kleosis_reports_and_queries_page($form, &$form_state) {
   return $form;
 }
 
+/*************************************************************************************************/
+
 /**
- * Render a filtered list of entries in the database.
+ * Render a filtered list of courses in the database
  *
- * @see db_select()
+ * Legacy report. This code was based on the courses being defined in
+ * a Kleosis custom table.  Course is now a Module using the Course content node
+ *.The code is currently left here for historical purposes...
  *
  */
 function kleosis_queries_courses_list_form() {
@@ -113,7 +89,7 @@ function kleosis_queries_courses_list_form() {
 }
 
 /**
- * List course filters that can be applied.
+ * List of course filters that can be applied.
  */
 function course_filters() {
 
@@ -232,9 +208,6 @@ function courses_filter_form() {
  */
 function courses_filter_form_submit($form, &$form_state) {
 
-//  drupal_set_message('inside courses_filter_form_submit()');
-//  dpm($form_state);
-
   $filters = course_filters();
   switch ($form_state['values']['op']) {
     case t('Filter'):
@@ -282,16 +255,6 @@ function kleosis_queries_courses_list() {
     'operations' => array('data' => t('Ops')),
   );
 
-/*  $header = array(
-    'courseno' => array('data' => t('Course No'), 'field' => 'kscrs.courseno'),
-    'coursename' => array('data' => t('Course Name'), 'field' => 'kscrs.coursename'),
-    'program' => array('data' => t('Program'), 'field' => 'kscrs.program'),
-    'status' => array('data' => t('Status'), 'field' => 'kscrs.status'),
-    'length' => array('data' => t('Length'), 'field' => 'kscrs.length'),
-    'description' => array('data' => t('Description'), 'field' => 'kscrs.description'),
-    'operations' => array('data' => t('Operations')),
-  );
-*/
   $query = db_select('ks_courses', 'kscrs');
   $query->addField('kscrs', 'kcrs_id');
   $query->addField('kscrs', 'courseno');
@@ -329,7 +292,6 @@ function kleosis_queries_courses_list() {
       $row = array_map('check_plain', $entry);;
       $rows[] = $row + array('ops' => 'edit');
 //      $rows[] = $row + array('ops' => l(t('edit'), 'kleosis/users/edit', array('query' => array('id' => $row['kcrs_id']))));
-//  todo: write an edit function for the courses
     }
  }
  $options = array();
@@ -355,53 +317,16 @@ function kleosis_queries_courses_list() {
   $output = $form  ;
 
   return $output;
-
-
-/*  $form['options'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Update options'),
-    '#attributes' => array('class' => array('container-inline')),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  );
-  $form['options']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Update'),
-  );
-
-  $results = $query->execute();
-    foreach ($results as $course) {
-
-    $options = array();
-    $options[$course->kcrs_id] = array(
-      'courseno' => $course->courseno,
-      'coursename' =>  $course->coursename,
-      'program' => $course->program,
-      'status' => $course->status,
-      'length' =>  $course->length,
-      'description' =>  $course->description,
-      'operations' =>  $course->length,
-    );
-  }
-
-
-  $form['courses'] = array(
-        '#theme' => 'tableselect',
-        '#header' => $header,
-        '#options' => $options,
-        '#empty' => t('No content available.'),
-        '#js_select' => TRUE,
-      );
-  $form['pager'] = array('#markup' => theme('pager'));
-
-  return $form;
-*/
 }
+
+/*******************************************************************************/
+
+// The following are legacy stub functions and are not currently used
 
 function kleosis_queries_classes_list_form() {
 
   drupal_set_title(t('Classes List'));
-  drupal_set_message(t('*Note: this report has been temporarily replaced by the list shown from the Classes menu item'));
+  drupal_set_message(t('*Note: this report has been replaced by the list shown from the Classes menu item'));
   $header = array(
     'class_id' => array('data' => t('Class id')),
     'course_id' => array('data' => t('Course id')),
@@ -427,7 +352,7 @@ function kleosis_queries_classes_list_form() {
 function kleosis_queries_students_list_form() {
 
   drupal_set_title(t('Students List'));
-  drupal_set_message(t('*Note: this report has been temporarily replaced by the list shown from the Students menu item'));
+  drupal_set_message(t('*Note: this report has been replaced by the list shown from the Students menu item'));
   $header = array(
     'student_id' => array('data' => t('Student id')),
     'drupal_uid' => array('data' => t('Drupal uid')),
@@ -455,7 +380,7 @@ function kleosis_queries_students_list_form() {
 function kleosis_queries_instructors_list_form() {
 
   drupal_set_title(t('Faculty List'));
-  drupal_set_message(t('*Note: this report will be temporarily replaced by the list shown from the Faculty menu item'));
+  drupal_set_message(t('*Note: this report will be replaced by the list shown from the Faculty menu item'));
   $header = array(
     'staff_id' => array('data' => t('Staff id')),
     'drupal_uid' => array('data' => t('Drupal uid')),

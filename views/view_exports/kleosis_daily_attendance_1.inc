@@ -2,7 +2,7 @@
 
 /**
  * @file
- * An exported Views daily attendance report
+ *  An exported Views daily attendance report
  */
 
 $view = new view;

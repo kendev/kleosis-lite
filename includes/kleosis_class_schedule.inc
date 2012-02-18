@@ -1,15 +1,15 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis Class Schedule
-*/
 
 /**
- * Provides Class Schedule functions available in kleosis (callback function)
+ * @file
+ *   Kleosis Class Schedule functions
+ */
+
+/**
+ * Provides Class Schedule functions (not currently used)
  *
  * @return
- *   tbd
+ *   currently a form with descriptive text
  */
 
 function kleosis_class_schedule_page($form, &$form_state) {

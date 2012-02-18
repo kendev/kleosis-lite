@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for Kleosis medical module.
+ *  Install file for Kleosis medical module.
  *
 
 /**
@@ -71,6 +71,7 @@ function medical_enable() {
   }
 }
 */
+
 /**
  * Returns a structured array defining the fields created by this content type.
  *

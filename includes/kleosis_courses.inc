@@ -1,17 +1,16 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis Courses functions
-*/
 
 /**
-* Provides Courses functions available in kleosis (callback function)
-*
-* @return
-*   tbd
-*/
+ * @file
+ *   Kleosis Courses functions
+ */
 
+/**
+ * Provides Courses functions for Kleosis (not currently used)
+ *
+ * @return
+ *   currently a form with descriptive text
+ */
 function kleosis_courses_page($form, &$form_state) {
 
 $page_desc = <<<EOT

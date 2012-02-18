@@ -1,9 +1,8 @@
 <?php
-// $Id: kleosis_unpopulate_description_tables.inc,v 1.8 2011/11/21 01:55:21 kendev Exp $
 
 /**
  * @file
- * Unpopulate the Kleosis description tables
+ *  Unpopulate the Kleosis description tables
  */
 
 /**

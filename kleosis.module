@@ -108,7 +108,6 @@ function kleosis_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('kleosis_intro_form'),
     'access callback' => 'kleosis_access_callback',
-//    'access arguments' => array('view kleosis student info'),
     'expanded' => TRUE,
     'menu_name' => 'kleosismm',
   );
@@ -805,9 +804,13 @@ function kleosis_intro_form($form, &$form_state) {
 $page_desc = <<<EOT
   <p><h1><strong>Welcome to Kleosis</strong></h1></p>
 
-  <strong>Kleosis</strong> is an open-source Student Information System (SIS) implemented as a Drupal module and fully integrated with the Moodle Learning Management System.  The main menu on the left will appear on most every <strong>Kleosis</strong> page as you navigate and access the numerous functions of this application.
+  <strong>Kleosis</strong> is an open-source Student Information System (SIS) implemented as a Drupal module and fully integrated
+  with the Moodle Learning Management System.  The main menu on the left will appear on most every <strong>Kleosis</strong> page
+  as you navigate and access the numerous functions of this application.
   <br/><br/>
-  Each main menu item represents a feature of <strong>Kleosis</strong> and links to a functional page with additional sub-menu items.  Please use the application via the various menu items and since <strong>Kleosis</strong> is a community-supported project, feedback is always welcome on how to improve and extend its features.
+  Each main menu item represents a feature of <strong>Kleosis</strong> and links to a functional page with additional sub-menu items.
+  Please use the application via the various menu items and since <strong>Kleosis</strong> is a community-supported project,
+  feedback is always welcome on how to improve and extend its features.
   <br/><br/>
 EOT;
 
@@ -1177,10 +1180,12 @@ $form['kleosis_break'] = array(
 */
 
   // Submit button
-//  $form['submit'] = array(
-//    '#type' => 'submit',
-//    '#value' => t('Save settings'),
-//  );
+/*
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save settings'),
+  );
+*/
   return system_settings_form($form);
 }
 
@@ -1209,43 +1214,6 @@ function kleosis_field_access($op, $field, $entity_type, $entity, $account) {
   return TRUE;
 }
 
-/**
- *
- * Retrieve the current user name from the session variable
- *
- * @param $uid
- *   The user id from the url
- *
- *  return user's uid
- */
-/*function kleosis_student_to_arg($uarg){
-
-  $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : '');
-  dpm('inside kleosis_student_to_arg');
-  dpm($uarg);
-
-  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
-    dpm('here is the ksopid:');
-    dpm($_GET['ksopid']);
-
-  }
-  dpm($uid);
-
-  if ( isset( $_GET['ksopid'] ) && !empty( $_GET['ksopid'] )) {
-  $uid = $uid . '?ksopid=' . $uid;
-  }
-  if ( isset( $_GET['kssid'] ) && !empty( $_GET['kssid'] )) {
-  $uid = $uid . '&kssid=' . $_GET['kssid'];
-  }
-  if ( isset( $_GET['ksop'] ) && !empty( $_GET['ksop'] )) {
-  $uid = $uid . '&ksop=' . $_GET['ksop'];
-  }
-  dpm('here is the returning param');
-  dpm($uid);
-
-  return $uid;
-}
-*/
 /**
  *  Provide a parameter replacement for this menu item:
  *    $items['kleosis/students/summary/setstatus/%kleosis_std_sd']

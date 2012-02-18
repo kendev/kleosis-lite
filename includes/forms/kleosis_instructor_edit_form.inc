@@ -1,12 +1,11 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Instructor Biodata edit form
+ *  Kleosis Instructor Biodata edit form
+ *
  *  Provides the edit form for the additional instructor fields from the custom tables
  */
-
 function build_ks_user_instructor_edit($theuser) {
 
   global $user;

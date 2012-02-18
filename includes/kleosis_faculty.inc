@@ -1,17 +1,16 @@
 <?php
-// $Id$
-/**
-* @file
-* kleosis Faculty
-*/
 
 /**
- * Provides Faculty functions available in kleosis available in kleosis (callback function)
- *
- * @return
- *   tbd
+ * @file
+ *   Kleosis Faculty functions
  */
 
+/**
+ * Provides Faculty functions for Kleosis (tbd...)
+ *
+ * @return
+ *   currently a form with descriptive text
+ */
 function kleosis_faculty_page($form, &$form_state) {
 
 $page_desc = <<<EOT

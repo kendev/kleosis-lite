@@ -1,5 +1,4 @@
 <?php
-// $Id: kleosis_populate_description_tables.inc,v 1.8 2011/11/21 01:55:21 kendev Exp $
 
 /**
  * @file

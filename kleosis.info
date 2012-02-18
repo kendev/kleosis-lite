@@ -1,6 +1,6 @@
 
 name = Kleosis
-description = Provides student records management functions and integrates with the Moodle LMS.
+description = Provides student records management and integrates with the Moodle LMS.
 core = 7.x
 package = "Kleosis"
 ; todo:  update the files list

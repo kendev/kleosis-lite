@@ -1,15 +1,14 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Medical edit form
+ *  Kleosis Medical edit form
+ *
  *  Provides the edit form for the additional medical info fields from the custom tables
  */
 
 $category = 2;
 $illnesses = ks_get_med_subject_record($med_nid, $category);
-//dpm($illnesses);
 $insert = !empty($illnesses) ? TRUE : FALSE;
 
   $form['content']['illnesses'] = array(
@@ -335,7 +334,6 @@ $insert = !empty($illnesses) ? TRUE : FALSE;
 
 $category = 3;
 $health_problems = ks_get_med_subject_record($med_nid, $category);
-//dpm($health_problems);
 $insert = !empty($health_problems) ? TRUE : FALSE;
 
   $form['content']['health_problems'] = array(
@@ -724,7 +722,6 @@ $insert = !empty($health_problems) ? TRUE : FALSE;
 
 $category = 4;
 $vaccination_history = ks_get_med_subject_record($med_nid, $category);
-//dpm($vaccination_history);
 $insert = !empty($vaccination_history) ? TRUE : FALSE;
 
   $form['content']['vaccination_history'] = array(
@@ -1141,7 +1138,6 @@ $insert = !empty($vaccination_history) ? TRUE : FALSE;
 
 $category = 5;
 $additional_info = ks_get_med_subject_record($med_nid, $category);
-//dpm($additional_info);
 $insert = !empty($additional_info) ? TRUE : FALSE;
 
   $form['content']['additional_info'] = array(
@@ -1247,10 +1243,8 @@ $insert = !empty($additional_info) ? TRUE : FALSE;
     '#suffix' => '</div><br/>',
   );
 
-
 $category = 1;
 $administrative = ks_get_med_subject_record($med_nid, $category);
-//dpm($additional_info);
 $insert = !empty($administrative) ? TRUE : FALSE;
 
   $form['content']['administrative'] = array(
@@ -1292,4 +1286,3 @@ $insert = !empty($administrative) ? TRUE : FALSE;
     '#prefix' => '<div style="float:left;width:600px" >',
     '#suffix' => '</div><br/>',
   );
-

@@ -1,16 +1,16 @@
 <?php
-// $Id$
+
 /**
  * @file
- * kleosis Students Attendance and Grades on-screen reports
- * Provides kleosis Students functions
+ *   Kleosis Students Attendance and Grades on-screen reports
+ *
 */
 
 /**
  * Defines a student current grades placeholder tab
  *
  * @return
- *    a markup blurb...
+ *    redirects to the Student Current Grades page
  */
 function kleosis_current_grades($form, &$form_state) {
 
@@ -22,7 +22,7 @@ function kleosis_current_grades($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
- drupal_set_title(t('Student Current Grades'));
+  drupal_set_title(t('Student Current Grades'));
 
 
 $page_desc = <<<EOT
@@ -30,27 +30,26 @@ $page_desc = <<<EOT
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Student Current Grades'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Current Grades'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-drupal_goto($path = 'kleosis/student/grades/current_grades', $options = array());
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  drupal_goto($path = 'kleosis/student/grades/current_grades', $options = array());
+  return $form;
 }
 
 /**
  * Provides the daily attendance report for a student
  *
  */
-
 function kleosis_students_attendance($form, &$form_state) {
 
   // check permissions
@@ -93,7 +92,6 @@ function kleosis_students_attendance($form, &$form_state) {
  * Academic year and term selection for the Students Attendance List form
  *
  */
-
 function kleosis_student_attnd_acyt_select_form() {
 
   global $user;
@@ -145,7 +143,7 @@ function kleosis_student_attnd_acyt_select_form() {
   );
 
   $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
-  $text = t('Current daily attendance totals for Student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+  $text = t('Current daily attendance totals for Student <strong>@name</strong>' . ': ', array('@name' => $usernames));
 
   $build['theclasses'] = array(
       '#markup' => $text,
@@ -161,7 +159,6 @@ function kleosis_student_attnd_acyt_select_form() {
  * Students attendance list form
  *
  */
-
 function kleosis_students_attendance_list() {
 
   $academic_year = isset($_SESSION['ks_student_attnd_acyt_select']['academic_year']) ? $_SESSION['ks_student_attnd_acyt_select']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
@@ -464,7 +461,7 @@ function kleosis_student_grades($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
- drupal_set_title(t('Student Grades'));
+  drupal_set_title(t('Student Grades'));
 
 
 $page_desc = <<<EOT
@@ -472,20 +469,20 @@ $page_desc = <<<EOT
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
-// add a fieldset for the page info
+  // add a fieldset for the page info
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Student Grades'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $form['pagehelp'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Grades'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-drupal_goto($path = 'kleosis/students/grades/current_grades', $options = array());
-return $form;
+  $form['pagehelp']['pageinfo'] = array(
+      '#markup' => $page_desc,
+    );
+  drupal_goto($path = 'kleosis/students/grades/current_grades', $options = array());
+  return $form;
 }
 
 /**
@@ -494,7 +491,6 @@ return $form;
  * @return
  *   build of current grades from moodle
  */
-
 function kleosis_student_current_grades($form, &$form_state) {
 
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
@@ -531,7 +527,6 @@ function kleosis_student_current_grades($form, &$form_state) {
  * Academic year and term selection for the Students Current Grades List form
  *
  */
-
 function kleosis_student_grades_acyt_select_form() {
 
   // check permissions
@@ -604,7 +599,7 @@ function kleosis_student_grades_acyt_select_form() {
 
 
     $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
-    $text = t('Current grades for student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+    $text = t('Current grades for student <strong>@name</strong>' . ': ', array('@name' => $usernames));
 
     $build['thegrades'] = array(
       '#markup' => $text,
@@ -690,7 +685,6 @@ function kleosis_student_grades_acyt_select_form_submit($form, &$form_state) {
  * @return
  *   tbd
  */
-
 function kleosis_student_final_grades($form, &$form_state) {
 
   $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
@@ -726,7 +720,6 @@ function kleosis_student_final_grades($form, &$form_state) {
  * Academic year and term selection for the Students Final Grades List form
  *
  */
-
 function kleosis_student_final_grades_acyt_select_form() {
 
   $academic_year = isset($_SESSION['ks_student_final_grades_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
@@ -775,7 +768,7 @@ function kleosis_student_final_grades_acyt_select_form() {
   );
 
   $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
-  $text = t('Final grades for student <strong>@name</strong>:' . ' ', array('@name' => $usernames));
+  $text = t('Final grades for student <strong>@name</strong>' . ': ', array('@name' => $usernames));
 
   $build['thegrades'] = array(
     '#markup' => $text,
@@ -800,9 +793,6 @@ function kleosis_student_final_grades_acyt_select_form_submit($form, &$form_stat
   switch ($form_state['values']['op']) {
 
     case 'Apply':
-//dpm('inside submit');
-//dpm($form);
-//dpm($form_state
 
       $_SESSION['ks_student_final_grades_select_filter'] = array(
                                         'academic_year' => $form_state['values']['academic_year'],
@@ -818,7 +808,6 @@ function kleosis_student_final_grades_acyt_select_form_submit($form, &$form_stat
  * @return
  *   build of final grades
  */
-
 function kleosis_student_final_grades_list() {
 
   // check permissions

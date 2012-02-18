@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Filter to handle dates stored as a timestamp.
+ *  Filter to handle dates stored as a timestamp.
  */
 
 /**

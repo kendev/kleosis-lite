@@ -1,9 +1,9 @@
 <?php
-// $Id$
 
 /**
  * @file
- *  kleosis Instructor Biodata view form
+ *  Kleosis Instructor Biodata view form
+ *
  *  Provides the view form for the additional instructor fields from the custom tables
  */
 
@@ -259,6 +259,5 @@ function build_ks_user_instructor_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-
 }
 

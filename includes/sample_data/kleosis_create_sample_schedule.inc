@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Create the sample schedule for kleosis
+ *  Create the sample schedule for kleosis
  */
 
   $sql = 'SELECT uid FROM {users} u WHERE u.name = :name';
