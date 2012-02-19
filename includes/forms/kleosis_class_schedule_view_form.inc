@@ -19,12 +19,17 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
 
   drupal_set_title(t('Class Schedule'));
 
-  $classid = isset($_SESSION['kleosis_class_selected_class']['classid']) ? $_SESSION['kleosis_class_selected_class']['classid'] : 0;
-  $classname = isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '';
+  $classid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['kleosis_class_selected_class']['classid']) ? $_SESSION['kleosis_class_selected_class']['classid'] : 0);
+  $classname = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['kleosis_class_selected_class']['classname']) ? $_SESSION['kleosis_class_selected_class']['classname'] : '');
 
   if ($classid == 0) {
     drupal_set_message(t('Please select a class from the Classes List page'));
     drupal_goto('kleosis/classes', array());
+  }
+
+  if ( isset( $_GET['ksopid'] )  ) {  // then arrived here from student class schedule, so update the class session variables
+    $_SESSION['kleosis_class_selected_class']['classid'] = $classid;
+    $_SESSION['kleosis_class_selected_class']['classname'] = $classname;
   }
 
   $ks_libpath = drupal_get_path('module', 'kleosis');
@@ -57,12 +62,23 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
 
   $period_record = $query->execute()->fetchAll();
 
+  $class_node = node_load($classid);
+  $acy =   $class_node->ks_class_academic_year['und'][0]['value'];
+  $term =   $class_node->ks_class_term['und'][0]['value'];
+  $classname_acyt = ' ' . $acy . ', ' . $term;
+
   if (empty($period_record)) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:7000px" ><br/><strong><p>',
-        '#suffix' => '</strong></p><br/></div>',
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong>',
+        '#suffix' => '</strong><br/></div>',
+      );
+    $form['no_schedule_acyt'] = array(
+        '#markup' => t('Academic Year and Term: @class', array('@class' => $classname_acyt)),
+        '#weight' => -8,
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong><p>',
+        '#suffix' => '</strong></p></div>',
       );
     return $form;
   }
@@ -70,7 +86,13 @@ function kleosis_class_schedule_view_form($form, &$form_state) {
     $form['weekly_schedule'] = array(
         '#markup' => t('Weekly schedule for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:640px" ><br/><strong><p>',
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong>',
+        '#suffix' => '</strong></div>',
+      );
+    $form['weekly_schedule_acyt'] = array(
+        '#markup' => t('Academic Year and Term: @class', array('@class' => $classname_acyt)),
+        '#weight' => -8,
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong><p>',
         '#suffix' => '</strong></p></div>',
       );
   }

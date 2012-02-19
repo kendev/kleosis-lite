@@ -66,12 +66,23 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 
   $period_record = $query->execute()->fetchAll();
 
+  $class_node = node_load($classid);
+  $acy =   $class_node->ks_class_academic_year['und'][0]['value'];
+  $term =   $class_node->ks_class_term['und'][0]['value'];
+  $classname_acyt = ' ' . $acy . ', ' . $term;
+
   if (empty($period_record)) {
     $form['no_schedule'] = array(
         '#markup' => t('There is no schedule defined for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong><p>',
-        '#suffix' => '</strong></p><br/></div>',
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong>',
+        '#suffix' => '</strong><br/></div>',
+      );
+    $form['no_schedule_acyt'] = array(
+        '#markup' => t('Academic Year and Term: @class', array('@class' => $classname_acyt)),
+        '#weight' => -8,
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong><p>',
+        '#suffix' => '</strong></p></div>',
       );
     return $form;
   }
@@ -79,7 +90,13 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
     $form['weekly_schedule'] = array(
         '#markup' => t('Weekly schedule for class: @class', array('@class' => $classname)),
         '#weight' => -10,
-        '#prefix' => '<div style="float: left;clear: left;width:640px" ><br/><strong><p>',
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong>',
+        '#suffix' => '</strong></div>',
+      );
+    $form['weekly_schedule_acyt'] = array(
+        '#markup' => t('Academic Year and Term: @class', array('@class' => $classname_acyt)),
+        '#weight' => -8,
+        '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong><p>',
         '#suffix' => '</strong></p></div>',
       );
   }

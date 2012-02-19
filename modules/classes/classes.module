@@ -827,10 +827,20 @@ function kleosis_class_students() {
     drupal_goto($path = 'kleosis/classes', $options = array());
   }
 
+  $class_node = node_load($classid);
+  $acy =   $class_node->ks_class_academic_year['und'][0]['value'];  // get the academic year and term
+  $term =   $class_node->ks_class_term['und'][0]['value'];
+  $classname_acyt = ' ' . $acy . ', ' . $term;
+
   $text = t('The following students are enrolled in class: <strong>@class </strong>', array('@class' => $classname));
   $build['theclass'] = array(
       '#markup' => $text,
-      '#prefix' => '<br/>',
+//      '#prefix' => '<br/>',
+      '#suffix' => '<br/>',
+    );
+  $text = t('For academic year and term: <strong>@class </strong>', array('@class' => $classname_acyt));
+  $build['theclass_acyt'] = array(
+      '#markup' => $text,
       '#suffix' => '<br/><br/>',
     );
 

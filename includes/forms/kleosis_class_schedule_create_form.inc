@@ -64,10 +64,21 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
 
   $period_record = $query->execute()->fetchAll();
 
+  $class_node = node_load($classid);
+  $acy =   $class_node->ks_class_academic_year['und'][0]['value'];
+  $term =   $class_node->ks_class_term['und'][0]['value'];
+  $classname_acyt = ' ' . $acy . ', ' . $term;
+
   $form['classname'] = array(
       '#markup' => t('Weekly schedule for class: @class', array('@class' => $classname)),
       '#weight' => -10,
-      '#prefix' => '<div style="float: left;clear: left;width:640px" ><br/><strong><p>',
+      '#prefix' => '<div style="float: left;clear: left;width:700px" ><br/><strong>',
+      '#suffix' => '</strong></div>',
+    );
+  $form['no_schedule_acyt'] = array(
+      '#markup' => t('Academic Year and Term: @class', array('@class' => $classname_acyt)),
+      '#weight' => -8,
+      '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong><p>',
       '#suffix' => '</strong></p></div>',
     );
 /*

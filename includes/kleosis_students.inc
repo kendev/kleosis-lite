@@ -865,7 +865,8 @@ EOT;
   $form['pagehelp']['pageinfo'] = array(
       '#markup' => $page_desc,
     );
-  drupal_goto($path = 'kleosis/students/classes/enrolled_classes', $options = array());
+//  drupal_goto($path = 'kleosis/students/classes/enrolled_classes', $options = array());
+  drupal_goto($path = 'kleosis/students/classes/class_schedule', $options = array());
   return $form;
 }
 
@@ -920,6 +921,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
 
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
+  global $user;
 
   // create a fieldset for the class academic year and term selection
   $build['acy_select'] = array(
@@ -935,7 +937,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
     '#title' => t('Academic Year'),
     '#options' =>  kleosis_academic_year_values(),
     '#default_value' =>  $academic_year,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 1,
     '#prefix' => '<div style="float: left;clear:left;width:130px" >',
     '#suffix' => '</div>',
@@ -945,7 +947,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
     '#title' => t('Term'),
     '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
     '#default_value' => $term,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 3,
     '#prefix' => '<div style="float: left;width:100px" >',
     '#suffix' => '</div>',
@@ -955,7 +957,7 @@ function kleosis_student_class_schedule_acyt_select_form() {
     '#type' => 'submit',
     '#value' => t('Apply'),
     '#weight' => 5,
-    '#disabled' => TRUE,
+    '#disabled' => !in_array('administrator', $user->roles),
     '#prefix' => '<div style="float: left;width:225px" ></br>',
     '#suffix' => '</div>',
   );
@@ -984,10 +986,14 @@ function kleosis_student_class_schedule_acyt_select_form_submit($form, &$form_st
   switch ($form_state['values']['op']) {
 
     case 'Apply':
-      $_SESSION['ks_student_class_schedule_select_filter'] = array(
-                                        'academic_year' => $form_state['values']['academic_year'],
-                                        'term' => $form_state['values']['term'],
-                                       );
+//      $_SESSION['ks_student_class_schedule_select_filter'] = array(
+//                                        'academic_year' => $form_state['values']['academic_year'],
+//                                        'term' => $form_state['values']['term'],
+//                                       );
+      $_SESSION['kleosis_students_classes'] = array(
+                                          'academic_year' => $form_state['values']['academic_year'],
+                                          'term' => $form_state['values']['term'],
+                                          );
       break;
   }
 }
@@ -1074,20 +1080,21 @@ function kleosis_student_class_schedule_list() {
       $an_end_period = $pendd->format('H') . ':' . $aperiod = $pendd->format('i');
       $aperiod = $a_start_period . '-' . $an_end_period;
 
-      // get the short course name from the course node
+      // get the short course name from the course node and link it to the class schedule
 
       if ($period->kccls_id_fk) {
         $class_node = node_load($period->kccls_id_fk);
         $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];
         $course_node = node_load($node_course_ref);
         $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
+        $class_link = l($node_course_no, 'kleosis/classes/schedule', array('query' => array('ksopid' => $period->kccls_id_fk, 'ksop' => $class_node->title, 'destination' => 'kleosis/students/classes/class_schedule')));
       }
       else {
         $node_course_no =  '';
       }
-      $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day, ) ;
+//      $schedule_array[] = array('period' => $aperiod, 'class' => $node_course_no, 'day' => $period->period_day, ) ;
+      $schedule_array[] = array('period' => $aperiod, 'class' => $class_link, 'day' => $period->period_day, ) ;
     }
-
   }
 
   // then, build the period column (day_0) from the periods in the schedule_array and make them unique
