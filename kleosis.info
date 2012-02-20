@@ -1,9 +1,9 @@
 
 name = Kleosis
-description = Provides student records management and integrates with the Moodle LMS.
+description = Provides student records management features and integrates with the Moodle LMS.
 core = 7.x
 package = "Kleosis"
-; todo:  update the files list
+
 files[] = kleosis.module
 files[] = kleosis.install
 files[] = kleosis.views.inc
@@ -44,3 +44,6 @@ files[] = views/views_handler_filter_custom_numeric.inc
 files[] = views/views_handler_argument_custom_numeric.inc
 
 version = "7.x-3.x-dev"
+
+; todo:  update the preceding list to include only relevant code files
+; that contain class or interface declarations for Drupal registration

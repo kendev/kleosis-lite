@@ -7,11 +7,9 @@
 
 /**
  *
- *  This code file is not for public display :)
+ *  Warning - this code file is not for public display :)
  *
  */
-
-//require_once ('kleosis_ws.inc');  // webservices wrapper functions
 
 $kleosispath = drupal_get_path('module', 'kleosis');
 $kwspath = $kleosispath . '/kws/MoodleWS.php';
@@ -36,8 +34,9 @@ function kleosis_processes_devcode_page_a($callback_arg = '') {
   $lepath = drupal_get_path('module', 'kleosis');
   global $base_url;
 
-/****************  begin dev code  ***************
+/****************  begin dev code  ************************************/
 
+/*
 Note: the following are test code snippets left here for instructional purposes
 
 $academic_year = variable_get('kleosis_academic_year','2011-2012');
@@ -167,7 +166,7 @@ dpm($record->final_grade_str);
 
 //register_shutdown_function('shutdown');
 
-/****************  end dev code  ***************/
+/****************  end dev code  ****************************************/
 
 
 /****************  new dev code can go here:  ***************/
@@ -180,9 +179,12 @@ dpm($record->final_grade_str);
 
 
 
+
+
  return array('#markup' => 'Development code goes here...');
 }
 
+// new functions development can be placed here and called by above dev code...
 
 /**
  * function to write a record into the the ks_class_schedule table
@@ -240,17 +242,6 @@ dpm($record->final_grade_str);
 }
 */
 
-// force logout of current user
-function force_logout() {
-  drupal_set_message(t('logging out current user.'));
-  global $user;
-  $tmp = NULL;
-  session_destroy();
-  user_module_invoke('logout', $tmp, $user);
-  $user = drupal_anonymous_user();
-}
-
-// new functions development can be placed here and called by above dev code...
 /*
 function shutdown() {
  if (($error = error_get_last())) {
@@ -293,6 +284,16 @@ function get_dayofweek($pTimezone) {
     return gmdate("l", time() + $offsetSeconds);
 }
 */
+
+// force logout of current user
+function force_logout() {
+  drupal_set_message(t('logging out current user.'));
+  global $user;
+  $tmp = NULL;
+  session_destroy();
+  user_module_invoke('logout', $tmp, $user);
+  $user = drupal_anonymous_user();
+}
 
 /**
  * Experimental code for syncing users...
