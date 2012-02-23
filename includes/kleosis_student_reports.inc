@@ -49,7 +49,7 @@ function kleosis_student_reports_odt_acyt_select_form() {
   // check permissions
   global $user;
   $view_reports = TRUE;
-  if ( !(in_array('administrator', $user->roles))  && !(user_access('view reports and queries')) ) {
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis reports and queries')) ) {
     $view_reports = FALSE;
   }
 
