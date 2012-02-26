@@ -99,7 +99,6 @@ function kleosis_student_attnd_acyt_select_form() {
   $academic_year = isset($_SESSION['ks_student_attnd_acyt_select']['academic_year']) ? $_SESSION['ks_student_attnd_acyt_select']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
   $term = isset($_SESSION['ks_student_attnd_acyt_select']['term']) ? $_SESSION['ks_student_attnd_acyt_select']['term'] : variable_get('kleosis_academic_term', 'fy');
 
-
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
@@ -126,7 +125,7 @@ function kleosis_student_attnd_acyt_select_form() {
     '#type' => 'select',
     '#title' => t('Term'),
     '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
-    '#default_value' => $term,
+    '#default_value' => $term,    // todo: maybe filter this to only show terms that exist for the attendance classes in the academic year
     '#disabled' => !in_array('administrator', $user->roles),
     '#weight' => 3,
     '#prefix' => '<div style="float: left;width:100px" >',
@@ -170,6 +169,10 @@ function kleosis_students_attendance_list() {
   global $base_root;
   global $user;
 
+  if ( ($academic_year == 'all') ) {
+    return array();
+  }
+
   $daterange = ks_get_acy_term_dates($academic_year, $term);
 
   $startdate = $daterange[0];
@@ -184,8 +187,8 @@ function kleosis_students_attendance_list() {
     'description' => 'Description',
   );
 
-//  get the "attendance class" nids for the selected student, academic year, and term
-  $attendance_class_nids = ks_get_attendance_class_by_gradelevel($student, $academic_year, $term);
+//  get the "Attendance class" nids for the selected student, academic year, and term (term is currently ignored)
+  $attendance_class_nids = ks_get_attendance_classes($student, $academic_year, $term);
 
   if (empty($attendance_class_nids)) {
     $text = t('Student <strong>@name</strong> is not enrolled in a Homework-Attendance class.', array('@name' => $name));
@@ -248,10 +251,12 @@ function kleosis_students_attendance_list() {
     '#suffix' => '</div><br/>',
   );
 
-  $build['attnd_details_view'] = array(
-    '#type' => 'markup',
-    '#markup' =>  views_embed_view('kleosis_attendance_totals_1', $display_id = 'default', $student, $dateforviews),
-  );
+  if ($dateforviews != '_') { // $dateforviews will be an underscore if no terms actually exist for the selected academic year and term
+    $build['attnd_details_view'] = array(
+      '#type' => 'markup',
+      '#markup' =>  views_embed_view('kleosis_attendance_totals_1', $display_id = 'default', $student, $dateforviews),
+    );
+  }
 
   $build['attnd_details_edit_link'] = array(
     '#type' => 'link',
@@ -389,25 +394,25 @@ function ks_get_student_atttendance_unexcused_absences($student, $classnids, $da
  * Get the "attendance class" nids for the selected student, academic year, and term
  *
  */
-function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) {
+function ks_get_attendance_classes($student, $academic_year, $term) {
 
-  if (($academic_year == 'all') || ($term == 'all') ) {
+  if ( ($academic_year == 'all') ) {
     return array();
   }
-  $daterange = ks_get_acy_term_dates($academic_year, $term);
 
-  $startdate = $daterange[0];
-  $enddate = $daterange[1];
+//  $daterange = ks_get_acy_term_dates($academic_year, $term);
+//  $startdate = $daterange[0];
+//  $enddate = $daterange[1];
 
   $nids_courses = array();
   $nids_classes = array();
 
-  /* first - get students gradelevel  */
+  /* first - get students gradelevel - not currently used */
 
   $studentrec = ks_get_student_record($student);
   $gradelevel = $studentrec['curr_gradelevel'];
 
-  /* next, get Courses with course_type 'Attendance' */
+  /* next, get all Courses with course_type 'Attendance' */ // todo: just get courses for the selected academic year
   $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course key
 
   $query = new EntityFieldQuery();
@@ -426,12 +431,12 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
     return array();
   }
 
-  /* then, get Classes referenced to Courses with course_type 'attendance' */
+  /* then, get Classes referenced to Courses with course_type 'Attendance' */
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
   ->entityCondition('bundle', 'class')
-  ->fieldCondition('ks_class_term', 'value', $term, '=')
+//  ->fieldCondition('ks_class_term', 'value', $term, '=')
   ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
   ->fieldCondition('ks_class_course_ref', 'nid', $nids_courses, 'IN', 0)
   ->propertyCondition('status', 1);  // not needed, just an example...
@@ -439,7 +444,7 @@ function ks_get_attendance_class_by_gradelevel($student, $academic_year, $term) 
   $result = $query->execute();
 
   if ( !empty($result) ) {
-    $nids_classes = array_keys($result['node']);  // these nids are the 'attendance classes'
+    $nids_classes = array_keys($result['node']);  // these nids are all the Attendance classes in the selected academic year
   }
 
   return $nids_classes;

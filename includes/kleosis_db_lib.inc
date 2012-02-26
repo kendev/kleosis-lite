@@ -882,8 +882,8 @@ function ks_get_acy_term_dates($academic_year, $term) {
     $termcount = $termcount -1;
   }
 
-  $term_startdate =  ($term == 'fy') ? 'term1' . '_startdate' : 'term' . $term . '_startdate';
-  $term_enddate =  ($term == 'fy') ? 'term' . $termcount . '_enddate' : 'term' . $term . '_enddate';
+  $term_startdate =  ($term == 'fy' || $term == 'all') ? 'term1' . '_startdate' : 'term' . $term . '_startdate';
+  $term_enddate =  ($term == 'fy' || $term == 'all') ? 'term' . $termcount . '_enddate' : 'term' . $term . '_enddate';
 
   $query = db_select('ks_academic_year_desc', 'kacy');
   $query->addField('kacy', $term_startdate);
