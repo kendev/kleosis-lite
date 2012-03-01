@@ -264,6 +264,15 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
     $pendd = new DateTime('now');
     $inew = 'new';
 
+    $period_day_d = isset($_SESSION['ks_class_schedule_new_period']['period_day']) ? $_SESSION['ks_class_schedule_new_period']['period_day'] : 1;
+    $period_start_hour_d = isset($_SESSION['ks_class_schedule_new_period']['period_start_hour']) ? $_SESSION['ks_class_schedule_new_period']['period_start_hour'] : $pstartd->format('H');
+    $period_start_minute_d = isset($_SESSION['ks_class_schedule_new_period']['period_start_minute']) ? $_SESSION['ks_class_schedule_new_period']['period_start_minute'] : $pstartd->format('i');
+    $period_end_hour_d = isset($_SESSION['ks_class_schedule_new_period']['period_end_hour']) ? $_SESSION['ks_class_schedule_new_period']['period_end_hour'] : $pendd->format('H');
+    $period_end_minute_d = isset($_SESSION['ks_class_schedule_new_period']['period_end_minute']) ? $_SESSION['ks_class_schedule_new_period']['period_end_minute'] : $pendd->format('i');
+    $classroom_d = isset($_SESSION['ks_class_schedule_new_period']['classroom']) ? $_SESSION['ks_class_schedule_new_period']['classroom'] : 1;
+    $period_lead_d = isset($_SESSION['ks_class_schedule_new_period']['period_lead']) ? $_SESSION['ks_class_schedule_new_period']['period_lead'] : 0;
+    $period_sub_d = isset($_SESSION['ks_class_schedule_new_period']['period_sub']) ? $_SESSION['ks_class_schedule_new_period']['period_sub'] : 0;
+
     $form['class_schedule_entry_record']['hr_' . $inew] = array(
       '#markup' => '-------------------------------------------------',
       '#prefix' => '<br/><div style="float: left;clear: left;">',
@@ -309,7 +318,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Day'),
       '#options' =>  kleosis_dayofweek_values(),
-      '#default_value' => 1,
+      '#default_value' => $period_day_d,
       '#prefix' => '<div style="float:left;clear:left;width:80" >',
       '#suffix' => '</div>',
     );
@@ -322,7 +331,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Hour'),
       '#options' =>  kleosis_hours_values(),
-      '#default_value' => $pstartd->format('H'),
+      '#default_value' => $period_start_hour_d,
       '#prefix' => '<div style="float: left;width:80" >',
       '#suffix' => '</div>',
     );
@@ -330,7 +339,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Min'),
       '#options' =>  kleosis_minutes_values(),
-      '#default_value' => $pstartd->format('i'),
+      '#default_value' => $period_start_minute_d,
       '#prefix' => '<div style="float: left;width:100" >',
       '#suffix' => '</div>',
     );
@@ -343,7 +352,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Hour'),
       '#options' =>  kleosis_hours_values(),
-      '#default_value' => $pendd->format('H'),
+      '#default_value' => $period_end_hour_d,
       '#prefix' => '<div style="float: left;width:80" >',
       '#suffix' => '</div>',
     );
@@ -351,7 +360,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Min'),
       '#options' =>  kleosis_minutes_values(),
-      '#default_value' => $pendd->format('i'),
+      '#default_value' => $period_end_minute_d,
       '#prefix' => '<div style="float: left;width:120" >',
       '#suffix' => '</div>',
     );
@@ -359,7 +368,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Room'),
       '#options' =>  ks_get_classrooms(),
-      '#default_value' => 1,
+      '#default_value' => $classroom_d,
       '#disabled' => FALSE,
       '#prefix' => '<div style="float: left;width:150px" >',
       '#suffix' => '</div>',
@@ -378,7 +387,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Lead Instructor'),
       '#options' =>  array(0 => t('no instructor')) + ks_get_instructor_names(),
-      '#default_value' => 0,
+      '#default_value' => $period_lead_d,
       '#prefix' => '<div style="float: left;width:140px" >',
       '#suffix' => '</div>',
     );
@@ -386,7 +395,7 @@ function kleosis_class_schedule_create_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Sub Instructor'),
       '#options' =>  array(0 => t('no sub')) + ks_get_instructor_names(),
-      '#default_value' => 0,
+      '#default_value' => $period_sub_d,
       '#prefix' => '<div style="float: left;width:140px" >',
       '#suffix' => '</div>',
     );
@@ -468,6 +477,16 @@ function kleosis_class_schedule_create_form_submit($form, &$form_state) {
   $schedule_record['period_sub'] = $form_state['values']['period_sub_new'];
 
   $ok = ks_insert_schedule_record($schedule_record);
+
+  $_SESSION['ks_class_schedule_new_period'] = array('period_day' => $form_state['values']['period_day_new'],
+                                    'period_start_hour' => $form_state['values']['period_start_hour_new'],
+                                    'period_start_minute' => $form_state['values']['period_start_minute_new'],
+                                    'period_end_hour' => $form_state['values']['period_end_hour_new'],
+                                    'period_end_minute' => $form_state['values']['period_end_minute_new'],
+                                    'classroom' => $form_state['values']['classroom_new'],
+                                    'period_lead' => $form_state['values']['period_lead_new'],
+                                    'period_sub' => $form_state['values']['period_sub_new'],
+                                    );
 
   $form_state['redirect'] = 'kleosis/classes/schedule/create';
 }
