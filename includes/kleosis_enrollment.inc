@@ -537,14 +537,16 @@ function kleosis_enroll_students_from_list($form, &$form_state) {
       $there_already = ks_get_enroll_records($value, TRUE, $form_state['values']['class']);
       $there_but_unenrolled = ks_get_enroll_records($value, FALSE, $form_state['values']['class']);
 
+      $username = get_ks_username_by_id($value);
+
       if  ( (empty($there_already)) &&  (empty($there_but_unenrolled)) ) {
         $newrec_id = ks_insert_enroll_record($enroll_record);
-        drupal_set_message('Student: ' . $value . ' was enrolled into class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+        drupal_set_message('Student: ' . $username . ' was enrolled into Class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] );  // . ' (class id: ' .  $form_state['values']['class'] . ')');
       }
       else {
         $enroll_record['ksccl_id'] = $there_but_unenrolled['ksccl_id'];
         $ok = ks_update_enroll_record($enroll_record);
-        drupal_set_message('Student: ' . $value . ' has been re-enrolled in class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+        drupal_set_message('Student: ' . $username . ' has been re-enrolled in Class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] );  // . ' (class id: ' .  $form_state['values']['class'] . ')');
       }
     }
     else {
@@ -594,13 +596,15 @@ function kleosis_unenroll_students_from_list($form, &$form_state) {
 
         $ok = ks_update_enroll_record($enroll_record);
 
+        $username = get_ks_username_by_id($value);
+
         // can do something more drastic like:
         // $ok = ks_delete_enroll_record($result['ksccl_id']);
         if ($ok) {
-          drupal_set_message('Student:' . ' ' . $value . ' was unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+          drupal_set_message('Student:' . ' ' . $username . ' was unenrolled from Class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] );  // . ' (class id: ' .  $form_state['values']['class'] . ')');
         }
         else {
-          drupal_set_message('Student:' . ' ' . $value . ' was not unenrolled from class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] . ' (class id:) ' .  $form_state['values']['class'] . ')');
+          drupal_set_message('Student:' . ' ' . $username . ' was not unenrolled from Class: ' . $form['enroll_actions']['enroll_actions']['class']['#options'][$form_state['values']['class']] );  // . ' (class id: ' .  $form_state['values']['class'] . ')');
         }
       }
     }

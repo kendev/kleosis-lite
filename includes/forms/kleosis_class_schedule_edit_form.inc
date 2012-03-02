@@ -62,7 +62,7 @@ function kleosis_class_schedule_edit_form($form, &$form_state) {
 
   $query->condition('ksclss.' . 'kccls_id_fk', $classid, '=');
   $query->orderBy('ksclss.period_day', 'ASC');
-//  $query->orderBy('ksclss.period_start_datetime', 'ASC');
+  $query->orderBy('ksclss.period_start_datetime', 'ASC');
 
   $period_record = $query->execute()->fetchAll();
 
