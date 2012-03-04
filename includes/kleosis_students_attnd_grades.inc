@@ -611,7 +611,7 @@ function kleosis_student_grades_acyt_select_form() {
       '#prefix' => '<div style="float: left;clear:left; width:550px" >',
       '#suffix' => '</div>',
       );
-
+// ($record->final_grade) ? number_format($record->final_grade, 2) : '',
     $header = array(
       'name' => array('data' => t('Username')),
       'course' => array('data' => t('Course'), ),
@@ -630,7 +630,7 @@ function kleosis_student_grades_acyt_select_form() {
             if ( empty($val['error']) ) {
               $options[$i] = array('name' => $name,
                             'course' => $val['itemid'],
-                            'grade' => $val['grade'],
+                            'grade' => ($val['grade']) ? number_format($val['grade'], 2) : '',
                             'str_grade' => $val['str_grade'],
                             'operations' => 'details',
                             );
@@ -891,7 +891,7 @@ function kleosis_student_final_grades_list() {
       $options[$record->kccls_id_fk] = array(
       'name' => l($name, 'kleosis/students/summary', array('query' => array('ksopid' => $uid, 'ksop' => $name))),
       'title' =>  $node_course_no,
-      'final_grade' =>  $record->final_grade,
+      'final_grade' =>  ($record->final_grade) ? number_format($record->final_grade, 2) : '',
       'final_grade_str' =>  $record->final_grade_str,
       'remarks' =>  $record->remarks,
     //   the following link re-uses the final_grades_edit_form in kleosis_grades.inc - cool!

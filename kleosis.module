@@ -441,7 +441,8 @@ function kleosis_menu() {
       );
 */
     $items['kleosis/grades/final_grades_edit'] = array(
-      'type' => MENU_LOCAL_TASK,
+//      'type' => MENU_LOCAL_TASK,
+      'type' => MENU_CALLBACK,
       'title' => 'Edit Final Grades',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('kleosis_final_grades_edit_form'),

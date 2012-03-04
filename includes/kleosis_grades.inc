@@ -237,7 +237,7 @@ function kleosis_current_grades_list() {
             if ( empty($val['error']) ) {
               $options[$i] = array('student' => $val['itemid'],
                             'course' => $coursetitle,
-                            'grade' => $val['grade'],
+                            'grade' => ($val['grade']) ? number_format($val['grade'], 2) : '',
                             'str_grade' => $val['str_grade'],
                             'operations' => 'details',
                             );
@@ -456,9 +456,8 @@ function kleosis_final_grades_list() {
     $lp_ksccl_id = $student->ksccl_id;
 
       $options[$student->kstu_id_fk] = array(
-//        'name' => $student->name,
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'final_grade' => !empty($graderow) ? ( ($graderow[0]->final_grade) ? number_format($graderow[0]->final_grade, 2) : '' ) : '',
         'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
   //      'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
