@@ -880,6 +880,9 @@ function kleosis_student_final_grades_list() {
 
     $grade_records = $query->execute()->fetchAll();
 
+    $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course type key
+    $lnchbrka = array_keys(ks_get_course_types(), 'Lunch-Breaktime');  // get the Lunch-Breaktime course type key
+
     foreach ($grade_records as $record) {
 
       $class_node = node_load($record->kccls_id_fk);
@@ -887,18 +890,19 @@ function kleosis_student_final_grades_list() {
       $course_node = node_load($node_course_ref);
       $coursetitle = $course_node->title;
       $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
+      $node_course_type =   $course_node->ks_course_type['und'][0]['value'];
 
-      $options[$record->kccls_id_fk] = array(
-      'name' => l($name, 'kleosis/students/summary', array('query' => array('ksopid' => $uid, 'ksop' => $name))),
-      'title' =>  $node_course_no,
-      'final_grade' =>  ($record->final_grade) ? number_format($record->final_grade, 2) : '',
-      'final_grade_str' =>  $record->final_grade_str,
-      'remarks' =>  $record->remarks,
-    //   the following link re-uses the final_grades_edit_form in kleosis_grades.inc - cool!
-    //   see also: kleosis_final_grades_list() in the same .inc
-      'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $record->kcclg_id, 'ksopcclid' => $record->ksccl_id, 'ksopcid' => $record->kccls_id_fk, 'ksopsid' => $uid, 'ksopsn' => $name, 'destination' => 'kleosis/students/grades/final_grades')))
-
-      );
+      if ( ($node_course_type != $attnda[0]) && ($node_course_type != $lnchbrka[0]) ) {
+        $options[$record->kccls_id_fk] = array(
+        'name' => l($name, 'kleosis/students/summary', array('query' => array('ksopid' => $uid, 'ksop' => $name))),
+        'title' =>  $node_course_no,
+        'final_grade' =>  ($record->final_grade) ? number_format($record->final_grade, 2) : '',
+        'final_grade_str' =>  $record->final_grade_str,
+        'remarks' =>  $record->remarks,
+        //   the following link re-uses the final_grades_edit_form in kleosis_grades.inc - cool. See also: kleosis_final_grades_list() in the same .inc
+        'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $record->kcclg_id, 'ksopcclid' => $record->ksccl_id, 'ksopcid' => $record->kccls_id_fk, 'ksopsid' => $uid, 'ksopsn' => $name, 'destination' => 'kleosis/students/grades/final_grades')))
+        );
+      }
     }
   }
   asort($options);
