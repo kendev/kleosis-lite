@@ -34,7 +34,7 @@ function kleosis_processes() {
 function show_ptable($table = NULL, $rows_per_page = 20) {
 
 $page_desc = <<<EOT
-    <br/>This is the base page for the Kleosis Process functions. Functions such as those involved in the beginning-of-term and end-of-term tasks will be placed and organized here. <br/><br/>
+    <br/>This is the base page for the Kleosis Process functions. Functions such as those involved in synchronization and background tasks will be placed and organized here. <br/><br/>
 
     The example functions in above tabs are the following:<br/>
     <ul>

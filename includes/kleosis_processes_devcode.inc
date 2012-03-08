@@ -28,7 +28,7 @@ require_once ($libpath);
  */
 function kleosis_processes_devcode_page_a($callback_arg = '') {
 
-  drupal_set_title(t('Test - Dev Code A'));
+  drupal_set_title(t('Test - Dev Code'));
   drupal_set_message(t('This is a development function...'));
 
   $lepath = drupal_get_path('module', 'kleosis');
@@ -171,12 +171,63 @@ dpm($record->final_grade_str);
 
 /****************  new dev code can go here:  ***************/
 
+/** create a class node  **/
+
+/*
+$nid = 3246;
+$academic_year = '2012-2013';
+$org_class = node_load($nid);
+
+$org_start_year = substr($org_class->ks_class_start_end_date['und'][0]['value'], 0, 4);
+$org_end_year = substr($org_class->ks_class_start_end_date['und'][0]['value2'], 0, 4);
+
+$org_start_year += 1;
+$org_end_year += 1;
+
+settype($org_start_year, 'string');
+settype($org_end_year, 'string');
+
+$new_class = new stdClass(); // Create a new node object
+$new_class->type = "class"; // class content type
+node_object_prepare($new_class); // Set some default values
+
+//$new_class->title    = $org_class->title;
+$new_class->title    = $org_class->title . ' - ' . $academic_year;
+$new_class->language = $org_class->language;
+$new_class->uid = $org_class->uid;
+$new_class->status = 1;
+$new_class->comment = 0;
+$new_class->promote = 0;
+$new_class->sticky = 0;
+
+$new_class->ks_class_course_ref['und'][0]['nid'] = $org_class->ks_class_course_ref['und'][0]['nid'];
+$new_class->ks_class_section['und'][0]['value'] = $org_class->ks_class_section['und'][0]['value'];
+$new_class->ks_class_start_end_date['und'][0]['value'] = substr_replace($org_class->ks_class_start_end_date['und'][0]['value'], $org_start_year, 0, 4);
+$new_class->ks_class_start_end_date['und'][0]['value2'] = substr_replace($org_class->ks_class_start_end_date['und'][0]['value2'], $org_end_year, 0, 4);
+$new_class->ks_class_academic_year['und'][0]['value'] = $academic_year;
+$new_class->ks_class_term['und'][0]['value'] = $org_class->ks_class_term['und'][0]['value'];
+$new_class->ks_class_type['und'][0]['value'] = $org_class->ks_class_type['und'][0]['value'];
+$new_class->ks_class_status['und'][0]['value'] = $org_class->ks_class_status['und'][0]['value'];
+$new_class->ks_class_remarks['und'][0]['value'] = $org_class->ks_class_remarks['und'][0]['value'];
 
 
+if($new_class = node_submit($new_class)) { // Prepare node for saving
+    node_save($new_class);
+    drupal_set_message( "A Class node with nid " . $new_class->nid . " saved!\n");
+    dpm($new_class);
 
+}
+else {
+      drupal_set_message( "A Class node with nid " . $new_class->nid . " was NOT saved!\n");
+}
 
+*/
 
-
+/*
+$nids = array(3330);
+node_delete_multiple($nids);
+drupal_set_message( "A Class node with nid " . $nids[0] . " was deleted!\n");
+*/
 
 
 

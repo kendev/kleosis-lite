@@ -603,17 +603,142 @@ function kleosis_menu() {
   );
   $items['kleosis/admin/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Admin', // this title shows in the tabbbed menu as the first tab
+    'title' => 'Admin', // this title shows in the tabbed menu as the first tab
     'weight' => 1,
   );
-  $items['kleosis/admin/placeholder_1'] = array(
+  $items['kleosis/admin/bot'] = array(
     'type' => MENU_LOCAL_TASK,
-    'title' => 'Admin Item',
+    'title' => 'Beginning of Term',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_placeholder_tab'),
+    'page arguments' => array('kleosis_admin_bot_import_data'),
+   'file' => 'includes/kleosis_admin.inc',
     'access callback' => TRUE,
     'weight' => 2,
   );
+  $items['kleosis/admin/bot/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Import Data', // this title shows in the tabbed menu as the first tab
+    'weight' => -10,
+  );
+  $items['kleosis/admin/bot/export_data'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Export Data',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_admin_bot_export_data'),
+      'file' => 'includes/kleosis_admin.inc',
+      'access callback' => TRUE,
+      'weight' => 1,
+    );
+  $items['kleosis/admin/eot'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'End of Term',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_admin_eot_student_rollover'),
+   'file' => 'includes/kleosis_admin.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+  $items['kleosis/admin/eot/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Student Rollover', // this title shows in the tabbed menu as the first tab
+    'weight' => -10,
+  );
+  $items['kleosis/admin/eot/class_generation'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Class Generation',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_admin_eot_class_generation'),
+      'file' => 'includes/kleosis_admin.inc',
+      'access callback' => TRUE,
+      'weight' => 1,
+    );
+  $items['kleosis/admin/eot/class_enrollments'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Class Enrollments',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_admin_eot_class_enrollments'),
+      'file' => 'includes/kleosis_admin.inc',
+      'access callback' => TRUE,
+      'weight' => 2,
+    );
+  $items['kleosis/admin/desc_tables'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Description Tables',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_admin_desc_tables'),
+   'file' => 'includes/kleosis_admin.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+  $items['kleosis/admin/desc_tables/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Maintenance', // this title shows in the tabbed menu as the first tab
+    'weight' => -10,
+  );
+
+  $items['kleosis/processes'] = array(
+    'title' => 'Processes',
+    'description' => 'Provides functions to control process flow',
+    'page callback' => 'kleosis_processes',
+    'file' => 'includes/kleosis_processes.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 16,
+    'menu_name' => 'kleosismm',
+  );
+  $items['kleosis/processes/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Processes',
+    'weight' => 1,
+  );
+  $items['kleosis/processes/devcode_b'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Sync Users',
+    'page callback' => 'kleosis_processes_devcode_sync_users',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+  $items["kleosis/processes/usersync"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Users Lists',
+    'page callback' => 'kleosis_processes_usersync',
+    'file' => 'includes/kleosis_processes.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+// can put development code in this callback for testing...
+  $items["kleosis/processes/devcode_a"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Test - Dev Code',
+    'page callback' => 'kleosis_processes_devcode_page_a',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+  $items["kleosis/processes/sample_data"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Sample Data',
+    'page callback' => 'kleosis_processes_sample_data_page',
+    'page arguments' => array(1),
+    'file' => 'includes/sample_data/kleosis_manage_sample_data.inc',
+//    'access callback' => TRUE,
+    'access arguments' => array('administer kleosis'),
+    'weight' => 5,
+  );
+/*
+  $items["kleosis/processes/logout"] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Force logout',
+    'page callback' => 'kleosis_processes_devcode_force_logout',
+    'page arguments' => array(1),
+    'file' => 'includes/kleosis_processes_devcode.inc',
+    'access callback' => TRUE,
+    'weight' => 6,
+  );
+*/
 
   $items['kleosis/lms_direct'] = array(
     'title' => 'LMS Direct',
@@ -623,7 +748,7 @@ function kleosis_menu() {
     'file' => 'includes/kleosis_lms_direct.inc',
     'access callback' => TRUE,
     'expanded' => TRUE,
-    'weight' => 16,
+    'weight' => 20,
     'menu_name' => 'kleosismm',
   );
   $items['kleosis/lms_direct/default'] = array(
@@ -672,70 +797,6 @@ function kleosis_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'includes/kleosis_users.inc',
   );
-
-  $items['kleosis/processes'] = array(
-    'title' => 'Processes',
-    'description' => 'Provides functions to control process flow',
-    'page callback' => 'kleosis_processes',
-    'file' => 'includes/kleosis_processes.inc',
-    'access callback' => TRUE,
-    'expanded' => TRUE,
-    'weight' => 20,
-    'menu_name' => 'kleosismm',
-  );
-  $items['kleosis/processes/default'] = array(
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Processes',
-    'weight' => 1,
-  );
-  $items['kleosis/processes/devcode_b'] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Test - Sync Users',
-    'page callback' => 'kleosis_processes_devcode_sync_users',
-    'page arguments' => array(1),
-    'file' => 'includes/kleosis_processes_devcode.inc',
-    'access callback' => TRUE,
-    'weight' => 2,
-  );
-  $items["kleosis/processes/usersync"] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Test - Users Lists',
-    'page callback' => 'kleosis_processes_usersync',
-    'file' => 'includes/kleosis_processes.inc',
-    'access callback' => TRUE,
-    'weight' => 3,
-  );
-// can put development code in this callback for testing...
-  $items["kleosis/processes/devcode_a"] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Test - Dev Code A',
-    'page callback' => 'kleosis_processes_devcode_page_a',
-    'page arguments' => array(1),
-    'file' => 'includes/kleosis_processes_devcode.inc',
-    'access callback' => TRUE,
-    'weight' => 4,
-  );
-  $items["kleosis/processes/sample_data"] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Sample Data',
-    'page callback' => 'kleosis_processes_sample_data_page',
-    'page arguments' => array(1),
-    'file' => 'includes/sample_data/kleosis_manage_sample_data.inc',
-//    'access callback' => TRUE,
-    'access arguments' => array('administer kleosis'),
-    'weight' => 5,
-  );
-/*
-  $items["kleosis/processes/logout"] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Force logout',
-    'page callback' => 'kleosis_processes_devcode_force_logout',
-    'page arguments' => array(1),
-    'file' => 'includes/kleosis_processes_devcode.inc',
-    'access callback' => TRUE,
-    'weight' => 6,
-  );
-*/
   $items['admin/config/development/kleosis'] = array(
     'title' => 'Kleosis settings',
     'description' => 'Configuration for the Kleosis module.',

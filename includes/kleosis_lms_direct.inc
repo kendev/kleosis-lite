@@ -25,7 +25,7 @@ function kleosis_lms_direct_page($form, &$form_state) {
   // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
 
-  drupal_set_title(t('LMS Direct - demo'));
+  drupal_set_title(t('LMS Direct - demo functions'));
 
 $page_desc = <<<EOT
     <br/>This is the base page for the kleosis LMS Direct functions that directly access the Moodle API thru the webservices layer. <br/><br/>
