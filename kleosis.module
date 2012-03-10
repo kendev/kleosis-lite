@@ -675,6 +675,15 @@ function kleosis_menu() {
     'title' => 'Maintenance', // this title shows in the tabbed menu as the first tab
     'weight' => -10,
   );
+  $items['kleosis/admin/eot/class_generation/delete'] = array(
+    'title' => 'Delete New Classes',
+    'description' => 'Delete the newly generated classes',
+    'page callback' => 'kleosis_new_classes_delete_page',
+    'file' => 'includes/kleosis_admin.inc',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'weight' => 5,
+  );
 
   $items['kleosis/processes'] = array(
     'title' => 'Processes',

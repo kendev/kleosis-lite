@@ -176,39 +176,54 @@ dpm($record->final_grade_str);
 /*
 $nid = 3246;
 $academic_year = '2012-2013';
-$org_class = node_load($nid);
 
-$org_start_year = substr($org_class->ks_class_start_end_date['und'][0]['value'], 0, 4);
-$org_end_year = substr($org_class->ks_class_start_end_date['und'][0]['value2'], 0, 4);
+$this_acy = variable_get('kleosis_academic_year', '2011-2012');
 
-$org_start_year += 1;
-$org_end_year += 1;
+$this_start_year = substr($this_acy, 0, 4);
+$this_end_year = substr($this_acy, 5, 4);
 
-settype($org_start_year, 'string');
-settype($org_end_year, 'string');
+$next_start_year = $this_start_year + 1;
+$next_end_year = $this_end_year + 1;
+
+$next_acy = $next_start_year . '-' . $next_end_year;
+
+
+
+
+
+$excl_class = node_load($nid);
+
+$excl_start_year = substr($excl_class->ks_class_start_end_date['und'][0]['value'], 0, 4);
+$excl_end_year = substr($excl_class->ks_class_start_end_date['und'][0]['value2'], 0, 4);
+
+$excl_start_year += 1;
+$excl_end_year += 1;
+
+settype($excl_start_year, 'string');
+settype($excl_end_year, 'string');
 
 $new_class = new stdClass(); // Create a new node object
 $new_class->type = "class"; // class content type
 node_object_prepare($new_class); // Set some default values
 
-//$new_class->title    = $org_class->title;
-$new_class->title    = $org_class->title . ' - ' . $academic_year;
-$new_class->language = $org_class->language;
-$new_class->uid = $org_class->uid;
+//$new_class->title    = $excl_class->title;
+$new_class->title    = $excl_class->title . ' - ' . $academic_year;
+$new_class->language = $excl_class->language;
+$new_class->uid = $excl_class->uid;
 $new_class->status = 1;
 $new_class->comment = 0;
 $new_class->promote = 0;
 $new_class->sticky = 0;
 
-$new_class->ks_class_course_ref['und'][0]['nid'] = $org_class->ks_class_course_ref['und'][0]['nid'];
-$new_class->ks_class_section['und'][0]['value'] = $org_class->ks_class_section['und'][0]['value'];
-$new_class->ks_class_start_end_date['und'][0]['value'] = substr_replace($org_class->ks_class_start_end_date['und'][0]['value'], $org_start_year, 0, 4);
-$new_class->ks_class_start_end_date['und'][0]['value2'] = substr_replace($org_class->ks_class_start_end_date['und'][0]['value2'], $org_end_year, 0, 4);
-$new_class->ks_class_academic_year['und'][0]['value'] = $academic_year;
-$new_class->ks_class_term['und'][0]['value'] = $org_class->ks_class_term['und'][0]['value'];
-$new_class->ks_class_type['und'][0]['value'] = $org_class->ks_class_type['und'][0]['value'];
-$new_class->ks_class_status['und'][0]['value'] = $org_class->ks_class_status['und'][0]['value'];
-$new_class->ks_class_remarks['und'][0]['value'] = $org_class->ks_class_remarks['und'][0]['value'];
+$new_class->ks_class_course_ref['und'][0]['nid'] = $excl_class->ks_class_course_ref['und'][0]['nid'];
+$new_class->ks_class_section['und'][0]['value'] = $excl_class->ks_class_section['und'][0]['value'];
+$new_class->ks_class_start_end_date['und'][0]['value'] = substr_replace($excl_class->ks_class_start_end_date['und'][0]['value'], $excl_start_year, 0, 4);
+$new_class->ks_class_start_end_date['und'][0]['value2'] = substr_replace($excl_class->ks_class_start_end_date['und'][0]['value2'], $excl_end_year, 0, 4);
+$new_class->ks_class_academic_year['und'][0]['value'] = $next_acy;
+$new_class->ks_class_term['und'][0]['value'] = $excl_class->ks_class_term['und'][0]['value'];
+$new_class->ks_class_type['und'][0]['value'] = $excl_class->ks_class_type['und'][0]['value'];
+$new_class->ks_class_status['und'][0]['value'] = $excl_class->ks_class_status['und'][0]['value'];
+$new_class->ks_class_remarks['und'][0]['value'] = $excl_class->ks_class_remarks['und'][0]['value'];
 
 
 if($new_class = node_submit($new_class)) { // Prepare node for saving
