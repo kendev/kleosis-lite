@@ -178,27 +178,121 @@ return $form;
  */
 function kleosis_admin_eot_student_rollover($form, &$form_state) {
 
-drupal_set_title(t('Student Rollover'));
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles)) ) {
+    drupal_set_message(t("You currently do not have permissions to generate new classes."));
+    $options = array('query' => array('destination' => 'kleosis/admin') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
 
-$page_desc = <<<EOT
-    <br/>This is the base page for the Kleosis Admin EOT Student Rollover function (currently being developed).
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
+  drupal_set_title(t('Student Rollover'));
 
-// add a fieldset for the page info
+  $this_acy = variable_get('kleosis_academic_year', '2012-2013');
 
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Page Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
+  $this_start_year = substr($this_acy, 0, 4);
+  $this_end_year = substr($this_acy, 5, 4);
 
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
+  $next_start_year = $this_start_year + 1;
+  $next_end_year = $this_end_year + 1;
 
-return $form;
+  $next_acy = $next_start_year . '-' . $next_end_year;
+
+  // add a fieldset for the page info
+
+  $form['rollover'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Student Rollover'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+    $form['rollover']['pageinfo'] = array(
+      '#markup' => t('Rollover (increase by 1) the current gradelevel for all students.'),
+      '#weight' => -1,
+      '#prefix' => '<div style="float: left;clear: left;width:700px" ><strong>',
+      '#suffix' => '</strong><br/><br/></div>',
+      );
+
+    $form['rollover']['this_acy'] = array(
+      '#type' => 'select',
+      '#title' => t('Current Academic Year'),
+      '#options' =>  array($this_acy => $this_acy),
+      '#default_value' => $this_acy,
+      '#disabled' => TRUE,
+      '#prefix' => '<div style="float: left;clear:left;width:200px" >',
+      '#suffix' => '</div>',
+    );
+
+    $form['rollover']['to'] = array(
+      '#markup' => t('-->'),
+      '#prefix' => '<div style="float: left;width:75px">&nbsp;<strong><em>',
+      '#suffix' => '</em></strong>&nbsp;&nbsp;</div>',
+    );
+    $form['rollover']['next_acy'] = array(
+      '#type' => 'select',
+      '#title' => t('Next Academic Year'),
+      '#options' =>  array($next_acy => $next_acy),
+      '#default_value' => $next_acy,
+      '#disabled' => TRUE,
+      '#prefix' => '<div style="float: left;width:200px" >',
+      '#suffix' => '</div><br/><br/><br/>',
+    );
+    $form['rollover']['spacer'] = array(
+      '#markup' =>    '&nbsp;',
+      '#prefix' => '<div style="float: left;clear: left;width:1px">',
+      '#suffix' => '</div>',
+    );
+    $form['rollover']['increase'] = array(
+      '#type' => 'submit',
+      '#value' => t('Rollover'),
+      '#weight' => 5,
+      '#prefix' => '<div style="float: left;clear:left; width:125px" >',
+      '#suffix' => '</div><br/>',
+    );
+    $form['rollunder'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Undo Rollover'),
+      '#weight' => 30,
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+    $form['rollunder']['delete_info'] = array(
+      '#markup' => t('Undo rollover (decrease by 1) the gradelevel for all students.'),
+      '#prefix' => '<div style="float: left;clear: left;width:600px" ><strong>',
+      '#suffix' => '</strong><br/></div>',
+      );
+    $form['rollunder']['spacer2'] = array(
+      '#markup' =>    '&nbsp;',
+      '#prefix' => '<div style="float: left;clear: left;width:1px">',
+      '#suffix' => '</div>',
+    );
+    $form['rollunder']['undo_rollover'] = array(
+      '#type' => 'submit',
+      '#value' => t('Undo Rollover'),
+      '#weight' => 5,
+      '#prefix' => '<div style="float: left;clear:left; width:125px" >',
+      '#suffix' => '</div><br/>',
+    );
+
+  return $form;
+}
+
+/*
+ * Submit function for the kleosis_admin_eot_tudent_rollover form
+ */
+function kleosis_admin_eot_student_rollover_submit($form, &$form_state) {
+
+  switch ($form_state['values']['op']) {
+
+    case 'Rollover':
+      $res = kleosis_student_rollover();
+      break;
+
+    case 'Undo Rollover':
+      $res = kleosis_undo_student_rollover();
+      break;
+  }
 }
 
 /**
@@ -436,6 +530,52 @@ $form['pagehelp']['pageinfo'] = array(
   );
 
 return $form;
+}
+
+/**
+ * function to rollover (increase by 1) the current gradelevel for all students
+ *
+ * @return true or false
+ *
+ */
+function kleosis_student_rollover() {
+
+  $res = FALSE;
+
+  $glevels = ks_get_gradelevels();
+  $max_gradelevel_key = sizeof($glevels) - 1;
+  $student_status = db_query('SELECT ksts_id FROM {ks_student_status_desc} WHERE status = :student',
+                              array(':student' => 'student'))->fetchField();
+
+  $students = array();
+  $query = db_select('users', 'u');
+  $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
+  $query->addField('u', 'name');
+  $query->addField('kstu', 'drp_uid_fk');
+  $query->condition('curr_status', $student_status, '=');
+  $results = $query->execute()->fetchAll();
+  foreach ($results as $lestudent) {
+    $students[$lestudent->drp_uid_fk] = $lestudent->name;
+  }
+
+  drupal_set_message(t('The student rollover function is currently being developed....'));
+//  dpm($students);
+
+  return $res;
+}
+
+/**
+ * function to undo rollover (decrease by 1) the gradelevel for all students.
+ *
+ * @return true or false
+ *
+ */
+function kleosis_undo_student_rollover() {
+
+  $res = FALSE;
+  drupal_set_message(t('The undo student rollover function is currently being developed....'));
+
+  return $res;
 }
 
 /**
