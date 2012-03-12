@@ -63,6 +63,26 @@ function ks_set_student_status($uid, $intstatus) {
   return $cnt;
 }
 /**
+ *
+ * update a student curr_gradelevel
+ *
+ * @param $uid
+ *   The student uid
+ * @param $intstatus
+ *   The student current gradelevel as an integer
+ * @return
+ *    $cnt - the count of records updated (normally 1, but will be 0 if no changes...
+ */
+function ks_set_student_gradelevel($uid, $intgradelevel) {
+
+  $cnt = db_update('ks_students')
+         ->condition('drp_uid_fk', $uid, '=')
+         ->fields(array('curr_gradelevel' => $intgradelevel ) )
+          ->execute();
+
+  return $cnt;
+}
+/**
  * Get all ks_students
  *
  * @return

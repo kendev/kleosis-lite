@@ -247,6 +247,7 @@ function kleosis_admin_eot_student_rollover($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Rollover'),
       '#weight' => 5,
+      '#disabled' => TRUE,  // *Admin note: delete or comment out this line to enable this function
       '#prefix' => '<div style="float: left;clear:left; width:125px" >',
       '#suffix' => '</div><br/>',
     );
@@ -271,6 +272,7 @@ function kleosis_admin_eot_student_rollover($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Undo Rollover'),
       '#weight' => 5,
+      '#disabled' => TRUE,  // *Admin note: delete or comment out this line to enable this function
       '#prefix' => '<div style="float: left;clear:left; width:125px" >',
       '#suffix' => '</div><br/>',
     );
@@ -372,6 +374,7 @@ function kleosis_admin_eot_class_generation($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Generate'),
       '#weight' => 5,
+      '#disabled' => TRUE,  // *Admin note: delete or comment out this line to enable this function
       '#prefix' => '<div style="float: left;clear:left; width:125px" >',
       '#suffix' => '</div><br/>',
     );
@@ -405,6 +408,7 @@ function kleosis_admin_eot_class_generation($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Delete'),
       '#weight' => 5,
+      '#disabled' => TRUE,  // *Admin note: delete or comment out this line to enable this function
       '#prefix' => '<div style="float: left;clear:left; width:125px" >',
       '#suffix' => '</div><br/>',
     );
@@ -540,26 +544,45 @@ return $form;
  */
 function kleosis_student_rollover() {
 
-  $res = FALSE;
+  $res = TRUE;
 
   $glevels = ks_get_gradelevels();
-  $max_gradelevel_key = sizeof($glevels) - 1;
-  $student_status = db_query('SELECT ksts_id FROM {ks_student_status_desc} WHERE status = :student',
+  $max_gradelevel_key = sizeof($glevels) - 1; // get the maximum gradelevel.  todo: get this from a variable
+  $status_is_student = db_query('SELECT ksts_id FROM {ks_student_status_desc} WHERE status = :student',
                               array(':student' => 'student'))->fetchField();
-
+  $status_is_graduated = db_query('SELECT ksts_id FROM {ks_student_status_desc} WHERE status = :graduated',
+                              array(':graduated' => 'graduated'))->fetchField();
   $students = array();
   $query = db_select('users', 'u');
   $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
   $query->addField('u', 'name');
   $query->addField('kstu', 'drp_uid_fk');
-  $query->condition('curr_status', $student_status, '=');
+  $query->condition('curr_status', $status_is_student, '=');  // get all students where curr_status = 'student'
   $results = $query->execute()->fetchAll();
+
   foreach ($results as $lestudent) {
-    $students[$lestudent->drp_uid_fk] = $lestudent->name;
+    $sturec = ks_get_student_record($lestudent->drp_uid_fk);
+    if ($sturec['curr_gradelevel'] != $max_gradelevel_key) {
+      $sturec['curr_gradelevel'] += 1;
+      $res = ks_set_student_gradelevel($lestudent->drp_uid_fk, $sturec['curr_gradelevel']);
+    }
+    else {
+      $stdt = new DateTime('now');
+      $cnt = db_insert('ks_student_status_details')
+          ->fields(array( 'kstu_id_fk' => $lestudent->drp_uid_fk,
+                          'ksts_id_fk' => $status_is_graduated,
+                          'status_reason' => 'graduated',
+                          'status_date' => $stdt->format('Y-m-d'),
+                          'gradelevel' => $sturec['curr_gradelevel'],
+                          'remarks' => '',
+                          ) )
+          ->execute();
+
+      $cnt = ks_set_student_status($lestudent->drp_uid_fk, $status_is_graduated);  // update the current status in the students record
+    }
   }
 
-  drupal_set_message(t('The student rollover function is currently being developed....'));
-//  dpm($students);
+  drupal_set_message(t('The student rollover has been successfully completed.'));
 
   return $res;
 }
@@ -572,8 +595,28 @@ function kleosis_student_rollover() {
  */
 function kleosis_undo_student_rollover() {
 
-  $res = FALSE;
-  drupal_set_message(t('The undo student rollover function is currently being developed....'));
+  $res = TRUE;
+
+  $status_is_student = db_query('SELECT ksts_id FROM {ks_student_status_desc} WHERE status = :student',
+                              array(':student' => 'student'))->fetchField();
+  $students = array();
+  $query = db_select('users', 'u');
+  $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
+  $query->addField('u', 'name');
+  $query->addField('kstu', 'drp_uid_fk');
+  $query->condition('curr_status', $status_is_student, '=');  // get all students where curr_status = 'student'
+  $results = $query->execute()->fetchAll();
+
+  foreach ($results as $lestudent) {
+    $sturec = ks_get_student_record($lestudent->drp_uid_fk);
+    $curr_status = $sturec['curr_status'];
+    if ( ($sturec['curr_gradelevel'] != 1) && ($sturec['curr_gradelevel'] != 0) ) {
+      $sturec['curr_gradelevel'] -= 1;
+      $res = ks_set_student_gradelevel($lestudent->drp_uid_fk, $sturec['curr_gradelevel']);
+    }
+  }
+
+  drupal_set_message(t('The student undo rollover has been successfully completed.'));
 
   return $res;
 }
