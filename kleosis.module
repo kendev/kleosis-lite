@@ -665,15 +665,24 @@ function kleosis_menu() {
     'type' => MENU_LOCAL_TASK,
     'title' => 'Description Tables',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_admin_desc_tables'),
+    'page arguments' => array('kleosis_admin_view_desc_tables'),
    'file' => 'includes/kleosis_admin.inc',
     'access callback' => TRUE,
     'weight' => 4,
   );
   $items['kleosis/admin/desc_tables/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Maintenance', // this title shows in the tabbed menu as the first tab
+    'title' => 'View Tables', // this title shows in the tabbed menu as the first tab
     'weight' => -10,
+  );
+  $items['kleosis/admin/desc_tables/edit'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Edit Tables',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_admin_edit_desc_tables'),
+   'file' => 'includes/kleosis_admin.inc',
+    'access callback' => TRUE,
+    'weight' => 1,
   );
   $items['kleosis/admin/eot/class_generation/delete'] = array(
     'title' => 'Delete New Classes',

@@ -5,6 +5,8 @@
  *   Kleosis Admin functions
  */
 
+  require_once ('kleosis_description_tables.inc');
+
 /**
  * Provides Admin functions for Kleosis (tbd...)
  *
@@ -181,7 +183,7 @@ function kleosis_admin_eot_student_rollover($form, &$form_state) {
   // check permissions
   global $user;
   if ( !(in_array('administrator', $user->roles)) ) {
-    drupal_set_message(t("You currently do not have permissions to generate new classes."));
+    drupal_set_message(t('You currently do not have permissions to access end of term functions.'));
     $options = array('query' => array('destination' => 'kleosis/admin') );
     drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
   }
@@ -308,7 +310,7 @@ function kleosis_admin_eot_class_generation($form, &$form_state) {
   // check permissions
   global $user;
   if ( !(in_array('administrator', $user->roles)) ) {
-    drupal_set_message(t("You currently do not have permissions to generate new classes."));
+    drupal_set_message(t('You currently do not have permissions to access end of term functions.'));
     $options = array('query' => array('destination' => 'kleosis/admin') );
     drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
   }
@@ -518,6 +520,60 @@ drupal_set_title(t('Description Tables Maintenance'));
 $page_desc = <<<EOT
     <br/>This is the base page for the Kleosis Description Tables maintenance functions (currently being developed).
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+EOT;
+
+// add a fieldset for the page info
+
+$form['pagehelp'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Page Description'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+$form['pagehelp']['pageinfo'] = array(
+    '#markup' => $page_desc,
+  );
+
+return $form;
+}
+
+/**
+ * Provides a view of the Kleosis description tables(tbd...)
+ *
+ * @return
+ *   currently a form with descriptive text
+ */
+function kleosis_admin_view_desc_tables($form, &$form_state) {
+
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles)) ) {
+    drupal_set_message(t('You currently do not have permissions to access Kleosis description tables.'));
+    $options = array('query' => array('destination' => 'kleosis/admin') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
+  drupal_set_title(t('List of Description Tables'));
+
+  $form = kleosis_get_desc_tables();
+  return $form;
+}
+
+/**
+ * Provides editing functions for the Kleosis description tables (tbd...)
+ *
+ * @return
+ *   currently a form with descriptive text
+ */
+function kleosis_admin_edit_desc_tables($form, &$form_state) {
+
+drupal_set_title(t('Description Tables Maintenance'));
+
+$page_desc = <<<EOT
+    <br/>This is the base page for editing the Kleosis Description Tables.<br/><br/> Since this function is currently being developed,
+    an SQL Tool such as phpMyAdmin or MySql Workbench can be used to directly add or edit specific entries in these tables.
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 EOT;
 
 // add a fieldset for the page info
