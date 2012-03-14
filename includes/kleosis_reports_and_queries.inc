@@ -18,6 +18,8 @@
 function kleosis_reports_and_queries_page($form, &$form_state) {
 
   $today = new DateTime('now');
+  $today_start = $today->format('Y-m-d 00:00:00');
+  $today_end = $today->format('Y-m-d 23:11:59');
 
   $header = array(
     'report_name' => array('data' => t('Report Name')),
@@ -29,7 +31,7 @@ function kleosis_reports_and_queries_page($form, &$form_state) {
   $options = array();
 
     $options[1] = array(
-      'report_name' => l(t('Daily Attendance List'), 'daily-attendance-list', array('query' => array('atnd_date' => $today->format('Y-m-d H:i:s'), 'destination' => 'kleosis/reports_and_queries'))),
+      'report_name' => l(t('Daily Attendance List'), 'daily-attendance-list', array('query' => array('atnd_date[min]' => $today_start, 'atnd_date[max]' => $today_end, 'destination' => 'kleosis/reports_and_queries'))),
       'report_category' => t('Attendance'),
       'report_description' => t('List of students who are absent this day'),
       'report_filters' => t('Attendance Date'),
