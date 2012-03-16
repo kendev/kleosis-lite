@@ -99,6 +99,9 @@ function kleosis_access_callback() {
  *
  */
 function kleosis_menu() {
+
+  $letter_grades_only = (user_role_load_by_name('lanna')) ? TRUE : FALSE;
+
   $items = array();
   $items['kleosis'] = array(
 //    'type' => MENU_NORMAL_ITEM,
@@ -260,8 +263,17 @@ function kleosis_menu() {
         'page callback' => 'drupal_get_form',
         'page arguments' => array('kleosis_student_final_grades'),
         'file' => 'includes/kleosis_students_attnd_grades.inc',
-        'access callback' => TRUE,
+        'access callback' => !($letter_grades_only),
         'weight' => 2,
+      );
+      $items['kleosis/students/grades/final_grades_ls'] = array(
+        'type' => MENU_LOCAL_TASK,
+        'title' => 'Final Grades - LS',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_student_final_grades_ls'),
+        'file' => 'includes/kleosis_grades_ls.inc',
+        'access callback' => $letter_grades_only,
+        'weight' => 3,
       );
 
     $items['kleosis/students/reports'] = array(
@@ -421,7 +433,7 @@ function kleosis_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('kleosis_final_grades_by_class'),
       'file' => 'includes/kleosis_grades.inc',
-      'access callback' => TRUE,
+      'access callback' => !($letter_grades_only),
       'weight' => 5,
     );
       $items['kleosis/grades/final_grades/default'] = array(
@@ -429,6 +441,17 @@ function kleosis_menu() {
         'title' => 'by Class',
         'weight' => 4,
       );
+      $items['kleosis/grades/final_grades_ls'] = array(
+        'title' => 'Final Grades-LS',
+        'type' => MENU_LOCAL_TASK,
+        'description' => 'Provides SIS Grades functions for LIST',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('kleosis_final_grades_ls_form'),
+        'file' => 'includes/kleosis_grades_ls.inc',
+        'access callback' => $letter_grades_only,
+        'weight' => 6,
+      );
+
 /*
       $items['kleosis/grades/final_grades/by_student'] = array(
         'type' => MENU_LOCAL_TASK,
@@ -447,9 +470,19 @@ function kleosis_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('kleosis_final_grades_edit_form'),
       'file' => 'includes/kleosis_grades.inc',
-      'access callback' => TRUE,
+      'access callback' => !($letter_grades_only),
       'weight' => 7,
     );
+    $items['kleosis/grades_ls/edit_final_grades_ls'] = array(
+      'type' => MENU_CALLBACK,
+      'title' => 'Edit Final Grades-LS',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_final_grades_ls_edit_form'),
+      'file' => 'includes/kleosis_grades_ls.inc',
+      'access callback' => $letter_grades_only,
+      'weight' => 8,
+    )
+
 /*
     $items['kleosis/grades/grade_scales'] = array(
       'type' => MENU_LOCAL_TASK,
@@ -462,9 +495,9 @@ function kleosis_menu() {
     );
 */
 
-  //Link to the kleosis Grades-LS page - this will eventually be removed
+  // Link to the Kleosis Grades-LS page - this is a custom feature for LIST
+  // (now moved to kleosis/students/grades/final_grades_ls)
 /*
-/////////////////////////////////////////////////
   $items['kleosis/grades_ls'] = array(
     'title' => 'Grades-LS',
     'description' => 'Provides SIS Grades functions for LIST',
@@ -481,37 +514,18 @@ function kleosis_menu() {
     'title' => 'Final Grades-LS List', // this title shows in the tabbbed menu as the first tab
     'weight' => 1,
   );
+
   $items['kleosis/grades_ls/edit_final_grades_ls'] = array(
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_CALLBACK,
     'title' => 'Edit Final Grades-LS',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('kleosis_final_grades_ls_edit_form'),
     'file' => 'includes/kleosis_grades_ls.inc',
     'access callback' => TRUE,
     'weight' => 4,
-  );
+  )
+  */;
 
-//  $items['kleosis/grades_ls/set_final_grades_ls'] = array(
-//    'type' => MENU_LOCAL_TASK,
-//    'title' => 'Lock Final Grades-LS',
-//    'page callback' => 'drupal_get_form',
-//    'page arguments' => array('kleosis_set_final_grades_ls'),
-//    'file' => 'includes/kleosis_grades_ls.inc',
-//    'access arguments' => array('administer kleosis'),
-//    'weight' => 8,
-//  );
-
-  $items['kleosis/grades_ls/current_grades'] = array(
-    'type' => MENU_LOCAL_TASK,
-    'title' => 'Current Grades-LS',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_get_current_grades_ls'),
-    'file' => 'includes/kleosis_grades_ls.inc',
-    'access callback' => TRUE,
-    'weight' => 10,
-  );
-/////////////////////////////////////////////////
-*/
   $items['kleosis/faculty'] = array(
     'title' => 'Faculty',
     'description' => 'Provides SIS Faculty functions',

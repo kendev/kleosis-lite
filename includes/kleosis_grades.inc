@@ -457,11 +457,11 @@ function kleosis_final_grades_list() {
 
       $options[$student->kstu_id_fk] = array(
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'final_grade' => !empty($graderow) ? ( ($graderow[0]->final_grade) ? number_format($graderow[0]->final_grade, 2) : '' ) : '',
+        'final_grade' => !empty($graderow) ? ( ($graderow[0]->final_grade > 0.00000)  ? number_format($graderow[0]->final_grade, 2) : '' ) : '',
         'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
   //      'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades/final_grades_edit', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name,  'destination' => 'kleosis/grades/final_grades')))
        );
   }
 
@@ -764,13 +764,15 @@ function kleosis_final_grades_edit_form_submit($form, &$form_state) {
       $res = ks_insert_final_grade_record($ks_final_grade_record);
     }
 
-    $form_state['redirect'] = 'kleosis/grades/final_grades';
+//    $form_state['redirect'] = 'kleosis/grades/final_grades';
+//    drupal_redirect_form($form_state);
 
       break;
 
     case 'Cancel':
 
-      $form_state['redirect'] = 'kleosis/grades/final_grades';
+//    $form_state['redirect'] = 'kleosis/grades/final_grades';
+//    drupal_redirect_form($form_state);
 
       break;
     }

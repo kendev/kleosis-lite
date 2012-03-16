@@ -2417,12 +2417,12 @@ function ks_insert_final_grade_ls_record($ks_final_grade_record) {
   $cnt = db_insert('ks_student_course_class_grades')
       ->fields(array( 'ksccl_id_fk' => $ks_final_grade_record['ksccl_id_fk'],
 //                      'current_grade' => $ks_final_grade_record['current_grade'],
-                      'final_exam_grade' => $ks_final_grade_record['final_exam_grade'],
-                      'course_grade' => $ks_final_grade_record['course_grade'],
+                      'final_exam_grade_str' => $ks_final_grade_record['final_exam_grade_str'],
+                      'course_grade_str' => $ks_final_grade_record['course_grade_str'],
                       'grade_item_1' => $ks_final_grade_record['grade_item_1'],
                       'grade_item_2' => $ks_final_grade_record['grade_item_2'],
                       'grade_item_3' => $ks_final_grade_record['grade_item_3'],
-                      'final_grade' => $ks_final_grade_record['final_grade'],
+                      'final_grade_str' => $ks_final_grade_record['final_grade_str'],
                       'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
@@ -2444,12 +2444,12 @@ function ks_update_final_grade_ls_record($ks_final_grade_record) {
       ->condition('kcclg_id', $ks_final_grade_record['kcclg_id'])
       ->fields(array( 'ksccl_id_fk' => $ks_final_grade_record['ksccl_id_fk'],
 //                      'current_grade' => $ks_final_grade_record['current_grade'],
-                      'final_exam_grade' => $ks_final_grade_record['final_exam_grade'],
-                      'course_grade' => $ks_final_grade_record['course_grade'],
+                      'final_exam_grade_str' => $ks_final_grade_record['final_exam_grade_str'],
+                      'course_grade_str' => $ks_final_grade_record['course_grade_str'],
                       'grade_item_1' => $ks_final_grade_record['grade_item_1'],
                       'grade_item_2' => $ks_final_grade_record['grade_item_2'],
                       'grade_item_3' => $ks_final_grade_record['grade_item_3'],
-                      'final_grade' => $ks_final_grade_record['final_grade'],
+                      'final_grade_str' => $ks_final_grade_record['final_grade_str'],
                       'remarks' => $ks_final_grade_record['remarks'], ) )
       ->execute();
 
