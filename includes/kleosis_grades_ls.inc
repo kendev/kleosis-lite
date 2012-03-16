@@ -1,22 +1,15 @@
 <?php
-// $Id$
+
 /**
 * @file
 * kleosis Grades (for LIST (_ls))
 */
 
 /**
- * Provides Grades functions available in kleosis available in Kleosis
- *
- * @return
- *   tbd
- */
-
-/**
  * Render a filtered list of student final grades.
  *
  */
-function kleosis_final_grades_ls_form() {
+function kleosis_final_grades_ls_form($form, &$form_state) {
 
   // Set Breadcrumbs
   $breadcrumb = array();
@@ -25,6 +18,7 @@ function kleosis_final_grades_ls_form() {
 
   drupal_set_breadcrumb($breadcrumb);
 
+  $build = array();
   $build['filter'] = kleosis_final_grades_ls_select_form();
   $build['#submit'][] = 'kleosis_final_grades_ls_select_form_submit';
   $build['list'] = kleosis_final_grades_ls_list();
@@ -49,6 +43,7 @@ function kleosis_final_grades_ls_select_form() {
 
   $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type AND n.status = :status ORDER BY n.title' ;
   $results = db_query($sql, array(':type' => 'class', ':status' => 1, ) );
+  $form = array();
   $options = array();
   foreach ($results as $class) {
     $node = node_load($class->nid);
@@ -116,6 +111,7 @@ function kleosis_final_grades_ls_select_form() {
     '#suffix' => '</div>',
   );
   return $form;
+
 }
 
 /**
@@ -125,11 +121,10 @@ function kleosis_final_grades_ls_select_form() {
  */
 function kleosis_final_grades_ls_list() {
 
-
-drupal_set_title(t('Final Grades-LS'));
+drupal_set_title(t('Final Grades-LS (by Class)'));
 
   $form = array();
-
+$return;
   // get the filter values from the session variable (if any) and set the default form values accordingly
 
   $class_id_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_id']) ? $_SESSION['ks_final_grades_class_filter']['class_id'] : 0;
@@ -138,58 +133,53 @@ drupal_set_title(t('Final Grades-LS'));
   $class_academic_year = isset($_SESSION['ks_final_grades_class_filter']['academic_year']) ? $_SESSION['ks_final_grades_class_filter']['academic_year'] : '2011-2012';
   $class_term = isset($_SESSION['ks_final_grades_class_filter']['term']) ? $_SESSION['ks_final_grades_class_filter']['term'] : 'fy';
 
-  $final_exam_grade_exists = $grade_item_1_exists =  $grade_item_2_exists =  $grade_item_3_exists = FALSE;
-  $weights = kleosis_get_grade_item_weights($class_id_from_filter);
-  if (isset($weights)) {
-    $final_exam_grade_exists =  ($weights['few'] <> '00.00') ? TRUE : FALSE;
-    $grade_item_1_exists =  ($weights['giaw'] <> '00.00') ? TRUE : FALSE;
-    $grade_item_2_exists =  ($weights['gibw'] <> '00.00') ? TRUE : FALSE;
-    $grade_item_3_exists =  ($weights['gicw'] <> '00.00') ? TRUE : FALSE;
-  }
-
   // the header contains all the fields that will be displayed in the tableselect list
-  if ($grade_item_3_exists) {
+//  if ($grade_item_3_exists) {
+  if (3==3) {
     $header = array(
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
-      'course_grade' => t('Course Grade'),
-      'final_exam_grade' => t('Final Exam'),
+      'course_grade_str' => t('Course Grade'),
+      'final_exam_grade_str' => t('Final Exam'),
       'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
       'grade_item_2' => variable_get('kleosis_grade_item_2_name', t('GradeItem 2')),
       'grade_item_3' => variable_get('kleosis_grade_item_3_name', t('GradeItem 3')),
-      'final_grade' => t('Final Grade'),
+      'final_grade_str' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
     );
   }
-  elseif ($grade_item_2_exists) {
+//  elseif ($grade_item_2_exists) {
+  elseif (2==2) {
     $header = array(
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
-      'course_grade' => t('Course Grade'),
-      'final_exam_grade' => t('Final Exam'),
+      'course_grade_str' => t('Course Grade'),
+      'final_exam_grade_str' => t('Final Exam'),
       'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
       'grade_item_2' => variable_get('kleosis_grade_item_2_name', t('GradeItem 2')),
-      'final_grade' => t('Final Grade'),
+      'final_grade_str' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
     );
   }
-  elseif ($grade_item_1_exists) {
+//  elseif ($grade_item_1_exists) {
+  elseif (1==1) {
     $header = array(
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
-      'course_grade' => t('Course Grade'),
-      'final_exam_grade' => t('Final Exam'),
+      'course_grade_str' => t('Course Grade'),
+      'final_exam_grade_str' => t('Final Exam'),
       'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
-      'final_grade' => t('Final Grade'),
+      'final_grade_str' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
     );
   }
-  elseif ($final_exam_grade_exists) {
+//  elseif ($final_exam_grade_exists) {
+  elseif (9==9) {
     $header = array(
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
-      'course_grade' => t('Course Grade'),
-      'final_exam_grade' => t('Final Exam'),
-      'final_grade' => t('Final Grade'),
+      'course_grade_str' => t('Course Grade'),
+      'final_exam_grade_str' => t('Final Exam'),
+      'final_grade_str' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
     );
@@ -197,83 +187,86 @@ drupal_set_title(t('Final Grades-LS'));
   else {
     $header = array(
       'name' => array('data' => t('Student'), 'field' => 'u.name'),
-      'course_grade' => t('Course Grade'),
-      'final_grade' => t('Final Grade'),
+      'course_grade_str' => t('Course Grade'),
+      'final_grade_str' => t('Final Grade'),
       'remarks' => t('Remarks'),
       'operations' => array('data' => t('Ops')),
     );
   }
-  $students_in_the_class = kleosis_get_students_in_class($class_id_from_filter);
-//  dpm($students_in_the_class);
 
+  $students_in_the_class = kleosis_get_students_in_class_ls($class_id_from_filter);
   $options = array();
 
   foreach ($students_in_the_class as $student) {
 
-    $graderow = kleosis_get_student_final_grade_record($student->kstu_id_fk, $class_id_from_filter);
+    $graderow = kleosis_get_student_final_grade_record_ls($student->kstu_id_fk, $class_id_from_filter);
 
     $lp_kcclg = !empty($graderow) ? $graderow[0]->kcclg_id : 0;
     $lp_ksccl_id = $student->ksccl_id;
 
-    if ($grade_item_3_exists) {
+//    if ($grade_item_3_exists) {
+    if (3==3) {
       $options[$student->kstu_id_fk] = array(
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'course_grade' => !empty($graderow) ? $graderow[0]->course_grade : '',
-        'final_exam_grade' => !empty($graderow) ? $graderow[0]->final_exam_grade : '',
+        'course_grade_str' => !empty($graderow) ? $graderow[0]->course_grade_str : '',
+        'final_exam_grade_str' => !empty($graderow) ? $graderow[0]->final_exam_grade_str : '',
         'grade_item_1' => !empty($graderow) ? $graderow[0]->grade_item_1 : '',
         'grade_item_2' => !empty($graderow) ? $graderow[0]->grade_item_2 : '',
         'grade_item_3' => !empty($graderow) ? $graderow[0]->grade_item_3 : '',
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
-  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades/final_grades_ls')))
+  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
        );
      }
-    elseif ($grade_item_2_exists) {
+//    elseif ($grade_item_2_exists) {
+    elseif (2==2) {
       $options[$student->kstu_id_fk] = array(
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'course_grade' => !empty($graderow) ? $graderow[0]->course_grade : '',
-        'final_exam_grade' => !empty($graderow) ? $graderow[0]->final_exam_grade : '',
+        'course_grade_str' => !empty($graderow) ? $graderow[0]->course_grade_str : '',
+        'final_exam_grade_str' => !empty($graderow) ? $graderow[0]->final_exam_grade_str : '',
         'grade_item_1' => !empty($graderow) ? $graderow[0]->grade_item_1 : '',
         'grade_item_2' => !empty($graderow) ? $graderow[0]->grade_item_2 : '',
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
-  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades/final_grades_ls')))
+  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
        );
      }
-    elseif ($grade_item_1_exists) {
+//    elseif ($grade_item_1_exists) {
+    elseif (1==1) {
       $options[$student->kstu_id_fk] = array(
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'course_grade' => !empty($graderow) ? $graderow[0]->course_grade : '',
-        'final_exam_grade' => !empty($graderow) ? $graderow[0]->final_exam_grade : '',
+        'course_grade_str' => !empty($graderow) ? $graderow[0]->course_grade_str : '',
+        'final_exam_grade_str' => !empty($graderow) ? $graderow[0]->final_exam_grade_str : '',
         'grade_item_1' => !empty($graderow) ? $graderow[0]->grade_item_1 : '',
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
-  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades/final_grades_ls')))
+ //       'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
        );
      }
-    elseif ($final_exam_grade_exists) {
+//    elseif ($final_exam_grade_exists) {
+    elseif (9==9) {
       $options[$student->kstu_id_fk] = array(
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'course_grade' => !empty($graderow) ? $graderow[0]->course_grade : '',
-        'final_exam_grade' => !empty($graderow) ? $graderow[0]->final_exam_grade : '',
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'course_grade_str' => !empty($graderow) ? $graderow[0]->course_grade_str : '',
+        'final_exam_grade_str' => !empty($graderow) ? $graderow[0]->final_exam_grade_str : '',
+        'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
-  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades/final_grades_ls')))
+  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
        );
      }
      else {
       $options[$student->kstu_id_fk] = array(
 //        'name' => $student->name,
         'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->kstu_id_fk, 'ksop' => $student->name))),
-        'course_grade' => !empty($graderow) ? $graderow[0]->course_grade : '',
-        'final_grade' => !empty($graderow) ? $graderow[0]->final_grade : '',
+        'course_grade_str' => !empty($graderow) ? $graderow[0]->course_grade_str : '',
+        'final_grade_str' => !empty($graderow) ? $graderow[0]->final_grade_str : '',
         'remarks' => !empty($graderow) ? $graderow[0]->remarks : '',
-  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades_ls/final_grades_ls')))
-        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name, 'destination' => 'kleosis/grades/final_grades_ls')))
+  //      'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $lp_kcclg, 'ksopcclid' => $lp_ksccl_id, 'ksopcid' => $class_id_from_filter, 'ksopsid' => $student->kstu_id_fk, 'ksopsn' => $student->name)))
        );
      }
   }
@@ -299,18 +292,7 @@ drupal_set_title(t('Final Grades-LS'));
     '#prefix' => '<div style="float: left;clear:left; width:200px" >',
     '#suffix' => '</div>',
   );
-
-  $form['grades_action']['grades_from_lms'] = array(
-    '#type' => 'submit',
-    '#value' => t('Get grades from Moodle gradebook'),
-    '#weight' => 25,
-    '#disabled' => TRUE,
-    '#prefix' => '<div style="float: left; width:225px" >',
-    '#suffix' => '</div>',
-  );
-
 return $form;
-
 }
 
 /**
@@ -322,7 +304,7 @@ return $form;
  * @return
  *    Result set containing the student id and name for each class member
  */
-function kleosis_get_students_in_class($classid) {
+function kleosis_get_students_in_class_ls($classid) {
 
   $query = db_select('ks_student_course_classes', 'ksscc');
   $query->innerJoin('users', 'u', 'u.uid = ksscc.kstu_id_fk');
@@ -335,10 +317,6 @@ function kleosis_get_students_in_class($classid) {
 
   // Only get items 0-1999, for scalability reasons...
   $query->range(0, 2000);
-
-//  $query = $query->extend('PagerDefault')->limit(variable_get('kleosis_pager_rows', 16));
-//  $query = $query->extend('TableSort');
-//  $query->orderByHeader($header);
 
   $results = $query->execute()->fetchAll();
 
@@ -356,7 +334,7 @@ function kleosis_get_students_in_class($classid) {
  * @return
  *    Result set containing the student grade record
  */
-function kleosis_get_student_final_grade_record($studentid, $classid) {
+function kleosis_get_student_final_grade_record_ls($studentid, $classid) {
 
   $query = db_select('ks_student_course_class_grades', 'ksgrd');
   $query->innerJoin('ks_student_course_classes', 'ksccl', 'ksccl.ksccl_id = ksgrd.ksccl_id_fk');
@@ -365,12 +343,12 @@ function kleosis_get_student_final_grade_record($studentid, $classid) {
   $query->addField('u', 'name');
   $query->addField('ksgrd', 'kcclg_id');
   $query->addField('ksgrd', 'ksccl_id_fk');
-  $query->addField('ksgrd', 'final_exam_grade');
-  $query->addField('ksgrd', 'course_grade');
+  $query->addField('ksgrd', 'final_exam_grade_str');
+  $query->addField('ksgrd', 'course_grade_str');
   $query->addField('ksgrd', 'grade_item_1');
   $query->addField('ksgrd', 'grade_item_2');
   $query->addField('ksgrd', 'grade_item_3');
-  $query->addField('ksgrd', 'final_grade');
+  $query->addField('ksgrd', 'final_grade_str');
   $query->addField('ksgrd', 'remarks');
 
   // Only get items 0-1999, for scalability reasons...
@@ -380,41 +358,11 @@ function kleosis_get_student_final_grade_record($studentid, $classid) {
   $query->condition('ksccl.' . 'kstu_id_fk', $studentid, '=');
   $query->condition('ksccl.' . 'kccls_id_fk', $classid, '=');
 
-//  $query = $query->extend('PagerDefault')->limit(variable_get('kleosis_pager_rows', 16));
-//  $query = $query->extend('TableSort');
-//  $query->orderByHeader($header);
-
   $results = $query->execute()->fetchAll();
 
 
   return $results;
 }
-
-/**
- * Get the grade item weights from the course for a specific class
- *
- * @param $classid
- *    The class id
- * @return
- *    array of weights
- */
-function kleosis_get_grade_item_weights($classid) {
-
-  $theclass = node_load($classid);
-  if ( (isset($theclass)) && ($classid <> 0) ) {
-    $thecourse = node_load($theclass->ks_class_course_ref['und'][0]['nid']);
-  }
-  $cgw = isset($thecourse->ks_course_grade_weight['und'][0]['value']) ? $thecourse->ks_course_grade_weight['und'][0]['value'] : 0.0;
-  $few = isset($thecourse->ks_final_exam_weight['und'][0]['value']) ? $thecourse->ks_final_exam_weight['und'][0]['value'] : 0.0;
-  $giaw = isset($thecourse->ks_grade_item_a_weight['und'][0]['value']) ? $thecourse->ks_grade_item_a_weight['und'][0]['value'] : 0.0;
-  $gibw = isset($thecourse->ks_grade_item_b_weight['und'][0]['value']) ? $thecourse->ks_grade_item_b_weight['und'][0]['value'] : 0.0;
-  $gicw = isset($thecourse->ks_grade_item_c_weight['und'][0]['value']) ? $thecourse->ks_grade_item_c_weight['und'][0]['value'] : 0.0;
-
-  $weights = array('cgw' => $cgw, 'few' => $few, 'giaw' => $giaw, 'gibw' => $gibw, 'gicw' => $gicw);
-
-  return $weights;
-}
-
 
 /**
  *
@@ -450,117 +398,6 @@ function kleosis_final_grades_ls_select_form_submit($form, &$form_state) {
 }
 
 /**
- * Defines a get current grades placeholder tab
- *
- * @return
- *    a markup blurb...
- */
-function kleosis_get_current_grades_ls($form, &$form_state) {
-
-  $breadcrumb = array();
-  $breadcrumb[] = l(t('Home'), 'kleosis');
-  $breadcrumb[] = l(t('Final grades-LS'), 'kleosis/grades_ls/final_grades_ls');
-  $breadcrumb[] = t('Current Grades');
-
-  // Set Breadcrumbs
-  drupal_set_breadcrumb($breadcrumb);
-
- drupal_set_title(t('Current Grades'));
-
-
-$page_desc = <<<EOT
-    <br/>This grades page will obtain and display the current grades for students in a selected class.
-    The grades will be retrieved from the assessment plan in Moodle for the selected class.<br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Current Grades'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-
-/**
- * Defines a grades placeholder tab
- *
- * @return
- *    a markup blurb...
- */
-function kleosis_grades_ls_placeholder_tab($form, &$form_state) {
-
- drupal_set_title(t('Grades Item'));
-
-$page_desc = <<<EOT
-  <br/>This is a placeholder page for upcoming Kleosis grading functionality (currently under construction...)
-  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Description'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-
-/**
- * Defines a set term final grades placeholder tab
- *
- * @return
- *    a markup blurb...
- */
-function kleosis_set_final_grades_ls($form, &$form_state) {
-
-  $breadcrumb = array();
-  $breadcrumb[] = l(t('Home'), 'kleosis');
-  $breadcrumb[] = l(t('Final grades-LS'), 'kleosis/grades_ls/final_grades_ls');
-  $breadcrumb[] = t('Lock Final Grades-LS');
-
-  // Set Breadcrumbs
-  drupal_set_breadcrumb($breadcrumb);
-
-drupal_set_title(t('Lock Final Grades-LS'));
-
-$page_desc = <<<EOT
-    <br/>This administrative page will set the final grades for all classes...
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-EOT;
-
-// add a fieldset for the page info
-
-$form['pagehelp'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Lock Final Grades-LS'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-
-$form['pagehelp']['pageinfo'] = array(
-    '#markup' => $page_desc,
-  );
-
-return $form;
-}
-
-/**
  *
  * Final grades edit form
  *
@@ -590,19 +427,14 @@ drupal_set_title(t('Edit Final Grades-LS'));
   }
   $node = node_load($class_id);
   $class_name = $node->title;
-  $weights = kleosis_get_grade_item_weights($class_id);
+//  $weights = kleosis_get_grade_item_weights_ls($class_id);
 
   $class_id_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_id']) ? $_SESSION['ks_final_grades_class_filter']['class_id'] : 0;
   $class_name_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_name']) ? $_SESSION['ks_final_grades_class_filter']['class_name'] : '';
   $class_academic_year = isset($_SESSION['ks_final_grades_class_filter']['academic_year']) ? $_SESSION['ks_final_grades_class_filter']['academic_year'] : '2011-2012';
   $class_term = isset($_SESSION['ks_final_grades_class_filter']['term']) ? $_SESSION['ks_final_grades_class_filter']['term'] : 'fy';
 
-  $final_exam_grade_exists =  ($weights['few'] <> '00.00') ? 'textfield' : 'hidden';
-  $grade_item_1_exists =  ($weights['giaw'] <> '00.00') ? 'textfield' : 'hidden';
-  $grade_item_2_exists =  ($weights['gibw'] <> '00.00') ? 'textfield' : 'hidden';
-  $grade_item_3_exists =  ($weights['gicw'] <> '00.00') ? 'textfield' : 'hidden';
-
-  $grades =  kleosis_get_student_final_grade_record($student_id, $class_id);
+  $grades =  kleosis_get_student_final_grade_record_ls($student_id, $class_id);
 
   $form['grades_edit']['academic_year'] = array(
     '#type' => 'select',
@@ -658,70 +490,75 @@ drupal_set_title(t('Edit Final Grades-LS'));
     '#type' => 'hidden',
     '#default_value' => $kcclg_id,
   );
-  $form['grades_edit']['course_grade'] = array(
+  $form['grades_edit']['course_grade_str'] = array(
     '#type' => 'textfield',
     '#title' => t('Course grade'),
-    '#default_value' =>  !empty($grades) ? $grades[0]->course_grade : '',
+    '#default_value' =>  !empty($grades) ? $grades[0]->course_grade_str : '',
     '#size' => 7,
     '#maxlength' => 8,
     '#weight' => 0,
-    '#description' => '% of final grade: ' . $weights['cgw'],
+//    '#description' => '% of final grade: ' . $weights['cgw'],
     '#prefix' => '<div style="float: left;clear:left;width:175px" ><br/>',
     '#suffix' => '</div>',
   );
-  $form['grades_edit']['final_exam_grade'] = array(
-    '#type' => $final_exam_grade_exists,
+  $form['grades_edit']['final_exam_grade_str'] = array(
+//    '#type' => $final_exam_grade_exists,
+    '#type' => 'textfield',
     '#title' => t('Final exam'),
-    '#default_value' =>  !empty($grades) ? $grades[0]->final_exam_grade : '',
+    '#default_value' =>  !empty($grades) ? $grades[0]->final_exam_grade_str : '',
     '#size' => 7,
     '#maxlength' => 8,
     '#weight' => 2,
-    '#description' => '% of final grade: ' . $weights['few'],
+//    '#description' => '% of final grade: ' . $weights['few'],
     '#prefix' => '<div style="float: left;width:175px" ><br/>',
     '#suffix' => '</div>',
   );
   $form['grades_edit']['grade_item_1'] = array(
-    '#type' => $grade_item_1_exists,
+//    '#type' => $grade_item_1_exists,
+    '#type' => 'textfield',
     '#title' => variable_get('kleosis_grade_item_1_name', 'Item 1 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_1 : '',
     '#size' => 7,
     '#maxlength' => 8,
     '#weight' => 4,
-    '#description' => '% of final grade: ' . $weights['giaw'],
-    '#prefix' => '<div style="float: left;clear:left;width:175px" >',
+//    '#description' => '% of final grade: ' . $weights['giaw'],
+    '#prefix' => '<div style="float: left;clear:left; width:175px" >',
     '#suffix' => '</div>',
   );
   $form['grades_edit']['grade_item_2'] = array(
-    '#type' => $grade_item_2_exists,
+//    '#type' => $grade_item_2_exists,
+    '#type' => 'textfield',
     '#title' => variable_get('kleosis_grade_item_2_name', 'Item 2 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_2 : '',
     '#size' => 7,
     '#maxlength' => 8,
-    '#description' => '% of final grade: ' . $weights['gibw'],
+//    '#description' => '% of final grade: ' . $weights['gibw'],
     '#weight' => 6,
     '#prefix' => '<div style="float: left;width:175px" >',
     '#suffix' => '</div>',
   );
   $form['grades_edit']['grade_item_3'] = array(
-    '#type' => $grade_item_3_exists,
+//    '#type' => $grade_item_3_exists,
+    '#type' => 'textfield',
     '#title' => variable_get('kleosis_grade_item_3_name', 'Item 3 grade'),
     '#default_value' =>  !empty($grades) ? $grades[0]->grade_item_3 : '',
     '#size' => 7,
     '#maxlength' => 8,
     '#weight' => 8,
-    '#description' => '% of final grade: ' . $weights['gicw'],
+//    '#description' => '% of final grade: ' . $weights['gicw'],
     '#prefix' => '<div style="float: left;width:175px" >',
     '#suffix' => '</div>',
   );
 
-  $form['grades_edit']['final_grade'] = array(
+  $form['grades_edit']['final_grade_str'] = array(
     '#type' => 'textfield',
     '#title' => t('Final grade'),
-    '#default_value' =>  !empty($grades) ? $grades[0]->final_grade : '',
-    '#disabled' => TRUE,
+    '#default_value' =>  !empty($grades) ? $grades[0]->final_grade_str : '',
+//    '#disabled' => TRUE,
     '#size' => 7,
     '#maxlength' => 8,
     '#weight' => 10,
+//    '#description' => 'Letter grade',
     '#prefix' => '<div id="final_grade_textfield_wrapper", style="float: left;clear:left;width:175px" >',
     '#suffix' => '</div>',
   );
@@ -745,19 +582,6 @@ drupal_set_title(t('Edit Final Grades-LS'));
     '#suffix' => '</div>',
   );
 
-  $form['grades_edit']['calculate'] = array(
-    '#type' => 'submit',
-    '#value' => t('Calculate final grade'),
-    '#weight' => 16,
-    '#ajax' => array(
-        'callback' => 'calculate_final_grade_ajax_callback',
-        'wrapper' => 'final_grade_textfield_wrapper',
-        'method' => 'replace',
-    ),
-    '#prefix' => '<div style="float: left;width:250px" ></br>',
-    '#suffix' => '</div>',
-  );
-
   $form['grades_edit']['cancel'] = array(
     '#type' => 'submit',
     '#value' => t('Cancel'),
@@ -766,74 +590,8 @@ drupal_set_title(t('Edit Final Grades-LS'));
     '#suffix' => '</div>',
   );
 
-//  dpm('inside kleosis_final_grades_ls_edit_form');
-//  dpm($form);
-//  dpm($form_state);
-
   return $form;
 }
-
-/**
- *
- *  Ajax callback for final grade calculation
- *
- */
- function calculate_final_grade_ajax_callback($form, $form_state) {
-
-  $final_exam = $form_state['values']['final_exam_grade'];
-  $course_grade = $form_state['values']['course_grade'];
-  $grade_item_1 = $form_state['values']['grade_item_1'];
-  $grade_item_2 = $form_state['values']['grade_item_2'];
-  $grade_item_3 = $form_state['values']['grade_item_3'];
-
-  $class_id_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_id']) ? $_SESSION['ks_final_grades_class_filter']['class_id'] : 0;
-
-  $final_grade = kleosis_calculate_final_grade($class_id_from_filter, $course_grade, $final_exam, $grade_item_1, $grade_item_2, $grade_item_3);
-
-  $element = $form['grades_edit']['final_grade'];
-  $element['#value'] = $final_grade;
-  $element['#default_value'] = $final_grade;  // no effect...
-
-  return $element;
- }
-
-/**
- *
- *  Final grade calculation
- *
- */
-function kleosis_calculate_final_grade($classid, $course_grade, $final_exam, $grade_item_1, $grade_item_2, $grade_item_3) {
-
-  $weights = kleosis_get_grade_item_weights($classid);
-
-  $cgw = $weights['cgw'];
-  $few = $weights['few'];
-  $giaw = $weights['giaw'];
-  $gibw = $weights['gibw'];
-  $gicw = $weights['gicw'];
-
-  if ($cgw == '100.00' && $few == '00.00' && $giaw == '00.00' && $gibw == '00.00' && $gicw == '00.00') {
-
-    $le_final_grade = $course_grade;
-  }
-  elseif ($cgw <> '00.00' && $few <> '00.00' && $giaw == '00.00' && $gibw == '00.00' && $gicw == '00.00') {
-    $le_final_grade = (($course_grade * $cgw) + ($final_exam * $few)) / 100.0;
-  }
-  elseif ($cgw <> '00.00' && $few <> '00.00' && $giaw <> '00.00' && $gibw == '00.00' && $gicw == '00.00') {
-    $le_final_grade = (($course_grade * $cgw) + ($final_exam * $few) + ($grade_item_1 * $giaw)) / 100.0;
-  }
-  elseif ($cgw <> '00.00' && $few <> '00.00' && $giaw <> '00.00' && $gibw <> '00.00' && $gicw == '00.00') {
-    $le_final_grade = (($course_grade * $cgw) + ($final_exam * $few) + ($grade_item_1 * $giaw) + ($grade_item_2 * $gibw)) / 100.0;
-  }
-  elseif ($cgw <> '00.00' && $few <> '00.00' && $giaw <> '00.00' && $gibw <> '00.00' && $gicw <> '00.00') {
-    $le_final_grade = (($course_grade * $cgw) + ($final_exam * $few) + ($grade_item_1 * $giaw) + ($grade_item_2 * $gibw) + ($grade_item_3 * $gicw)) / 100.0;
-  }
-  else {
-    $le_final_grade = 0;
-  }
-
-  return $le_final_grade;
- }
 
 /**
  *
@@ -842,41 +600,14 @@ function kleosis_calculate_final_grade($classid, $course_grade, $final_exam, $gr
  */
 function kleosis_final_grades_ls_edit_form_validate($form, &$form_state) {
 
-// dpm($form_state);
   if ($form_state['values']['op'] == 'Cancel') {
     return;
   }
+/*
   if ( (empty($form_state['values']['final_exam_grade'])) || (!is_numeric($form_state['values']['final_exam_grade'])) ) {
       form_set_error('final_exam_grade', t('Final exam grade must be a decimal number.'), $limit_validation_errors = NULL);
     }
-  if ( (empty($form_state['values']['course_grade'])) || (!is_numeric($form_state['values']['course_grade'])) ) {
-      form_set_error('course_grade', t('Course grade must be a decimal number.'), $limit_validation_errors = NULL);
-    }
-//  if( (empty($form_state['values']['final_grade'])) || (!is_numeric($form_state['values']['final_grade'])) ) {
-//      form_set_error('final_grade', t('Final grade must be a decimal number.'), $limit_validation_errors = NULL);
-//    }
-//  if ( !is_numeric($form_state['values']['final_grade']) ) {
-//      form_set_error('final_grade', t('Final grade must be a decimal number.'), $limit_validation_errors = NULL);
-//    }
-
-  if (empty($form_state['values']['grade_item_1'])) {
-    $form_state['values']['grade_item_1'] = NULL;
-    }
-  elseif ( !is_numeric($form_state['values']['grade_item_1'])  ) {
-     form_set_error('grade_item_1', t('Grade Item 1 must be a decimal number.'), $limit_validation_errors = NULL);
-    }
-  if (empty($form_state['values']['grade_item_2'])) {
-    $form_state['values']['grade_item_2'] = NULL;
-    }
-  elseif ( !is_numeric($form_state['values']['grade_item_2'])  ) {
-     form_set_error('grade_item_2', t('Grade Item 2 must be a decimal number.'), $limit_validation_errors = NULL);
-    }
-  if (empty($form_state['values']['grade_item_3'])) {
-    $form_state['values']['grade_item_3'] = NULL;
-    }
-  elseif ( !is_numeric($form_state['values']['grade_item_3'])  ) {
-     form_set_error('grade_item_3', t('Grade Item 3 must be a decimal number.'), $limit_validation_errors = NULL);
-    }
+*/
 }
 /**
  *
@@ -885,33 +616,21 @@ function kleosis_final_grades_ls_edit_form_validate($form, &$form_state) {
  */
 function kleosis_final_grades_ls_edit_form_submit($form, &$form_state) {
 
-//  dpm($form);
-//  dpm($form_state['input']['final_grade']);
   switch ($form_state['values']['op']) {
 
     case 'Update':
-
-    // calculated the final grade again because form values altered by ajax do not show up for the submit process!
-    $final_exam = $form_state['values']['final_exam_grade'];
-    $course_grade = $form_state['values']['course_grade'];
-    $grade_item_1 = $form_state['values']['grade_item_1'];
-    $grade_item_2 = $form_state['values']['grade_item_2'];
-    $grade_item_3 = $form_state['values']['grade_item_3'];
-
-    $class_id_from_filter = isset($_SESSION['ks_final_grades_class_filter']['class_id']) ? $_SESSION['ks_final_grades_class_filter']['class_id'] : 0;
-    $final_grade = kleosis_calculate_final_grade($class_id_from_filter, $course_grade, $final_exam, $grade_item_1, $grade_item_2, $grade_item_3);
 
     $ks_final_grade_record = array();
     $ks_final_grade_record['kcclg_id'] = $form_state['values']['kcclg_id'];
     $ks_final_grade_record['ksccl_id_fk'] = $form_state['values']['ksccl_id'];
 //        $ks_final_grade_record['current_grade'] = $form_state['values']['current_grade'];
-    $ks_final_grade_record['final_exam_grade'] = $form_state['values']['final_exam_grade'];
-    $ks_final_grade_record['course_grade'] = $form_state['values']['course_grade'];
+    $ks_final_grade_record['final_exam_grade_str'] = $form_state['values']['final_exam_grade_str'];
+    $ks_final_grade_record['course_grade_str'] = $form_state['values']['course_grade_str'];
     $ks_final_grade_record['grade_item_1'] = $form_state['values']['grade_item_1'];
     $ks_final_grade_record['grade_item_2'] = $form_state['values']['grade_item_2'];
     $ks_final_grade_record['grade_item_3'] = $form_state['values']['grade_item_3'];
-//        $ks_final_grade_record['final_grade'] = $form_state['values']['final_grade'];
-    $ks_final_grade_record['final_grade'] = $final_grade;
+        $ks_final_grade_record['final_grade_str'] = $form_state['values']['final_grade_str'];
+//    $ks_final_grade_record['final_grade'] = $final_grade;
     $ks_final_grade_record['remarks'] = $form_state['values']['remarks'];
 
     if ($ks_final_grade_record['kcclg_id']) {
@@ -921,14 +640,284 @@ function kleosis_final_grades_ls_edit_form_submit($form, &$form_state) {
       $res = ks_insert_final_grade_ls_record($ks_final_grade_record);
     }
 
-    $form_state['redirect'] = 'kleosis/grades_ls/final_grades_ls';
+//    $form_state['redirect'] = 'kleosis/grades/final_grades_ls';
 
       break;
 
     case 'Cancel':
 
-      $form_state['redirect'] = 'kleosis/grades_ls/final_grades_ls';
+//      $form_state['redirect'] = 'kleosis/grades/final_grades_ls';
 
       break;
     }
+}
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+
+
+/**
+ * Provides the final grades for a student
+ *
+ * @return
+ *   tbd
+ */
+function kleosis_student_final_grades_ls($form, &$form_state) {
+
+  $uid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : (isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : 0);
+  $name = isset( $_GET['ksop'] ) ? $_GET['ksop'] : (isset($_SESSION['student']['name']) ? $_SESSION['student']['name'] : '');
+
+  if ($uid == 0) {
+    drupal_set_message(t('Please select a Student by clicking on a Student link.from the Student List page.'));
+    drupal_goto($path = 'kleosis/students', $options = array());
+  }
+
+  $_SESSION['student']['id'] = $uid;
+  $_SESSION['student']['name'] = $name;
+
+  // Set Breadcrumbs
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Students'), 'kleosis/students');
+  $breadcrumb[] = t('Student Final Grades - LS');
+
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('Student Final Grades - LS'));
+
+  $build['filter'] = kleosis_student_final_grades_ls_acyt_select_form();
+  $build['#submit'][] = 'kleosis_student_final_grades_ls_acyt_select_form_submit';
+  $build['list'] = kleosis_student_final_grades_ls_list();
+
+  return $build;
+}
+
+/**
+ *
+ * Academic year and term selection for the Students Final Grades List form
+ *
+ */
+function kleosis_student_final_grades_ls_acyt_select_form() {
+
+  $academic_year = isset($_SESSION['ks_student_final_grades_ls_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_ls_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_final_grades_ls_select_filter']['term']) ? $_SESSION['ks_student_final_grades_ls_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+  $uid = $_SESSION['student']['id'];
+  $name = $_SESSION['student']['name'];
+
+  // create a fieldset for the class academic year and term selection
+  $build['acy_select'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Academic Year') . ': ' . $academic_year . '&nbsp; &nbsp; &nbsp; ' . t('Term') . ': ' . $term . '&nbsp; &nbsp; &nbsp; ' . t('Student') . ': ' . ks_get_usernames_for_display($uid),
+    '#weight' => -5,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+  $build['acy_select']['academic_year'] = array(
+    '#type' => 'select',
+    '#title' => t('Academic Year'),
+    '#options' =>  kleosis_academic_year_values(),
+    '#default_value' =>  $academic_year,
+    '#disabled' => FALSE,
+    '#weight' => 1,
+    '#prefix' => '<div style="float: left;clear:left;width:130px" >',
+    '#suffix' => '</div>',
+  );
+  $build['acy_select']['term'] = array(
+    '#type' => 'select',
+    '#title' => t('Term'),
+    '#options' => array('all' => t('All')) + kleosis_academic_term_values(),
+    '#default_value' => $term,
+    '#disabled' => FALSE,
+    '#weight' => 3,
+    '#prefix' => '<div style="float: left;width:100px" >',
+    '#suffix' => '</div>',
+  );
+
+  $build['acy_select']['select'] = array(
+    '#type' => 'submit',
+    '#value' => t('Apply'),
+    '#weight' => 5,
+    '#disabled' => FALSE,
+    '#prefix' => '<div style="float: left;width:225px" ></br>',
+    '#suffix' => '</div>',
+  );
+
+  $usernames = ks_get_usernames_for_display($uid);  // get the display names for this user
+  $text = t('Final grades for student <strong>@name</strong>' . ': ', array('@name' => $usernames));
+
+  $build['thegrades'] = array(
+    '#markup' => $text,
+    '#prefix' => '<div style="float: left;clear:left; width:550px" >',
+    '#suffix' => '</div>',
+    );
+
+  return $build;
+}
+
+
+/**
+ *
+ * Implementation of hook_submit() for the Students Final Grades List form.
+ *
+ */
+function kleosis_student_final_grades_ls_acyt_select_form_submit($form, &$form_state) {
+
+  $uid = $_SESSION['student']['id'];
+  $name = $_SESSION['student']['name'];
+
+  switch ($form_state['values']['op']) {
+
+    case 'Apply':
+
+      $_SESSION['ks_student_final_grades_ls_select_filter'] = array(
+                                        'academic_year' => $form_state['values']['academic_year'],
+                                        'term' => $form_state['values']['term'],
+                                       );
+      break;
+  }
+}
+
+/**
+ * Provides the final grades for a student
+ *
+ * @return
+ *   build of final grades
+ */
+function kleosis_student_final_grades_ls_list() {
+
+  // check permissions
+  global $user;
+  if ( !(in_array('administrator', $user->roles))  && !(user_access('view kleosis grades')) ) {
+    drupal_set_message(t("You currently do not have permissions to view Kleosis grades."));
+    $options = array('query' => array('destination' => 'kleosis/students') );
+    drupal_goto($_SERVER['HTTP_REFERER'], $options, $http_response_code = 302); // return to calling url
+  }
+
+  $academic_year = isset($_SESSION['ks_student_final_grades_ls_select_filter']['academic_year']) ? $_SESSION['ks_student_final_grades_ls_select_filter']['academic_year'] : variable_get('kleosis_academic_year', '2011-2012');
+  $term = isset($_SESSION['ks_student_final_grades_ls_select_filter']['term']) ? $_SESSION['ks_student_final_grades_ls_select_filter']['term'] : variable_get('kleosis_academic_term', 'fy');
+
+  $uid = $_SESSION['student']['id'];
+  $name = $_SESSION['student']['name'];
+
+  // the header contains all the fields that will be displayed in the tableselect list
+/*
+  $header = array(
+    'name' => array('data' => t('Username'), $name),
+    'title' => 'Course',
+    'final_grade' => array('data' => t('Final Grade (decimal)'), 'field' => 'ksstugrades.final_grade'),
+    'final_grade_str' => array('data' => t('Final Grade (letter)'), 'field' => 'ksstugrades.final_grade_str'),
+    'remarks' => array('data' => t('Remarks'), 'field' => 'ksstugrades.remarks'),
+    'operations' => array('data' => t('Ops')),
+  );
+*/
+  $header = array(
+//    'name' => array('data' => t('Student'), 'field' => 'u.name'),
+    'name' => array('data' => t('Username'), $name),
+    'title' => 'Course',
+    'course_grade_str' => t('Course Grade'),
+    'final_exam_grade_str' => t('Final Exam'),
+    'grade_item_1' => variable_get('kleosis_grade_item_1_name', t('GradeItem 1')),
+    'grade_item_2' => variable_get('kleosis_grade_item_2_name', t('GradeItem 2')),
+    'grade_item_3' => variable_get('kleosis_grade_item_3_name', t('GradeItem 3')),
+    'final_grade_str' => t('Final Grade'),
+    'remarks' => t('Remarks'),
+//    'operations' => array('data' => t('Ops')),
+    'operations' => t('Ops'),
+  );
+
+//  $classid = $_SESSION['kleosis_class_selected_class']['classid'];
+
+// get all class nids for the selected academic year and term:
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', 'class')
+  ->fieldCondition('ks_class_term', 'value', $term, '=')
+  ->fieldCondition('ks_class_academic_year', 'value', $academic_year, '=')
+  ->fieldCondition('ks_class_status', 'value', '1', '=')  // 'Active'
+  ->propertyCondition('status', 1)  // not needed, just an example...
+  ->fieldOrderBy('ks_class_academic_year', 'value', 'ASC');
+
+  $result = $query->execute();
+
+  $build = array();
+  $options = array();
+
+  if ( !empty($result) ) {
+
+    $nids = array_keys($result['node']);
+    $nodes = entity_load('node', array_keys($result['node']));
+
+    // get the grades from the classes that the student has taken during the selected academic year and term
+
+    $query = db_select('ks_student_course_classes', 'ksstuclass');
+//    $query->innerJoin('ks_student_course_class_grades', 'ksstugrades', 'ksstugrades.ksccl_id_fk = ksstuclass.ksccl_id');
+    $query->leftJoin('ks_student_course_class_grades', 'ksstugrades', 'ksstugrades.ksccl_id_fk = ksstuclass.ksccl_id');
+    $query->addField('ksstuclass', 'ksccl_id');
+    $query->addField('ksstuclass', 'kstu_id_fk');
+    $query->addField('ksstuclass', 'kccls_id_fk');
+    $query->addField('ksstugrades', 'kcclg_id');
+    $query->addField('ksstugrades', 'final_exam_grade_str');
+    $query->addField('ksstugrades', 'course_grade_str');
+    $query->addField('ksstugrades', 'grade_item_1');
+    $query->addField('ksstugrades', 'grade_item_2');
+    $query->addField('ksstugrades', 'grade_item_3');
+    $query->addField('ksstugrades', 'final_grade_str');
+    $query->addField('ksstugrades', 'remarks');
+
+    $query->condition('ksstuclass.' . 'kstu_id_fk', $uid, '=');
+    $query->condition('ksstuclass.' . 'kccls_id_fk', $nids, 'IN');
+
+    $grade_records = $query->execute()->fetchAll();
+
+    $attnda = array_keys(ks_get_course_types(), 'Attendance');  // get the Attendance course type key
+    $lnchbrka = array_keys(ks_get_course_types(), 'Lunch-Breaktime');  // get the Lunch-Breaktime course type key
+
+    foreach ($grade_records as $record) {
+
+      $class_node = node_load($record->kccls_id_fk);
+      $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];
+      $course_node = node_load($node_course_ref);
+      $coursetitle = $course_node->title;
+      $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
+      $node_course_type =   $course_node->ks_course_type['und'][0]['value'];
+
+      if ( ($node_course_type != $attnda[0]) && ($node_course_type != $lnchbrka[0]) ) {
+        $options[$record->kccls_id_fk] = array(
+        'name' => l($name, 'kleosis/students/summary', array('query' => array('ksopid' => $uid, 'ksop' => $name))),
+        'title' =>  $node_course_no,
+        'course_grade_str' =>  $record->course_grade_str,
+        'final_exam_grade_str' =>  $record->final_exam_grade_str,
+        'grade_item_1' =>  $record->grade_item_1,
+        'grade_item_2' =>  $record->grade_item_2,
+        'grade_item_3' =>  $record->grade_item_3,
+        'final_grade_str' =>  $record->final_grade_str,
+        'remarks' =>  $record->remarks,
+        //   the following link re-uses the final_grades_edit_form in kleosis_grades.inc - cool. See also: kleosis_final_grades_list() in the same .inc
+        'operations' => l(t('edit'), 'kleosis/grades_ls/edit_final_grades_ls', array('query' => array('ksopgid' => $record->kcclg_id, 'ksopcclid' => $record->ksccl_id, 'ksopcid' => $record->kccls_id_fk, 'ksopsid' => $uid, 'ksopsn' => $name, 'destination' => 'kleosis/students/grades/final_grades_ls')))
+        );
+      }
+    }
+  }
+  asort($options);
+  $build['students'] = array(
+    '#type' => 'table',       // used for table
+//    '#type' => 'tableselect',   // used for tableselect
+    '#theme' => 'table',      // used only for table
+    '#header' => $header,
+//    '#options' => $options,   // used for tableselect
+    '#rows' => $options,   // used for table
+    '#empty' => t('No grades exist for the student for the selected academic year and term.'),
+    '#multiple' => TRUE,
+    '#js_select' => TRUE,
+  );
+
+  $build['pager'] = array('#markup' => theme('pager'));
+  return $build;
 }

@@ -896,7 +896,7 @@ function kleosis_student_final_grades_list() {
         $options[$record->kccls_id_fk] = array(
         'name' => l($name, 'kleosis/students/summary', array('query' => array('ksopid' => $uid, 'ksop' => $name))),
         'title' =>  $node_course_no,
-        'final_grade' =>  ($record->final_grade) ? number_format($record->final_grade, 2) : '',
+        'final_grade' =>  ($record->final_grade > 0.00000) ? number_format($record->final_grade, 2) : '',
         'final_grade_str' =>  $record->final_grade_str,
         'remarks' =>  $record->remarks,
         //   the following link re-uses the final_grades_edit_form in kleosis_grades.inc - cool. See also: kleosis_final_grades_list() in the same .inc
