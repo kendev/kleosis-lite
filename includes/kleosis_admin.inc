@@ -800,3 +800,26 @@ function kleosis_generate_next_classes($from_academic_year, $to_academic_year, $
   return $res;
 }
 
+/**
+ * Provides a function for general admin tasks
+ *
+ * @return
+ *    redirects to the calling url
+ */
+function kleosis_general_admin($form, &$form_state) {
+
+  $ksopid = isset( $_GET['ksopid'] ) ? $_GET['ksopid'] : '';
+  $ksop = isset( $_GET['ksop'] ) ? $_GET['ksop'] : '';
+
+  if ($ksopid == 'national_name') {  // toggle the display of the national name
+    if( !isset($_SESSION['kleosis_general_admin']['show_national_name']) ) {
+      $_SESSION['kleosis_general_admin']['show_national_name'] = TRUE;
+    }
+    else {
+      $_SESSION['kleosis_general_admin']['show_national_name'] = !$_SESSION['kleosis_general_admin']['show_national_name'];
+    }
+  }
+  drupal_redirect_form($form_state);
+  return $form;
+}
+

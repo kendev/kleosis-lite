@@ -57,6 +57,7 @@ function kleosis_uninstall() {
   variable_del('kleosis_sample_users');
   variable_del('kleosis_odtreports_path');
   variable_del('kleosis_pager_rows');
+  variable_del('kleosis_view_national_name');
 
   if (variable_get('kleosis_student_role_exists') == FALSE) {  // if a role didn't exist before kleosis, then delete it
     user_role_delete('student');
