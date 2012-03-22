@@ -109,17 +109,17 @@ function build_ks_user_student_edit($theuser) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-/*
   $form['student_biodata']['fullname_t'] = array(
     '#type' => 'textfield',
-    '#title' => t('Name (national)'),
+    '#title' => t('Full Name (National)'),
     '#size' => 35,
     '#maxlength' => 48,
     '#default_value' => ($defaults)? $ks_user['fullname_t']: '',
     '#prefix' => '<div style="float: left;clear:left;width:275px" >',
     '#suffix' => '</div>',
   );
-  $form['student_biodata']['friendlyname_t'] = array(
+/*
+$form['student_biodata']['friendlyname_t'] = array(
     '#type' => 'textfield',
     '#title' => t('Friendly Name (national)'),
     '#size' => 20,
@@ -144,7 +144,7 @@ function build_ks_user_student_edit($theuser) {
     '#size' => 20,
     '#maxlength' => 24,
     '#default_value' => ($defaults)? $ks_user['nationality'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $form['student_biodata']['date_of_birth'] = array(

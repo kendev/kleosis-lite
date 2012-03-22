@@ -1101,7 +1101,7 @@ function ks_update_student_record(&$edit) {
                         'fullname' => $edit['fullname'],
                         'familyname' => $edit['familyname'],
                         'friendlyname' => $edit['std_friendlyname'],
-//                        'fullname_t' => $edit['fullname_t'],
+                        'fullname_t' => $edit['fullname_t'],
 //                        'familyname_t' => $edit['familyname_t'],
 //                        'friendlyname_t' => $edit['friendlyname_t'],
                         'gender' => $edit['gender'],

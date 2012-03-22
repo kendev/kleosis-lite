@@ -138,6 +138,8 @@ function kleosis_students_list() {
 
 drupal_set_title(t('Student List'));
 
+  global $base_root;
+  global $user;
   $form = array();
 
   // get the filter values from the session variable (if any) and set the default form values accordingly
@@ -170,19 +172,50 @@ drupal_set_title(t('Student List'));
     '#submit' => array('kleosis_students_list_submit'),
   );
 */
-  // the header contains all the fields that will be displayed in the tableselect list
-  $header = array(
-    'name' => array('data' => t('Username'), 'field' => 'u.name'),
-//    'drp_uid_fk' => array('data' => t('Student id'), 'field' => 'kstu.drp_uid_fk'),
-    'fullname' => array('data' => t('Fullname'), 'field' => 'kstu.fullname'),
-    'friendlyname' => array('data' => t('Friendly Name'), 'field' => 'kstu.friendlyname'),
-    'program' => array('data' => t('Program'), 'field' => 'kpgm.program'),
-    'gradelevel' => array('data' => t('Gradelevel'), 'field' => 'kgrdl.gradelevel'),
-    'status' => array('data' => t('Status'), 'field' => 'ksts.status'),
-//    'operations' => array('data' => t('Ops')),
-  );
-//    'identity_id' => array('data' => t('Identity id'), 'field' => 'kstu.identity_id'),
+  $nn_title = t('hide national name');
+  $show_nn = TRUE;
+  if( (!isset($_SESSION['kleosis_general_admin']['show_national_name'])) || ($_SESSION['kleosis_general_admin']['show_national_name'] == FALSE) ) {
+    $nn_title = t('show national name');
+    $show_nn = FALSE;
+  }
 
+  if( !(variable_get('kleosis_view_national_name', '1')) ) {
+   $form['national_name'] = array(
+    '#type' => 'link',
+    '#title' => $nn_title,
+    '#access' => ( in_array('administrator', $user->roles) || user_access('view kleosis student info') ),
+    '#href' => $base_root . url('kleosis/admin/general', array('query' => array('ksopid' => 'national_name', 'ksop' => 'toggle', 'destination' => 'kleosis/students', ))),
+    '#prefix' => '<div style="float:left;width:250px">',
+    '#suffix' => '</div>',
+    );
+  }
+
+  // the header contains all the fields that will be displayed in the tableselect list
+  if ($show_nn) {
+    $header = array(
+      'name' => array('data' => t('Username'), 'field' => 'u.name'),
+  //    'drp_uid_fk' => array('data' => t('Student id'), 'field' => 'kstu.drp_uid_fk'),
+      'fullname' => array('data' => t('Fullname'), 'field' => 'kstu.fullname'),
+      'friendlyname' => array('data' => t('Friendly Name'), 'field' => 'kstu.friendlyname'),
+      'fullname_t' => array('data' => t('Fullname (National)'), 'field' => 'kstu.fullname_t'),
+      'program' => array('data' => t('Program'), 'field' => 'kpgm.program'),
+      'gradelevel' => array('data' => t('Gradelevel'), 'field' => 'kgrdl.gradelevel'),
+      'status' => array('data' => t('Status'), 'field' => 'ksts.status'),
+  //    'operations' => array('data' => t('Ops')),
+    );
+  }
+  else {
+    $header = array(
+      'name' => array('data' => t('Username'), 'field' => 'u.name'),
+  //    'drp_uid_fk' => array('data' => t('Student id'), 'field' => 'kstu.drp_uid_fk'),
+      'fullname' => array('data' => t('Fullname'), 'field' => 'kstu.fullname'),
+      'friendlyname' => array('data' => t('Friendly Name'), 'field' => 'kstu.friendlyname'),
+      'program' => array('data' => t('Program'), 'field' => 'kpgm.program'),
+      'gradelevel' => array('data' => t('Gradelevel'), 'field' => 'kgrdl.gradelevel'),
+      'status' => array('data' => t('Status'), 'field' => 'ksts.status'),
+  //    'operations' => array('data' => t('Ops')),
+    );
+  }
   if (($field == 'username'))  {
     $query = db_select('users', 'u');
     $query->innerJoin('ks_students', 'kstu', 'kstu.drp_uid_fk = u.uid');
@@ -200,6 +233,7 @@ drupal_set_title(t('Student List'));
   $query->addField('kstu', 'identity_id');
   $query->addField('kstu', 'fullname');
   $query->addField('kstu', 'friendlyname');
+  $query->addField('kstu', 'fullname_t');
   $query->addField('kpgm', 'program');
   $query->addField('kgrdl', 'gradelevel');
   $query->addField('ksts', 'status');
@@ -254,22 +288,34 @@ drupal_set_title(t('Student List'));
   $results = $query->execute()->fetchAll();
 
   foreach ($results as $student) {
-    $options[$student->drp_uid_fk] = array(
-//      'name' => l($student->name , 'user/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list'))),
-//      'name' => $student->name,
-      'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name))),
-//      'drp_uid_fk' =>  $student->drp_uid_fk,
-      'fullname' =>  !empty($student->fullname) ? $student->fullname : '(' . $student->name . ')',
-//      'identity_id' => $student->identity_id,
-      'friendlyname' => $student->friendlyname,
-      'program' => $student->program,
-      'gradelevel' => $student->gradelevel,
-      'status' =>  $student->status,
-//      'operations' => l(t('edit'), 'user/' . $student->drp_uid_fk . '/edit', array('query' => array('destination' => 'kleosis/students/list')))
-//      'operations' => l(t('edit'), 'kleosis/std/summary/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list')))
-//      'operations' =>  l(t('Summary page'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
-
-    );
+    if ($show_nn) {
+      $options[$student->drp_uid_fk] = array(
+  //      'name' => l($student->name , 'user/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list'))),
+  //      'name' => $student->name,
+        'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name))),
+  //      'drp_uid_fk' =>  $student->drp_uid_fk,
+        'fullname' =>  !empty($student->fullname) ? $student->fullname : '(' . $student->name . ')',
+  //      'identity_id' => $student->identity_id,
+        'friendlyname' => $student->friendlyname,
+        'fullname_t' => $student->fullname_t,
+        'program' => $student->program,
+        'gradelevel' => $student->gradelevel,
+        'status' =>  $student->status,
+  //      'operations' => l(t('edit'), 'user/' . $student->drp_uid_fk . '/edit', array('query' => array('destination' => 'kleosis/students/list')))
+  //      'operations' => l(t('edit'), 'kleosis/std/summary/' . $student->drp_uid_fk, array('query' => array('destination' => 'kleosis/students/list')))
+  //      'operations' =>  l(t('Summary page'), 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name)))
+      );
+    }
+    else {
+      $options[$student->drp_uid_fk] = array(
+        'name' =>  l($student->name, 'kleosis/students/summary', array('query' => array('ksopid' => $student->drp_uid_fk, 'ksop' => $student->name))),
+        'fullname' =>  !empty($student->fullname) ? $student->fullname : '(' . $student->name . ')',
+         'friendlyname' => $student->friendlyname,
+        'program' => $student->program,
+        'gradelevel' => $student->gradelevel,
+        'status' =>  $student->status,
+      );
+    }
   }
   $form['students'] = array(
         '#type' => 'table',       // used for table

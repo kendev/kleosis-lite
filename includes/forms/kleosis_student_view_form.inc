@@ -106,16 +106,14 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-/*
-  if (!(empty($fullname_t))) {
     $account->content['student_biodata']['fullname_t'] = array(
       '#type' => 'user_profile_item',
-      '#title' => t('Name (national)'),
+      '#title' => t('Full Name (National)'),
       '#markup' => ($defaults)? $ks_user['fullname_t'] : '',
       '#prefix' => '<div style="float:left;clear:left;width:275px" >',
       '#suffix' => '</div>',
     );
-  }
+/*
   if (!(empty($friendlyname_t))) {
     $account->content['student_biodata']['friendlyname_t'] = array(
       '#type' => 'user_profile_item',
@@ -139,7 +137,7 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#type' => 'user_profile_item',
     '#title' => t('Nationality'),
     '#markup' => ($defaults)? $ks_user['nationality'] : 0,
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div>',
   );
   $account->content['student_biodata']['date_of_birth'] = array(
