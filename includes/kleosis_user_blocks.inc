@@ -212,17 +212,32 @@ function kleosis_block_contents($delta) {
       break;
   case 'my_assignments':
 
-//   currently gets all assignments...
+//   todo: a webservices method needs to be written to return only the assignments for a specific user
+//   in the meantime, make an initial call to ws_get_my_courses(), then post-filter the ws_get_assignments() call
+
+      $itemsc = array();
+      $nbr_courses_to_display = variable_get('my_courses_count');
+      $courses = ws_get_my_courses();
+      if ($courses) {
+        foreach ($courses as $le_course) {
+          if ($le_course['id'] != 1) {
+            $itemsc[] = $le_course['id'];
+          }
+        }
+      }
 
       $items = array();
       $nbr_assignments_to_display = variable_get('my_assignments_count');
-      $assignments = ws_get_assignments();
+      $assignments = ws_get_assignments();  // this gets all assignments for all users for all courses (very inefficient...)
 
       if ($assignments) {
         foreach ($assignments as $key => $val) {
-          $items[$val['id']] = l($val['name'], $moodle_url . '/mod/assignment/index.php', array('query' => array('id' => $val['course']), 'attributes' => array('target' => '_blank')));
+          if (in_array($val['course'], $itemsc)) {
+            $items[$val['id']] = l($val['name'], $moodle_url . '/mod/assignment/index.php', array('query' => array('id' => $val['course']), 'attributes' => array('target' => '_blank')));
+          }
         }
       }
+
       return array('#markup' => theme('item_list', array('items' => $items)));
 
       break;
