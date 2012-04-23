@@ -32,21 +32,21 @@ function ws_get_user($uid, $uid_field='id') {
     $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
+    $rowsa = array();
     $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, $uid_field);
 
-    $rowsa = array();
-
+    if (isset($res) ) {
     // should only be one
     foreach ($res->users as $le_user) {
-
       $rowsa[] = array('id' => $le_user->id, 'username' => $le_user->username, 'firstname' => $le_user->firstname, 'lastname' => $le_user->lastname);
     }
+  }
 
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
   }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_user returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_user error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
   }
 
@@ -75,20 +75,21 @@ function ws_get_users($userids = array(), $userfield = '') {
 
     // blank array returns all users...
     $userids = array();
-    $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, '');
-
     $rowsa = array();
 
-    foreach ($res->users as $le_user) {
+    $res = $moodle->get_users($lr->getClient(), $lr->getSessionKey(), $userids, '');
 
-      $rowsa[] = array('id' => $le_user->id, 'username' => $le_user->username, 'firstname' => $le_user->firstname, 'lastname' => $le_user->lastname);
+    if (isset($res) ) {
+      foreach ($res->users as $le_user) {
+        $rowsa[] = array('id' => $le_user->id, 'username' => $le_user->username, 'firstname' => $le_user->firstname, 'lastname' => $le_user->lastname);
+      }
     }
 
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_users returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_users error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
    }
 
@@ -110,19 +111,19 @@ function ws_get_roles() {
     $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
     $lr = $moodle->login($res['username'], $res['password']);
 
-    $res = $moodle->get_roles($lr->getClient(), $lr->getSessionKey());
     $rolesa = array();
+    $res = $moodle->get_roles($lr->getClient(), $lr->getSessionKey());
 
-    foreach ($res->roles as $le_role) {
-
-      $rolesa[] = array('id' => $le_role->id, 'name' => $le_role->name, 'description' => $le_role->description);
+    if (isset($res) ) {
+      foreach ($res->roles as $le_role) {
+        $rolesa[] = array('id' => $le_role->id, 'name' => $le_role->name, 'description' => $le_role->description);
+      }
     }
-
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_roles returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_roles error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
     }
 
@@ -168,20 +169,18 @@ function ws_users_edit_form_submit_values($form_values) {
   //  dpm($leUsers);
 
   try {
-      $margs = get_wsdl_uri();  // get the params for MoodleWS
-      $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
-      $lr = $moodle->login($res['username'], $res['password']);
+    $margs = get_wsdl_uri();  // get the params for MoodleWS
+    $moodle = new MoodleWS($margs['wsdl'], $margs['uri']);
+    $lr = $moodle->login($res['username'], $res['password']);
 
     $res = $moodle->edit_users($lr->getClient(), $lr->getSessionKey(), $le_users);
-    //  dpm('Output from moodle->edit_user: ');
-    //  dpm($res);
 
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
 
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->edit_users returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->edit_users error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
     }
     return;  // todo: update this with a return value
@@ -248,8 +247,8 @@ function ws_add_user($duser) {
 
   }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->edit_users returned an error on adding a user: %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->add_users error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
   }
 
@@ -272,12 +271,13 @@ function ws_get_courses() {
     $lr = $moodle->login($res['username'], $res['password']);
 
     $courseids=array();
+    $coursesa = array();
     $res=$moodle->get_courses($lr->getClient(), $lr->getSessionKey(), $courseids, '');
 
-    $coursesa = array();
-    foreach ($res->courses as $le_course) {
-
-      $coursesa[] = array('id' => $le_course->id, 'shortname' => $le_course->shortname, 'fullname' => $le_course->fullname, 'summary' => $le_course->summary);
+    if (isset($res) ) {
+      foreach ($res->courses as $le_course) {
+        $coursesa[] = array('id' => $le_course->id, 'shortname' => $le_course->shortname, 'fullname' => $le_course->fullname, 'summary' => $le_course->summary);
+      }
     }
 
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
@@ -290,8 +290,8 @@ function ws_get_courses() {
 
     if ($pos === FALSE) {
        // string $errortype NOT found in $e->getMessage()
-    drupal_set_message(t('webservices->get_courses returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_courses error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
       }
     else {
        // string $errortype IS found in $e->getMessage()
@@ -332,9 +332,11 @@ function ws_get_my_courses($ks_user = '') {
 
     $res=$moodle->get_my_courses($lr->getClient(), $lr->getSessionKey(), $ks_user, '');
 //    $res=$moodle->get_my_courses($lr->getClient(), $lr->getSessionKey(), $ws_mdl_uid, '');
-    foreach ($res->courses as $le_course) {
 
-      $coursesa[] = array('id' => $le_course->id, 'shortname' => $le_course->shortname, 'fullname' => $le_course->fullname, 'summary' => $le_course->summary);
+    if (isset($res) ) {
+      foreach ($res->courses as $le_course) {
+        $coursesa[] = array('id' => $le_course->id, 'shortname' => $le_course->shortname, 'fullname' => $le_course->fullname, 'summary' => $le_course->summary);
+      }
     }
 
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
@@ -347,8 +349,8 @@ function ws_get_my_courses($ks_user = '') {
 
     if ($pos === FALSE) {
        // string $errortype NOT found in $e->getMessage()
-    drupal_set_message(t('webservices->ws_get_my_courses returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_my_courses error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
       }
     else {
        // string $errortype IS found in $e->getMessage()
@@ -380,15 +382,16 @@ function ws_get_assignments($course = '') { // todo: complete this...
     $res = $moodle->get_all_assignments($lr->getClient(), $lr->getSessionKey(), '', '');
     $assgtsoa = $res->getAssignments();
 
-    foreach ($assgtsoa as $le_assgt) {
-
-      $assgtsa[] = array('id' => $le_assgt->id, 'course' => $le_assgt->course, 'name' => $le_assgt->name);
+    if (isset($assgtsoa) ) {
+      foreach ($assgtsoa as $le_assgt) {
+        $assgtsa[] = array('id' => $le_assgt->id, 'course' => $le_assgt->course, 'name' => $le_assgt->name);
+      }
     }
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_assignments returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_all_assignments error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
     }
 
@@ -422,8 +425,10 @@ function ws_get_grades($ks_user = '') {
 
     $gradessoa = $res->getGrades();
 
-    foreach ($gradessoa as $le_grade) {
-      $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+    if (isset($gradessoa) ) {
+      foreach ($gradessoa as $le_grade) {
+        $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+      }
     }
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
@@ -440,8 +445,8 @@ function ws_get_grades($ks_user = '') {
 
     if ( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
-      drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
-      array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_user_grades error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
       }
     else {
        // string $errortype IS found in $e->getMessage()
@@ -482,8 +487,10 @@ function ws_get_grades_by_username($ks_user = '') {
 
     $gradessoa = $res->getGrades();
 
-    foreach ($gradessoa as $le_grade) {
-      $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+    if (isset($gradessoa) ) {
+      foreach ($gradessoa as $le_grade) {
+        $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+      }
     }
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
@@ -500,8 +507,8 @@ function ws_get_grades_by_username($ks_user = '') {
 
     if ( ($pos1 === FALSE) && ($pos2 === FALSE) ) {
        // string $errortype NOT found in $e->getMessage()
-      drupal_set_message(t('webservices->get_user_grades returned an error = %errormessage. %tryagain',
-      array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_user_grades error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
       }
     else {
        // string $errortype IS found in $e->getMessage()
@@ -537,14 +544,16 @@ function ws_get_course_grades($coursename) {
 
     $gradessoa = $res->getGrades();
 
-    foreach ($gradessoa as $le_grade) {
-      $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+    if (isset($gradessoa) ) {
+      foreach ($gradessoa as $le_grade) {
+        $gradesa[] = array('error' => $le_grade->error, 'itemid' => $le_grade->itemid, 'grade' => $le_grade->grade, 'str_grade' => $le_grade->str_grade, 'feedback' => $le_grade->feedback);
+      }
     }
     $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
   catch (Exception $e) {
-    drupal_set_message(t('webservices->get_course_grades returned an error = %errormessage. %tryagain',
-    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      watchdog('webservices', t('ws->get_course_grades error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
     return NULL;
     }
 
@@ -612,8 +621,11 @@ function get_mdl_login() {
       $moodle->logout($lr->getClient(), $lr->getSessionKey());
     }
     catch (Exception $e) {
-      drupal_set_message(t('webservices->get_user returned an error = %errormessage. %tryagain',
-      array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+//    drupal_set_message(t('webservices->get_mdl_login returned an error = %errormessage. %tryagain',
+//    array('%errormessage' => $e->getMessage(), '%tryagain' => '  Please try again or contact your System Administrator.')), 'error');
+      drupal_set_message(t('Note: a webservices communication issue occurred - details are in the recent log messages.'));
+      watchdog('webservices', t('ws->get_mdl_login error: %errormessage in file: %file on line: %line'),
+      array('%errormessage' => $e->getMessage(), '%file' => $e->getFile(), '%line' => $e->getLine() ), WATCHDOG_ERROR);
       return NULL;
     }
 
