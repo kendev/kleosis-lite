@@ -426,11 +426,27 @@ function ks_get_user_relationships() {
  * @return
  *   the drupal id of the primary parent_guardian
  */
-function get_student_primary_guardian($stu_uid) {
+function ks_get_student_primary_guardian($stu_uid) {
 
   // todo: look up (join) for the 'Primary Guardian' id
   $drp_uid = db_query('SELECT kusr_rel_id_fk FROM {ks_user_relationships} WHERE kusr_id_fk = :kusr_id_fk AND relationship = :relationship',
                             array(':relationship' => 5, ':kusr_id_fk' => $stu_uid))->fetchField();
+  return $drp_uid;
+}
+
+/**
+ * Retrieve the emergency contact id for a student
+ *
+ * @param $stu_uid
+ *   The students ks_uid
+ * @return
+ *   the drupal id of the primary emergency contact
+ */
+function ks_get_student_emergency_contact($stu_uid) {
+
+  // todo: review this...
+  $drp_uid = db_query('SELECT kusr_rel_id_fk FROM {ks_user_relationships} WHERE kusr_id_fk = :kusr_id_fk AND relationship = :relationship',
+                            array(':relationship' => 3, ':kusr_id_fk' => $stu_uid))->fetchField();
   return $drp_uid;
 }
 

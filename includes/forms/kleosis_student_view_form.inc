@@ -16,7 +16,7 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
       drupal_set_message(t('Student @user @notregistered', $message));
       return FALSE;
   }
-  $ks_primary_guardian_id = get_student_primary_guardian($account->uid);
+  $ks_primary_guardian_id = ks_get_student_primary_guardian($account->uid);
   if (empty($ks_primary_guardian_id)) {
      // $message = array('@user' => $account->name, '@notregistered' => t('is not registered in Kleosis'));
      // drupal_set_message(t('Student @user @notregistered', $message));

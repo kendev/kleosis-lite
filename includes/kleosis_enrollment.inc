@@ -342,6 +342,7 @@ else{
         $query->condition('u.' . 'name', $thename . '%', 'like');
     }
   }
+    $query->condition('kstu.' . 'curr_status', 1, '=');  // student = 1
 
 //  $count_query = clone $query;
 //  $count_query->addExpression('COUNT(kstu.kstu_id)');

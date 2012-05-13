@@ -31,6 +31,7 @@ function kleosis_students_filter_form() {
   $field = isset($_SESSION['student_filter']['field']) ? $_SESSION['student_filter']['field'] : '';
   $oper = isset($_SESSION['student_filter']['oper']) ? $_SESSION['student_filter']['oper'] : '';
   $thename = isset($_SESSION['student_filter']['thename']) ? $_SESSION['student_filter']['thename'] : '';
+  $student_status = isset($_SESSION['student_filter']['student_status']) ? $_SESSION['student_filter']['student_status'] : 1;
 
   // Set Breadcrumbs
   $breadcrumb = array();
@@ -73,6 +74,15 @@ function kleosis_students_filter_form() {
     '#suffix' => '</div>',
   );
 
+  $form['searchuser']['student_status'] = array(
+    '#type' => 'select',
+    '#title' => t('Status'),
+	'#options' =>  ks_get_student_statuses(),
+    '#default_value' => $student_status,
+    '#weight' => '15',
+    '#prefix' => '<div style="float: right;width:150px" >',
+    '#suffix' => '</div>',
+  );
   $form['searchuser']['clear'] = array(
     '#type' => 'submit',
     '#value' => t('Clear'),
@@ -147,6 +157,7 @@ drupal_set_title(t('Student List'));
   $field = isset($_SESSION['student_filter']['field']) ? $_SESSION['student_filter']['field'] : '';
   $oper = isset($_SESSION['student_filter']['oper']) ? $_SESSION['student_filter']['oper'] : '';
   $thename = isset($_SESSION['student_filter']['thename']) ? $_SESSION['student_filter']['thename'] : '';
+  $student_status = isset($_SESSION['student_filter']['student_status']) ? $_SESSION['student_filter']['student_status'] : 1;
 
   // create another fieldset for multiple update options (tbd...)
 /*
@@ -247,7 +258,7 @@ drupal_set_title(t('Student List'));
        $query->condition('u.' . 'name', $thename, '=');
     }
     else{
-        $query->condition('u.' . 'name', $thename . '%', 'like');
+        $query->condition('u.' . 'name', '%' . $thename . '%', 'like');
     }
   }
   if (($field == 'fullname') && (!empty($thename)) )  {
@@ -255,7 +266,7 @@ drupal_set_title(t('Student List'));
        $query->condition('kstu.' . 'fullname', $thename, '=');
     }
     else{
-        $query->condition('kstu.' . 'fullname', $thename . '%', 'like');
+        $query->condition('kstu.' . 'fullname', '%' . $thename . '%', 'like');
     }
   }
   if (($field == 'friendlyname') && (!empty($thename)) )  {
@@ -263,7 +274,7 @@ drupal_set_title(t('Student List'));
        $query->condition('kstu.' . 'friendlyname', $thename, '=');
     }
     else{
-        $query->condition('kstu.' . 'friendlyname', $thename . '%', 'like');
+        $query->condition('kstu.' . 'friendlyname', '%' . $thename . '%', 'like');
     }
   }
   if (($field == 'gradelevel') && (!empty($thename)) )  {
@@ -271,9 +282,12 @@ drupal_set_title(t('Student List'));
        $query->condition('kgrdl.' . 'gradelevel', $thename, '=');
     }
     else{
-        $query->condition('kgrdl.' . 'gradelevel', $thename . '%', 'like');
+        $query->condition('kgrdl.' . 'gradelevel', '%' . $thename . '%', 'like');
     }
   }
+  if ($student_status) {
+    $query->condition('kstu.' . 'curr_status', $student_status, '=');
+	}
 //  $count_query = clone $query;
 //  $count_query->addExpression('COUNT(kstu.kstu_id)');
 
@@ -376,7 +390,8 @@ function kleosis_students_filter_form_submit($form, &$form_state) {
     else {
         $_SESSION['student_filter'] = array('field' => $form_state['values']['field'],
                                         'oper' => $form_state['values']['oper'],
-                                        'thename' => $form_state['values']['thename'], );
+                                        'thename' => $form_state['values']['thename'],
+                                        'student_status' => $form_state['values']['student_status'], );
     }
 }
 
@@ -434,7 +449,7 @@ function kleosis_student_summary_form($form, &$form_state) {
   $account = user_load($uid);
 /**********************************/
   $defaults = TRUE;
-  $ks_primary_guardian_id = get_student_primary_guardian($uid);
+  $ks_primary_guardian_id = ks_get_student_primary_guardian($uid);
   if (empty($ks_primary_guardian_id)) {
       $guardian = FALSE;
   }
