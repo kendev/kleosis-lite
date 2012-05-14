@@ -428,9 +428,9 @@ function ks_get_user_relationships() {
  */
 function ks_get_student_primary_guardian($stu_uid) {
 
-  // todo: look up (join) for the 'Primary Guardian' id
+  $pguard = array_keys(ks_get_user_relationships(), 'Primary Guardian');  // get the Primary Guardian key
   $drp_uid = db_query('SELECT kusr_rel_id_fk FROM {ks_user_relationships} WHERE kusr_id_fk = :kusr_id_fk AND relationship = :relationship',
-                            array(':relationship' => 5, ':kusr_id_fk' => $stu_uid))->fetchField();
+                            array(':relationship' => $pguard[0], ':kusr_id_fk' => $stu_uid))->fetchField();
   return $drp_uid;
 }
 
@@ -444,9 +444,9 @@ function ks_get_student_primary_guardian($stu_uid) {
  */
 function ks_get_student_emergency_contact($stu_uid) {
 
-  // todo: review this...
+  $ecnct = array_keys(ks_get_user_relationships(), 'Emergency Contact');  // get the Emergency Contact key
   $drp_uid = db_query('SELECT kusr_rel_id_fk FROM {ks_user_relationships} WHERE kusr_id_fk = :kusr_id_fk AND relationship = :relationship',
-                            array(':relationship' => 3, ':kusr_id_fk' => $stu_uid))->fetchField();
+                            array(':relationship' => $ecnct[0], ':kusr_id_fk' => $stu_uid))->fetchField();
   return $drp_uid;
 }
 

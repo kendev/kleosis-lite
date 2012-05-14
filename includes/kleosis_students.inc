@@ -439,6 +439,8 @@ function kleosis_student_summary_form($form, &$form_state) {
   drupal_set_title(t('Student Summary'));
   $defaults = FALSE;  // will allow the form fields to show the user data
 
+  $guardian = FALSE;
+  $emergency_contact = TRUE;
   $ks_usertype = 'ks_student';
   $ks_user = ks_get_student_record($uid);
   if (empty($ks_user)) {
@@ -456,6 +458,16 @@ function kleosis_student_summary_form($form, &$form_state) {
   else {
       $ks_primary_guardian = ks_get_parent_guardian_record($ks_primary_guardian_id);
       $guardian = TRUE;
+  }
+
+  $ks_emergency_contact_id = ks_get_student_emergency_contact($uid);
+
+  if (empty($ks_emergency_contact_id)) {
+      $emergency_contact = FALSE;
+  }
+  else {
+      $ks_emergency_contact = ks_get_parent_guardian_record($ks_emergency_contact_id);
+      $emergency_contact = TRUE;
   }
 
   $accd = (!empty($ks_user['acceptance_date'])) ? new DateTime($ks_user['acceptance_date']) : new DateTime('1901-01-01 0:0:00');
@@ -571,11 +583,18 @@ function kleosis_student_summary_form($form, &$form_state) {
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
     );
+  $form['user_biodata']['emergency_contact'] = array(
+    '#type' => 'item',
+    '#title' => t('Emergency Contact'),
+    '#markup' => ($emergency_contact)? l($ks_emergency_contact['fullname'] , 'user/' . $ks_emergency_contact_id, array('query' => array('ksopid' => $uid, 'ksop' => $name))) : 'not set',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+    );
   $form['user_biodata']['remarks'] = array(
     '#type' => 'item',
     '#title' => t('Remarks'),
     '#markup' => ($defaults)? $ks_user['remarks'] : '',
-    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
  return $form;

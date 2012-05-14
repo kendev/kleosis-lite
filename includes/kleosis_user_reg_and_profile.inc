@@ -141,7 +141,7 @@ function kleosis_user_profile_form_submit($form, &$form_state) {
 
 /**
  *
- * Implementation of hook_user_insert() for the Users SIMS Info data.
+ * Implementation of hook_user_insert() for the Users Kleosis data.
  *
  */
 function kleosis_user_insert(&$edit, $account, $category) {
@@ -328,7 +328,7 @@ function kleosis_user_operations_reg_new_user($cusers)  {
      // drupal_set_message('User '. $theuser->name . ' is an Applicant - cannot be registered until this role is changed.');
       return;
       }
-    // if  only an authenticated user, then return
+    // if only an authenticated user, then return
     if ( (in_array('student', $theuser->roles)) ) {
           $ks_usertype = 'ks_student';
       }
@@ -344,7 +344,10 @@ function kleosis_user_operations_reg_new_user($cusers)  {
           return;
       }
 
-    $mdl_uid = ks_create_moodleuser($theuser);  // create user in moodle ( ok if user already exists in moodle)
+    $mdl_uid = ks_create_moodleuser($theuser);  // create user in moodle (ok if user already exists in moodle)
+    if (!isset($mdl_uid)) {  // can happen if no connection to moodle
+			$mdl_uid = 0;
+		}
 
     // determine if user already exists in the user extension tables
     $result = ks_check_exists_userrecord($ks_usertype, $theuser->uid);
@@ -377,23 +380,30 @@ function kleosis_user_operations_reg_new_user($cusers)  {
  */
 function ks_create_moodleuser($auser) {
 
-  $muser = ws_get_user($auser->name, 'username');
-  if ((isset($muser[0]['id'])) && ($muser[0]['id'] > 0) ) {
-    $mdl_uid = $muser[0]['id']; // moodle user exists already, get the id
-  }
-  else {
-    $newuser = array('drp_uid' => $auser->uid,    // todo: determine other user fields to send to moodle
-                  'username' => $auser->name,
-                  'firstname' => $auser->name . '-fn',
-                  'lastname' => $auser->name . '-ln',
-                  'email' => $auser->mail);
-    $muser = ws_add_user($newuser);  // todo: error checking
-    $mdl_uid = $muser->users[0]->id;
+  $mdl_uid = 0;
 
-    if ($mdl_uid > 0) {
-      $message = array('@user' => $auser->name, '@created' => t('has been successfully created in moodle.'));
-      drupal_set_message(t('User @user @created', $message));
-    }
+  try {
+	  $muser = ws_get_user($auser->name, 'username');
+	  if ((isset($muser[0]['id'])) && ($muser[0]['id'] > 0) ) {
+			$mdl_uid = $muser[0]['id']; // moodle user exists already, get the id
+	  }
+	  else {
+			$newuser = array('drp_uid' => $auser->uid,    // todo: determine other user fields to send to moodle
+							'username' => $auser->name,
+							'firstname' => $auser->name . '-fn',
+							'lastname' => $auser->name . '-ln',
+							'email' => $auser->mail);
+			$muser = ws_add_user($newuser);  // todo: error checking
+			$mdl_uid = $muser->users[0]->id;
+
+			if ($mdl_uid > 0) {
+				$message = array('@user' => $auser->name, '@created' => t('has been successfully created in moodle.'));
+				drupal_set_message(t('User @user @created', $message));
+			}
+	  }
+  }
+   catch (Exception $e) {
+		 //
   }
   return $mdl_uid;
 }

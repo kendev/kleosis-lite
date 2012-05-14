@@ -2781,42 +2781,6 @@ else {
 
     $fields = array(
       'kurel_id' => 1,
-      'relationship' => 'Mother',
-      'description' => 'Mother',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 2,
-      'relationship' => 'Father',
-      'description' => 'Father',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 3,
-      'relationship' => 'Brother',
-      'description' => 'Brother',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 4,
-      'relationship' => 'Sister',
-      'description' => 'Sister',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 5,
       'relationship' => 'Primary Guardian',
       'description' => 'Primary Guardian',
     );
@@ -2825,7 +2789,7 @@ else {
       ->execute();
 
     $fields = array(
-      'kurel_id' => 6,
+      'kurel_id' => 2,
       'relationship' => 'Secondary Guardian',
       'description' => 'Secondary Guardian',
     );
@@ -2834,9 +2798,45 @@ else {
       ->execute();
 
     $fields = array(
+      'kurel_id' => 3,
+      'relationship' => 'Emergency Contact',
+      'description' => 'Emergency Contact',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 4,
+      'relationship' => 'Mother',
+      'description' => 'Mother',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 5,
+      'relationship' => 'Father',
+      'description' => 'Father',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 6,
+      'relationship' => 'Sister',
+      'description' => 'Sister',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
       'kurel_id' => 7,
-      'relationship' => 'Relative',
-      'description' => 'Relative',
+      'relationship' => 'Brother',
+      'description' => 'Brother',
     );
     db_insert('ks_user_relationships_desc')
       ->fields($fields)
@@ -2844,33 +2844,6 @@ else {
 
     $fields = array(
       'kurel_id' => 8,
-      'relationship' => 'Friend',
-      'description' => 'Friend',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 9,
-      'relationship' => 'Aunt',
-      'description' => 'Aunt',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 10,
-      'relationship' => 'Uncle',
-      'description' => 'Uncle',
-    );
-    db_insert('ks_user_relationships_desc')
-      ->fields($fields)
-      ->execute();
-
-    $fields = array(
-      'kurel_id' => 11,
       'relationship' => 'Grandmother',
       'description' => 'Grandmother',
     );
@@ -2879,7 +2852,7 @@ else {
       ->execute();
 
     $fields = array(
-      'kurel_id' => 12,
+      'kurel_id' => 9,
       'relationship' => 'Grandfather',
       'description' => 'Grandfather',
     );
@@ -2888,7 +2861,43 @@ else {
       ->execute();
 
     $fields = array(
+      'kurel_id' => 10,
+      'relationship' => 'Aunt',
+      'description' => 'Aunt',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 11,
+      'relationship' => 'Uncle',
+      'description' => 'Uncle',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 12,
+      'relationship' => 'Relative',
+      'description' => 'Relative',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
       'kurel_id' => 13,
+      'relationship' => 'Friend',
+      'description' => 'Friend',
+    );
+    db_insert('ks_user_relationships_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'kurel_id' => 14,
       'relationship' => 'Other',
       'description' => 'Other',
     );
