@@ -2688,7 +2688,7 @@ else {
     $fields = array(
       'ksts_id' => 6,
       'status' => 'withdrawn',
-      'description' => 'withdrawn studen',
+      'description' => 'withdrawn student',
     );
     db_insert('ks_student_status_desc')
       ->fields($fields)
@@ -2698,6 +2698,15 @@ else {
       'ksts_id' => 7,
       'status' => 'terminated',
       'description' => 'terminated student',
+    );
+    db_insert('ks_student_status_desc')
+      ->fields($fields)
+      ->execute();
+
+    $fields = array(
+      'ksts_id' => 99,
+      'status' => 'other',
+      'description' => 'other status',
     );
     db_insert('ks_student_status_desc')
       ->fields($fields)
