@@ -7,7 +7,7 @@
 
 $view = new view;
 $view->name = 'daily_attendance_list';
-$view->description = '';
+$view->description = 'List of students who are absent for the current day or date range';
 $view->tag = 'default';
 $view->base_table = 'ks_student_attendance';
 $view->human_name = 'Daily attendance list';
@@ -33,25 +33,33 @@ $handler->display->display_options['style_options']['columns'] = array(
   'name' => 'name',
   'atnd_date' => 'atnd_date',
   'absence_type' => 'absence_type',
+  'excuse_reason' => 'excuse_reason',
 );
-$handler->display->display_options['style_options']['default'] = '-1';
+$handler->display->display_options['style_options']['default'] = 'atnd_date';
 $handler->display->display_options['style_options']['info'] = array(
   'name' => array(
-    'sortable' => 0,
+    'sortable' => 1,
     'default_sort_order' => 'asc',
     'align' => '',
     'separator' => '',
     'empty_column' => 0,
   ),
   'atnd_date' => array(
-    'sortable' => 0,
-    'default_sort_order' => 'asc',
+    'sortable' => 1,
+    'default_sort_order' => 'desc',
     'align' => '',
     'separator' => '',
     'empty_column' => 0,
   ),
   'absence_type' => array(
-    'sortable' => 0,
+    'sortable' => 1,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+    'empty_column' => 0,
+  ),
+  'excuse_reason' => array(
+    'sortable' => 1,
     'default_sort_order' => 'asc',
     'align' => '',
     'separator' => '',
@@ -139,7 +147,6 @@ $handler->display->display_options['fields']['absence_type']['table'] = 'ks_abse
 $handler->display->display_options['fields']['absence_type']['field'] = 'absence_type';
 $handler->display->display_options['fields']['absence_type']['relationship'] = 'abs_type';
 $handler->display->display_options['fields']['absence_type']['label'] = 'Absence type';
-$handler->display->display_options['fields']['absence_type']['exclude'] = TRUE;
 $handler->display->display_options['fields']['absence_type']['alter']['alter_text'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['make_link'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['absolute'] = 0;
@@ -149,6 +156,7 @@ $handler->display->display_options['fields']['absence_type']['alter']['trim_whit
 $handler->display->display_options['fields']['absence_type']['alter']['nl2br'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['word_boundary'] = 1;
 $handler->display->display_options['fields']['absence_type']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['absence_type']['alter']['more_link'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['strip_tags'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['trim'] = 0;
 $handler->display->display_options['fields']['absence_type']['alter']['html'] = 0;

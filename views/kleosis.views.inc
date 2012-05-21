@@ -297,10 +297,10 @@ function kleosis_views_data() {
     ),
   );
 
-
 /******************************************************************************
  *                        ks_student_course_classes table
  ******************************************************************************/
+
   $data['ks_student_course_classes']['table']['group'] = t('Kleosis');
 
   // Join to the Drupal users table - this will allow the ks_student_course_classes fields to
@@ -322,16 +322,7 @@ function kleosis_views_data() {
       'click sortable' => TRUE,
     ),
   );
-/*
-  $data['ks_student_course_classes']['kccls_id_fk'] = array(
-    'title' => t('ksccl classid'),
-    'help' => t('ks_student_course_classes table: Class id'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-  );
-*/
+
   $data['ks_student_course_classes']['kccls_id_fk'] = array(
     'title' => t('ksccl class'),
     'help' => t('ks_student_course_classes table: kccls_id_fk'),
@@ -339,7 +330,6 @@ function kleosis_views_data() {
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
     ),
-
     'relationship' => array(
     'handler' => 'views_handler_relationship',
     'base' => 'node',
@@ -348,9 +338,39 @@ function kleosis_views_data() {
     ),
   );
 
+  $data['ks_student_course_classes']['ib_level'] = array(
+    'title' => t('ksccl ib_level'),
+    'help' => t('ks_student_course_classes table: ib_level'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+         'handler' => 'views_handler_filter_numeric',
+    ),
+    'relationship' => array(
+    'handler' => 'views_handler_relationship',
+    'base' => 'ks_ib_level_desc',
+    'base field' => 'kibl_id',
+    'label' => t('IB Level'),   // This shows up in the Configure field form when adding the ksccl (ib_level) field
+                                // from the ks_ib_level_desc table.  The 'IB Level' appears in the Relationship select box.
+                                // When this relationship is added in Views, all of the ks_ib_level_desc table fields
+                                // conveniently appear in the Add field block!
+    ),
+  );
+
   $data['ks_student_course_classes']['class_auth'] = array(
     'title' => t('ksccl class auth'),
     'help' => t('ks_student_course_classes table: class auth'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  $data['ks_student_course_classes']['enrol_status'] = array(
+    'title' => t('ksccl enrol_status'),
+    'help' => t('ks_student_course_classes table: enrol_status'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
@@ -365,7 +385,7 @@ function kleosis_views_data() {
       'click sortable' => TRUE,
     ),
     'filter' => array(
-         'handler' => 'views_handler_filter_string',
+         'handler' => 'views_handler_filter_custom_datetime',
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -380,7 +400,7 @@ function kleosis_views_data() {
       'click sortable' => TRUE,
     ),
     'filter' => array(
-         'handler' => 'views_handler_filter_string',
+         'handler' => 'views_handler_filter_custom_datetime',
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -456,7 +476,7 @@ function kleosis_views_data() {
       'relationship' => array(
       'handler' => 'views_handler_relationship',
       'base' => 'users',
-      'field' => 'kstu_id_fk',
+      'base_field' => 'uid',
       'label' => t('Drupal User id'),
    ),
   );
@@ -532,7 +552,7 @@ function kleosis_views_data() {
     'filter' => array(
          'handler' => 'views_handler_filter_numeric',
     ),
-     'relationship' => array(
+    'relationship' => array(
     'handler' => 'views_handler_relationship',
     'base' => 'ks_absence_type_desc',
     'base field' => 'kabsty_id',
@@ -561,7 +581,7 @@ function kleosis_views_data() {
     'filter' => array(
          'handler' => 'views_handler_filter_numeric',
     ),
-     'relationship' => array(
+    'relationship' => array(
     'handler' => 'views_handler_relationship',
     'base' => 'ks_excused_absence_reason_desc',
     'base field' => 'kexcr_id',
@@ -592,6 +612,7 @@ function kleosis_views_data() {
 /******************************************************************************
  *                        ks_absence_type_desc table
  ******************************************************************************/
+
   $data['ks_absence_type_desc']['table']['group'] = t('Kleosis');
 
   // Note: Can optionally use this join instead of the 'relationship' definition from the ['ks_student_attendance']['abs_type'] field.
@@ -632,6 +653,7 @@ function kleosis_views_data() {
 /******************************************************************************
  *                        ks_excused_absence_reason_desc table
  ******************************************************************************/
+
   $data['ks_excused_absence_reason_desc']['table']['group'] = t('Kleosis');
 
 /*
@@ -653,7 +675,7 @@ function kleosis_views_data() {
 
   $data['ks_excused_absence_reason_desc']['excuse_reason'] = array(
     'title' => t('kexcrdesc excuse_reason'),  //  this appears on the Fields block in Views like this:
-                                            //  Kleosis: kexcrdesc excuse_reason (kexcrdesc excuse_reason)
+                                              //  Kleosis: kexcrdesc excuse_reason (kexcrdesc excuse_reason)
     'help' => t('ks_excused_absence_reason_desc table: Excuse reason'),  // This appears in the Add fields form in Views like this:
                                                               // Kleosis: kexcrdesc excuse_reason
                                                               // ks_absence_type_desc table: Excuse reason
@@ -667,257 +689,200 @@ function kleosis_views_data() {
   );
 
 /******************************************************************************
- *                        Moodle table definitions  -  legacy
+ *                        ks_class_schedule table definitions
  ******************************************************************************/
 
-/*  // Define the moodle mdl_user table as a base table
-  $data['mdl_user']['table']['base'] = array(
-    'field' => 'id',
-    'title' => t('Moodle User'),
-    'help' => t('Moodle User defines the Moodle mdl_user table as a base table'),
-    'database' => 'moodle',
-  );
-*/
-  $data['mdl_user']['table']['group'] = t('Moodle');
+  $data['ks_class_schedule']['table']['group'] = t('Kleosis');
 
-  $data['mdl_user']['table']['join'] = array(
-    'users' => array(
-    'left_field' => 'uid',
-    'field' => 'id',
+ // Define the ks_class_schedule table as a base table
+
+  $data['ks_class_schedule']['table']['base'] = array(
+    'field' => 'kclss_id',
+    'title' => t('Kleosis Class Schedule'),
+    'help' => t('Kleosis Class Schedule defines the ks_class_schedule table as a base table'),
+  );
+
+  $data['ks_class_schedule']['kclss_id'] = array(
+    'title' => t('ks_cls_sched kclss_id'),
+    'help' => t('ks_class_schedule table: Primary key'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
     ),
   );
 
-  $data['mdl_user']['id'] = array(
-   'title' => t('mdl_user id'),
-   'help' => t('mdl_user table: User Primary key'),
-   'field' => array(
+  $data['ks_class_schedule']['kccls_id_fk'] = array(
+    'title' => t('ks_cls_sched class'),
+    'help' => t('ks_class_schedule table: kccls_id_fk'),
+    'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
+    ),
+
+    'relationship' => array(
+    'handler' => 'views_handler_relationship',
+    'base' => 'node',
+    'base field' => 'nid',
+    'label' => t('Kleosis (Atnd) Class'),
+    ),
+  );
+
+  $data['ks_class_schedule']['period_start_datetime'] = array(
+    'title' => t('ks_cls_sched start datetime'),
+    'help' => t('ks_class_schedule table: start datetime'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+         'handler' => 'views_handler_filter_custom_datetime',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_custom_numeric',
+    ),
+  );
+
+  $data['ks_class_schedule']['period_end_datetime'] = array(
+    'title' => t('ks_cls_sched end datetime'),
+    'help' => t('ks_class_schedule table: end datetime'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+         'handler' => 'views_handler_filter_custom_datetime',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_custom_numeric',
+    ),
+  );
+
+  $data['ks_class_schedule']['period_day'] = array(
+    'title' => t('ks_cls_sched period day'),
+    'help' => t('ks_class_schedule table: period_day'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  $data['ks_class_schedule']['period_hour'] = array(
+    'title' => t('ks_cls_sched period hour'),
+    'help' => t('ks_class_schedule table: period hour'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  $data['ks_class_schedule']['period_length'] = array(
+    'title' => t('ks_cls_sched period length'),
+    'help' => t('ks_class_schedule table: period length'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  $data['ks_class_schedule']['period_status'] = array(
+    'title' => t('ks_cls_sched period status'),
+    'help' => t('ks_class_schedule table: period status'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+         'handler' => 'views_handler_filter_numeric',
+    ),
+    'relationship' => array(
+    'handler' => 'views_handler_relationship',
+    'base' => 'ks_class_schedule_status_desc',
+    'base field' => 'kclsss_id',
+    'label' => t('Period Status'), // This shows up in the Configure field form when adding the excuse_reason field
+                                  // from the ks_class_schedule_status_desc table.  The 'Period Status' appears in the Relationship select box.
+                                  // When this relationship is added in Views, all of the ks_class_schedule_status_desc table fields
+                                  // conveniently appear in the Add field block!
+    ),
+  );
+
+  $data['ks_class_schedule']['classroom'] = array(
+    'title' => t('ks_cls_sched classroom'),
+    'help' => t('ks_class_schedule table: classroom'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+         'handler' => 'views_handler_filter_numeric',
+    ),
+    'relationship' => array(
+    'handler' => 'views_handler_relationship',
+    'base' => 'ks_classroom_desc',
+    'base field' => 'kclsr_id',
+    'label' => t('Classroom'),  // This shows up in the Configure field form when adding the room_name (classroom) field
+                                // from the ks_classroom_desc table.  The 'Classroom' appears in the Relationship select box.
+                                // When this relationship is added in Views, all of the ks_classroom_desc table fields
+                                // conveniently appear in the Add field block!
+    ),
+  );
+
+  $data['ks_class_schedule']['period_lead'] = array(
+    'title' => t('ks_cls_sched: Link to Instructor'),
+    'help' => t('Relationship from the ks_class_schedule foreign key (period_lead) to the Drupal users table primary key (uid).'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+      'relationship' => array(
+      'handler' => 'views_handler_relationship',
+      'base' => 'users',
+      'base_field' => 'uid',
+      'label' => t('Drupal User id'),
    ),
   );
 
-  $data['mdl_user']['username'] = array(
-    'title' => t('User username'),
-    'help' => t('mdl_user table: User username'),
+  $data['ks_class_schedule']['period_sub'] = array(
+    'title' => t('ks_cls_sched: Link to Sub'),
+    'help' => t('Relationship from the ks_class_schedule foreign key (period_sub) to the Drupal users table primary key (uid).'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
     ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
-    'sort' => array(
-      'handler' => 'views_handler_sort',
-    ),
- );
-
-  $data['mdl_user']['idnumber'] = array(
-    'title' => t('User idnumber'),
-    'help' => t('mdl_user table: User idnumber'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
- );
-
-  $data['mdl_user']['firstname'] = array(
-    'title' => t('User firstname'),
-    'help' => t('mdl_user table: User firstname'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
- );
-
-  $data['mdl_user']['lastname'] = array(
-    'title' => t('User lastname'),
-    'help' => t('mdl_user table: User lastname'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
- );
-
-  $data['mdl_user']['deleted'] = array(
-    'title' => t('User deleted status'),
-    'help' => t('mdl_user table: User deleted status'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_numeric',
-    ),
- );
-
-  $data['mdl_user']['email'] = array(
-    'title' => t('User email'),
-    'help' => t('mdl_user table: User email'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
- );
-
-  // Define the moodle mdl_grade_grades table as a base table
-  $data['mdl_grade_grades']['table']['base'] = array(
-    'field' => 'id',
-    'title' => t('Moodle Grades'),
-    'help' => t('Moodle Grades defines the Moodle mdl_grades_grade table as a base table'),
-    'database' => 'moodle',
+      'relationship' => array(
+      'handler' => 'views_handler_relationship',
+      'base' => 'users',
+      'base_field' => 'uid',
+      'label' => t('Drupal User id'),
+   ),
   );
 
-  $data['mdl_grade_grades']['table']['group'] = t('Moodle');
+/******************************************************************************
+ *                        ks_class_schedule_status_desc table
+ ******************************************************************************/
 
-  $data['mdl_grade_grades']['table']['join'] = array(
-    'mdl_user' => array(
-    'left_field' => 'id',
-    'field' => 'userid',
-    ),
-  );
+  $data['ks_class_schedule_status_desc']['table']['group'] = t('Kleosis');
 
-  $data['mdl_grade_grades']['id'] = array(
-    'title' => t('grade_grades id'),
-    'help' => t('grade_grades table: Primary key'),
+  $data['ks_class_schedule_status_desc']['kclsss_id'] = array(
+    'title' => t('kclsrmdesc kclsss_id'),
+    'help' => t('ks_class_schedule_status_desc table: Primary key'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
     ),
   );
 
-  $data['mdl_grade_grades']['userid'] = array(
-    'title' => t('grade_grades Userid'),
-    'help' => t('grade_grades table: User id'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-        'relationship' => array(
-          'handler' => 'views_handler_relationship',
-          'base' => 'mdl_user',
-          'field' => 'id',
-          'label' => t('Student Name'),
-        ),
-  );
-
-  $data['mdl_grade_grades']['itemid'] = array(
-    'title' => t('grade_grades Itemid'),
-    'help' => t('grade_grades table: itemid'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-        'relationship' => array(
-          'handler' => 'views_handler_relationship',
-          'base' => 'grade_items',
-          'field' => 'id',
-          'label' => t('Grade Item'),
-        ),
-  );
-
-  $data['mdl_grade_grades']['finalgrade'] = array(
-    'title' => t('grade_grades Grade'),
-    'help' => t('grade_grades table: finalgrade'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_numeric',
-    ),
-
-  );
-
-  // Define the moodle mdl_grade_items table
-   $data['mdl_grade_items']['table'] = array(
-    'title' => t('Moodle grade_items'),
-    'help' => t('Moodle grade_items table'),
-    'database' => 'moodle',
-  );
-
-  $data['mdl_grade_items']['table']['group'] = t('Moodle');
-
-  $data['mdl_grade_items']['table']['join'] = array(
-  'mdl_grade_grades' => array(
-    'left_field' => 'itemid',
-    'field' => 'id',
-  ),
-);
-
-  $data['mdl_grade_items']['id'] = array(
-    'title' => t('grade_items id'),
-    'help' => t('grade_items table: Primary key'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-  );
-
-  $data['mdl_grade_items']['courseid'] = array(
-    'title' => t('grade_items Courseid'),
-    'help' => t('grade_items table: Course id'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-        'relationship' => array(
-          'handler' => 'views_handler_relationship',
-          'base' => 'mdl_course',
-          'field' => 'id',
-          'label' => t('Course Name'),
-        ),
-  );
-
-  $data['mdl_grade_items']['itemtype'] = array(
-    'title' => t('grade_items Itemtype'),
-    'help' => t('grade_items table: grade_items'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
-  );
-
-  // Define the moodle mdl_course table as a base table
-  $data['mdl_course']['table']['base'] = array(
-    'field' => 'id',
-    'title' => t('Moodle Courses'),
-    'help' => t('Moodle Courses defines the Moodle mdl_course table as a base table'),
-    'database' => 'moodle',
-  );
-
-  $data['mdl_course']['table']['group'] = t('Moodle');
-
-  $data['mdl_course']['table']['join'] = array(
-    'mdl_grade_items' => array(
-      'left_field' => 'courseid',
-      'field' => 'id',
-    ),
-  );
-
-  $data['mdl_course']['id'] = array(
-    'title' => t('mdl_course id'),
-    'help' => t('mdl_course table: Primary key'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-  );
-
-  $data['mdl_course']['shortname'] = array(
-    'title' => t('mdl_course Shortname'),
-    'help' => t('mdl_course table: shortname'),
+  $data['ks_class_schedule_status_desc']['status'] = array(
+    'title' => t('kclsscheddesc status'),   //  this appears on the Fields block in Views like this:
+                                            //  Kleosis: kclsscheddesc status (kclsscheddesc status)
+    'help' => t('ks_class_schedule_status_desc table: Status'),  // This appears in the Add fields form in Views like this:
+                                                                 // Kleosis: kclsscheddesc status
+                                                                  // ks_class_schedule_status_desc table: status
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
@@ -925,20 +890,42 @@ function kleosis_views_data() {
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
-    'filter' => array(
-         'handler' => 'views_handler_filter_string',
-    ),
   );
 
-  $data['mdl_course']['fullname'] = array(
-    'title' => t('mdl_course Fullname'),
-    'help' => t('mdl_course table: fullname'),
+/******************************************************************************
+ *                        ks_classroom_desc table
+ ******************************************************************************/
+
+  $data['ks_classroom_desc']['table']['group'] = t('Kleosis');
+
+  $data['ks_classroom_desc']['kclsr_id'] = array(
+    'title' => t('kclsrmdesc kclsr_id'),
+    'help' => t('ks_classroom_desc table: Primary key'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
     ),
   );
 
+  $data['ks_classroom_desc']['room_name'] = array(
+    'title' => t('kclsrmdesc classroom'),   //  this appears on the Fields block in Views like this:
+                                            //  Kleosis: kclsrmdesc classroom (kclsrmdesc classroom)
+    'help' => t('ks_classroom_desc table: Classroom'),  // This appears in the Add fields form in Views like this:
+                                                        // Kleosis: kclsrmdesc classroom
+                                                        // ks_classroom_desc table: classroom
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+
+/******************************************************************************
+ *                        ks_student_status_desc table
+ ******************************************************************************/
 /*
   $data['ks_student_status_desc']['table']['base'] = array( // no need to make this a base table because it's
     'field' => 'ksts_id',                                   // linked via a relationship
@@ -983,6 +970,9 @@ function kleosis_views_data() {
     ),
   );
 
+/******************************************************************************
+ *                        ks_instructor_status_desc table
+ ******************************************************************************/
 /*
   $data['ks_instructor_status_desc']['table']['base'] = array( // no need to make this a base table because it's
     'field' => 'kinsts_id',                                   // linked via a relationship
@@ -1027,7 +1017,37 @@ function kleosis_views_data() {
     ),
   );
 
-//  dpm($data);
+/******************************************************************************
+ *                        ks_ib_level_desc table
+ ******************************************************************************/
+
+  $data['ks_ib_level_desc']['table']['group'] = t('Kleosis');
+
+  $data['ks_ib_level_desc']['kibl_id'] = array(
+    'title' => t('kiblvldesc kibl_id'),
+    'help' => t('ks_ib_level_desc table: Primary key'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  $data['ks_ib_level_desc']['ib_level'] = array(
+    'title' => t('kiblvldesc ib_level'),    //  this appears on the Fields block in Views like this:
+                                            //  Kleosis: kiblvldesc ib_level (kiblvldesc ib_level)
+    'help' => t('ks_ib_level_desc table: ib_level'),  // This appears in the Add fields form in Views like this:
+                                                      // Kleosis: kiblvldesc ib_level
+                                                      // ks_ib_level_desc table: ib_level
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+
   return $data;
 }
 

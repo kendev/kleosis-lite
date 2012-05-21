@@ -34,19 +34,20 @@ function kleosis_reports_and_queries_page($form, &$form_state) {
       'report_name' => l(t('Daily Attendance List'), 'daily-attendance-list', array('query' => array('atnd_date[min]' => $today_start, 'atnd_date[max]' => $today_end, 'destination' => 'kleosis/reports_and_queries'))),
       'report_category' => t('Attendance'),
       'report_description' => t('List of students who are absent this day'),
-      'report_filters' => t('Attendance Date'),
+      'report_filters' => t('Attendance Date Range'),
     );
     $options[2] = array(
       'report_name' => l(t('Students Class List'), 'students-class-list', array('query' => array('destination' => 'kleosis/reports_and_queries'))),
       'report_category' => t('Classes'),
       'report_description' => t('List of Classes each student is currently enrolled in'),
-      'report_filters' => t('Student Name') . ', ' . t('Course Name') . ', ' . t('Enrol Date'),
+      'report_filters' => t('Student Name'),
     );
     $options[3] = array(
-      'report_name' => t('Instructor-Courses List'),
-      'report_category' => t('Courses'),
-      'report_description' => t('List of Courses each instructor is currently teaching'),
-      'report_filters' => t('Instructor Name'),
+      'report_name' => t('Instructor-Classes List'),
+      'report_name' => l(t('Instructor-Classes List'), 'instructor-classes', array('query' => array('destination' => 'kleosis/reports_and_queries'))),
+      'report_category' => t('Classes'),
+      'report_description' => t('List of Classes each instructor is currently teaching'),
+      'report_filters' => t('Instructor Name') . ', ' . t('Date Range'),
     );
     $options[4] = array(
       'report_category' => t('...'),

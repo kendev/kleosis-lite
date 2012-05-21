@@ -7,17 +7,17 @@
 
 $view = new view;
 $view->name = 'kleosis_attendance_totals_2';
-$view->description = '';
+$view->description = 'Daily attendance details for a student for the given academic year and term (with filters)';
 $view->tag = 'default';
 $view->base_table = 'ks_student_attendance';
-$view->human_name = 'kleosis_attendance_totals_2';
+$view->human_name = 'Attendance details 2';
 $view->core = 7;
 $view->api_version = '3.0';
 $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
 /* Display: Master */
 $handler = $view->new_display('default', 'Master', 'default');
-$handler->display->display_options['title'] = 'Kleosis Attendance Totals (w/Filters)';
+$handler->display->display_options['title'] = 'Kleosis Attendance Details (w/Filters)';
 $handler->display->display_options['access']['type'] = 'none';
 $handler->display->display_options['cache']['type'] = 'none';
 $handler->display->display_options['query']['type'] = 'views_query';
@@ -259,4 +259,3 @@ $handler->display->display_options['filters']['atnd_date']['expose']['multiple']
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
 $handler->display->display_options['path'] = 'kleosis-attendance-totals-2';
-
