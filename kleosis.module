@@ -229,59 +229,87 @@ function kleosis_menu() {
     'title' => 'Attendance',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('kleosis_students_attendance'),
-    'file' => 'includes/kleosis_students_attnd_grades.inc',
+    'file' => 'includes/kleosis_students_attendance.inc',
     'access callback' => TRUE,
     'weight' => 5,
   );
-    $items['kleosis/students/grades'] = array(
+
+  $items['kleosis/students/attendance/default'] = array(
+    'title' => 'Daily Attendance',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  $items['kleosis/students/attendance/absentee'] = array(
+    'description' => 'Absentee periods report for the selected student',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_student_absentee_periods'),
+    'file' => 'includes/kleosis_students_attendance.inc',
+    'access callback' => TRUE,
+    'title' => 'Absentee Periods',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 1,
+  );
+/*
+  $items['kleosis/students/attendance/period'] = array(
+    'description' => 'Period attendance report for the selected student',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_student_period_attendance'),
+    'file' => 'includes/kleosis_students_attendance.inc',
+    'access callback' => TRUE,
+    'title' => 'Period Attendance',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 2,
+  );
+*/
+  $items['kleosis/students/grades'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Grades',
+    'description' => 'Provides Grades functions for a student',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_student_grades'),
+    'file' => 'includes/kleosis_students_grades.inc',
+    'access callback' => TRUE,
+    'weight' => 6,
+  );
+  $items['kleosis/students/grades/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
+    'weight' => -10,
+  );
+    $items['kleosis/students/grades/current_grades'] = array(
       'type' => MENU_LOCAL_TASK,
-      'title' => 'Grades',
-      'description' => 'Provides Grades functions for a student',
+      'title' => 'Current Grades',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('kleosis_student_grades'),
-      'file' => 'includes/kleosis_students_attnd_grades.inc',
+      'page arguments' => array('kleosis_student_current_grades'),
+      'file' => 'includes/kleosis_students_grades.inc',
       'access callback' => TRUE,
-      'weight' => 6,
+      'weight' => 1,
     );
-    $items['kleosis/students/grades/default'] = array(
-      'type' => MENU_DEFAULT_LOCAL_TASK,
-      'title' => 'Grades', // this title shows in the tabbbed menu as the first tab
-      'weight' => -10,
+    $items['kleosis/students/grades/final_grades'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Final Grades',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_student_final_grades'),
+      'file' => 'includes/kleosis_students_grades.inc',
+      'access callback' => !($letter_grades_only),
+      'weight' => 2,
     );
-      $items['kleosis/students/grades/current_grades'] = array(
-        'type' => MENU_LOCAL_TASK,
-        'title' => 'Current Grades',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('kleosis_student_current_grades'),
-        'file' => 'includes/kleosis_students_attnd_grades.inc',
-        'access callback' => TRUE,
-        'weight' => 1,
-      );
-      $items['kleosis/students/grades/final_grades'] = array(
-        'type' => MENU_LOCAL_TASK,
-        'title' => 'Final Grades',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('kleosis_student_final_grades'),
-        'file' => 'includes/kleosis_students_attnd_grades.inc',
-        'access callback' => !($letter_grades_only),
-        'weight' => 2,
-      );
-      $items['kleosis/students/grades/final_grades_ls'] = array(
-        'type' => MENU_LOCAL_TASK,
-        'title' => 'Final Grades - LS',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('kleosis_student_final_grades_ls'),
-        'file' => 'includes/kleosis_grades_ls.inc',
-        'access callback' => $letter_grades_only,
-        'weight' => 3,
-      );
+    $items['kleosis/students/grades/final_grades_ls'] = array(
+      'type' => MENU_LOCAL_TASK,
+      'title' => 'Final Grades - LS',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('kleosis_student_final_grades_ls'),
+      'file' => 'includes/kleosis_grades_ls.inc',
+      'access callback' => $letter_grades_only,
+      'weight' => 3,
+    );
 
     $items['kleosis/students/reports'] = array(
       'type' => MENU_LOCAL_TASK,
       'title' => 'Reports',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('kleosis_student_reports'),
-      'file' => 'includes/kleosis_student_reports.inc',
+      'file' => 'includes/kleosis_students_reports.inc',
       'access callback' => TRUE,
       'weight' => 7,
     );
@@ -295,7 +323,7 @@ function kleosis_menu() {
         'title' => 'OpenOffice Reports',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('kleosis_student_reports_odt'),
-        'file' => 'includes/kleosis_student_reports.inc',
+        'file' => 'includes/kleosis_students_reports.inc',
         'access callback' => TRUE,
         'weight' => 1,
       );
@@ -305,7 +333,7 @@ function kleosis_menu() {
         'title' => 'Interactive Reports',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('kleosis_student_reports_ia'),
-        'file' => 'includes/kleosis_student_reports.inc',
+        'file' => 'includes/kleosis_students_reports.inc',
         'access callback' => TRUE,
         'weight' => 2,
       );
@@ -315,7 +343,7 @@ function kleosis_menu() {
         'title' => 'PDS Reports',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('kleosis_student_reports_pds'),
-        'file' => 'includes/kleosis_student_reports.inc',
+        'file' => 'includes/kleosis_students_reports.inc',
         'access callback' => TRUE,
         'weight' => 3,
       );
@@ -325,7 +353,7 @@ function kleosis_menu() {
       'title' => 'Transcript',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('kleosis_student_transcript_odt'),
-      'file' => 'includes/kleosis_student_reports.inc',
+      'file' => 'includes/kleosis_students_reports.inc',
       'access callback' => TRUE,
       'weight' => 8,
     );
@@ -361,22 +389,36 @@ function kleosis_menu() {
 */
   $items['kleosis/attendance'] = array(
     'title' => 'Attendance',
-    'description' => 'Provides SIS Attendance',
+    'description' => 'Provides Kleosis Attendance',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_attendance_taking_form'),
-    'file' => 'includes/forms/kleosis_attendance_taking_form.inc',
+    'page arguments' => array('kleosis_attendance'),
+    'file' => 'includes/kleosis_attendance.inc',
     'access callback' => TRUE,
     'weight' => 7,
     'menu_name' => 'kleosismm',
   );
   $items['kleosis/attendance/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Take Attendance', // this title shows in the tabbbed menu as the first tab
-    'weight' => -10,
+    'title' => 'Attendance', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
   );
-  $items['kleosis/attendance/view'] = array(
+  $items['kleosis/attendance/daily'] = array(
     'type' => MENU_LOCAL_TASK,
-    'title' => 'View Attendance',
+    'title' => 'Daily Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_attendance_taking_form'),
+    'file' => 'includes/forms/kleosis_attendance_taking_form.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+  $items['kleosis/attendance/daily/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Take Daily Attendance', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/attendance/daily/view'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'View Daily Attendance',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('kleosis_attendance_view_form'),
     'file' => 'includes/forms/kleosis_attendance_view_form.inc',
@@ -384,6 +426,54 @@ function kleosis_menu() {
     'weight' => 2,
   );
 
+  $items['kleosis/attendance/absentee'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Absentee Periods',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_absentee_periods_mark'),
+    'file' => 'includes/kleosis_attendance.inc',
+    'access callback' => TRUE,
+    'weight' => 3,
+  );
+  $items['kleosis/attendance/absentee/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Mark Absentee Periods', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/attendance/absentee/view'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'View Absentee Periods',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_absentee_periods_view'),
+    'file' => 'includes/kleosis_attendance.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+/*
+  $items['kleosis/attendance/period'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'Period Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_period_attendance_taking_form'),
+    'file' => 'includes/kleosis_attendance.inc',
+    'access callback' => TRUE,
+    'weight' => 4,
+  );
+  $items['kleosis/attendance/period/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Take Period Attendance', // this title shows in the tabbbed menu as the first tab
+    'weight' => 1,
+  );
+  $items['kleosis/attendance/period/view'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title' => 'View Period Attendance',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_period_attendance_view_form'),
+    'file' => 'includes/kleosis_attendance.inc',
+    'access callback' => TRUE,
+    'weight' => 2,
+  );
+*/
   $items['kleosis/grades'] = array(
     'title' => 'Grades',
     'description' => 'Provides SIS Grades functions',
@@ -563,19 +653,19 @@ function kleosis_menu() {
   );
   $items['kleosis/reports_and_queries/default'] = array(
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'title' => 'Reports and Queries', // this title shows in the tabbbed menu as the first tab
+    'title' => 'Reports', // this title shows in the tabbbed menu as the first tab
     'weight' => 1,
   );
-/*  $items["kleosis/reports_and_queries/courses"] = array(
+  $items["kleosis/reports_and_queries/courses"] = array(
     'type' => MENU_LOCAL_TASK,
-    'title' => 'List local courses',
+    'title' => 'User-created Reports',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('kleosis_queries_courses_list_form'),
+    'page arguments' => array('kleosis_user_reports_page'),
     'file' => 'includes/kleosis_reports_and_queries.inc',
     'access callback' => TRUE,
     'weight' => 2,
   );
-  $items["kleosis/reports_and_queries/classes"] = array(
+/*  $items["kleosis/reports_and_queries/classes"] = array(
     'type' => MENU_LOCAL_TASK,
     'title' => 'List local classes',
     'page callback' => 'drupal_get_form',

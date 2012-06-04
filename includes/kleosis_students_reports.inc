@@ -302,6 +302,9 @@ function kleosis_student_reports_odt_download() {
     $rpt_date = new DateTime('now');
     $odf->setVars('reportdate', $rpt_date->format('F') . '  ' . $rpt_date->format('Y'));
 
+//    $xtra_var_1 = 'Extra Var 1';
+//    $odf->setVars('odtextra1', $xtra_var_1);
+
 
     $article = $odf->setSegment('articles');
 

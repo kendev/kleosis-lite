@@ -17,6 +17,16 @@
 
 function kleosis_reports_and_queries_page($form, &$form_state) {
 
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Reports and Queries'), 'kleosis/reports_and_queries');
+  $breadcrumb[] = t('Reports');
+
+  // Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('Reports'));
+
   $today = new DateTime('now');
   $today_start = $today->format('Y-m-d 00:00:00');
   $today_end = $today->format('Y-m-d 23:11:59');
@@ -56,6 +66,74 @@ function kleosis_reports_and_queries_page($form, &$form_state) {
       'report_filters' => t('...'),
     );
     $options[5] = array(
+      'report_category' => t('...'),
+      'report_name' => t('...'),
+      'report_description' => t('...'),
+      'report_filters' => t('...'),
+    );
+
+  $form['reports'] = array(
+        '#theme' => 'table',
+        '#header' => $header,
+        '#rows' => $options,
+        '#empty' => t('No reports are available.'),
+      );
+  $form['pager'] = array('#markup' => theme('pager'));
+  return $form;
+}
+
+/**
+ * Display a list of User-created Reports
+ *
+ * @return
+ *   List of User-created Reports
+ */
+
+function kleosis_user_reports_page($form, &$form_state) {
+
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), 'kleosis');
+  $breadcrumb[] = l(t('Reports and Queries'), 'kleosis/reports_and_queries');
+  $breadcrumb[] = t('User-created Reports');
+
+  // Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+
+  drupal_set_title(t('User-created Reports'));
+
+  $today = new DateTime('now');
+  $today_start = $today->format('Y-m-d 00:00:00');
+  $today_end = $today->format('Y-m-d 23:11:59');
+
+  $header = array(
+    'report_name' => array('data' => t('Report Name')),
+    'report_category' => array('data' => t('Report Category')),
+    'report_description' => array('data' => t('Report Description')),
+    'report_filters' => array('data' => t('Report Filters')),
+  );
+
+  $options = array();
+
+    $options[1] = array(
+//      'report_name' => l(t('Students per Gradelevel'), 'students_per_gradelevel', array('query' => array('destination' => 'kleosis/reports_and_queries'))),
+      'report_name' => t('Students per Gradelevel'),
+      'report_category' => t('Students'),
+      'report_description' => t('List of students in each gradelevel'),
+      'report_filters' => t('Gradelevel'),
+    );
+    $options[2] = array(
+      'report_category' => t('...'),
+      'report_name' => t('...'),
+      'report_description' => t('...'),
+      'report_filters' => t('...'),
+    );
+    $options[3] = array(
+      'report_category' => t('...'),
+      'report_name' => t('...'),
+      'report_description' => t('...'),
+      'report_filters' => t('...'),
+    );
+    $options[4] = array(
       'report_category' => t('...'),
       'report_name' => t('...'),
       'report_description' => t('...'),

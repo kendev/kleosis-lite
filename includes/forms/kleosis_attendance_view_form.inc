@@ -23,7 +23,8 @@ function kleosis_attendance_view_form($form, &$form_state) {
   // Set Breadcrumbs
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), 'kleosis');
-  $breadcrumb[] = t('View Attendance');
+  $breadcrumb[] = l(t('Daily Attendance'), 'kleosis/attendance/daily');
+  $breadcrumb[] = t('View Daily Attendance');
 
   drupal_set_breadcrumb($breadcrumb);
 
@@ -313,7 +314,7 @@ function ks_attnd_view_class_selection_form($form, &$form_state) {
  */
 function kleosis_attendance_input_form($form, &$form_state) {
 
-  drupal_set_title(t('View Attendance'));
+  drupal_set_title(t('View Daily Attendance'));
 
   $attnd_toggle = isset($_SESSION['ks_atnd_class_select']['toggle_attnd']) ? $_SESSION['ks_atnd_class_select']['toggle_attnd'] : 'inactive';
 
