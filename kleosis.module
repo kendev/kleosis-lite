@@ -656,7 +656,7 @@ function kleosis_menu() {
     'title' => 'Reports', // this title shows in the tabbbed menu as the first tab
     'weight' => 1,
   );
-  $items["kleosis/reports_and_queries/courses"] = array(
+  $items['kleosis/reports_and_queries/user_created'] = array(
     'type' => MENU_LOCAL_TASK,
     'title' => 'User-created Reports',
     'page callback' => 'drupal_get_form',
@@ -665,6 +665,18 @@ function kleosis_menu() {
     'access callback' => TRUE,
     'weight' => 2,
   );
+
+  $items['kleosis/reports_and_queries/user_created/term_report/%ks_student'] = array(
+     'description' => 'add-edit-view a term report',
+     'page callback' => 'kleosis_term_report_view',
+     'page arguments' => array(4),
+     'file' => 'includes/kleosis_term_reports.inc',
+     'access callback' => TRUE,
+     'title' => 'Term Report',
+     'type' => MENU_CALLBACK,
+     'weight' => 4,
+ );
+
 /*  $items["kleosis/reports_and_queries/classes"] = array(
     'type' => MENU_LOCAL_TASK,
     'title' => 'List local classes',
@@ -1455,6 +1467,28 @@ function kleosis_std_sd_to_arg($uarg) {
 }
 
 /**
+ *
+ *  Provide a non-null parameter replacement for this menu item:
+ *    $items['kleosis/reports_and_queries/user_created/term_report/%ks_student'']
+ *
+ * @param $uarg
+ *   The user id from the url (can be null)
+ *
+ *  return non-null uid
+*/
+function ks_student_to_arg($uarg) {
+
+  $arg4 = arg(4);
+  $someid = !empty($uarg) ? $uarg : !empty($arg4) ? $arg4 : 1;
+
+//dpm($someid);
+
+  $uid = isset($_SESSION['student']['id']) ? $_SESSION['student']['id'] : $someid;
+
+  return $uid;
+}
+
+/**
  * Function to respond to a php fatal error
  *
  * @return
@@ -1478,4 +1512,9 @@ function kleosis_shutdown() {
   }
 }
 
+
+function kleosis_m_term_report_view($clbk){
+dpm($clbk);
+ return array('#markup' => 'kleosis_m_term_report_view here...');
+}
 
