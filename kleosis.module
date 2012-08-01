@@ -952,6 +952,204 @@ function kleosis_menu() {
   return $items;
 }
 
+function kleosis_menu_alter(&$items) {
+
+  module_load_include('inc', 'menu');
+
+  // Create the Kleosis MyPortal menu
+  if (module_exists('menu')) {
+
+    if (!$kleosis_myportal_menu = menu_load('kleosis_myportalmm')) {
+			$menu = array(
+				'menu_name' => 'kleosis_myportalmm',
+				'title' => 'Kleosis MyPortal',
+				'description' => t('Kleosis MyPortal items'),
+			);
+			menu_save($menu);
+		}
+	}
+
+  $items['kleosis_myportal'] = array(
+//    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_CALLBACK,
+//    'title' => 'Kleosis MyPortal',
+    'description' => 'Student and Parent Portal',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_myportal_intro_form'),
+    'file' => drupal_get_path('module', 'kleosis') . '/includes/kleosis_myportal.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/student'] = array(
+    'title' => 'Select Student',    // this title shows in the main menu
+    'description' => 'Parent selection of the student',
+    'page callback' => '_menu_test_menu_page',
+    'page arguments' => array(t('Select the student')),
+    'file' => drupal_get_path('module', 'kleosis') . '/includes/kleosis_myportal.inc',
+    'access callback' => FALSE,
+    'weight' => 2,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+/*  $items['kleosis_myportal/class_schedule'] = array(
+    'title' => 'Class Schedule',    // this title shows in the main menu
+    'description' => 'Student current class schedule',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_myportal_class_schedule_form'),
+    'file' => drupal_get_path('module', 'kleosis') . '/includes/kleosis_myportal.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 3,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+*/
+  $items['kleosis_myportal/class_schedule'] = array(
+    'title' => 'Class Schedule',    // this title shows in the main menu
+    'description' => 'Student current class schedule',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('kleosis_myportal_class_schedule_form'),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 3,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/attendance'] = array(
+    'title' => 'Attendance',    // this title shows in the main menu
+    'description' => 'Student current attendance',
+    'page callback' => 'kleosis_myportal_atendance',
+    'page arguments' => array(t("This is the student's current attendance...")),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 4,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/grades'] = array(
+    'title' => 'Grades',    // this title shows in the main menu
+    'description' => 'Student current grades',
+    'page callback' => 'kleosis_myportal_grades',
+    'page arguments' => array(t("These are the student's current grades...")),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 6,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/assignments'] = array(
+    'title' => 'Assignments',    // this title shows in the main menu
+    'description' => 'Student current assignments',
+    'page callback' => 'kleosis_myportal_assignments',
+    'page arguments' => array(t("These are the student's current assignments...")),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 7,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/transcript'] = array(
+    'title' => 'Transcript',    // this title shows in the main menu
+    'description' => 'Student online transcript',
+    'page callback' => 'kleosis_myportal_transcript',
+    'page arguments' => array(t("This is the student's transcript...")),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 9,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/profile'] = array(
+    'title' => 'Profile',    // this title shows in the main menu
+    'description' => 'Profile for the logged in user',
+    'page callback' => 'kleosis_myportal_profile',
+    'page arguments' => array(t("This is the student's profile...")),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 10,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/calendar'] = array(
+    'title' => 'Calendar',    // this title shows in the main menu
+    'description' => 'School calendar',
+    'page callback' => 'kleosis_myportal_calendar',
+    'page arguments' => array(t('This is the school calendar...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 11,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/school_news'] = array(
+    'title' => 'School News',    // this title shows in the main menu
+    'description' => 'School News',
+    'page callback' => 'kleosis_myportal_school_news',
+    'page arguments' => array(t('This is the school news...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+    'weight' => 12,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/student_resources'] = array(
+    'title' => 'Student Resources',    // this title shows in the main menu
+    'description' => 'Resources available to the student',
+    'page callback' => 'kleosis_myportal_student_resources',
+    'page arguments' => array(t('Resources available to the student...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 14,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/parent_resources'] = array(
+    'title' => 'Parent Resources',    // this title shows in the main menu
+    'description' => 'Resources available to the parent',
+    'page callback' => 'kleosis_myportal_parent_resources',
+    'page arguments' => array(t('Resources available to the parent...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => FALSE,
+    'expanded' => TRUE,
+    'weight' => 15,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/my_sites'] = array(
+    'title' => 'My Sites',    // this title shows in the main menu
+    'description' => 'List of sites' ,
+    'page callback' => 'kleosis_myportal_my_sites',
+    'page arguments' => array(t('This is a list of sites of interest to the student...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 16,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+  $items['kleosis_myportal/my_messages'] = array(
+    'title' => 'My Messages',    // this title shows in the main menu
+    'description' => 'List of messages' ,
+    'page callback' => 'kleosis_myportal_my_messages',
+    'page arguments' => array(t('This is a list of student messages...')),
+    'file' => 'kleosis_myportal.inc',
+    'file path' => drupal_get_path('module', 'kleosis') . '/includes/',
+    'access callback' => TRUE,
+    'weight' => 17,
+    'expanded' => TRUE,
+    'menu_name' => 'kleosis_myportalmm',
+  );
+}
+
 /**
  *
  * Implementation of hook_theme() (kleosis Main Menu).
