@@ -1095,6 +1095,8 @@ function kleosis_student_class_schedule_list() {
   $uid = $_SESSION['student']['id'];
   $name = $_SESSION['student']['name'];
 
+  global $user;
+
   // the header contains all the fields that will be displayed in the tableselect list
   $header = array(
     'period' => array('data' => t('Period'), ),
@@ -1167,7 +1169,12 @@ function kleosis_student_class_schedule_list() {
         $node_course_ref =   $class_node->ks_class_course_ref['und'][0]['nid'];
         $course_node = node_load($node_course_ref);
         $node_course_no =   $course_node->ks_course_no['und'][0]['value'];
-        $class_link = l($node_course_no, 'kleosis/classes/schedule', array('query' => array('ksopid' => $period->kccls_id_fk, 'ksop' => $class_node->title, 'destination' => 'kleosis/students/classes/class_schedule')));
+				if (in_array('administrator', $user->roles) || in_array('instructor', $user->roles) ) {
+        	$class_link = l($node_course_no, 'kleosis/classes/schedule', array('query' => array('ksopid' => $period->kccls_id_fk, 'ksop' => $class_node->title, 'destination' => 'kleosis/students/classes/class_schedule')));
+				}
+				else {
+					$class_link = $node_course_no;
+				}
       }
       else {
         $node_course_no =  '';

@@ -44,6 +44,11 @@ function kleosis_uninstall() {
       menu_delete($kleosis_menu);
     }
   }
+  if (module_exists('menu')) {  // delete the kleosis my portal menu.
+    if ($kleosis_menu = menu_load('kleosis_myportalmm')) {
+      menu_delete($kleosis_menu);
+    }
+  }
   variable_del('kleosis_organization');
   variable_del('kleosis_academic_year');
   variable_del('kleosis_academic_term');

@@ -164,3 +164,18 @@ Also, if you didn't load the sample data, try creating a basic page first and se
 
 Have fun and please send us feedback at kleosis.org
 
+Notes: 
+
+Another optional Kleosis configuration: add the Kleosis My Portal menu to the My Portal page as created above.
+
+	- Edit the My Portal page and scroll down to the bottom and click on Url_path_settings, then type in 'myportalmp' in the
+	  Url Alias textbox (without the single quotes)
+	- Add the Kleosis My Portal menu to this page by using the steps similar to adding the Kleosis Main Menu earlier
+	  Be sure to show this menu only on the following pages:
+		myportalmp
+		kleosis_myportal
+		kleosis_myportal/*
+		
+The My Portal functionality is now available via the Kleosis My Portal menu
+
+The installation of Drupal and Kleosis will be greatly simplified in a future release when a Drupal profile is created for Kleosis.
