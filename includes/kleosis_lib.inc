@@ -607,6 +607,25 @@ function kleosis_report_odt_values() {
 }
 
 /**
+ * The allowed values for the types of webform reports
+ *
+ * @return
+ *    An array of webform report types to select
+ */
+function kleosis_webform_report_types_values() {
+
+  $le_array = array(
+    'wf_progress_rpt' => t('Progress Report'),
+    'wf_progress_rpt_ed' => t('Progress Report ED'),
+    'wf_special_ed_rpt' => t('Special Ed Report'),
+    'wf_other_rpt_a' => t('Other Report A'),
+    'wf_other_rpt_b' => t('Other Report B'),
+    'wf_other_rpt_c' => t('Other Report C'),
+  );
+  return $le_array;
+}
+
+/**
  *
  * Initialize Kleosis permissions to Kleosis roles
  *

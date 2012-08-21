@@ -1,0 +1,1132 @@
+$webform = array (
+  'nid' => '1044',
+  'confirmation' => '<p>Confirmation message for the progress report 2 webform.</p>',
+  'confirmation_format' => 'filtered_html',
+  'redirect_url' => '<confirmation>',
+  'status' => '1',
+  'block' => '0',
+  'teaser' => '0',
+  'allow_draft' => '0',
+  'auto_save' => '0',
+  'submit_notice' => '1',
+  'submit_text' => '',
+  'submit_limit' => '-1',
+  'submit_interval' => '-1',
+  'total_submit_limit' => '-1',
+  'total_submit_interval' => '-1',
+  'record_exists' => true,
+  'roles' => 
+  array (
+    0 => '1',
+    1 => '2',
+  ),
+  'emails' => 
+  array (
+  ),
+  'components' => 
+  array (
+    11 => 
+    array (
+      'nid' => 1044,
+      'cid' => '11',
+      'pid' => '0',
+      'form_key' => 'report_title',
+      'name' => 'Report Title',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_title]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '21',
+      'page_num' => 1,
+    ),
+    3 => 
+    array (
+      'nid' => 1044,
+      'cid' => '3',
+      'pid' => '0',
+      'form_key' => 'report_date',
+      'name' => 'Report Date',
+      'type' => 'date',
+      'value' => 'today',
+      'extra' => 
+      array (
+        'timezone' => 'user',
+        'title_display' => 'inline',
+        'private' => 0,
+        'datepicker' => 1,
+        'year_textfield' => 0,
+        'start_date' => '-2 years',
+        'end_date' => '+2 years',
+        'conditional_operator' => '=',
+        'description' => '',
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '22',
+      'page_num' => 1,
+    ),
+    14 => 
+    array (
+      'nid' => 1044,
+      'cid' => '14',
+      'pid' => '0',
+      'form_key' => 'academic_year',
+      'name' => 'Academic Year',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_acy]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'width' => '12',
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '23',
+      'page_num' => 1,
+    ),
+    13 => 
+    array (
+      'nid' => 1044,
+      'cid' => '13',
+      'pid' => '0',
+      'form_key' => 'academic_term',
+      'name' => 'Academic Term',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_term]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'width' => '4',
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '24',
+      'page_num' => 1,
+    ),
+    1 => 
+    array (
+      'nid' => 1044,
+      'cid' => '1',
+      'pid' => '0',
+      'form_key' => 'student_name',
+      'name' => 'Student Name',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_sname]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '25',
+      'page_num' => 1,
+    ),
+    2 => 
+    array (
+      'nid' => 1044,
+      'cid' => '2',
+      'pid' => '0',
+      'form_key' => 'student_id',
+      'name' => 'Student ID',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_stid]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 1,
+        'width' => '7',
+        'disabled' => 1,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '26',
+      'page_num' => 1,
+    ),
+    4 => 
+    array (
+      'nid' => 1044,
+      'cid' => '4',
+      'pid' => '0',
+      'form_key' => 'gradelevel',
+      'name' => 'Gradelevel',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_grlevel]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'width' => '5',
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '27',
+      'page_num' => 1,
+    ),
+    5 => 
+    array (
+      'nid' => 1044,
+      'cid' => '5',
+      'pid' => '0',
+      'form_key' => 'class_1',
+      'name' => 'Class 1',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls1]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '28',
+      'page_num' => 1,
+    ),
+    6 => 
+    array (
+      'nid' => 1044,
+      'cid' => '6',
+      'pid' => '0',
+      'form_key' => 'grid_1',
+      'name' => 'Chart 1',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '29',
+      'page_num' => 1,
+    ),
+    7 => 
+    array (
+      'nid' => 1044,
+      'cid' => '7',
+      'pid' => '0',
+      'form_key' => 'class_2',
+      'name' => 'Class 2',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls2]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '30',
+      'page_num' => 1,
+    ),
+    8 => 
+    array (
+      'nid' => 1044,
+      'cid' => '8',
+      'pid' => '0',
+      'form_key' => 'grid_2',
+      'name' => 'Chart 2',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '31',
+      'page_num' => 1,
+    ),
+    9 => 
+    array (
+      'nid' => 1044,
+      'cid' => '9',
+      'pid' => '0',
+      'form_key' => 'class_3',
+      'name' => 'Class 3',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls3]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '32',
+      'page_num' => 1,
+    ),
+    10 => 
+    array (
+      'nid' => 1044,
+      'cid' => '10',
+      'pid' => '0',
+      'form_key' => 'grid_3',
+      'name' => 'Chart 3',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '33',
+      'page_num' => 1,
+    ),
+    15 => 
+    array (
+      'nid' => 1044,
+      'cid' => '15',
+      'pid' => '0',
+      'form_key' => 'class_4',
+      'name' => 'Class 4',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls4]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '34',
+      'page_num' => 1,
+    ),
+    16 => 
+    array (
+      'nid' => 1044,
+      'cid' => '16',
+      'pid' => '0',
+      'form_key' => 'grid_4',
+      'name' => 'Chart 4',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '35',
+      'page_num' => 1,
+    ),
+    17 => 
+    array (
+      'nid' => 1044,
+      'cid' => '17',
+      'pid' => '0',
+      'form_key' => 'class_5',
+      'name' => 'Class 5',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls5]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '36',
+      'page_num' => 1,
+    ),
+    18 => 
+    array (
+      'nid' => 1044,
+      'cid' => '18',
+      'pid' => '0',
+      'form_key' => 'grid_5',
+      'name' => 'Chart 5',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '37',
+      'page_num' => 1,
+    ),
+    19 => 
+    array (
+      'nid' => 1044,
+      'cid' => '19',
+      'pid' => '0',
+      'form_key' => 'class_6',
+      'name' => 'Class 6',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls6]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '38',
+      'page_num' => 1,
+    ),
+    20 => 
+    array (
+      'nid' => 1044,
+      'cid' => '20',
+      'pid' => '0',
+      'form_key' => 'grid_6',
+      'name' => 'Chart 6',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '39',
+      'page_num' => 1,
+    ),
+    35 => 
+    array (
+      'nid' => 1044,
+      'cid' => '35',
+      'pid' => '0',
+      'form_key' => 'second_page',
+      'name' => 'Second Page',
+      'type' => 'pagebreak',
+      'value' => '',
+      'extra' => 
+      array (
+        'conditional_operator' => '=',
+        'private' => 0,
+        'next_page_label' => '',
+        'prev_page_label' => '',
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '40',
+      'page_num' => 2,
+    ),
+    21 => 
+    array (
+      'nid' => 1044,
+      'cid' => '21',
+      'pid' => '0',
+      'form_key' => 'class_7',
+      'name' => 'Class 7',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls7]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '41',
+      'page_num' => 2,
+    ),
+    22 => 
+    array (
+      'nid' => 1044,
+      'cid' => '22',
+      'pid' => '0',
+      'form_key' => 'grid_7',
+      'name' => 'Chart 7',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '42',
+      'page_num' => 2,
+    ),
+    23 => 
+    array (
+      'nid' => 1044,
+      'cid' => '23',
+      'pid' => '0',
+      'form_key' => 'class_8',
+      'name' => 'Class 8',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls8]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '43',
+      'page_num' => 2,
+    ),
+    24 => 
+    array (
+      'nid' => 1044,
+      'cid' => '24',
+      'pid' => '0',
+      'form_key' => 'grid_8',
+      'name' => 'Chart 8',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '44',
+      'page_num' => 2,
+    ),
+    25 => 
+    array (
+      'nid' => 1044,
+      'cid' => '25',
+      'pid' => '0',
+      'form_key' => 'class_9',
+      'name' => 'Class 9',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls9]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '45',
+      'page_num' => 2,
+    ),
+    26 => 
+    array (
+      'nid' => 1044,
+      'cid' => '26',
+      'pid' => '0',
+      'form_key' => 'grid_9',
+      'name' => 'Chart 9',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '46',
+      'page_num' => 2,
+    ),
+    27 => 
+    array (
+      'nid' => 1044,
+      'cid' => '27',
+      'pid' => '0',
+      'form_key' => 'class_10',
+      'name' => 'Class 10',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls10]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '47',
+      'page_num' => 2,
+    ),
+    28 => 
+    array (
+      'nid' => 1044,
+      'cid' => '28',
+      'pid' => '0',
+      'form_key' => 'grid_10',
+      'name' => 'Chart 10',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '48',
+      'page_num' => 2,
+    ),
+    29 => 
+    array (
+      'nid' => 1044,
+      'cid' => '29',
+      'pid' => '0',
+      'form_key' => 'class_11',
+      'name' => 'Class 11',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls11]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '49',
+      'page_num' => 2,
+    ),
+    30 => 
+    array (
+      'nid' => 1044,
+      'cid' => '30',
+      'pid' => '0',
+      'form_key' => 'grid_11',
+      'name' => 'Chart 11',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '50',
+      'page_num' => 2,
+    ),
+    31 => 
+    array (
+      'nid' => 1044,
+      'cid' => '31',
+      'pid' => '0',
+      'form_key' => 'class_12',
+      'name' => 'Class 12',
+      'type' => 'textfield',
+      'value' => '[current-page:query:ksr_cls12]',
+      'extra' => 
+      array (
+        'title_display' => 'inline',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '51',
+      'page_num' => 2,
+    ),
+    32 => 
+    array (
+      'nid' => 1044,
+      'cid' => '32',
+      'pid' => '0',
+      'form_key' => 'grid_12',
+      'name' => 'Chart 12',
+      'type' => 'grid',
+      'value' => '',
+      'extra' => 
+      array (
+        'description' => 'Progress report results',
+        'title_display' => 'none',
+        'private' => 0,
+        'optrand' => 0,
+        'qrand' => 0,
+        'conditional_operator' => '=',
+        'options' => '1|Fails
+2|Below Avg
+3|Satisfactory
+4|Good
+5|Excels
+',
+        'custom_option_keys' => 0,
+        'questions' => '1|Academic performance
+2|Participation/Effort
+3|Homework completion
+',
+        'custom_question_keys' => 0,
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '52',
+      'page_num' => 2,
+    ),
+    33 => 
+    array (
+      'nid' => 1044,
+      'cid' => '33',
+      'pid' => '0',
+      'form_key' => 'summary',
+      'name' => 'Summary',
+      'type' => 'textarea',
+      'value' => '',
+      'extra' => 
+      array (
+        'title_display' => 0,
+        'private' => 0,
+        'resizable' => 1,
+        'disabled' => 0,
+        'conditional_operator' => '=',
+        'cols' => '',
+        'rows' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '53',
+      'page_num' => 2,
+    ),
+    34 => 
+    array (
+      'nid' => 1044,
+      'cid' => '34',
+      'pid' => '0',
+      'form_key' => 'report_authorization',
+      'name' => 'Report Authorization',
+      'type' => 'textfield',
+      'value' => '',
+      'extra' => 
+      array (
+        'title_display' => 'before',
+        'private' => 0,
+        'disabled' => 0,
+        'unique' => 0,
+        'conditional_operator' => '=',
+        'width' => '',
+        'maxlength' => '',
+        'field_prefix' => '',
+        'field_suffix' => '',
+        'description' => '',
+        'attributes' => 
+        array (
+        ),
+        'conditional_component' => '',
+        'conditional_values' => '',
+      ),
+      'mandatory' => '0',
+      'weight' => '54',
+      'page_num' => 2,
+    ),
+  ),
+  'conditionals' => 
+  array (
+  ),
+);
+

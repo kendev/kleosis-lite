@@ -328,11 +328,11 @@ function kleosis_menu() {
         'weight' => 1,
       );
 
-      $items['kleosis/students/reports/ia_reports'] = array(
+      $items['kleosis/students/reports/wf_reports'] = array(
         'type' => MENU_LOCAL_TASK,
         'title' => 'Interactive Reports',
         'page callback' => 'drupal_get_form',
-        'page arguments' => array('kleosis_student_reports_ia'),
+        'page arguments' => array('kleosis_student_reports_wf'),
         'file' => 'includes/kleosis_students_reports.inc',
         'access callback' => TRUE,
         'weight' => 2,
@@ -1711,8 +1711,24 @@ function kleosis_shutdown() {
 }
 
 
-function kleosis_m_term_report_view($clbk){
-dpm($clbk);
- return array('#markup' => 'kleosis_m_term_report_view here...');
+/*
+ * Implements hook_node_view_alter
+ *	used for the Webform module to display an extra message when creating a new Kleosis Webform Report
+ *
+ */
+function webform_node_view_alter(&$build) {
+
+	if ( isset($build['webform']['#form']['submitted']['report_title']['#default_value']) ) {
+
+			$string = $build['webform']['#form']['submitted']['report_title']['#default_value'];
+			$pos = strpos($string, "Progress Report");
+			if ($pos === false) {
+					// not a Kleosis Progress Report webform
+					// todo: generalize this for other Kleosis webforms
+			} else {
+					drupal_set_message('To create a new report, complete this form and then click on the Submit button to add it to the report list.');
+			}
+	}
 }
+
 
