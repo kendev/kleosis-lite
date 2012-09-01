@@ -494,10 +494,10 @@ function build_ks_user_student_view($account, $view_mode, $langcode) {
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );
-  $account->content['student_guardian_info']['grd_email'] = array(
+  $account->content['student_guardian_info']['occupation'] = array(
     '#type' => 'user_profile_item',
-    '#title' => t('Email'),
-    '#markup' => ($guardian)? '$email' : '',
+    '#title' => t('Occupation'),
+    '#markup' => ($guardian)? $ks_primary_guardian['occupation'] : '',
     '#prefix' => '<div style="float:left;width:275px" >',
     '#suffix' => '</div><br/>',
   );

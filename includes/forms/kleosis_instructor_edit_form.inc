@@ -61,7 +61,7 @@ function build_ks_user_instructor_edit($theuser) {
   );
   $form['instructor_biodata']['fullname'] = array(
     '#type' => 'textfield',
-    '#title' => t('Name'),
+    '#title' => t('Full Name'),
     '#size' => 35,
     '#maxlength' => 48,
     '#default_value' => ($defaults)? $ks_user['fullname'] : '',

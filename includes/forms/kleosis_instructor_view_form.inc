@@ -63,7 +63,7 @@ function build_ks_user_instructor_view($account, $view_mode, $langcode) {
   );
   $account->content['instructor_biodata']['fullname'] = array(
     '#type' => 'user_profile_item',
-    '#title' => t('Name'),
+    '#title' => t('Full Name'),
     '#markup' => ($defaults)? $ks_user['fullname'] : '',
     '#prefix' => '<div style="float:left;clear:left;width:275px" >',
     '#suffix' => '</div>',
@@ -113,6 +113,13 @@ function build_ks_user_instructor_view($account, $view_mode, $langcode) {
   );
 }
 */
+  $account->content['instructor_biodata']['email'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t('Email'),
+    '#markup' => ($defaults)? $account->mail : '',
+    '#prefix' => '<div style="float:left;clear:left;width:275px" >',
+    '#suffix' => '</div><br/>',
+  );
   $account->content['instructor_biodata']['nationality'] = array(
     '#type' => 'user_profile_item',
     '#title' => t('Nationality'),
